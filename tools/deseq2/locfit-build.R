@@ -6,6 +6,8 @@ output <- normalizePath(args[[2L]], mustWork = TRUE)
 stopifnot(getRversion() == "4.6.0")
 compiler <- system2("emcc", "--version", stdout = TRUE)
 message(compiler[[1L]])
+stopifnot(grepl("5.0.7 (263db4cffa6f9fc2ec514a70abac81362ea41849)",
+                compiler[[1L]], fixed = TRUE))
 # The complete toolchain is fixed by the immutable container image digest.
 library(rwasm)
 makevars <- system.file("webr-vars.mk", package = "rwasm", mustWork = TRUE)

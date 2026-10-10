@@ -8,5 +8,8 @@
   "webr_version": "0.6.0",
   "r_version": "4.6.0",
   "changes": "Set the C17 compiler and flags to Emscripten through rwasm's Makevars. No R or C source changes.",
-  "toolchain_pin": "The complete compiler and rwasm installation are pinned by build_image; the compiler version is recorded in locfit-build-environment.txt."
+  "toolchain_pin": "The complete compiler and rwasm installation are pinned by build_image; the compiler version is recorded in locfit-build-environment.txt.",
+  "emscripten_version": "5.0.7",
+  "emscripten_revision": "263db4cffa6f9fc2ec514a70abac81362ea41849",
+  "rwasm_version": "0.3.0.9000"
 }
