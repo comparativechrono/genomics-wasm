@@ -1,0 +1,111 @@
+name: Diagnose DESeq2 in WebKit
+on:
+  push:
+    branches:
+      - diagnostics/deseq2-webkit
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: deseq2-webkit-diagnostics-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  webkit:
+    strategy:
+      fail-fast: false
+      matrix:
+        playwright: ['1.56.1', '1.64.0']
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      BROWSER: webkit
+      DESEQ2_DIAGNOSTICS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the selected Playwright version
+        run: |
+          npm ci
+          npm install --no-save --package-lock=false playwright@${{ matrix.playwright }}
+          npx playwright install --with-deps webkit
+      - uses: actions/download-artifact@v4
+        with:
+          name: deseq2-validation-inputs
+          repository: comparativechrono/genomics-wasm
+          run-id: 38095890822
+          github-token: ${{ github.token }}
+          path: .
+      - name: Record diagnostic inputs
+        env:
+          PLAYWRIGHT_VERSION: ${{ matrix.playwright }}
+        run: |
+          mkdir -p reports/deseq2-diagnostics/${{ matrix.playwright }}
+          node --input-type=module <<'JS'
+          import { writeFileSync } from 'node:fs';
+          import { createRequire } from 'node:module';
+          const require = createRequire(import.meta.url);
+          const version = require('playwright/package.json').version;
+          if (version !== process.env.PLAYWRIGHT_VERSION) throw new Error(`Unexpected Playwright version: ${version}`);
+          writeFileSync(`reports/deseq2-diagnostics/${version}/inputs.json`, JSON.stringify({
+            commit: process.env.GITHUB_SHA,
+            sourceRun: 38095890822,
+            sourceArtifact: 'deseq2-validation-inputs',
+            playwright: version,
+            node: process.version,
+            platform: process.platform,
+            architecture: process.arch,
+          }, null, 2) + '\n');
+          JS
+      - name: Compare WebKit results with native R
+        id: numerical
+        continue-on-error: true
+        run: >-
+          node scripts/validate-deseq2.mjs
+          --engine webkit
+          --native-baseline reports/deseq2/node/native
+          --report-dir reports/deseq2-diagnostics/${{ matrix.playwright }}/numerical
+      - name: Test the browser interface in a fresh session (1 of 3)
+        id: ui_1
+        continue-on-error: true
+        env:
+          DESEQ2_REPORT_DIR: reports/deseq2-diagnostics/${{ matrix.playwright }}/ui-1
+        run: node scripts/test-deseq2-demo.mjs
+      - name: Test the browser interface in a fresh session (2 of 3)
+        id: ui_2
+        continue-on-error: true
+        env:
+          DESEQ2_REPORT_DIR: reports/deseq2-diagnostics/${{ matrix.playwright }}/ui-2
+        run: node scripts/test-deseq2-demo.mjs
+      - name: Test the browser interface in a fresh session (3 of 3)
+        id: ui_3
+        continue-on-error: true
+        env:
+          DESEQ2_REPORT_DIR: reports/deseq2-diagnostics/${{ matrix.playwright }}/ui-3
+        run: node scripts/test-deseq2-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deseq2-webkit-diagnostics-playwright-${{ matrix.playwright }}
+          path: reports/deseq2-diagnostics/${{ matrix.playwright }}/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Require every numerical and interface check to pass
+        if: always()
+        env:
+          NUMERICAL_RESULT: ${{ steps.numerical.outcome }}
+          UI_1_RESULT: ${{ steps.ui_1.outcome }}
+          UI_2_RESULT: ${{ steps.ui_2.outcome }}
+          UI_3_RESULT: ${{ steps.ui_3.outcome }}
+        run: |
+          failed=0
+          for result in NUMERICAL_RESULT UI_1_RESULT UI_2_RESULT UI_3_RESULT; do
+            printf '%s=%s\n' "$result" "${!result}"
+            if [ "${!result}" != success ]; then failed=1; fi
+          done
+          exit "$failed"

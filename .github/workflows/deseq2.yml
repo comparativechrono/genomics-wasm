@@ -1,6 +1,8 @@
 name: Build and validate DESeq2
 on:
   push:
+    branches-ignore:
+      - 'diagnostics/**'
   pull_request:
   workflow_dispatch:
 permissions:
