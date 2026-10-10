@@ -1,0 +1,12 @@
+{
+  "package": "locfit",
+  "version": "1.5-9.12",
+  "license": "GPL (>= 2)",
+  "source_url": "https://cran.r-project.org/src/contrib/locfit_1.5-9.12.tar.gz",
+  "source_sha256": "fa31b9d407f3557a6fcb7105cbd7b16a32a6fb868a7c60bc38a3e33cb7a39343",
+  "build_image": "ghcr.io/r-wasm/webr@sha256:3fbf3dc3537c5b31bca94dd797dc25364693b18d71b1d0975f318fbfd6269d86",
+  "webr_version": "0.6.0",
+  "r_version": "4.6.0",
+  "emscripten_version": "4.0.8",
+  "changes": "Set the C17 compiler and flags to Emscripten through rwasm's Makevars. No R or C source changes."
+}

@@ -1,0 +1,26 @@
+# Run only inside the pinned, disposable webR build container.
+args <- commandArgs(trailingOnly = TRUE)
+stopifnot(length(args) == 2L)
+source <- normalizePath(args[[1L]], mustWork = TRUE)
+output <- normalizePath(args[[2L]], mustWork = TRUE)
+stopifnot(getRversion() == "4.6.0")
+compiler <- system2("emcc", "--version", stdout = TRUE)
+stopifnot(grepl("4.0.8", compiler[[1L]], fixed = TRUE))
+library(rwasm)
+makevars <- system.file("webr-vars.mk", package = "rwasm", mustWork = TRUE)
+# R selects CC17 when DESCRIPTION requests USE_C17. rwasm's ordinary
+# CC override does not cover that compiler, causing the upstream build
+# to invoke native gcc with WebAssembly flags. Set both compiler paths.
+cat("\n# genomics-wasm: select the WebAssembly C17 compiler\n",
+    "override CC = emcc\n",
+    "override CC17 = emcc\n",
+    "override C17STD = -std=gnu17\n",
+    "override C17FLAGS = $(WASM_CFLAGS)\n",
+    file = makevars, append = TRUE, sep = "")
+writeLines(c(paste("R", getRversion()),
+             paste("rwasm", packageVersion("rwasm")),
+             compiler[[1L]],
+             paste("Makevars", makevars)),
+           file.path(output, "locfit-build-environment.txt"))
+rwasm::build(source, out_dir = output, dependencies = FALSE)
+stopifnot(file.exists(file.path(output, "locfit_1.5-9.12.tgz")))

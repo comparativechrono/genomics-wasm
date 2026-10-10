@@ -1,0 +1,24 @@
+name: Build and validate DESeq2
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: deseq2-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  locfit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build locfit for webR with its C17 compiler
+        run: bash scripts/build-deseq2-locfit.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deseq2-locfit
+          path: build/deseq2/locfit/
+          retention-days: 30
+          if-no-files-found: error
