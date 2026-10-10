@@ -27,7 +27,10 @@ export async function createDESeq2({ baseUrl = DEFAULT_BASE, onProgress = () => 
   if (signal?.aborted) throw new DOMException('Cancelled', 'AbortError');
   onProgress('Loading R');
   const manifest = JSON.parse(new TextDecoder().decode(await readAsset(new URL('manifest.json', base), signal)));
-  const { WebR, ChannelType } = await import(new URL('webr/webr.mjs', base).href);
+  // webR's .mjs entry imports Node built-ins; its .js entry is for browsers.
+  const isNode = typeof process !== 'undefined' && !!process.versions?.node;
+  const entry = isNode ? 'webr/webr.mjs' : 'webr/webr.js';
+  const { WebR, ChannelType } = await import(new URL(entry, base).href);
   const rBase = new URL('webr/', base);
   const r = new WebR({
     baseUrl: rBase.protocol === 'file:' ? decodeURIComponent(rBase.pathname) : rBase.href,
