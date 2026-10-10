@@ -29,13 +29,19 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential gfortran libblas-dev liblapack-dev
+          for library in blas lapack; do
+            for suffix in so so.3; do
+              sudo update-alternatives --set "lib${library}.${suffix}-x86_64-linux-gnu" "/usr/lib/x86_64-linux-gnu/${library}/lib${library}.${suffix}"
+            done
+          done
+          Rscript --vanilla -e 's <- sessionInfo(); print(s); stopifnot(grepl("/blas/", s$BLAS, fixed=TRUE), grepl("/lapack/", s$LAPACK, fixed=TRUE))'
           npm ci
       - name: Test comparators and verify real count data
         run: |
           npm test
           python3 scripts/fetch-deseq2-data.py --verify
           python3 scripts/fetch-deseq2-data.py --regenerate --output build/deseq2-data/reproduced
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         id: locfit-cache
         with:
           path: build/deseq2/locfit/
@@ -43,16 +49,29 @@ jobs:
       - name: Build locfit for webR with its C17 compiler
         if: steps.locfit-cache.outputs.cache-hit != 'true'
         run: bash scripts/build-deseq2-locfit.sh
+      - uses: actions/cache/save@v4
+        if: steps.locfit-cache.outputs.cache-hit != 'true'
+        with:
+          path: build/deseq2/locfit/
+          key: ${{ steps.locfit-cache.outputs.cache-primary-key }}
       - name: Assemble pinned R and DESeq2 browser files
         run: python3 scripts/build-deseq2.py
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
+        id: native-cache
         with:
           path: |
             build/deseq2-native/runtime-library/
             build/deseq2-native/build-library/
-          key: deseq2-native-${{ runner.os }}-r4.6.0-${{ hashFiles('scripts/setup-deseq2-native.py', 'tools/deseq2/sources.lock.json') }}
+          key: deseq2-native-${{ runner.os }}-r4.6.0-reference-blas-${{ hashFiles('scripts/setup-deseq2-native.py', 'tools/deseq2/sources.lock.json') }}
       - name: Build matching native R packages from source
         run: python3 scripts/setup-deseq2-native.py
+      - uses: actions/cache/save@v4
+        if: steps.native-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            build/deseq2-native/runtime-library/
+            build/deseq2-native/build-library/
+          key: ${{ steps.native-cache.outputs.cache-primary-key }}
       - name: Compare native R and webR in Node
         run: node scripts/validate-deseq2.mjs --engine node --rscript build/deseq2-native/Rscript
       - name: Prepare standalone DESeq2 package

@@ -18,6 +18,13 @@ Native BLAS and OpenMP thread counts are set to one. Browser tests run without
 cross-origin isolation headers and reject requests to external servers; the
 bundle must supply its own R runtime and packages.
 
+The native reference uses the standard BLAS/LAPACK implementation, matching
+the reference routines used by webR. On Ubuntu CI, the workflow explicitly
+selects the `blas` and `lapack` system alternatives and checks R's reported
+library paths before compiling packages. This matters because the R setup
+action otherwise selects OpenBLAS. The native package cache records this
+choice in its key.
+
 After a native run, another engine can use its saved baseline:
 
 ```sh
@@ -167,3 +174,11 @@ The bounds above are limited to these tested outputs. They do not establish an
 error bound for every dataset, model, transformation, or optional DESeq2 method.
 New inputs or engines that exceed a bound require investigation rather than an
 automatic tolerance increase.
+
+An initial CI run selected OpenBLAS 0.3.26 for native R. All 14 webR output
+tables were byte-identical to the successful local run, but the native final
+dispersion estimates for three genes differed from the reference-BLAS run,
+with downstream p-value differences exceeding the bounds above. CI therefore
+selects reference BLAS/LAPACK explicitly; the numerical tolerances were not
+widened. These comparisons establish agreement with that recorded native
+configuration, not every possible BLAS implementation.
