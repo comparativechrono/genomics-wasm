@@ -172,10 +172,15 @@ try {
       await compare('sam',baseline.original.stdout,crossNative.stdout,`${tool}-${dataset}-cross-native`);
       await compare('sam',baseline.original.stdout,crossWasm.stdout,`${tool}-${dataset}-cross-wasm`);
       summary.cases.push({id:`${tool}-${dataset}-cross-index`,status:'passed'});
-      const repeated=await wasm(tool,paired,input);
-      success(repeated,`repeated ${tool} command`);
-      await compare('sam',baseline.original.stdout,repeated.stdout,`${tool}-${dataset}-repeat`);
-      summary.cases.push({id:`${tool}-${dataset}-repeat`,status:'passed'});
+      // Exercise consecutive fresh workers after an intermittent WebKit failure.
+      const repeatCount=tool==='bwa-mem2'?3:1;
+      for(let i=0;i<repeatCount;i++) {
+        const id=`${tool}-${dataset}-repeat${i===0?'':`-${i+1}`}`;
+        const repeated=await wasm(tool,paired,input);
+        success(repeated,`repeated ${tool} command ${i+1}`);
+        await compare('sam',baseline.original.stdout,repeated.stdout,id);
+        summary.cases.push({id,status:'passed'});
+      }
     }
     if(tools.includes('freebayes')) {
       const input=files.filter(f=>!f.path.endsWith('.fastq'));

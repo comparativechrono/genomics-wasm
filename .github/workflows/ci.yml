@@ -46,6 +46,8 @@ jobs:
           bash scripts/build-minimap2.sh all
       - name: Compare native and WebAssembly outputs in Node
         run: node scripts/validate.mjs --engine node
+      - name: Check BWA-MEM2 memory exhaustion fails safely
+        run: node scripts/test-bwa-mem2-memory.mjs
       - name: Prepare independent tool packages and corresponding sources
         run: python3 scripts/package.py
       - uses: actions/upload-artifact@v4

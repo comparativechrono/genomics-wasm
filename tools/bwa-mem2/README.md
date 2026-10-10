@@ -68,6 +68,12 @@ copies use additional memory outside the heap. Whole human genomes and
 memory-constrained devices are outside this package's supported scope.
 No shared-memory browser setup or cross-origin isolation is required.
 
+The WebAssembly build explicitly enables `ABORTING_MALLOC`. If the browser
+cannot supply more heap memory, the command fails instead of returning a null
+allocation pointer to upstream routines that do not check it. This prevents
+those routines from continuing with invalid memory. It does not change the
+indexing or alignment algorithms or guarantee that a particular input fits.
+
 ## Port changes
 
 All upstream source changes are in [browser.patch](browser.patch), with a small
@@ -88,6 +94,9 @@ profiling helper in [port.h](port.h).
   is checked at compile time.
 - Integer formatting uses the appropriate fixed-width types across platforms.
   SAM position formatting retains 64-bit inputs.
+- Tree nodes align their keys and child pointers to each type's requirements.
+  This fixes misaligned accesses found by UndefinedBehaviorSanitizer; node
+  capacity, key ordering and comparisons are unchanged.
 - The file opener supports local files and standard input; subprocesses and
   network access are unavailable inside the compiled module.
 
@@ -96,10 +105,12 @@ A native speed advantage over BWA does not imply an advantage in the browser.
 
 ## Validation
 
-Run the shared three-way differential suite with:
+From the repository checkout, run the shared three-way differential suite and
+the memory-failure check:
 
 ```sh
 node scripts/validate.mjs --tool bwa-mem2 --engine node
+node scripts/test-bwa-mem2-memory.mjs
 ```
 
 The suite compares original native, patched native and WebAssembly builds
@@ -110,7 +121,12 @@ match-score case exercises 16-bit score processing. Browser runs in Chromium,
 Firefox and WebKit are separate CI gates. The suite writes the exact commands,
 input and binary hashes, outputs and comparisons under `reports/`.
 
-The Node.js v24.19.0 run passed all 20 cases on 10 October 2026. All five
+The memory test uses the actual module in a disposable worker whose heap cannot
+grow. The command must reject with an out-of-memory error, and a fresh worker
+must still run successfully. It checks failure handling without changing the
+alignment algorithm or the numerical comparisons.
+
+The Node.js v24.19.0 run passed all 24 cases on 10 October 2026. All five
 index files were byte-identical across the three builds on both datasets.
 All SAM fields and tags matched for paired and single reads, changed seed and
 score parameters, higher match scores (`-A 3`), multiple batches (`-K 10000`),
