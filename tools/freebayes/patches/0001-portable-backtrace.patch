@@ -1,0 +1,22 @@
+--- a/src/SegfaultHandler.h
++++ b/src/SegfaultHandler.h
+@@ -2,7 +2,7 @@
+ #define FREEBAYES_SEGFAULTHANDLER_H
+ 
+ #include <stdio.h>
+-#ifndef __CYGWIN__
++#if !defined(__CYGWIN__) && !defined(GENOMICS_WASM_PORT)
+ #include <execinfo.h>
+ #endif
+ #include <signal.h>
+--- a/src/SegfaultHandler.cpp
++++ b/src/SegfaultHandler.cpp
+@@ -4,7 +4,7 @@
+ // many thanks to tgamblin
+ 
+ void segfaultHandler(int sig) {
+-#ifndef __CYGWIN__
++#if !defined(__CYGWIN__) && !defined(GENOMICS_WASM_PORT)
+     void *array[10];
+     size_t size;
+ 

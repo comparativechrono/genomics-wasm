@@ -1,0 +1,9 @@
+/build/
+/dist/
+/releases/
+/reports/
+/node_modules/
+/toolchain/
+__pycache__/
+*.pyc
+.DS_Store

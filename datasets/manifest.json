@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "purpose": "Small public sequencing datasets for native-versus-WebAssembly equivalence tests. Not truth datasets or accuracy benchmarks.",
+  "prepared_utc": "2026-10-10",
+  "sources": {
+    "human/q.fa": {
+      "url": "https://raw.githubusercontent.com/freebayes/freebayes/084dce52e54af5adbd1e2b0a67f3733dd8bfddc0/test/tiny/q.fa",
+      "sha256": "07ac3fae2b27ae6415165e9bbda7af88247035fa2d0faf275b2320b0a818093d",
+      "bytes": 12565
+    },
+    "human/q.fa.fai": {
+      "url": "https://raw.githubusercontent.com/freebayes/freebayes/084dce52e54af5adbd1e2b0a67f3733dd8bfddc0/test/tiny/q.fa.fai",
+      "sha256": "fea5eae895edc08c4a21e7d432782c6b9542674ccfc77650c99e84e5bea84757",
+      "bytes": 16
+    },
+    "human/NA12878.chr22.tiny.bam": {
+      "url": "https://raw.githubusercontent.com/freebayes/freebayes/084dce52e54af5adbd1e2b0a67f3733dd8bfddc0/test/tiny/NA12878.chr22.tiny.bam",
+      "sha256": "54178b80e198abe7398b3ca5ccc12009b38c466c8ff63794fc030d7f279031a7",
+      "bytes": 287213
+    },
+    "human/NA12878.chr22.tiny.bam.bai": {
+      "url": "https://raw.githubusercontent.com/freebayes/freebayes/084dce52e54af5adbd1e2b0a67f3733dd8bfddc0/test/tiny/NA12878.chr22.tiny.bam.bai",
+      "sha256": "873b763b584c5910f3e5672ccf61919f1dd0474db5c980bf4854bc0bf960d9e7",
+      "bytes": 96
+    },
+    "yeast/sacCer3.fa.gz": {
+      "url": "https://hgdownload.soe.ucsc.edu/goldenPath/sacCer3/bigZips/sacCer3.fa.gz",
+      "sha256": "e3a70396853eff5a012077efbd06cb97d858e12349745d102e316bb8f620f266",
+      "bytes": 3820548
+    },
+    "yeast/SRR1569870_1.prefix.fastq.gz": {
+      "url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR156/000/SRR1569870/SRR1569870_1.fastq.gz",
+      "sha256": "621f8acb6abfca549b4d8f13dc830f6f52948727c11ade3b5cc8424ce13a87a1",
+      "bytes": 10000000,
+      "range": "bytes=0-9999999",
+      "note": "First 10000000 compressed bytes only. The gzip member is intentionally incomplete; read only the first 100000 complete FASTQ records."
+    },
+    "yeast/SRR1569870_2.prefix.fastq.gz": {
+      "url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR156/000/SRR1569870/SRR1569870_2.fastq.gz",
+      "sha256": "034093fa2649ed09c564857dad38b287e90e05a340d1beaf9977dff426d23e5b",
+      "bytes": 10000000,
+      "range": "bytes=0-9999999",
+      "note": "First 10000000 compressed bytes only. The gzip member is intentionally incomplete; read only the first 100000 complete FASTQ records."
+    }
+  },
+  "datasets": {
+    "human": {
+      "organism": "Homo sapiens",
+      "sample": "NA12878",
+      "source_repository": "https://github.com/freebayes/freebayes",
+      "source_commit": "084dce52e54af5adbd1e2b0a67f3733dd8bfddc0",
+      "upstream_paths": [
+        "test/tiny/q.fa",
+        "test/tiny/NA12878.chr22.tiny.bam"
+      ],
+      "original_run_accession": null,
+      "original_run_accession_note": "The upstream tiny fixture does not record an SRA/ENA run accession; the original read group is NA12878D_HiSeqX_R1.fastq.gz. Do not attribute these reads to another run.",
+      "reference": {
+        "assembly": "GRCh37/hg19",
+        "chromosome": "chr22",
+        "start_1based": 22200345,
+        "end_1based_inclusive": 22212700,
+        "fixture_contig": "q",
+        "length": 12356,
+        "verification": "All reference bases matched UCSC hg19 API on 2026-10-10.",
+        "verification_url": "https://api.genome.ucsc.edu/getData/sequence?genome=hg19;chrom=chr22;start=22200344;end=22212700"
+      },
+      "fastq_pairs": 512,
+      "bam_records": 3333,
+      "transformation": "Copy upstream FASTA/BAM/index bytes unchanged. Collect primary paired records in BAM; retain complete pairs; sort query names lexicographically and select first 512. Restore original sequencing orientation (reverse-complement sequence and reverse qualities for reverse-strand alignments). Do not modify sequence or quality scores.",
+      "limitations": [
+        "Reads are recovered from alignments, so any upstream hard clipping or quality processing is retained. They are not claimed to reproduce the original raw FASTQ files.",
+        "The upstream BAM maps local reference coordinates to q but retains chromosome-scale PNEXT values. Fixed caller tests intentionally preserve upstream bytes.",
+        "The small subset is not representative of whole-genome alignment performance."
+      ]
+    },
+    "yeast": {
+      "organism": "Saccharomyces cerevisiae",
+      "strain": "BY4741",
+      "run_accession": "SRR1569870",
+      "experiment_accession": "SRX696259",
+      "study_accession": "SRP046161",
+      "sample_accession": "SRS697355",
+      "instrument": "Illumina HiSeq 2000",
+      "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/SRR1569870",
+      "source_full_fastq_md5": [
+        "9b670852a7572a02d6cf53050f7791dd",
+        "effe1a157ceb2d734fda79ea163b61d2"
+      ],
+      "reference": {
+        "assembly": "UCSC sacCer3 (S288C)",
+        "chromosome": "chrM",
+        "start_1based": 1,
+        "end_1based_inclusive": 85779,
+        "length": 85779,
+        "topology": "linearized mitochondrial reference"
+      },
+      "source_pairs_examined": 100000,
+      "fastq_pairs": 1079,
+      "read_length": 101,
+      "bam_records": 2158,
+      "q20_mean_aligned_depth": 2.4564520453724104,
+      "alignment_program": "bwa 0.7.19-r1273 native",
+      "alignment_command": [
+        "bwa",
+        "mem",
+        "-t",
+        "1",
+        "-R",
+        "@RG\\tID:SRR1569870\\tSM:BY4741\\tPL:ILLUMINA",
+        "sacCer3.fa",
+        "yeast-prefix_1.fastq",
+        "yeast-prefix_2.fastq"
+      ],
+      "transformation": "Read first 100000 complete pairs from each compressed prefix. Align against all sacCer3 chromosomes using native BWA, single thread. Retain pairs with both primary alignments on chrM. FASTQ records copied unchanged from ENA in original order. Fixed BAM contains only those primary alignments; chrM coordinate values and tags unchanged; reference IDs remapped to single-contig header; records sorted by POS, query name, flag.",
+      "limitations": [
+        "Mean Q20 depth is about 2.46x and coverage is uneven. This is a small equivalence fixture, not a variant-detection accuracy benchmark.",
+        "Selection is based on alignment to the whole yeast reference. It is an enriched subset and cannot measure mapping specificity on whole-genome reads.",
+        "The linear chrM reference does not model circular-origin-spanning reads.",
+        "No biological truth calls are supplied."
+      ]
+    }
+  },
+  "regeneration": {
+    "python": "3.12",
+    "pysam": "0.23.3",
+    "bwa": "0.7.19-r1273",
+    "note": "BAM compression can depend on the linked zlib implementation. Check fixture SHA256 before using any regenerated replacement."
+  },
+  "files": {
+    "human/UPSTREAM_LICENSE.txt": {
+      "sha256": "a74f8ca21ce149b8474d6b124a3bed1b7050fe2d3eb2660e36abdda524437b84",
+      "bytes": 1070
+    },
+    "human/input.bam": {
+      "sha256": "54178b80e198abe7398b3ca5ccc12009b38c466c8ff63794fc030d7f279031a7",
+      "bytes": 287213
+    },
+    "human/input.bam.bai": {
+      "sha256": "873b763b584c5910f3e5672ccf61919f1dd0474db5c980bf4854bc0bf960d9e7",
+      "bytes": 96
+    },
+    "human/reads_1.fastq": {
+      "sha256": "bc42c9da7c6a7bfe9534aa7ff3326d6a236cf84387ce8fdf0d5244bb7003d06e",
+      "bytes": 169984
+    },
+    "human/reads_2.fastq": {
+      "sha256": "11b43d97316b86985b4a785b6942fdde52b45c920d42a5f76f9f73463aeb125c",
+      "bytes": 169984
+    },
+    "human/reference.fa": {
+      "sha256": "07ac3fae2b27ae6415165e9bbda7af88247035fa2d0faf275b2320b0a818093d",
+      "bytes": 12565
+    },
+    "human/reference.fa.fai": {
+      "sha256": "fea5eae895edc08c4a21e7d432782c6b9542674ccfc77650c99e84e5bea84757",
+      "bytes": 16
+    },
+    "provenance/SRR1569870-files.tsv": {
+      "sha256": "8a6dc4fd349ec6391db69f2a01bf402a263f0f79a8f1ff5d723053ab6a55d8f9",
+      "bytes": 291
+    },
+    "provenance/SRR1569870.xml": {
+      "sha256": "2488114d203049b298d41a936e416c9f5b7b7e5ee90cabb4ed19c6dd1a5862dc",
+      "bytes": 2182
+    },
+    "yeast/input.bam": {
+      "sha256": "379d1f84d4f335d7ecaeddbd78827609f3723352641ea62a64106e1762a407b6",
+      "bytes": 145755
+    },
+    "yeast/input.bam.bai": {
+      "sha256": "f4fd40bfe7a270060639ec2f40174a3d4497d6a56f6b3f200dc8b059af1141aa",
+      "bytes": 136
+    },
+    "yeast/reads_1.fastq": {
+      "sha256": "c90a42ee8284627db0e96608caaa10cab0bf7a1e6aa7ef3c20ba2b83f75849f6",
+      "bytes": 288443
+    },
+    "yeast/reads_2.fastq": {
+      "sha256": "17a7a061b1d4230a91eab44723524e1d32462be5751e7796cbb382e03d57e573",
+      "bytes": 288443
+    },
+    "yeast/reference.fa": {
+      "sha256": "33b1d29a069388708195ea477fe4c7c7f74bb8683f101c3e2a52e1bd638f3482",
+      "bytes": 87215
+    },
+    "yeast/reference.fa.fai": {
+      "sha256": "faf14e6331b6b8c592f4d62e74a7326757e3577489405f0231ee5772c0dff513",
+      "bytes": 19
+    }
+  }
+}

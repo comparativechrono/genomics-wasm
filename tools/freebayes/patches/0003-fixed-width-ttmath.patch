@@ -1,0 +1,15 @@
+--- a/ttmath/ttmathtypes.h
++++ b/ttmath/ttmathtypes.h
+@@ -209,7 +209,11 @@
+ 	/*!
+ 		on 64bit platforms one word (uint, sint) will be equal 64bits
+ 	*/
+-	#ifdef _MSC_VER
++	#ifdef GENOMICS_WASM_PORT
++		typedef uint64_t uint;
++		typedef int64_t sint;
++		static_assert(sizeof(uint) == 8, "TTMath 64-bit words require an 8-byte integer");
++	#elif defined(_MSC_VER)
+ 		/* in VC 'long' type has 32 bits, __int64 is VC extension */
+ 		typedef unsigned __int64 uint;
+ 		typedef signed   __int64 sint;

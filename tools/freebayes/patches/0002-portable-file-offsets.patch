@@ -1,0 +1,22 @@
+--- a/vcflib/fastahack/LargeFileSupport.h
++++ b/vcflib/fastahack/LargeFileSupport.h
+@@ -5,7 +5,7 @@
+ #define ftell64(a)     _ftelli64(a)
+ #define fseek64(a,b,c) _fseeki64(a,b,c)
+ typedef __int64 off_type;
+-#elif defined(__APPLE__) || defined(__FreeBSD__)
++#elif defined(__APPLE__) || defined(__FreeBSD__) || defined(GENOMICS_WASM_PORT)
+ #define ftell64(a)     ftello(a)
+ #define fseek64(a,b,c) fseeko(a,b,c)
+ typedef off_t off_type;
+--- a/src/LargeFileSupport.h
++++ b/src/LargeFileSupport.h
+@@ -9,7 +9,7 @@
+ #define ftell64(a)     ftell(a)
+ #define fseek64(a,b,c) fseek(a,b,c)
+ typedef __int64_t off_type;
+-#elif defined(__APPLE__)
++#elif defined(__APPLE__) || defined(GENOMICS_WASM_PORT)
+ #define ftell64(a)     ftello(a)
+ #define fseek64(a,b,c) fseeko(a,b,c)
+ typedef off_t off_type;

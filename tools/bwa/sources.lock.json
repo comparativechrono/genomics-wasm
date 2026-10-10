@@ -1,0 +1,15 @@
+{
+  "tool": "bwa",
+  "version": "0.7.19",
+  "revision": "b92993c1161e73167181558856567ef2f367e3f0",
+  "url": "https://codeload.github.com/lh3/bwa/tar.gz/b92993c1161e73167181558856567ef2f367e3f0",
+  "sha256": "aa00b8c6f33e9064b6d17e3155af79245fe533b24759fe8faa93424f5caa01cf",
+  "emscripten": "3.1.64",
+  "dependencies": {
+    "zlib": {
+      "version": "1.3.1",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    }
+  }
+}

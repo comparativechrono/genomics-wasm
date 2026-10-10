@@ -1,0 +1,11 @@
+{
+  "description": "Observed output counts from the pinned original native builds and SHA-256-pinned fixtures. Counts supplement full record comparisons; they are not the equivalence criterion on their own.",
+  "bwa": {
+    "human": { "pairs": 512 },
+    "yeast": { "pairs": 1079 }
+  },
+  "freebayes": {
+    "human": { "default": 154, "haploid": 154, "quality": 44 },
+    "yeast": { "default": 8, "haploid": 8, "quality": 8 }
+  }
+}
