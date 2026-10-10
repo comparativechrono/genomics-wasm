@@ -7,6 +7,6 @@
   "build_image": "ghcr.io/r-wasm/webr@sha256:3fbf3dc3537c5b31bca94dd797dc25364693b18d71b1d0975f318fbfd6269d86",
   "webr_version": "0.6.0",
   "r_version": "4.6.0",
-  "emscripten_version": "4.0.8",
-  "changes": "Set the C17 compiler and flags to Emscripten through rwasm's Makevars. No R or C source changes."
+  "changes": "Set the C17 compiler and flags to Emscripten through rwasm's Makevars. No R or C source changes.",
+  "toolchain_pin": "The complete compiler and rwasm installation are pinned by build_image; the compiler version is recorded in locfit-build-environment.txt."
 }
