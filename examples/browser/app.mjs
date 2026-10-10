@@ -12,6 +12,12 @@ const examples = {
     { label: 'Align paired reads', args: ['mem', 'reference.fa', 'reads_1.fq', 'reads_2.fq'], outputs: [] },
     { label: 'Align single reads', args: ['mem', 'reference.fa', 'reads.fq'], outputs: [] },
   ],
+  'bwa-mem2': [
+    { label: 'Usage', args: [], outputs: [] },
+    { label: 'Index a reference', args: ['index', 'reference.fa'], outputs: ['0123', 'amb', 'ann', 'bwt.2bit.64', 'pac'].map(extension => `reference.fa.${extension}`) },
+    { label: 'Align paired reads', args: ['mem', '-t', '1', 'reference.fa', 'reads_1.fq', 'reads_2.fq'], outputs: [] },
+    { label: 'Align single reads', args: ['mem', '-t', '1', 'reference.fa', 'reads.fq'], outputs: [] },
+  ],
   freebayes: [
     { label: 'Help', args: ['--help'], outputs: [] },
     { label: 'Call variants', args: ['--fasta-reference', 'reference.fa', 'alignment.bam'], outputs: [] },
@@ -128,7 +134,7 @@ $('command-form').addEventListener('submit', async event => {
     $('stderr').textContent = preview(result.stderr);
     const seconds = ((performance.now() - started) / 1000).toFixed(2);
     $('status').textContent = `Exited with status ${result.exitCode} after ${seconds} seconds.${result.missingOutputs.length ? ` Missing requested files: ${result.missingOutputs.join(', ')}.` : ''}`;
-    download('Download standard output', tool === 'freebayes' && !args.includes('--help') ? 'calls.vcf' : tool === 'bwa' && args[0] === 'mem' ? 'alignment.sam' : `${tool}-stdout.txt`, result.stdout);
+    download('Download standard output', tool === 'freebayes' && !args.includes('--help') ? 'calls.vcf' : ['bwa', 'bwa-mem2'].includes(tool) && args[0] === 'mem' ? 'alignment.sam' : `${tool}-stdout.txt`, result.stdout);
     download('Download standard error', `${tool}-stderr.txt`, result.stderr);
     for (const file of result.files) {
       workspace.set(file.path, file.data);

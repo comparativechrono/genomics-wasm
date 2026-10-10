@@ -24,7 +24,7 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential git curl xz-utils autoconf automake libtool pkg-config
+          sudo apt-get install -y build-essential clang git curl xz-utils autoconf automake libtool pkg-config
           npm ci
       - name: Test runtime and comparators
         run: npm test
@@ -36,6 +36,7 @@ jobs:
         run: |
           source toolchain/emsdk/emsdk_env.sh
           bash scripts/build-bwa.sh all
+          bash scripts/build-bwa-mem2.sh all
           bash scripts/build-freebayes.sh all
       - name: Compare native and WebAssembly outputs in Node
         run: node scripts/validate.mjs --engine node

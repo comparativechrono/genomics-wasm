@@ -157,3 +157,38 @@ comparison code; they are not evidence that a WebAssembly tool reproduces a
 native tool. That evidence requires actual differential runs on the recorded
 datasets. Agreement with a native program establishes port equivalence within
 the tested scope, not biological accuracy.
+
+## BWA-MEM2 differential checks
+
+Run the pinned BWA-MEM2 build against the real human and yeast fixtures:
+
+```sh
+node scripts/validate.mjs --tool bwa-mem2 --engine node
+node scripts/validate.mjs --tool bwa-mem2 --engine chromium
+node scripts/validate.mjs --tool bwa-mem2 --engine firefox
+node scripts/validate.mjs --tool bwa-mem2 --engine webkit
+```
+
+These compare the unmodified native **BWA-MEM2** build with both the patched
+native build and the WebAssembly build. BWA 0.7.19 is a separate tool and is not
+used as the BWA-MEM2 baseline. All SAM comparisons use the exact policy above;
+there is no numeric tolerance for alignment fields or tags.
+
+For each dataset, the runner compares all five BWA-MEM2 index files byte for
+byte: `.0123`, `.amb`, `.ann`, `.bwt.2bit.64`, and `.pac`. It runs paired-end and
+single-end alignment, changed seed length and score threshold, increased match
+scores (`-A 3`), multiple small read batches (`-K 10000`), empty FASTQ files, and a repeated command. Native and
+WebAssembly builds each read both native-generated and WebAssembly-generated
+indexes. Primary alignment counts must agree with the read counts recorded in
+`expected.json`, in addition to complete SAM comparisons. Missing input files
+must fail with the same nonzero exit status in all three builds.
+
+A separate port restriction check requires `-t 2` to fail with exit status 2 and
+an explicit single-thread diagnostic in the patched native and WebAssembly
+builds. The unmodified native tool supports multiple threads, so this case does
+not claim native equivalence.
+
+Raw SAM, index bytes, process diagnostics, comparison reports, and the summary
+are written under `reports/<engine>/`. The summary records input and binary
+SHA-256 hashes. A successful Node run exercises the WebAssembly module and its
+worker API; browser compatibility requires the separate browser runs above.

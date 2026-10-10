@@ -4,6 +4,10 @@
     "human": { "pairs": 512 },
     "yeast": { "pairs": 1079 }
   },
+  "bwa-mem2": {
+    "human": { "pairs": 512 },
+    "yeast": { "pairs": 1079 }
+  },
   "freebayes": {
     "human": { "default": 154, "haploid": 154, "quality": 44 },
     "yeast": { "default": 8, "haploid": 8, "quality": 8 }

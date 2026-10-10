@@ -11,7 +11,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const browserName = process.env.BROWSER || 'chromium';
 const browserType = { chromium, firefox, webkit }[browserName];
 if (!browserType) throw new Error('BROWSER must be chromium, firefox or webkit');
-for (const tool of ['bwa', 'freebayes']) {
+for (const tool of ['bwa', 'bwa-mem2', 'freebayes']) {
   await stat(resolve(root, `dist/${tool}/${tool}.mjs`)).catch(() => { throw new Error(`Build ${tool} before running the browser demo test`); });
 }
 
@@ -50,26 +50,35 @@ try {
     await page.waitForFunction(() => document.getElementById('status').textContent === 'Files loaded.');
   };
 
-  await run(1); // BWA prints usage and returns one when no command is supplied.
-  assert.match(await page.locator('#stderr').innerText(), /bwa|Usage/i);
-  await upload([
-    ['datasets/human/reference.fa', 'reference.fa'],
-    ['datasets/human/reads_1.fastq', 'reads_1.fq'],
-    ['datasets/human/reads_2.fastq', 'reads_2.fq'],
-  ]);
-  await page.locator('#example').selectOption('1');
-  await run();
-  assert.match(await page.locator('#files').innerText(), /reference\.fa\.bwt/);
-  assert.equal(await page.locator('#files li').count(), 8);
+  for (const tool of ['bwa', 'bwa-mem2']) {
+    await page.locator('#tool').selectOption(tool);
+    await page.locator('#clear').click();
+    await run(1); // Both aligners print usage and return one without a command.
+    assert.match(await page.locator('#stderr').innerText(), /bwa|Usage/i);
+    await upload([
+      ['datasets/human/reference.fa', 'reference.fa'],
+      ['datasets/human/reads_1.fastq', 'reads_1.fq'],
+      ['datasets/human/reads_2.fastq', 'reads_2.fq'],
+    ]);
+    await page.locator('#example').selectOption('1');
+    await run();
+    const indexName = tool === 'bwa' ? 'reference.fa.bwt' : 'reference.fa.bwt.2bit.64';
+    assert.ok((await page.locator('#files').innerText()).includes(indexName));
+    assert.equal(await page.locator('#files li').count(), 8);
+    const index = await downloadBytes(page, `Download ${indexName}`);
+    assert.equal(index.name, indexName, 'Index download retains its filename');
+    assert.ok(index.bytes.length > 1000, `${tool} produced a nonempty binary index`);
 
-  await page.locator('#example').selectOption('2');
-  await run();
-  assert.match(await page.locator('#stdout').innerText(), /@SQ\tSN:/);
-  const firstSam = await downloadStdout(page);
-  assert.match(firstSam.toString('utf8'), /^@HD|^@SQ/m);
-  assert.ok(firstSam.length > 1000, 'BWA produced a nonempty alignment');
-  await run();
-  assert.deepEqual(await downloadStdout(page), firstSam, 'Repeated runs return identical SAM bytes');
+    await page.locator('#example').selectOption('2');
+    await run();
+    assert.match(await page.locator('#stdout').innerText(), /@SQ\tSN:/);
+    const firstSam = await downloadBytes(page, 'Download standard output');
+    assert.equal(firstSam.name, 'alignment.sam');
+    assert.match(firstSam.bytes.toString('utf8'), /^@HD|^@SQ/m);
+    assert.ok(firstSam.bytes.length > 1000, `${tool} produced a nonempty alignment`);
+    await run();
+    assert.deepEqual((await downloadBytes(page, 'Download standard output')).bytes, firstSam.bytes, `${tool}: repeated runs return identical SAM bytes`);
+  }
 
   await page.locator('#tool').selectOption('freebayes');
   await run();
@@ -81,20 +90,20 @@ try {
   ]);
   await page.locator('#example').selectOption('1');
   await run();
-  assert.match((await downloadStdout(page)).toString('utf8'), /^##fileformat=VCF/m);
+  assert.match((await downloadBytes(page, 'Download standard output')).bytes.toString('utf8'), /^##fileformat=VCF/m);
   assert.deepEqual(pageErrors, [], 'The browser reported no uncaught errors');
-  console.log(`Browser demo passed with real BWA and FreeBayes in ${browserName}.`);
+  console.log(`Browser demo passed with real BWA, BWA-MEM2 and FreeBayes in ${browserName}.`);
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));
 }
 
-async function downloadStdout(page) {
+async function downloadBytes(page, label) {
   const [download] = await Promise.all([
     page.waitForEvent('download'),
-    page.getByRole('link', { name: 'Download standard output', exact: true }).click(),
+    page.getByRole('link', { name: label, exact: true }).click(),
   ]);
   const path = await download.path();
   assert.ok(path, 'Download produced a local file');
-  return readFile(path);
+  return { name: download.suggestedFilename(), bytes: await readFile(path) };
 }

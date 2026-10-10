@@ -94,6 +94,67 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'LICENSE.zlib'):
             packager.collect('bwa')
 
+    def mem2_fixture(self):
+        files = {
+            'scripts/build-bwa-mem2.sh': b'# BWA-MEM2 build fixture\n',
+            'tools/bwa-mem2/README.md': b'# BWA-MEM2 source documentation fixture\n',
+            'tools/bwa-mem2/patches/port.patch': b'portability patch fixture\n',
+            'dist/bwa-mem2/bwa-mem2.mjs': b'export default function fixture() {}\n',
+            'dist/bwa-mem2/bwa-mem2.wasm': b'\x00asm\x01\x00\x00\x00',
+            'dist/bwa-mem2/LICENSE': b'BWA-MEM2 licence fixture\n',
+            'dist/bwa-mem2/LICENSE.zlib': b'zlib licence fixture\n',
+            'dist/bwa-mem2/LICENSE.safestringlib': b'safestringlib licence fixture\n',
+            'dist/bwa-mem2/LICENSE-COPYING.safestringlib.txt': b'safestringlib additional licence fixture\n',
+            'build/downloads/bwa-mem2-fixture.tar.gz': b'mem2-upstream-source-archive-fixture',
+            'build/downloads/safestringlib-fixture.tar.gz': b'safestringlib-source-archive-fixture',
+        }
+        for name, content in files.items():
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(content)
+        lock = json.loads((self.root / 'tools/bwa/sources.lock.json').read_text())
+        lock['version'] = '2.2.1'
+        lock['sha256'] = packager.sha256(files['build/downloads/bwa-mem2-fixture.tar.gz'])
+        lock['dependencies']['safestringlib'] = {
+            'revision': 'fixture', 'sha256': packager.sha256(files['build/downloads/safestringlib-fixture.tar.gz']),
+        }
+        (self.root / 'tools/bwa-mem2/sources.lock.json').write_text(json.dumps(lock))
+
+    def test_mem2_package_is_independent_and_includes_all_source_archives(self):
+        self.mem2_fixture()
+        with contextlib.redirect_stdout(io.StringIO()):
+            filename = packager.write_package('bwa-mem2', self.root / 'releases')
+        self.assertEqual(filename.name, 'bwa-mem2-2.2.1-wasm.zip')
+        prefix = 'bwa-mem2-2.2.1-wasm/'
+        with zipfile.ZipFile(filename) as archive:
+            names = archive.namelist()
+            for name in ('bwa-mem2-fixture', 'safestringlib-fixture', 'zlib-fixture'):
+                self.assertIn(prefix + f'build/downloads/{name}.tar.gz', names)
+            self.assertFalse(any('/tools/bwa/' in name or '/dist/bwa/' in name for name in names))
+            readme = archive.read(prefix + 'README.md').decode()
+            self.assertIn('BWA-MEM2 2.2.1', readme)
+            self.assertIn('`.bwt.2bit.64`', readme)
+            self.assertIn('build-bwa-mem2.sh all', readme)
+            self.assertIn("tool.run([]", archive.read(prefix + 'examples/help.mjs').decode())
+            source_manifest = json.loads(archive.read(prefix + 'source-manifest.json'))
+            for name, digest in source_manifest['files'].items():
+                self.assertEqual(packager.sha256(archive.read(prefix + name)), digest, name)
+            release = json.loads(archive.read(prefix + 'release.json'))
+            self.assertEqual(release['tool'], 'bwa-mem2')
+            self.assertEqual(release['wasmSha256'], packager.sha256(archive.read(prefix + 'dist/bwa-mem2/bwa-mem2.wasm')))
+
+    def test_mem2_changed_dependency_or_missing_notice_prevents_release(self):
+        self.mem2_fixture()
+        dependency = self.root / 'build/downloads/safestringlib-fixture.tar.gz'
+        original = dependency.read_bytes()
+        dependency.write_bytes(b'changed')
+        with self.assertRaisesRegex(RuntimeError, 'Checksum mismatch.*safestringlib'):
+            packager.collect('bwa-mem2')
+        dependency.write_bytes(original)
+        (self.root / 'dist/bwa-mem2/LICENSE.safestringlib').unlink()
+        with self.assertRaisesRegex(RuntimeError, 'LICENSE.safestringlib'):
+            packager.collect('bwa-mem2')
+
 
 if __name__ == '__main__':
     unittest.main()

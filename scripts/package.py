@@ -14,6 +14,8 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 COMPILED_SUFFIXES = {'.o', '.a', '.so', '.dylib', '.dll', '.exe', '.wasm', '.pyc'}
+TOOLS = ('bwa', 'bwa-mem2', 'freebayes')
+DISPLAY_NAMES = {'bwa': 'BWA', 'bwa-mem2': 'BWA-MEM2', 'freebayes': 'FreeBayes'}
 
 
 def sha256(data: bytes) -> str:
@@ -80,7 +82,9 @@ def freebayes_sources(lock: dict) -> list[Path]:
 
 
 def collect(tool: str) -> tuple[dict[str, tuple[bytes, int]], dict]:
-    lock_name = 'sources.lock.json' if tool == 'bwa' else 'upstream.lock.json'
+    if tool not in TOOLS:
+        raise ValueError(f'Unknown tool: {tool}')
+    lock_name = 'upstream.lock.json' if tool == 'freebayes' else 'sources.lock.json'
     lock_path = ROOT / f'tools/{tool}/{lock_name}'
     lock = json.loads(required(lock_path))
     module = required(ROOT / f'dist/{tool}/{tool}.mjs')
@@ -118,15 +122,19 @@ def collect(tool: str) -> tuple[dict[str, tuple[bytes, int]], dict]:
     entries['runtime/README.md'] = (runtime_readme, 0o644)
     source_hashes['runtime/README.md'] = sha256(runtime_readme)
 
-    if tool == 'bwa':
+    if tool in ('bwa', 'bwa-mem2'):
         for filename, digest in (
-            (f'bwa-{lock["revision"]}.tar.gz', lock['sha256']),
+            (f'{tool}-{lock["revision"]}.tar.gz', lock['sha256']),
             (f'zlib-{lock["dependencies"]["zlib"]["version"]}.tar.gz', lock['dependencies']['zlib']['sha256']),
         ):
             add(verify_archive(filename, digest), source=True)
+        if tool == 'bwa-mem2':
+            dependency = lock['dependencies']['safestringlib']
+            add(verify_archive(f'safestringlib-{dependency["revision"]}.tar.gz', dependency['sha256']), source=True)
         # Notice collection is part of the build, not an optional packaging step.
-        for name in ('COPYING', 'LICENSE.zlib'):
-            required(ROOT / f'dist/bwa/{name}')
+        notices = ('COPYING', 'LICENSE.zlib') if tool == 'bwa' else ('LICENSE', 'LICENSE.safestringlib', 'LICENSE-COPYING.safestringlib.txt', 'LICENSE.zlib')
+        for name in notices:
+            required(ROOT / f'dist/{tool}/{name}')
     else:
         for path in freebayes_sources(lock):
             add(path, source=True)
@@ -161,12 +169,21 @@ def collect(tool: str) -> tuple[dict[str, tuple[bytes, int]], dict]:
 
 
 def package_readme(tool: str, lock: dict) -> str:
-    display = 'BWA' if tool == 'bwa' else 'FreeBayes'
-    help_args = '[]' if tool == 'bwa' else "['--help']"
-    tool_command = "['mem', '-t', '1', 'reference.fa', 'reads.fastq']" if tool == 'bwa' else "['--fasta-reference', 'reference.fa', 'reads.bam']"
-    inputs = ('For alignment, first run `index` and retain the reference `.amb`, `.ann`, `.bwt`, `.pac` and `.sa` files. Supply those index files and reads to the next command.' if tool == 'bwa' else 'Supply a reference FASTA and its `.fai`, plus a coordinate-sorted BAM and its `.bai`. The caller writes VCF bytes to standard output.')
-    offline = ('The build finds its checksum-pinned BWA and zlib archives in `build/downloads/`.' if tool == 'bwa' else 'The build verifies `source-manifest.json` and uses the bundled recursive source tree in `build/cache/freebayes-upstream/` without Git metadata. zlib and SIMDe archives are in `build/downloads/`.')
-    help_status = " BWA's no-argument usage command normally exits with status 1." if tool == 'bwa' else ''
+    display = DISPLAY_NAMES[tool]
+    aligner = tool in ('bwa', 'bwa-mem2')
+    help_args = '[]' if aligner else "['--help']"
+    tool_command = "['mem', '-t', '1', 'reference.fa', 'reads.fastq']" if aligner else "['--fasta-reference', 'reference.fa', 'reads.bam']"
+    inputs = {
+        'bwa': 'For alignment, first run `index` and retain the reference `.amb`, `.ann`, `.bwt`, `.pac` and `.sa` files. Supply those index files and reads to the next command.',
+        'bwa-mem2': 'For alignment, first run this tool\'s `index` command and retain the reference `.0123`, `.amb`, `.ann`, `.bwt.2bit.64` and `.pac` files. Supply those index files and reads to the next command. Original BWA indexes cannot replace the BWA-MEM2 index. This port supports one thread.',
+        'freebayes': 'Supply a reference FASTA and its `.fai`, plus a coordinate-sorted BAM and its `.bai`. The caller writes VCF bytes to standard output.',
+    }[tool]
+    offline = {
+        'bwa': 'The build finds its checksum-pinned BWA and zlib archives in `build/downloads/`.',
+        'bwa-mem2': 'The build finds its checksum-pinned BWA-MEM2, safestringlib and zlib archives in `build/downloads/`. The complete dependency sources are included.',
+        'freebayes': 'The build verifies `source-manifest.json` and uses the bundled recursive source tree in `build/cache/freebayes-upstream/` without Git metadata. zlib and SIMDe archives are in `build/downloads/`.',
+    }[tool]
+    help_status = f" {display}'s no-argument usage command normally exits with status 1." if aligner else ''
     return f'''# {display} {lock['version']} for WebAssembly
 
 This standalone package contains the compiled {display} tool, a dependency-free JavaScript runner, full corresponding sources, portability changes, build instructions and licence notices. No other genomics-wasm tool package is needed.
@@ -218,7 +235,7 @@ sha256sum -c SHA256SUMS
 
 
 def help_example(tool: str) -> str:
-    args = '[]' if tool == 'bwa' else "['--help']"
+    args = "['--help']" if tool == 'freebayes' else '[]'
     return f'''import {{ ToolRunner }} from '../runtime/index.mjs';
 const tool = new ToolRunner({{ moduleUrl: new URL('../dist/{tool}/{tool}.mjs', import.meta.url) }});
 const result = await tool.run({args}, {{ timeoutMs: 30000 }});
@@ -254,11 +271,11 @@ def write_package(tool: str, output: Path) -> Path:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--tool', choices=('bwa', 'freebayes', 'all'), default='all')
+    parser.add_argument('--tool', choices=(*TOOLS, 'all'), default='all')
     parser.add_argument('--output', type=Path, default=ROOT / 'releases')
     options = parser.parse_args()
-    requested = ('bwa', 'freebayes') if options.tool == 'all' else (options.tool,)
-    # Fail before writing either release when required modules are absent.
+    requested = TOOLS if options.tool == 'all' else (options.tool,)
+    # Fail before writing any release when required modules are absent.
     for tool in requested:
         required(ROOT / f'dist/{tool}/{tool}.mjs')
         required(ROOT / f'dist/{tool}/{tool}.wasm')

@@ -1,10 +1,13 @@
 # Upstream software
 
 The WebAssembly packages contain upstream software, not reimplementations of
-the algorithms. Exact revisions and checksums are recorded in `tools/bwa/` and
-`tools/freebayes/`.
+the algorithms. Exact revisions and checksums are recorded in each tool's
+directory under `tools/`.
 
 - BWA: Heng Li and contributors; GPL-3.0. Source: https://github.com/lh3/bwa
+- BWA-MEM2: Vasimuddin Md, Sanchit Misra and contributors, building on Heng Li's
+  BWA; MIT. Source: https://github.com/bwa-mem2/bwa-mem2
+  Its package also includes the pinned safestringlib and zlib sources and notices.
 - FreeBayes: Erik Garrison and contributors; upstream MIT. Its linked
   dependencies have additional terms, including GPL-2.0-or-later code in the
   vcflib Smith-Waterman library. Source: https://github.com/freebayes/freebayes

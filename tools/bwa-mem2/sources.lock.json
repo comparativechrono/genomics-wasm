@@ -1,0 +1,20 @@
+{
+  "tool": "bwa-mem2",
+  "version": "2.2.1",
+  "revision": "bf3d376e95f4321b0d37a27d7ff1c77da4d289ff",
+  "url": "https://codeload.github.com/bwa-mem2/bwa-mem2/tar.gz/bf3d376e95f4321b0d37a27d7ff1c77da4d289ff",
+  "sha256": "5414a68151e79f3fd0e4e96ec63f1d94eabed79158501598c7712a602dac1cb1",
+  "emscripten": "3.1.64",
+  "dependencies": {
+    "safestringlib": {
+      "revision": "245c4b8cff1d2e7338b7f3a82828fc8e72b29549",
+      "url": "https://codeload.github.com/intel/safestringlib/tar.gz/245c4b8cff1d2e7338b7f3a82828fc8e72b29549",
+      "sha256": "6dea4f4accdc14eea706c88bb11725e8c2cd69b0d8c5f5ee19a0669d1883a901"
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    }
+  }
+}

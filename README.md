@@ -1,8 +1,8 @@
 # Genomics WebAssembly tools
 
-BWA and FreeBayes compiled for use in web browsers and Node.js. Each tool has an
-independent package, ordinary command-line arguments, a small JavaScript API,
-and tests against the corresponding native program.
+BWA, BWA-MEM2 and FreeBayes compiled for use in web browsers and Node.js.
+Each tool has an independent package, ordinary command-line arguments, a small
+JavaScript API, and tests against the corresponding native program.
 
 The ports run the upstream algorithms. They do not replay saved results.
 Browser commands run in workers, so they can be cancelled without blocking the
@@ -13,6 +13,7 @@ page. Each command receives a fresh WebAssembly instance.
 | Tool | Upstream version | Initial browser scope |
 | --- | --- | --- |
 | [BWA](tools/bwa/README.md) | 0.7.19 | `index` and `mem`, local files, one thread |
+| [BWA-MEM2](tools/bwa-mem2/README.md) | 2.2.1 | `index` and `mem`, local files, one thread |
 | [FreeBayes](tools/freebayes/README.md) | 1.3.6 | Local BAM/SAM variant calling, one process |
 
 See the individual tool documentation for supported features, build changes,
@@ -21,14 +22,16 @@ small validation fixtures.
 
 ## Build
 
-On Linux, install a C/C++ compiler, Make, Git, curl, Python 3.12 or newer and
-Node.js 20 or newer. The reproducible compiler target is Emscripten 3.1.64.
+On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
+Node.js 20 or newer. BWA-MEM2's native baseline uses Clang. The reproducible
+WebAssembly compiler target is Emscripten 3.1.64.
 
 ```sh
 npm ci
 bash scripts/setup-emsdk.sh
 source toolchain/emsdk/emsdk_env.sh
 bash scripts/build-bwa.sh all
+bash scripts/build-bwa-mem2.sh all
 bash scripts/build-freebayes.sh all
 ```
 
@@ -79,7 +82,9 @@ node scripts/validate.mjs --engine webkit
 Validation uses real human NA12878 and yeast BY4741 sequencing data. Dataset
 origins, transformations and checksums are documented under [datasets](datasets/README.md).
 The caller receives the same fixed BAM in each implementation, independently of
-the aligner tests. BWA index files are compared and cross-tested between builds.
+the aligner tests. BWA and BWA-MEM2 each use their own native program as the
+baseline. Their index files are compared and cross-tested between native and
+WebAssembly builds of the same tool; BWA and BWA-MEM2 indexes are separate formats.
 
 The tests compare full SAM/VCF records and meaningful headers, preserving
 secondary alignments, complex alleles and duplicate records. They also exercise
@@ -95,7 +100,8 @@ with all changed scores close to zero. All other fields remain exact. The
 comparator's default is strict; the validation runner supplies both bounds
 explicitly. See the [FreeBayes port notes](tools/freebayes/README.md).
 
-GitHub Actions builds all three versions and runs the same comparisons in Node,
+GitHub Actions builds the original native, patched native and WebAssembly
+versions of each tool, and runs the same comparisons in Node,
 Chromium, Firefox and WebKit. Each run stores raw outputs and JSON reports as
 artifacts. The `release-gate` job requires every build and browser test to pass.
 There is no automatic publication of a release from an unvalidated build.

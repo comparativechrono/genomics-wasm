@@ -12,11 +12,11 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const options = { tool: 'all', engine: 'node', dataset: 'all' };
 for (let i = 2; i < process.argv.length; i += 2) {
   const key = process.argv[i].replace(/^--/, '');
-  if (!(key in options) || !process.argv[i + 1]) throw new Error('Usage: validate.mjs [--tool bwa|freebayes|all] [--engine node|chromium|firefox|webkit] [--dataset human|yeast|all]');
+  if (!(key in options) || !process.argv[i + 1]) throw new Error('Usage: validate.mjs [--tool bwa|bwa-mem2|freebayes|all] [--engine node|chromium|firefox|webkit] [--dataset human|yeast|all]');
   options[key] = process.argv[i + 1];
 }
-if (!['all','bwa','freebayes'].includes(options.tool) || !['node','chromium','firefox','webkit'].includes(options.engine) || !['all','human','yeast'].includes(options.dataset)) throw new Error('Unknown validation option');
-const tools = options.tool === 'all' ? ['bwa','freebayes'] : [options.tool];
+if (!['all','bwa','bwa-mem2','freebayes'].includes(options.tool) || !['node','chromium','firefox','webkit'].includes(options.engine) || !['all','human','yeast'].includes(options.dataset)) throw new Error('Unknown validation option');
+const tools = options.tool === 'all' ? ['bwa','bwa-mem2','freebayes'] : [options.tool];
 const datasets = options.dataset === 'all' ? ['human','yeast'] : [options.dataset];
 const reportDir = join(root, 'reports', options.engine);
 await mkdir(reportDir, { recursive: true });
@@ -98,7 +98,7 @@ async function caseRun(tool,dataset,name,args,files,format) {
   const lines=Buffer.from(original.stdout).toString('utf8').split('\n').filter(line=>line && !line.startsWith(format==='sam'?'@':'#'));
   if(format==='sam') {
     const primary=lines.filter(line=>(Number(line.split('\t')[1])&0x900)===0).length;
-    const expected=name==='empty'?0:expectations.bwa[dataset].pairs*(name==='single'?1:2);
+    const expected=name==='empty'?0:expectations[tool][dataset].pairs*(name==='single'?1:2);
     if(primary!==expected) throw new Error(`${id}: expected ${expected} primary records, found ${primary}`);
     record.primaryRecords=primary;
   } else {
@@ -126,40 +126,46 @@ try {
   for(const tool of tools) summary.builds[tool]=Object.fromEntries(await Promise.all(['native','patched-native','wasm'].map(async kind=>[kind,hash(await readFile(kind==='wasm'?join(root,'dist',tool,`${tool}.wasm`):join(root,'build',kind,tool)))])));
   for(const dataset of datasets) {
     const files=await loadDataset(dataset);
-    if(tools.includes('bwa')) {
+    for(const tool of tools.filter(name=>name==='bwa'||name==='bwa-mem2')) {
       const reference=files.filter(f=>f.path==='reference.fa');
-      const indexNames=['amb','ann','bwt','pac','sa'].map(suffix=>`reference.fa.${suffix}`);
+      const suffixes=tool==='bwa'?['amb','ann','bwt','pac','sa']:['0123','amb','ann','bwt.2bit.64','pac'];
+      const indexNames=suffixes.map(suffix=>`reference.fa.${suffix}`);
       const indexArgs=['index','reference.fa'];
-      const original=await native('bwa','native',indexArgs,reference,indexNames,`${dataset}-index`);
-      const patched=await native('bwa','patched-native',indexArgs,reference,indexNames,`${dataset}-index`);
-      const port=await wasm('bwa',indexArgs,reference,indexNames);
-      for(const [kind,result] of [['native',original],['patched-native',patched],['wasm',port]]) success(result,`bwa ${dataset} index ${kind}`);
+      const original=await native(tool,'native',indexArgs,reference,indexNames,`${dataset}-index`);
+      const patched=await native(tool,'patched-native',indexArgs,reference,indexNames,`${dataset}-index`);
+      const port=await wasm(tool,indexArgs,reference,indexNames);
       const rename=f=>({path:f.path.replace(/^\/work\//,''),data:f.data});
-      const nativeIndexes=original.files.map(rename),wasmIndexes=port.files.map(rename);
-      for(const [kind,indexes] of [['native',nativeIndexes],['wasm',wasmIndexes]]) for(const f of indexes) await writeFile(join(reportDir,`bwa-${dataset}-${kind}-${f.path}`),f.data);
-      for(let i=0;i<indexNames.length;i++) {
-        if(hash(original.files[i].data)!==hash(patched.files[i].data)||hash(original.files[i].data)!==hash(port.files[i].data)) throw new Error(`BWA ${dataset} index differs: ${indexNames[i]}`);
+      for(const [kind,result] of [['native',original],['patched-native',patched],['wasm',port]]) {
+        await writeFile(join(reportDir,`${tool}-${dataset}-index.${kind}.stdout.txt`),result.stdout);
+        await writeFile(join(reportDir,`${tool}-${dataset}-index.${kind}.stderr.txt`),result.stderr);
+        for(const f of result.files.map(rename)) await writeFile(join(reportDir,`${tool}-${dataset}-${kind}-${f.path}`),f.data);
+        success(result,`${tool} ${dataset} index ${kind}`);
       }
-      summary.cases.push({id:`bwa-${dataset}-index`,status:'passed',sha256:Object.fromEntries(nativeIndexes.map(f=>[f.path,hash(f.data)]))});
+      const nativeIndexes=original.files.map(rename),wasmIndexes=port.files.map(rename);
+      for(let i=0;i<indexNames.length;i++) {
+        if(hash(original.files[i].data)!==hash(patched.files[i].data)||hash(original.files[i].data)!==hash(port.files[i].data)) throw new Error(`${tool} ${dataset} index differs: ${indexNames[i]}`);
+      }
+      summary.cases.push({id:`${tool}-${dataset}-index`,status:'passed',sha256:Object.fromEntries(nativeIndexes.map(f=>[f.path,hash(f.data)]))});
       const input=[...files.filter(f=>f.path==='reference.fa'||f.path.endsWith('.fastq')),...nativeIndexes];
       const mem=['mem','-t','1','-K','10000000'];
       const paired=[...mem,'reference.fa','reads_1.fastq','reads_2.fastq'];
-      const baseline=await caseRun('bwa',dataset,'paired',paired,input,'sam');
-      await caseRun('bwa',dataset,'single',[...mem,'reference.fa','reads_1.fastq'],input,'sam');
-      await caseRun('bwa',dataset,'parameters',[...mem,'-k','17','-T','20','reference.fa','reads_1.fastq','reads_2.fastq'],input,'sam');
-      await caseRun('bwa',dataset,'small-batches',['mem','-t','1','-K','10000','reference.fa','reads_1.fastq','reads_2.fastq'],input,'sam');
-      if(dataset==='human') await caseRun('bwa',dataset,'empty',paired,input.map(f=>f.path.endsWith('.fastq')?{...f,data:new Uint8Array()}:f),'sam');
+      const baseline=await caseRun(tool,dataset,'paired',paired,input,'sam');
+      await caseRun(tool,dataset,'single',[...mem,'reference.fa','reads_1.fastq'],input,'sam');
+      await caseRun(tool,dataset,'parameters',[...mem,'-k','17','-T','20','reference.fa','reads_1.fastq','reads_2.fastq'],input,'sam');
+      if(tool==='bwa-mem2') await caseRun(tool,dataset,'high-scores',[...mem,'-A','3','reference.fa','reads_1.fastq','reads_2.fastq'],input,'sam');
+      await caseRun(tool,dataset,'small-batches',['mem','-t','1','-K','10000','reference.fa','reads_1.fastq','reads_2.fastq'],input,'sam');
+      if(dataset==='human'||tool==='bwa-mem2') await caseRun(tool,dataset,'empty',paired,input.map(f=>f.path.endsWith('.fastq')?{...f,data:new Uint8Array()}:f),'sam');
       const crossInput=[...input.filter(f=>!indexNames.includes(f.path)),...wasmIndexes];
-      const crossNative=await native('bwa','native',paired,crossInput,[],`${dataset}-cross-index`);
-      const crossWasm=await wasm('bwa',paired,crossInput);
+      const crossNative=await native(tool,'native',paired,crossInput,[],`${dataset}-cross-index`);
+      const crossWasm=await wasm(tool,paired,crossInput);
       success(crossNative,'native consuming WASM index');success(crossWasm,'WASM consuming WASM index');
-      await compare('sam',baseline.original.stdout,crossNative.stdout,`bwa-${dataset}-cross-native`);
-      await compare('sam',baseline.original.stdout,crossWasm.stdout,`bwa-${dataset}-cross-wasm`);
-      summary.cases.push({id:`bwa-${dataset}-cross-index`,status:'passed'});
-      const repeated=await wasm('bwa',paired,input);
-      success(repeated,'repeated BWA command');
-      await compare('sam',baseline.original.stdout,repeated.stdout,`bwa-${dataset}-repeat`);
-      summary.cases.push({id:`bwa-${dataset}-repeat`,status:'passed'});
+      await compare('sam',baseline.original.stdout,crossNative.stdout,`${tool}-${dataset}-cross-native`);
+      await compare('sam',baseline.original.stdout,crossWasm.stdout,`${tool}-${dataset}-cross-wasm`);
+      summary.cases.push({id:`${tool}-${dataset}-cross-index`,status:'passed'});
+      const repeated=await wasm(tool,paired,input);
+      success(repeated,`repeated ${tool} command`);
+      await compare('sam',baseline.original.stdout,repeated.stdout,`${tool}-${dataset}-repeat`);
+      summary.cases.push({id:`${tool}-${dataset}-repeat`,status:'passed'});
     }
     if(tools.includes('freebayes')) {
       const input=files.filter(f=>!f.path.endsWith('.fastq'));
@@ -172,12 +178,34 @@ try {
     }
   }
   for(const tool of tools) {
-    const args=tool==='bwa'?['mem','missing.fa','missing.fastq']:['-f','missing.fa','missing.bam'];
+    const args=tool==='bwa'||tool==='bwa-mem2'?['mem','missing.fa','missing.fastq']:['-f','missing.fa','missing.bam'];
     const nativeResult=await native(tool,'native',args,[],[],'missing-input');
     const port=await wasm(tool,args,[]);
-    if(nativeResult.exitCode===0||port.exitCode===0) throw new Error(`${tool} accepted missing inputs`);
-    if(nativeResult.exitCode!==port.exitCode) throw new Error(`${tool} missing-input exit codes differ: ${nativeResult.exitCode} vs ${port.exitCode}`);
+    const results=[['native',nativeResult],['wasm',port]];
+    if(tool==='bwa-mem2') results.push(['patched-native',await native(tool,'patched-native',args,[],[],'missing-input')]);
+    for(const [kind,result] of results) {
+      await writeFile(join(reportDir,`${tool}-missing-input.${kind}.stdout.txt`),result.stdout);
+      await writeFile(join(reportDir,`${tool}-missing-input.${kind}.stderr.txt`),result.stderr);
+      if(result.exitCode===0) throw new Error(`${tool} ${kind} accepted missing inputs`);
+      if(result.exitCode!==nativeResult.exitCode) throw new Error(`${tool} missing-input exit codes differ: native ${nativeResult.exitCode} vs ${kind} ${result.exitCode}`);
+    }
     summary.cases.push({id:`${tool}-missing-input`,status:'passed',exitCode:port.exitCode});
+    if(tool==='bwa-mem2') {
+      // The port intentionally supports one thread; native upstream permits more.
+      // Check the restriction separately rather than claim native equivalence here.
+      const id='bwa-mem2-unsupported-threads';
+      const args=['mem','-t','2','missing.fa','missing.fastq'];
+      const results=[
+        ['patched-native',await native(tool,'patched-native',args,[],[],id)],
+        ['wasm',await wasm(tool,args,[])],
+      ];
+      for(const [kind,result] of results) {
+        await writeFile(join(reportDir,`${id}.${kind}.stdout.txt`),result.stdout);
+        await writeFile(join(reportDir,`${id}.${kind}.stderr.txt`),result.stderr);
+        if(result.exitCode!==2||!Buffer.from(result.stderr).toString('utf8').includes('supports only -t 1')) throw new Error(`${id} ${kind}: expected exit 2 and an explicit single-thread diagnostic`);
+      }
+      summary.cases.push({id,args,status:'passed',scope:'port restriction',exitCode:2});
+    }
   }
   summary.status='passed';
 } catch(error) {
