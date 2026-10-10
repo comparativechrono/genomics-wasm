@@ -18,6 +18,18 @@ directory under `tools/`.
 - HISAT2: Daehwan Kim and contributors, including code from Bowtie 2;
   GPL-3.0-or-later. Source: https://github.com/DaehwanKimLab/hisat2
 - minimap2: Heng Li and contributors; MIT. Source: https://github.com/lh3/minimap2
+- DESeq2: Michael Love, Simon Anders, Wolfgang Huber and contributors;
+  LGPL-3.0-or-later. Source: https://github.com/thelovelab/DESeq2
+  Its separate package uses webR and R, together with the Bioconductor and CRAN
+  dependencies recorded in `tools/deseq2/sources.lock.json`. These retain their
+  individual licences. `locfit` is GPL-2.0-or-later; the build changes its compiler
+  configuration without changing the statistical implementation.
+- webR: webR authors; distribution binaries are GPL-3.0. Build scripts and
+  additional application software are MIT unless stated otherwise upstream.
+  R and bundled libraries retain their respective licences.
+  Source: https://github.com/r-wasm/webr
+- R: R Core Team and contributors; GPL-2.0-or-later.
+  Source: https://www.r-project.org/
 - zlib: Jean-loup Gailly and Mark Adler; zlib licence.
 - FreeBayes additionally includes pinned HTSlib, SeqLib, vcflib, SIMDe and their
   component libraries. See `tools/freebayes/` and the collected notices in the

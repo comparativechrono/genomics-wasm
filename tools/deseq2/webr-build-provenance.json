@@ -1,0 +1,19 @@
+{
+  "webrVersion": "0.6.0",
+  "rVersion": "4.6.0",
+  "webrSourceRevision": "f116a5e60e220182d09ac015837c88c454c663c5",
+  "npmArchiveSha256": "5821c8bd87484add59064fa13fa62a65f686032f3f64dacf4b0aa34c4325e959",
+  "wasmFile": "dist/deseq2/webr/R.wasm",
+  "wasmSha256": "5df459fb222d332e358cf08e4019c0e114398579ed8c62242bfcceeda81222ba",
+  "embeddedCompilerStrings": [
+    {
+      "offset": 5824337,
+      "text": "flang version 21.1.8 (https://github.com/r-wasm/llvm-project 0d8c5b06667caafe598c500ceca14bd175bc8e95)"
+    },
+    {
+      "offset": 5824211,
+      "text": "emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 5.0.7 (263db4cffa6f9fc2ec514a70abac81362ea41849)"
+    }
+  ],
+  "meaning": "These strings occur in the R.wasm distributed in the checksum-pinned upstream npm package, not just in our build container. They identify the compiler and linked Fortran runtime source revision used by the bundled R binary. The pinned locfit build image reports the same compiler versions."
+}

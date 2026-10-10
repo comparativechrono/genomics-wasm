@@ -1,13 +1,15 @@
 # Genomics WebAssembly tools
 
-Sequence trimming, DNA and RNA alignment, and variant calling tools compiled
-for use in web browsers and Node.js.
-Each tool has an independent package, ordinary command-line arguments, a small
-JavaScript API, and tests against the corresponding native program.
+Sequence trimming, DNA and RNA alignment, variant calling and differential
+expression tools for web browsers and Node.js. Each tool has an independent
+package, a JavaScript API, and tests against the corresponding native program.
+The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
+using webR.
 
 The ports run the upstream algorithms. They do not replay saved results.
 Browser commands run in workers, so they can be cancelled without blocking the
-page. Each command receives a fresh WebAssembly instance.
+page. Each sequence-tool command receives a fresh WebAssembly instance. A
+DESeq2 session retains its R objects until the session is closed.
 
 ## Tools
 
@@ -20,10 +22,15 @@ page. Each command receives a fresh WebAssembly instance.
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [HISAT2](tools/hisat2/README.md) | 2.2.2 | Small-index building and spliced RNA alignment, one thread |
 | [minimap2](tools/minimap2/README.md) | 2.31 | Indexing and alignment, including spliced RNA modes, one thread |
+| [DESeq2](tools/deseq2/README.md) | 1.52.0 | Count-matrix analysis using R 4.6.0 and webR 0.6.0, one R process |
 
 See the individual tool documentation for supported features, build changes,
 licences and limitations. Whole-genome performance is not established by the
 small validation fixtures.
+
+DESeq2 has a separate build, browser example and validation workflow. It uses
+existing upstream WebAssembly packages, with a compiler configuration fix for
+the missing `locfit` dependency. See its [instructions](tools/deseq2/README.md).
 
 ## Build
 

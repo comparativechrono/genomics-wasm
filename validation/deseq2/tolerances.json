@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "description": "Per-column bounds from native R 4.6.0 versus webR 0.6.0 measurements on the pinned airway fixture. See README.md. Unlisted columns remain exact.",
+  "default": {
+    "absolute": 0,
+    "relative": 0
+  },
+  "columns": {
+    "dispersions.tsv:dispGeneEst": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "dispersions.tsv:dispFit": {
+      "absolute": 0,
+      "relative": 2e-14
+    },
+    "dispersions.tsv:dispersion": {
+      "absolute": 0,
+      "relative": 2e-12
+    },
+    "local-dispersions.tsv:dispGeneEst": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "local-dispersions.tsv:dispFit": {
+      "absolute": 0,
+      "relative": 1e-12
+    },
+    "local-dispersions.tsv:dispersion": {
+      "absolute": 0,
+      "relative": 0.000001
+    },
+    "wald.tsv:log2FoldChange": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald.tsv:stat": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald.tsv:pvalue": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald.tsv:padj": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald.tsv:lfcSE": {
+      "absolute": 0,
+      "relative": 1e-12
+    },
+    "wald-unfiltered.tsv:log2FoldChange": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-unfiltered.tsv:stat": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-unfiltered.tsv:pvalue": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-unfiltered.tsv:padj": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-unfiltered.tsv:lfcSE": {
+      "absolute": 0,
+      "relative": 1e-12
+    },
+    "wald-reverse.tsv:log2FoldChange": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-reverse.tsv:stat": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-reverse.tsv:pvalue": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-reverse.tsv:padj": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "wald-reverse.tsv:lfcSE": {
+      "absolute": 0,
+      "relative": 1e-12
+    },
+    "lrt.tsv:log2FoldChange": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "lrt.tsv:stat": {
+      "absolute": 1e-12,
+      "relative": 2e-12
+    },
+    "lrt.tsv:pvalue": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "lrt.tsv:padj": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "lrt.tsv:lfcSE": {
+      "absolute": 0,
+      "relative": 1e-12
+    },
+    "shrink-normal.tsv:log2FoldChange": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "shrink-normal.tsv:stat": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "shrink-normal.tsv:pvalue": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "shrink-normal.tsv:padj": {
+      "absolute": 0,
+      "relative": 1e-10
+    },
+    "shrink-normal.tsv:lfcSE": {
+      "absolute": 0,
+      "relative": 1e-12
+    },
+    "vst.tsv:*": {
+      "absolute": 0,
+      "relative": 2e-14
+    },
+    "local-wald.tsv:log2FoldChange": {
+      "absolute": 0,
+      "relative": 5e-8
+    },
+    "local-wald.tsv:lfcSE": {
+      "absolute": 0,
+      "relative": 5e-7
+    },
+    "local-wald.tsv:stat": {
+      "absolute": 0,
+      "relative": 5e-7
+    },
+    "local-wald.tsv:pvalue": {
+      "absolute": 0,
+      "relative": 0.000005
+    },
+    "local-wald.tsv:padj": {
+      "absolute": 0,
+      "relative": 0.000005
+    }
+  }
+}

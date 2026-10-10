@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DESeq2 in the browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><h1>DESeq2 in the browser</h1><p>Run R code with gene counts and sample information.</p></header>
+  <main>
+    <p>This example uses DESeq2 in webR. R runs in this browser tab. Uploaded files stay here and are cleared when you reload the page.</p>
+    <section aria-labelledby="data-heading">
+      <h2 id="data-heading">Data</h2>
+      <p>Use raw integer gene counts, with genes in rows and samples in columns. The first column holds the gene IDs. In the sample table, the first column holds sample IDs matching the count-table headings. Both files need a header row and tab-separated columns.</p>
+      <div class="row">
+        <div><label for="counts">Count table</label><input id="counts" type="file" accept=".tsv,.txt,.tab"><p id="counts-name" class="hint">No count table loaded.</p></div>
+        <div><label for="samples">Sample table</label><input id="samples" type="file" accept=".tsv,.txt,.tab"><p id="samples-name" class="hint">No sample table loaded.</p></div>
+      </div>
+      <button id="load-airway" type="button">Load airway example</button>
+      <button id="clear" type="button" class="secondary">Clear data</button>
+      <p class="hint">The airway data contain counts for 63,677 genes in eight human airway smooth-muscle samples: four cell lines, each with and without dexamethasone treatment. <a href="../../datasets/deseq2-airway/README.md">Data source</a></p>
+    </section>
+    <form id="analysis-form">
+      <fieldset id="analysis-controls">
+        <legend>R code</legend>
+        <p>The two uploaded files are available as <code>counts.tsv</code> and <code>samples.tsv</code>. Edit the design and contrast for your own experiment. The example compares treated with untreated samples while accounting for cell line.</p>
+        <label for="script">Analysis</label>
+        <textarea id="script" rows="30" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-describedby="script-hint"></textarea>
+        <p class="hint" id="script-hint">This is ordinary R code. Files written in the working directory become downloads. DESeq2 and its bundled dependencies are available; other R packages need a compatible webR build.</p>
+        <button id="run" type="submit" disabled>Run analysis</button>
+        <button id="reset-script" type="button" class="secondary">Restore example code</button>
+      </fieldset>
+    </form>
+    <button id="cancel" type="button" class="secondary" disabled>Cancel analysis</button>
+    <section aria-labelledby="results-heading">
+      <h2 id="results-heading">Results</h2>
+      <p id="status" role="status" aria-live="polite">Load the airway example or choose two TSV files.</p>
+      <p class="hint">The first run loads R and the package files. A full analysis can take a few minutes, depending on your browser and computer.</p>
+      <div id="downloads"></div>
+      <h3>Output</h3><pre id="stdout">No output yet.</pre>
+      <h3>Messages and warnings</h3><pre id="stderr">No messages yet.</pre>
+    </section>
+    <p><a href="../../runtime/DESEQ2.md">JavaScript API</a> · <a href="README.md">Running this example</a></p>
+  </main>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-10-10",
+  "purpose": "Real replicated RNA-seq count data for native R versus webR DESeq2 comparisons. Counts have not been simulated, rounded, scaled or normalized.",
+  "sources": {
+    "airway_1.26.0.tar.gz": {
+      "url": "https://bioconductor.org/packages/3.20/data/experiment/src/contrib/airway_1.26.0.tar.gz",
+      "bytes": 24755667,
+      "sha256": "66943bb50e776d1c3a68a00e1d525bf825f4d2da07384a88b10737dfafd04832"
+    }
+  },
+  "datasets": {
+    "deseq2-airway": {
+      "organism": "Homo sapiens",
+      "description": "Four primary human airway smooth muscle cell lines, with paired untreated and dexamethasone-treated samples; all eight samples are untreated with albuterol.",
+      "geo_accession": "GSE52778",
+      "sra_study_accession": "SRP033351",
+      "publication_doi": "10.1371/journal.pone.0099625",
+      "publication_pmid": "24926665",
+      "source_package": "airway 1.26.0, Bioconductor 3.20",
+      "source_package_url": "https://bioconductor.org/packages/3.20/data/experiment/html/airway.html",
+      "source_package_license": "LGPL (upstream does not specify a version; original DESCRIPTION is preserved)",
+      "source_rdata_member": "airway/data/airway.RData",
+      "source_rdata": {
+        "bytes": 5651312,
+        "sha256": "98d05e82867ae4bed92295eb8863ab6c1aa694876f2b29b455c30a559f801cd0"
+      },
+      "genes": 63677,
+      "samples": 8,
+      "sample_ids": [
+        "SRR1039508",
+        "SRR1039509",
+        "SRR1039512",
+        "SRR1039513",
+        "SRR1039516",
+        "SRR1039517",
+        "SRR1039520",
+        "SRR1039521"
+      ],
+      "reference_assembly": "GRCh37",
+      "gene_annotation": "Ensembl release 75",
+      "counting": "Integer gene counts from the counts assay of the upstream airway object; see upstream vignette for STAR alignment and summarizeOverlaps construction.",
+      "design": "~ cell + dex",
+      "treatment_reference": "untrt",
+      "treatment_comparison": "trt versus untrt",
+      "selection": "All 63,677 genes and all eight samples from airway 1.26.0, unchanged and in original order."
+    }
+  },
+  "files": {
+    "deseq2-airway/UPSTREAM_CITATION.R": {
+      "bytes": 1111,
+      "sha256": "2abac4e243668e459dc320e5426b607549bb641d48f8052083f274ab0def7b23"
+    },
+    "deseq2-airway/UPSTREAM_DESCRIPTION.txt": {
+      "bytes": 1460,
+      "sha256": "996396cdc483f1b69b8a76129a029e3d27691a1927de3c2a721246023808ed5f"
+    },
+    "deseq2-airway/counts.tsv": {
+      "bytes": 2287691,
+      "sha256": "407b9f8dfe619580b3b0bbaa0464aad7943e10deff4bae0e57c8a42f63ba5bb6"
+    },
+    "deseq2-airway/samples.tsv": {
+      "bytes": 786,
+      "sha256": "333516592a6c278e248998cd91043f0d619698214a0cb89bfe602676e68497b5"
+    }
+  }
+}

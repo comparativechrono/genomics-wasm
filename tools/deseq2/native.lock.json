@@ -1,0 +1,8 @@
+{
+  "rVersion": "4.6.0",
+  "platform": "Ubuntu 24.04 x86_64",
+  "url": "https://cdn.posit.co/r/ubuntu-2404/pkgs/r-4.6.0_1_amd64.deb",
+  "filename": "r-4.6.0_1_amd64.deb",
+  "sha256": "784e5d9d2f13fbdf12105a2ed72ee036e03d17fa2446e6932ab694c275a7ca46",
+  "note": "Optional local native R bootstrap. Package sources and build headers are pinned in sources.lock.json. Only the R launcher's installation paths are relocated; R and package statistical code are unchanged."
+}

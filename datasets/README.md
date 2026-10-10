@@ -1,5 +1,9 @@
 # Test data
 
+The [airway count matrix](deseq2-airway/README.md) is provided separately for
+DESeq2. It contains 63,677 genes and eight human samples from four paired cell
+lines. Its biological replicates are independent of the read subsets below.
+
 These are small subsets of public sequencing data. They test whether a
 WebAssembly build reproduces the native program's results. They are not
 biological truth datasets and do not establish variant-calling accuracy.
