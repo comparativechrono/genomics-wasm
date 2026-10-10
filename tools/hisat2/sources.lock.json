@@ -1,0 +1,8 @@
+{
+  "tool": "hisat2",
+  "version": "2.2.2",
+  "revision": "99583d7536b9ee017ac07de8834017a3bf99a2fe",
+  "url": "https://codeload.github.com/DaehwanKimLab/hisat2/tar.gz/99583d7536b9ee017ac07de8834017a3bf99a2fe",
+  "sha256": "8b2d4f6683eeea2b856756c2287a9b4c56ce74d4620fc756e0dbb26b0c1b1039",
+  "emscripten": "3.1.64"
+}

@@ -1,0 +1,79 @@
+<RUN_SET>
+<RUN accession="ERR127306" alias="E-MTAB-1147:SLX-2650.CRIRUN_441.s_5" broker_name="ArrayExpress" center_name="European Bioinformatics Institute" run_center="CRUK Cambridge Research Institute">
+  <IDENTIFIERS>
+    <PRIMARY_ID>ERR127306</PRIMARY_ID>
+    <SUBMITTER_ID namespace="European Bioinformatics Institute">E-MTAB-1147:SLX-2650.CRIRUN_441.s_5</SUBMITTER_ID>
+  </IDENTIFIERS>
+  <TITLE>Illumina Genome Analyzer II paired end sequencing; Transcription profiling by high throughput sequencing of HNRNPC knockdown and control HeLa cells</TITLE>
+  <EXPERIMENT_REF accession="ERX103445" refcenter="CRUK Cambridge Research Institute" refname="E-MTAB-1147:SLX-2650.CRIRUN_441.s_5">
+    <IDENTIFIERS>
+      <PRIMARY_ID>ERX103445</PRIMARY_ID>
+      <SUBMITTER_ID namespace="CRUK Cambridge Research Institute">E-MTAB-1147:SLX-2650.CRIRUN_441.s_5</SUBMITTER_ID>
+    </IDENTIFIERS>
+  </EXPERIMENT_REF>
+  <DATA_BLOCK>
+    <FILES>
+      <FILE ascii_offset="@" checksum="7d6ad5298e4c0286a1c0be0f3726808c" checksum_method="MD5" filename="run/ERR127/ERR127306/SLX-2650.CRIRUN_441.s_5.1_sequence.txt.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred">
+        <READ_LABEL>F</READ_LABEL>
+      </FILE>
+      <FILE ascii_offset="@" checksum="c4fca4949a4925b4b5ec290bdfa0e433" checksum_method="MD5" filename="run/ERR127/ERR127306/SLX-2650.CRIRUN_441.s_5.2_sequence.txt.gz" filetype="fastq" quality_encoding="ascii" quality_scoring_system="phred">
+        <READ_LABEL>R</READ_LABEL>
+      </FILE>
+    </FILES>
+  </DATA_BLOCK>
+  <RUN_LINKS>
+    <RUN_LINK>
+      <XREF_LINK>
+        <DB>ENA-SUBMISSION</DB>
+        <ID>ERA131307</ID>
+      </XREF_LINK>
+    </RUN_LINK>
+    <RUN_LINK>
+      <XREF_LINK>
+        <DB>ENA-STUDY</DB>
+        <ID>ERP001458</ID>
+      </XREF_LINK>
+    </RUN_LINK>
+    <RUN_LINK>
+      <XREF_LINK>
+        <DB>ENA-SAMPLE</DB>
+        <ID>ERS140920</ID>
+      </XREF_LINK>
+    </RUN_LINK>
+    <RUN_LINK>
+      <XREF_LINK>
+        <DB>ENA-FASTQ-FILES</DB>
+        <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR127306&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+      </XREF_LINK>
+    </RUN_LINK>
+    <RUN_LINK>
+      <XREF_LINK>
+        <DB>ENA-SUBMITTED-FILES</DB>
+        <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR127306&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+      </XREF_LINK>
+    </RUN_LINK>
+  </RUN_LINKS>
+  <RUN_ATTRIBUTES>
+    <RUN_ATTRIBUTE>
+      <TAG>ENA-STATUS</TAG>
+      <VALUE>PUBLIC</VALUE>
+    </RUN_ATTRIBUTE>
+    <RUN_ATTRIBUTE>
+      <TAG>ENA-FIRST-PUBLIC</TAG>
+      <VALUE>2013-01-01</VALUE>
+    </RUN_ATTRIBUTE>
+    <RUN_ATTRIBUTE>
+      <TAG>ENA-LAST-UPDATE</TAG>
+      <VALUE>2018-11-16</VALUE>
+    </RUN_ATTRIBUTE>
+    <RUN_ATTRIBUTE>
+      <TAG>ENA-BASE-COUNT</TAG>
+      <VALUE>4181537520</VALUE>
+    </RUN_ATTRIBUTE>
+    <RUN_ATTRIBUTE>
+      <TAG>ENA-SPOT-COUNT</TAG>
+      <VALUE>29038455</VALUE>
+    </RUN_ATTRIBUTE>
+  </RUN_ATTRIBUTES>
+</RUN>
+</RUN_SET>

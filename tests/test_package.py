@@ -155,6 +155,64 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'LICENSE.safestringlib'):
             packager.collect('bwa-mem2')
 
+    def tool_fixture(self, tool, *, dependencies=()):
+        source = f'{tool}-upstream-source-fixture'.encode()
+        files = {
+            f'scripts/build-{tool}.sh': b'# build recipe fixture\n',
+            f'tools/{tool}/README.md': b'# Tool documentation fixture\n',
+            f'tools/{tool}/browser.patch': b'portability patch fixture\n',
+            f'dist/{tool}/{tool}.mjs': b'export default function fixture() {}\n',
+            f'dist/{tool}/{tool}.wasm': b'\x00asm\x01\x00\x00\x00',
+            f'build/downloads/{tool}-fixture.tar.gz': source,
+        }
+        lock = {'version': 'test', 'revision': 'fixture', 'emscripten': '3.1.64',
+                'sha256': packager.sha256(source), 'dependencies': {}}
+        for name in packager.NOTICES[tool]:
+            files[f'dist/{tool}/{name}'] = f'{name} licence fixture\n'.encode()
+        for name in dependencies:
+            content = f'{name}-dependency-source-fixture'.encode()
+            archive = f'{name}-fixture.tar.gz'
+            files[f'build/downloads/{archive}'] = content
+            lock['dependencies'][name] = {'version': 'fixture', 'sha256': packager.sha256(content)}
+        files[f'tools/{tool}/sources.lock.json'] = packager.json_bytes(lock)
+        for name, content in files.items():
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(content)
+
+    def test_trimming_and_rna_packages_are_independent_with_verified_sources(self):
+        for tool, dependencies in (('seqtk', ('zlib',)), ('adapterremoval', ('zlib', 'bzip2')),
+                                   ('hisat2', ()), ('minimap2', ('zlib',))):
+            with self.subTest(tool=tool):
+                self.tool_fixture(tool, dependencies=dependencies)
+                with contextlib.redirect_stdout(io.StringIO()):
+                    filename = packager.write_package(tool, self.root / 'releases')
+                prefix = f'{tool}-test-wasm/'
+                with zipfile.ZipFile(filename) as archive:
+                    names = archive.namelist()
+                    self.assertIn(prefix + f'build/downloads/{tool}-fixture.tar.gz', names)
+                    for dependency in dependencies:
+                        self.assertIn(prefix + f'build/downloads/{dependency}-fixture.tar.gz', names)
+                    self.assertFalse(any('/tools/bwa/' in name or '/dist/bwa/' in name for name in names))
+                    self.assertIn(f'build-{tool}.sh all', archive.read(prefix + 'README.md').decode())
+                    self.assertIn(f'tool.run({packager.HELP_ARGS[tool]}', archive.read(prefix + 'examples/help.mjs').decode())
+                    source_manifest = json.loads(archive.read(prefix + 'source-manifest.json'))
+                    for name, digest in source_manifest['files'].items():
+                        self.assertEqual(packager.sha256(archive.read(prefix + name)), digest, name)
+                    for line in archive.read(prefix + 'SHA256SUMS').decode().splitlines():
+                        digest, name = line.split('  ', 1)
+                        self.assertEqual(packager.sha256(archive.read(prefix + name)), digest, name)
+
+    def test_missing_rna_notice_or_trimming_dependency_prevents_release(self):
+        self.tool_fixture('hisat2')
+        (self.root / 'dist/hisat2/THIRD_PARTY_LICENSES.txt').unlink()
+        with self.assertRaisesRegex(RuntimeError, 'THIRD_PARTY_LICENSES.txt'):
+            packager.collect('hisat2')
+        self.tool_fixture('adapterremoval', dependencies=('zlib', 'bzip2'))
+        (self.root / 'build/downloads/bzip2-fixture.tar.gz').write_bytes(b'changed')
+        with self.assertRaisesRegex(RuntimeError, 'Checksum mismatch.*bzip2'):
+            packager.collect('adapterremoval')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,15 +1,225 @@
 {
   "description": "Observed output counts from the pinned original native builds and SHA-256-pinned fixtures. Counts supplement full record comparisons; they are not the equivalence criterion on their own.",
   "bwa": {
-    "human": { "pairs": 512 },
-    "yeast": { "pairs": 1079 }
+    "human": {
+      "pairs": 512
+    },
+    "yeast": {
+      "pairs": 1079
+    }
   },
   "bwa-mem2": {
-    "human": { "pairs": 512 },
-    "yeast": { "pairs": 1079 }
+    "human": {
+      "pairs": 512
+    },
+    "yeast": {
+      "pairs": 1079
+    }
   },
   "freebayes": {
-    "human": { "default": 154, "haploid": 154, "quality": 44 },
-    "yeast": { "default": 8, "haploid": 8, "quality": 8 }
+    "human": {
+      "default": 154,
+      "haploid": 154,
+      "quality": 44
+    },
+    "yeast": {
+      "default": 8,
+      "haploid": 8,
+      "quality": 8
+    }
+  },
+  "seqtk": {
+    "human": {
+      "quality": 13,
+      "quality-threshold": 271,
+      "fixed-ends": 512,
+      "fixed-length": 512
+    },
+    "yeast": {
+      "quality": 40,
+      "quality-threshold": 75,
+      "fixed-ends": 1079,
+      "fixed-length": 1079
+    }
+  },
+  "rna": {
+    "rna-human": {
+      "pairs": 256
+    },
+    "rna-yeast": {
+      "pairs": 256
+    }
+  },
+  "adapterremoval": {
+    "human": {
+      "paired-adapters": {
+        "records": {
+          "trimmed.pair1.truncated": 512,
+          "trimmed.pair2.truncated": 512,
+          "trimmed.singleton.truncated": 0,
+          "trimmed.discarded": 0
+        },
+        "retainedReads": 1024,
+        "retainedNucleotides": 154546,
+        "adapterTrimmedReads": 4
+      },
+      "quality": {
+        "records": {
+          "trimmed.pair1.truncated": 512,
+          "trimmed.pair2.truncated": 512,
+          "trimmed.singleton.truncated": 0,
+          "trimmed.discarded": 0
+        },
+        "retainedReads": 1024,
+        "retainedNucleotides": 153252,
+        "adapterTrimmedReads": 4
+      },
+      "fixed-ends": {
+        "records": {
+          "trimmed.pair1.truncated": 512,
+          "trimmed.pair2.truncated": 512,
+          "trimmed.singleton.truncated": 0,
+          "trimmed.discarded": 0
+        },
+        "retainedReads": 1024,
+        "retainedNucleotides": 142258,
+        "adapterTrimmedReads": 4
+      },
+      "collapse": {
+        "records": {
+          "trimmed.pair1.truncated": 331,
+          "trimmed.pair2.truncated": 331,
+          "trimmed.singleton.truncated": 0,
+          "trimmed.discarded": 0,
+          "trimmed.collapsed": 181,
+          "trimmed.collapsed.truncated": 0
+        },
+        "retainedReads": 843,
+        "retainedNucleotides": 142943,
+        "adapterTrimmedReads": 4
+      },
+      "single": {
+        "records": {
+          "trimmed.truncated": 512,
+          "trimmed.discarded": 0
+        },
+        "retainedReads": 512,
+        "retainedNucleotides": 76636,
+        "adapterTrimmedReads": 90
+      }
+    },
+    "yeast": {
+      "paired-adapters": {
+        "records": {
+          "trimmed.pair1.truncated": 1079,
+          "trimmed.pair2.truncated": 1079,
+          "trimmed.singleton.truncated": 0,
+          "trimmed.discarded": 0
+        },
+        "retainedReads": 2158,
+        "retainedNucleotides": 215916,
+        "adapterTrimmedReads": 122
+      },
+      "quality": {
+        "records": {
+          "trimmed.pair1.truncated": 1075,
+          "trimmed.pair2.truncated": 1075,
+          "trimmed.singleton.truncated": 4,
+          "trimmed.discarded": 4
+        },
+        "retainedReads": 2154,
+        "retainedNucleotides": 214172,
+        "adapterTrimmedReads": 122
+      },
+      "fixed-ends": {
+        "records": {
+          "trimmed.pair1.truncated": 1079,
+          "trimmed.pair2.truncated": 1079,
+          "trimmed.singleton.truncated": 0,
+          "trimmed.discarded": 0
+        },
+        "retainedReads": 2158,
+        "retainedNucleotides": 190020,
+        "adapterTrimmedReads": 122
+      },
+      "collapse": {
+        "records": {
+          "trimmed.pair1.truncated": 788,
+          "trimmed.pair2.truncated": 788,
+          "trimmed.singleton.truncated": 0,
+          "trimmed.discarded": 0,
+          "trimmed.collapsed": 291,
+          "trimmed.collapsed.truncated": 0
+        },
+        "retainedReads": 1867,
+        "retainedNucleotides": 199108,
+        "adapterTrimmedReads": 122
+      },
+      "single": {
+        "records": {
+          "trimmed.truncated": 1079,
+          "trimmed.discarded": 0
+        },
+        "retainedReads": 1079,
+        "retainedNucleotides": 107937,
+        "adapterTrimmedReads": 210
+      }
+    }
+  },
+  "hisat2": {
+    "rna-human": {
+      "paired": {
+        "records": 512,
+        "primaryRecords": 512,
+        "splicedRecords": 212
+      },
+      "single": {
+        "records": 256,
+        "primaryRecords": 256,
+        "splicedRecords": 106
+      },
+      "parameters": {
+        "records": 512,
+        "primaryRecords": 512,
+        "splicedRecords": 212
+      },
+      "annotation": {
+        "records": 512,
+        "primaryRecords": 512,
+        "splicedRecords": 221
+      },
+      "empty": {
+        "records": 0,
+        "primaryRecords": 0,
+        "splicedRecords": 0
+      }
+    },
+    "rna-yeast": {
+      "paired": {
+        "records": 512,
+        "primaryRecords": 512,
+        "splicedRecords": 188
+      },
+      "single": {
+        "records": 256,
+        "primaryRecords": 256,
+        "splicedRecords": 67
+      },
+      "parameters": {
+        "records": 512,
+        "primaryRecords": 512,
+        "splicedRecords": 192
+      },
+      "annotation": {
+        "records": 512,
+        "primaryRecords": 512,
+        "splicedRecords": 189
+      },
+      "empty": {
+        "records": 0,
+        "primaryRecords": 0,
+        "splicedRecords": 0
+      }
+    }
   }
 }

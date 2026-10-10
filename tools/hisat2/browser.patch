@@ -1,0 +1,135 @@
+--- a/aligner_result.h
++++ b/aligner_result.h
+@@ -1142,7 +1142,7 @@
+         en.adjustOff(refExtent() - 1);
+         Coord right = refcoord_right();
+         st2.init(right);
+-        st2.adjustOff(1 - refExtent());
++        st2.adjustOff(TRefOff(1) - TRefOff(refExtent())); // Keep subtraction signed on wasm32.
+ 		en2.init(right);
+ 	}
+ 
+--- a/gfm.h
++++ b/gfm.h
+@@ -546,7 +546,9 @@
+ struct USE_POPCNT_INSTRUCTION {
+     inline static int pop64(uint64_t x) {
+         int64_t count;
+-#ifdef USING_MSC_COMPILER
++#if defined(HISAT2_WASM_PORT)
++        count = __builtin_popcountll(x);
++#elif defined(USING_MSC_COMPILER)
+ 		count = __popcnt64(x);
+ #else
+         asm ("popcntq %[x],%[count]\n": [count] "=&r" (count): [x] "r" (x));
+--- a/hisat2.cpp
++++ b/hisat2.cpp
+@@ -3688,11 +3688,11 @@
+ 		for(int i = 0; i < nthreads; i++) {
+ 			// Thread IDs start at 1
+ 			tids[i] = i+1;
+-            threads[i] = new tthread::thread(multiseedSearchWorker_hisat2, (void*)&tids[i]);
+-		}
+-
+-        for (int i = 0; i < nthreads; i++)
+-            threads[i]->join();
++            // Altered for the port: run the sole upstream worker on this thread.
++            multiseedSearchWorker_hisat2((void*)&tids[i]);
++		}
++
++        // The single worker completed synchronously above.
+ 
+ 	}
+ 	if(!metricsPerRead && (metricsOfb != NULL || metricsStderr)) {
+@@ -4233,6 +4233,14 @@
+ 		}
+ 		if(startVerbose) { cerr << "Entered main(): "; logTime(cerr, true); }
+ 		parseOptions(argc, argv);
++        if(nthreads != 1) {
++            cerr << "HISAT2 browser port supports only -p 1 / --threads 1" << endl;
++            return 2;
++        }
++        if(useMm || useShmem) {
++            cerr << "HISAT2 browser port does not support memory-mapped or shared-memory indexes" << endl;
++            return 2;
++        }
+ 		argv0 = argv[0];
+ 		if(showVersion) {
+ 			cout << argv0 << " version " << HISAT2_VERSION << endl;
+--- a/hisat2_build.cpp
++++ b/hisat2_build.cpp
+@@ -46,7 +46,7 @@
+ #include <iostream>
+ #include <vector>
+ 
+-MemoryTally gMemTally;
++extern MemoryTally gMemTally;
+ // Build parameters
+ int verbose;
+ static int sanityCheck;
+@@ -676,6 +676,10 @@
+ 		EList<string> infiles(MISC_CAT);
+ 
+ 		parseOptions(argc, argv);
++        if(nthreads != 1) {
++            cerr << "HISAT2 browser port supports only -p 1 / --threads 1" << endl;
++            return 2;
++        }
+ 		argv0 = argv[0];
+ 		if(showVersion) {
+ 			cout << argv0 << " version " << string(HISAT2_VERSION).c_str() << endl;
+--- a/hisat2_inspect.cpp
++++ b/hisat2_inspect.cpp
+@@ -31,10 +31,10 @@
+ 
+ using namespace std;
+ 
+-MemoryTally gMemTally;
++extern MemoryTally gMemTally;
+ 
+ static bool showVersion = false; // just print version and quit?
+-int verbose             = 0;  // be talkative
++static int verbose      = 0;  // be talkative
+ static int names_only   = 0;  // just print the sequence names in the index
+ static int snp_only     = 0;
+ static int splicesite_only = 0;
+@@ -722,7 +722,7 @@
+ /**
+  * main function.  Parses command-line arguments.
+  */
+-int main(int argc, char **argv) {
++int hisat2_inspect_main(int argc, char **argv) {
+ 	try {
+ 		string ebwtFile;  // read serialized Ebwt from this file
+ 		string query;   // read query string(s) from this file
+--- a/processor_support.h
++++ b/processor_support.h
+@@ -10,7 +10,9 @@
+ 
+ // Intel compiler defines __GNUC__, so this is needed to disambiguate
+ 
+-#if defined(__INTEL_COMPILER)
++#if defined(HISAT2_WASM_PORT)
++// Altered for the single-threaded WebAssembly port: no x86 CPUID.
++#elif defined(__INTEL_COMPILER)
+ #   define USING_INTEL_COMPILER
+ #elif defined(__GNUC__)
+ #   define USING_GCC_COMPILER
+@@ -40,6 +42,9 @@
+     // http://www.intel.com/content/www/us/en/processors/architectures-software-developer-manuals.html
+     // Also http://en.wikipedia.org/wiki/SSE4 talks about available on Intel & AMD processors
+ 
++    #ifdef HISAT2_WASM_PORT
++    return true; // pop64 uses the portable compiler builtin in this port.
++    #else
+     regs_t regs;
+ 
+     try {
+@@ -61,6 +66,7 @@
+         return false;
+     }
+     return true;
++    #endif
+     }
+ 
+ #endif // POPCNT_CAPABILITY

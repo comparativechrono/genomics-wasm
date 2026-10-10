@@ -7,17 +7,20 @@ import { createServer } from 'node:http';
 import { dirname, resolve, join, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { ToolRunner } from '../runtime/index.mjs';
+import { runAdditionalCases } from '../validation/additional-cases.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const options = { tool: 'all', engine: 'node', dataset: 'all' };
 for (let i = 2; i < process.argv.length; i += 2) {
   const key = process.argv[i].replace(/^--/, '');
-  if (!(key in options) || !process.argv[i + 1]) throw new Error('Usage: validate.mjs [--tool bwa|bwa-mem2|freebayes|all] [--engine node|chromium|firefox|webkit] [--dataset human|yeast|all]');
+  if (!(key in options) || !process.argv[i + 1]) throw new Error('Usage: validate.mjs [--tool bwa|bwa-mem2|freebayes|adapterremoval|seqtk|hisat2|minimap2|all] [--engine node|chromium|firefox|webkit] [--dataset human|yeast|rna-human|rna-yeast|all]');
   options[key] = process.argv[i + 1];
 }
-if (!['all','bwa','bwa-mem2','freebayes'].includes(options.tool) || !['node','chromium','firefox','webkit'].includes(options.engine) || !['all','human','yeast'].includes(options.dataset)) throw new Error('Unknown validation option');
-const tools = options.tool === 'all' ? ['bwa','bwa-mem2','freebayes'] : [options.tool];
-const datasets = options.dataset === 'all' ? ['human','yeast'] : [options.dataset];
+if (!['all','bwa','bwa-mem2','freebayes','adapterremoval','seqtk','hisat2','minimap2'].includes(options.tool) || !['node','chromium','firefox','webkit'].includes(options.engine) || !['all','human','yeast','rna-human','rna-yeast'].includes(options.dataset)) throw new Error('Unknown validation option');
+const requestedTools = options.tool === 'all' ? ['bwa','bwa-mem2','freebayes','adapterremoval','seqtk','hisat2','minimap2'] : [options.tool];
+const tools = options.dataset.startsWith('rna-') ? requestedTools.filter(tool=>['hisat2','minimap2'].includes(tool)) : requestedTools;
+if(!tools.length) throw new Error('RNA fixture selection requires hisat2, minimap2, or all');
+const datasets = options.dataset === 'all' ? ['human','yeast'] : [options.dataset].filter(name=>!name.startsWith('rna-'));
 const reportDir = join(root, 'reports', options.engine);
 await mkdir(reportDir, { recursive: true });
 const summary = { schema: 1, startedAt: new Date().toISOString(), engine: options.engine, node: process.version, status: 'running', builds: {}, datasets: {}, cases: [] };
@@ -114,7 +117,7 @@ async function caseRun(tool,dataset,name,args,files,format) {
 }
 async function loadDataset(name) {
   const directory=join(root,'datasets',name);
-  const names=(await readdir(directory)).filter(n=>/\.(fa|fai|fastq|bam|bai)$/.test(n)).sort();
+  const names=(await readdir(directory)).filter(n=>/\.(fa|fai|fastq|bam|bai|tsv|bed)$/.test(n)).sort();
   const files=await Promise.all(names.map(async path=>({path,data:await readFile(join(directory,path))})));
   summary.datasets[name]=Object.fromEntries(files.map(f=>[f.path,hash(f.data)]));
   return files;
@@ -122,8 +125,15 @@ async function loadDataset(name) {
 
 try {
   execFileSync('python3',[join(root,'scripts','fetch-test-data.py'),'--verify'],{cwd:root,stdio:'pipe'});
+  if(tools.some(tool=>tool==='hisat2'||tool==='minimap2') || options.dataset.startsWith('rna-')) execFileSync('python3',[join(root,'scripts','fetch-rna-test-data.py'),'--verify'],{cwd:root,stdio:'pipe'});
   if(options.engine!=='node') await startBrowser();
   for(const tool of tools) summary.builds[tool]=Object.fromEntries(await Promise.all(['native','patched-native','wasm'].map(async kind=>[kind,hash(await readFile(kind==='wasm'?join(root,'dist',tool,`${tool}.wasm`):join(root,'build',kind,tool)))])));
+  if(tools.includes('hisat2')) {
+    summary.builds.hisat2.nativeComponents = Object.fromEntries(await Promise.all(['align','build','inspect'].map(async command=> {
+      const path=`hisat2-bin/hisat2-${command}-s`;
+      return [path,hash(await readFile(join(root,'build','native',path)))];
+    })));
+  }
   for(const dataset of datasets) {
     const files=await loadDataset(dataset);
     for(const tool of tools.filter(name=>name==='bwa'||name==='bwa-mem2')) {
@@ -177,7 +187,8 @@ try {
       await caseRun('freebayes',dataset,'repeat',['-f','reference.fa','input.bam'],input,'vcf');
     }
   }
-  for(const tool of tools) {
+  await runAdditionalCases({ root, options, tools, reportDir, summary, expectations, hash, wasm, native, compare, success, loadDataset });
+  for(const tool of tools.filter(name=>['bwa','bwa-mem2','freebayes'].includes(name))) {
     const args=tool==='bwa'||tool==='bwa-mem2'?['mem','missing.fa','missing.fastq']:['-f','missing.fa','missing.bam'];
     const nativeResult=await native(tool,'native',args,[],[],'missing-input');
     const port=await wasm(tool,args,[]);

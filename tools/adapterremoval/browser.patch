@@ -1,0 +1,64 @@
+--- a/src/alignment.cpp
++++ b/src/alignment.cpp
+@@ -39,7 +39,7 @@
+ {
+ 
+ #if defined(__SSE__) && defined(__SSE2__)
+-#include <xmmintrin.h>
++#include <emmintrin.h>
+ 
+ //! Mask representing those (sparse) bits used when comparing multiple
+ //! nucleotides. These are simply the least significant bit in each byte.
+--- a/src/scheduler.cpp
++++ b/src/scheduler.cpp
+@@ -246,31 +246,13 @@
+ 
+     queue_analytical_step(m_steps.front(), 0);
+ 
+-    std::vector<std::thread> threads;
+-
+-    try {
+-        for (int i = 0; i < nthreads - 1; ++i) {
+-            threads.emplace_back(run_wrapper, this);
+-        }
+-    } catch (const std::system_error& error) {
+-        print_locker lock;
+-        std::cerr << "ERROR: Failed to create threads:\n"
+-                  << cli_formatter::fmt(error.what()) << std::endl;
+-
+-        set_errors_occured();
+-    }
+-
+-    // Run the main thread (the only thread in case of non-threaded mode)
++    // The browser port uses the existing single-thread scheduler. No read,
++    // alignment, trimming, merging, queueing or output steps are replaced.
++    if (nthreads != 1) {
++        std::cerr << "Error: this build supports --threads 1 only." << std::endl;
++        return false;
++    }
+     run_wrapper(this);
+-
+-    for (auto& thread: threads) {
+-        try {
+-            thread.join();
+-        } catch (const std::system_error& error) {
+-            std::cerr << "ERROR: Failed to join thread: " << error.what() << std::endl;
+-            set_errors_occured();
+-        }
+-    }
+ 
+     if (errors_occured()) {
+         return false;
+--- a/src/userconfig.cpp
++++ b/src/userconfig.cpp
+@@ -618,8 +618,8 @@
+         return argparse::parse_result::error;
+     }
+ 
+-    if (!max_threads) {
+-        std::cerr << "Error: --threads must be at least 1!" << std::endl;
++    if (max_threads != 1) {
++        std::cerr << "Error: this build supports --threads 1 only." << std::endl;
+         return argparse::parse_result::error;
+     } else if (max_threads > 1 && argparser.is_set("--seed")) {
+         std::cerr << "Warning: The option --seed should not be used when "

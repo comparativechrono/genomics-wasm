@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header><h1>Genomics WASM</h1><p>Run BWA, BWA-MEM2 or FreeBayes in your browser.</p></header>
+  <header><h1>Genomics WASM</h1><p>Trim reads, align DNA or RNA reads, and call variants in your browser.</p></header>
   <main>
     <p>This example runs the compiled tools in a worker. Files stay in this browser tab and are cleared when you reload. Start with a small reference and a small set of reads.</p>
     <form id="command-form">
       <fieldset id="controls">
         <legend>Command</legend>
         <div class="row">
-          <label>Tool<select id="tool"><option value="bwa">BWA</option><option value="bwa-mem2">BWA-MEM2</option><option value="freebayes">FreeBayes</option></select></label>
+          <label>Tool<select id="tool"><option value="bwa">BWA</option><option value="bwa-mem2">BWA-MEM2</option><option value="freebayes">FreeBayes</option><option value="adapterremoval">AdapterRemoval</option><option value="seqtk">seqtk</option><option value="hisat2">HISAT2</option><option value="minimap2">minimap2</option></select></label>
           <label>Example<select id="example"></select></label>
         </div>
         <label for="arguments">Arguments (JSON array, without the program name)</label>
@@ -32,7 +32,7 @@
       <h2 id="files-heading">Files</h2>
       <label for="upload">Add reference, reads, alignments or indexes</label>
       <input id="upload" type="file" multiple>
-      <p class="hint">For BWA or BWA-MEM2, index the reference with the selected tool first, then run alignment. Each aligner needs its own index. For FreeBayes, add a reference, its FASTA index, a coordinate-sorted BAM and its index.</p>
+      <p class="hint">BWA, BWA-MEM2 and HISAT2 need their own indexes; run the selected tool's indexing example first. minimap2 can use a FASTA directly. Trimming tools need FASTQ reads. FreeBayes needs a reference, its FASTA index, a coordinate-sorted BAM and its index.</p>
       <ul id="files"><li>No files loaded.</li></ul>
       <button id="clear" type="button">Clear files</button>
     </section>

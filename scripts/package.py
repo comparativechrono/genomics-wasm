@@ -14,8 +14,19 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 COMPILED_SUFFIXES = {'.o', '.a', '.so', '.dylib', '.dll', '.exe', '.wasm', '.pyc'}
-TOOLS = ('bwa', 'bwa-mem2', 'freebayes')
-DISPLAY_NAMES = {'bwa': 'BWA', 'bwa-mem2': 'BWA-MEM2', 'freebayes': 'FreeBayes'}
+TOOLS = ('bwa', 'bwa-mem2', 'freebayes', 'adapterremoval', 'seqtk', 'hisat2', 'minimap2')
+DISPLAY_NAMES = {'bwa': 'BWA', 'bwa-mem2': 'BWA-MEM2', 'freebayes': 'FreeBayes',
+                 'adapterremoval': 'AdapterRemoval', 'seqtk': 'seqtk', 'hisat2': 'HISAT2', 'minimap2': 'minimap2'}
+HELP_ARGS = {'bwa': '[]', 'bwa-mem2': '[]', 'freebayes': "['--help']", 'adapterremoval': "['--help']",
+             'seqtk': '[]', 'hisat2': "['align', '--help']", 'minimap2': "['--help']"}
+NOTICES = {
+    'bwa': ('COPYING', 'LICENSE.zlib'),
+    'bwa-mem2': ('LICENSE', 'LICENSE.safestringlib', 'LICENSE-COPYING.safestringlib.txt', 'LICENSE.zlib'),
+    'adapterremoval': ('LICENSE', 'LICENSE.zlib', 'LICENSE.bzip2'),
+    'seqtk': ('LICENSE', 'LICENSE.zlib'),
+    'hisat2': ('LICENSE', 'THIRD_PARTY_LICENSES.txt'),
+    'minimap2': ('LICENSE.txt', 'LICENSE.zlib'),
+}
 
 
 def sha256(data: bytes) -> str:
@@ -87,6 +98,7 @@ def collect(tool: str) -> tuple[dict[str, tuple[bytes, int]], dict]:
     lock_name = 'upstream.lock.json' if tool == 'freebayes' else 'sources.lock.json'
     lock_path = ROOT / f'tools/{tool}/{lock_name}'
     lock = json.loads(required(lock_path))
+    required(ROOT / f'tools/{tool}/README.md')
     module = required(ROOT / f'dist/{tool}/{tool}.mjs')
     wasm = required(ROOT / f'dist/{tool}/{tool}.wasm')
     if not module or not wasm.startswith(b'\x00asm\x01\x00\x00\x00'):
@@ -122,18 +134,14 @@ def collect(tool: str) -> tuple[dict[str, tuple[bytes, int]], dict]:
     entries['runtime/README.md'] = (runtime_readme, 0o644)
     source_hashes['runtime/README.md'] = sha256(runtime_readme)
 
-    if tool in ('bwa', 'bwa-mem2'):
-        for filename, digest in (
-            (f'{tool}-{lock["revision"]}.tar.gz', lock['sha256']),
-            (f'zlib-{lock["dependencies"]["zlib"]["version"]}.tar.gz', lock['dependencies']['zlib']['sha256']),
-        ):
-            add(verify_archive(filename, digest), source=True)
-        if tool == 'bwa-mem2':
-            dependency = lock['dependencies']['safestringlib']
-            add(verify_archive(f'safestringlib-{dependency["revision"]}.tar.gz', dependency['sha256']), source=True)
+    if tool != 'freebayes':
+        add(verify_archive(f'{tool}-{lock["revision"]}.tar.gz', lock['sha256']), source=True)
+        for name, dependency in lock.get('dependencies', {}).items():
+            version = dependency.get('revision') or dependency['version']
+            filename = dependency.get('archive') or f'{name}-{version}.tar.gz'
+            add(verify_archive(filename, dependency['sha256']), source=True)
         # Notice collection is part of the build, not an optional packaging step.
-        notices = ('COPYING', 'LICENSE.zlib') if tool == 'bwa' else ('LICENSE', 'LICENSE.safestringlib', 'LICENSE-COPYING.safestringlib.txt', 'LICENSE.zlib')
-        for name in notices:
+        for name in NOTICES[tool]:
             required(ROOT / f'dist/{tool}/{name}')
     else:
         for path in freebayes_sources(lock):
@@ -170,20 +178,36 @@ def collect(tool: str) -> tuple[dict[str, tuple[bytes, int]], dict]:
 
 def package_readme(tool: str, lock: dict) -> str:
     display = DISPLAY_NAMES[tool]
-    aligner = tool in ('bwa', 'bwa-mem2')
-    help_args = '[]' if aligner else "['--help']"
-    tool_command = "['mem', '-t', '1', 'reference.fa', 'reads.fastq']" if aligner else "['--fasta-reference', 'reference.fa', 'reads.bam']"
+    help_args = HELP_ARGS[tool]
+    tool_command = {
+        'bwa': "['mem', '-t', '1', 'reference.fa', 'reads.fastq']",
+        'bwa-mem2': "['mem', '-t', '1', 'reference.fa', 'reads.fastq']",
+        'freebayes': "['--fasta-reference', 'reference.fa', 'reads.bam']",
+        'adapterremoval': "['--file1', 'reads.fastq', '--basename', 'trimmed', '--threads', '1', '--seed', '42', '--trimns', '--trimqualities']",
+        'seqtk': "['trimfq', 'reads.fastq']",
+        'hisat2': "['align', '-p', '1', '-x', 'reference', '-U', 'reads.fastq', '-S', 'alignment.sam']",
+        'minimap2': "['-ax', 'splice:sr', '-t', '1', 'reference.fa', 'reads_1.fastq', 'reads_2.fastq']",
+    }[tool]
+    input_example = "{path: 'reads.fastq', data: readBytes}" if tool in ('adapterremoval', 'seqtk', 'hisat2') else "{path: 'reference.fa', data: referenceBytes}"
     inputs = {
         'bwa': 'For alignment, first run `index` and retain the reference `.amb`, `.ann`, `.bwt`, `.pac` and `.sa` files. Supply those index files and reads to the next command.',
         'bwa-mem2': 'For alignment, first run this tool\'s `index` command and retain the reference `.0123`, `.amb`, `.ann`, `.bwt.2bit.64` and `.pac` files. Supply those index files and reads to the next command. Original BWA indexes cannot replace the BWA-MEM2 index. This port supports one thread.',
         'freebayes': 'Supply a reference FASTA and its `.fai`, plus a coordinate-sorted BAM and its `.bai`. The caller writes VCF bytes to standard output.',
+        'adapterremoval': 'Supply single or paired FASTQ inputs. Request the output FASTQ files and `.settings` report through the runner\'s `outputs` option. Single-read output names with this basename are `trimmed.truncated`, `trimmed.discarded` and `trimmed.settings`. Paired runs instead write `trimmed.pair1.truncated`, `trimmed.pair2.truncated`, `trimmed.singleton.truncated`, `trimmed.discarded` and `trimmed.settings`. This port supports one processing thread.',
+        'seqtk': 'The `trimfq` command trims low-quality bases and writes FASTQ to standard output. Use `-b` and `-e` to remove fixed numbers of bases from the start and end. See the tool README for the validation scope of other seqtk commands.',
+        'hisat2': 'First run `["build", "reference.fa", "reference"]` and keep all eight `reference.1.ht2` through `reference.8.ht2` index files. Supply the index files and reads to `align`. Request `alignment.sam` through the runner\'s `outputs` option. `inspect` reads an existing index. This port supports small indexes and one alignment thread.',
+        'minimap2': 'The `splice:sr` preset aligns short RNA reads and `splice` aligns long RNA reads. The aligner writes SAM to standard output with `-a`. You may supply a reference FASTA directly or first build an index with `["-x", "splice:sr", "-d", "reference.mmi", "reference.fa"]`. An existing index fixes the indexing parameters, so build it with the preset intended for alignment. This port supports one processing thread.',
     }[tool]
     offline = {
         'bwa': 'The build finds its checksum-pinned BWA and zlib archives in `build/downloads/`.',
         'bwa-mem2': 'The build finds its checksum-pinned BWA-MEM2, safestringlib and zlib archives in `build/downloads/`. The complete dependency sources are included.',
         'freebayes': 'The build verifies `source-manifest.json` and uses the bundled recursive source tree in `build/cache/freebayes-upstream/` without Git metadata. zlib and SIMDe archives are in `build/downloads/`.',
+        'adapterremoval': 'The build finds its checksum-pinned upstream and dependency archives in `build/downloads/`.',
+        'seqtk': 'The build finds its checksum-pinned seqtk and zlib archives in `build/downloads/`.',
+        'hisat2': 'The build finds its checksum-pinned HISAT2 source archive, including bundled dependency sources, in `build/downloads/`.',
+        'minimap2': 'The build finds its checksum-pinned minimap2 and zlib archives in `build/downloads/`.',
     }[tool]
-    help_status = f" {display}'s no-argument usage command normally exits with status 1." if aligner else ''
+    help_status = f" {display}'s no-argument usage command normally exits with status 1." if tool in ('bwa', 'bwa-mem2', 'seqtk') else ''
     return f'''# {display} {lock['version']} for WebAssembly
 
 This standalone package contains the compiled {display} tool, a dependency-free JavaScript runner, full corresponding sources, portability changes, build instructions and licence notices. No other genomics-wasm tool package is needed.
@@ -208,7 +232,7 @@ console.log(result.exitCode, new TextDecoder().decode(result.stdout));
 console.log(new TextDecoder().decode(result.stderr));
 ```
 
-For a real command, use an argument array such as `{tool_command}` and supply input bytes through `files: [{{path: 'reference.fa', data: referenceBytes}}, ...]`. {inputs} The runner creates a fresh worker and filesystem for every command. `stdout`, `stderr` and returned files are raw byte arrays. See `runtime/README.md` for the full file, output, cancellation and timeout interface and `tools/{tool}/README.md` for supported options and limits.{help_status}
+For a real command, use an argument array such as `{tool_command}` and supply input bytes through `files: [{input_example}, ...]`. {inputs} The runner creates a fresh worker and filesystem for every command. `stdout`, `stderr` and returned files are raw byte arrays. See `runtime/README.md` for the full file, output, cancellation and timeout interface and `tools/{tool}/README.md` for supported options and limits.{help_status}
 
 ## Rebuild from included sources
 
@@ -235,7 +259,7 @@ sha256sum -c SHA256SUMS
 
 
 def help_example(tool: str) -> str:
-    args = "['--help']" if tool == 'freebayes' else '[]'
+    args = HELP_ARGS[tool]
     return f'''import {{ ToolRunner }} from '../runtime/index.mjs';
 const tool = new ToolRunner({{ moduleUrl: new URL('../dist/{tool}/{tool}.mjs', import.meta.url) }});
 const result = await tool.run({args}, {{ timeoutMs: 30000 }});

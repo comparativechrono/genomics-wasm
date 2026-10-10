@@ -413,5 +413,35 @@ class ComparisonTests(unittest.TestCase):
                 self.assertEqual(json.loads(result.stdout), json.loads(report.read_text()))
 
 
+class FastqChecks(unittest.TestCase):
+    def test_fastq_validation_and_mate_order(self):
+        # The differential runner uses byte equality, then independently checks
+        # retained read counts, valid records, and mate pairing/order.
+        root = Path(__file__).resolve().parents[1]
+        script = r"""
+import assert from 'node:assert/strict';
+import { fastqRecords, checkPairs } from './validation/additional-cases.mjs';
+const read = '@read1/1\nACGT\n+\nIIII\n';
+const first = fastqRecords(Buffer.from(read), 'first');
+const second = fastqRecords(Buffer.from(read.replace('/1', '/2')), 'second');
+assert.equal(first.length, 1);
+assert.equal(first[0].sequence, 'ACGT');
+assert.equal(first[0].quality, 'IIII');
+checkPairs(first, second, 'pair');
+assert.deepEqual(fastqRecords(Buffer.alloc(0), 'empty'), []);
+for (const changed of [read.slice(0, -1), read.replace('IIII', 'III'), read.replace('@read', 'read'), read.replace('\n+\n', '\n-\n'), read.replace('ACGT', 'ACG1')]) {
+  assert.throws(() => fastqRecords(Buffer.from(changed), 'broken'));
+}
+assert.throws(() => fastqRecords(Buffer.from([255, 10]), 'nonascii'));
+assert.throws(() => checkPairs(first, [], 'missing mate'));
+assert.throws(() => checkPairs(first, fastqRecords(Buffer.from(read.replace('read1', 'read2')), 'other'), 'wrong mate'));
+const two = fastqRecords(Buffer.from(read + read.replace('read1', 'read2')), 'two');
+assert.throws(() => checkPairs(two, two.slice().reverse(), 'reordered mates'));
+"""
+        result = subprocess.run(['node', '--input-type=module', '-e', script], cwd=root,
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()

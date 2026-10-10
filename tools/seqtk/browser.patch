@@ -1,0 +1,172 @@
+--- a/kseq.h
++++ b/kseq.h
+@@ -92,7 +92,7 @@
+ #endif
+ 
+ #ifndef kroundup64
+-#define kroundup64(x) (--(x), (x)|=(x)>>1, (x)|=(x)>>2, (x)|=(x)>>4, (x)|=(x)>>8, (x)|=(x)>>16, (x)|=(x)>>32, ++(x))
++#define kroundup64(x) do { uint64_t kseq_round = (uint64_t)(x) - 1; kseq_round |= kseq_round >> 1; kseq_round |= kseq_round >> 2; kseq_round |= kseq_round >> 4; kseq_round |= kseq_round >> 8; kseq_round |= kseq_round >> 16; kseq_round |= kseq_round >> 32; (x) = kseq_round + 1; } while (0)
+ #endif
+ 
+ #define __KS_GETUNTIL(__read, __bufsize) \
+--- a/seqtk.c
++++ b/seqtk.c
+@@ -509,9 +509,9 @@
+ 				}
+ 				la = a; lb = b;
+ 			}
+-			if (h) printf("%s\t%ld\t%ld", seq->name.s, beg, end);
+-			else printf("%s\t%ld", seq->name.s, l);
+-			for (i = 0; i < 11; ++i) printf("\t%ld", cnt[i]);
++			if (h) printf("%s\t%" PRId64 "\t%" PRId64 "", seq->name.s, beg, end);
++			else printf("%s\t%" PRId64 "", seq->name.s, l);
++			for (i = 0; i < 11; ++i) printf("\t%" PRId64 "", cnt[i]);
+ 			putchar('\n');
+ 		}
+ 		fflush(stdout);
+@@ -605,7 +605,7 @@
+ 					for (y = l - win_size; y < next; ++y) --cnt[(int)buf[y % win_size]];
+ 				}
+ 				if (cnt[1] + cnt[2] > 0)
+-					printf("%s\t%ld\t%ld\t%.2lf\t%ld\t%ld\n", seq->name.s, next, i,
++					printf("%s\t%" PRId64 "\t%" PRId64 "\t%.2lf\t%" PRIu64 "\t%" PRIu64 "\n", seq->name.s, next, i,
+ 						   (double)cnt[2] / (cnt[1] + cnt[2]) * win_size, cnt[1] + cnt[2], cnt[2]);
+ 				next = i;
+ 			}
+@@ -654,7 +654,7 @@
+ 			c = i < len? seq_nt6_table[(uint8_t)seq->seq.s[i]] : 5;
+ 			if (i == len || (c >= 1 && c <= 4)) {
+ 				if (l > 0 && l >= min_size)
+-					printf("%s\t%ld\t%ld\n", seq->name.s, i - l, i);
++					printf("%s\t%" PRId64 "\t%" PRId64 "\n", seq->name.s, i - l, i);
+ 				l = 0;
+ 			} else ++l;
+ 		}
+@@ -712,7 +712,7 @@
+ 		for (i = 0; i < p->n; ++i) {
+ 			int64_t beg = p->a[i<<1], end = p->a[i<<1|1];
+ 			if (beg >= seq->seq.l) {
+-				fprintf(stderr, "[subseq] %s: %ld >= %ld\n", seq->name.s, beg, seq->seq.l);
++				fprintf(stderr, "[subseq] %s: %" PRId64 " >= %zu\n", seq->name.s, beg, seq->seq.l);
+ 				continue;
+ 			}
+ 			if (end > seq->seq.l) end = seq->seq.l;
+@@ -720,11 +720,11 @@
+ 				printf("%c%s", seq->qual.l == seq->seq.l? '@' : '>', seq->name.s);
+ 				if (beg > 0 || (int64_t)p->a[i<<1|1] != INT64_MAX) {
+ 					if (end == INT64_MAX) {
+-						if (beg) printf(":%ld", beg+1);
+-					} else printf(":%ld-%ld", beg+1, end);
++						if (beg) printf(":%" PRId64 "", beg+1);
++					} else printf(":%" PRId64 "-%" PRId64 "", beg+1, end);
+ 				}
+ 				if (seq->comment.l) printf(" %s", seq->comment.s);
+-			} else printf("%s\t%ld\t", seq->name.s, beg + 1);
++			} else printf("%s\t%" PRId64 "\t", seq->name.s, beg + 1);
+ 			if (end > seq->seq.l) end = seq->seq.l;
+ 			if (do_strand && p->rev) { // TODO: the strand mode only works with FASTA
+ 				if (end - beg >= seq_max) {
+@@ -1020,7 +1020,7 @@
+ 		for (i = 0; i < l; ++i) {
+ 			int b = seq->seq.s[i];
+ 			if (bitcnt_table[seq_nt16_table[b]] == 2)
+-				printf("%s\t%ld\t%c\n", seq->name.s, i+1, b);
++				printf("%s\t%" PRId64 "\t%c\n", seq->name.s, i+1, b);
+ 		}
+ 	}
+ 	kseq_destroy(seq);
+@@ -1113,7 +1113,7 @@
+ {
+ 	int64_t i;
+ 	if (begin >= end) return; // FIXME: why may this happen? Understand it!
+-	fprintf(fpout, "%c%s:%ld-%ld", ks->qual.l? '@' : '>', ks->name.s, begin+1, end);
++	fprintf(fpout, "%c%s:%" PRId64 "-%" PRId64 "", ks->qual.l? '@' : '>', ks->name.s, begin+1, end);
+ 	for (i = begin; i < end && i < ks->seq.l; ++i) {
+ 		if ((i - begin)%60 == 0) fputc('\n', fpout);
+ 		fputc(ks->seq.s[i], fpout);
+@@ -1159,7 +1159,7 @@
+ 		int64_t k = 0, begin = 0, end = 0;
+ 		while (find_next_cut(ks, k, &begin, &end) >= 0) {
+ 			if (begin != 0) {
+-				if (gap_only) printf("%s\t%ld\t%ld\n", ks->name.s, begin, end);
++				if (gap_only) printf("%s\t%" PRId64 "\t%" PRId64 "\n", ks->name.s, begin, end);
+ 				else print_seq(stdout, ks, k, begin);
+ 			}
+ 			k = end;
+@@ -1192,12 +1192,12 @@
+ 		c = ks->seq.s[0]; l = 1; beg = 0;
+ 		for (i = 1; i < ks->seq.l; ++i) {
+ 			if (ks->seq.s[i] != c) {
+-				if (l >= min_len) printf("%s\t%ld\t%ld\t%c\n", ks->name.s, beg, beg + l, c);
++				if (l >= min_len) printf("%s\t%" PRId64 "\t%" PRId64 "\t%c\n", ks->name.s, beg, beg + l, c);
+ 				c = ks->seq.s[i]; l = 1; beg = i;
+ 			} else ++l;
+ 		}
+ 	}
+-	if (l >= min_len) printf("%s\t%ld\t%ld\t%c\n", ks->name.s, beg, beg + l, c);
++	if (l >= min_len) printf("%s\t%" PRId64 "\t%" PRId64 "\t%c\n", ks->name.s, beg, beg + l, c);
+ 	kseq_destroy(ks);
+ 	gzclose(fp);
+ 	return 0;
+@@ -1588,14 +1588,14 @@
+ 				sc += -1.0f;
+ 				if (sc < 0 || max - sc > xdropoff) {
+ 					if (max_i + 1 - start >= min_l)
+-						printf("%s\t%ld\t%ld\t%ld\n", seq->name.s, start, max_i + 1, max_hits - start_hits + 1);
++						printf("%s\t%" PRId64 "\t%" PRId64 "\t%" PRId64 "\n", seq->name.s, start, max_i + 1, max_hits - start_hits + 1);
+ 					sc = max = 0;
+ 					i = max_i;
+ 				}
+ 			}
+ 		}
+ 		if (max > 0. && max_i + 1 - start >= min_l)
+-			printf("%s\t%ld\t%ld\t%ld\n", seq->name.s, start, max_i + 1, max_hits - start_hits + 1);
++			printf("%s\t%" PRId64 "\t%" PRId64 "\t%" PRId64 "\n", seq->name.s, start, max_i + 1, max_hits - start_hits + 1);
+ 	}
+ 	kseq_destroy(seq);
+ 	gzclose(fp);
+@@ -1831,7 +1831,7 @@
+ 			} else k = 0;
+ 		}
+ 		which = cnt_nei[0] > cnt_nei[1]? 0 : 1;
+-		printf("%s\t%ld\t%c\t%ld\t%ld\n", ks->name.s, ks->seq.l, "+-"[which], cnt_nei[which], cnt[which]);
++		printf("%s\t%zu\t%c\t%" PRId64 "\t%" PRId64 "\n", ks->name.s, ks->seq.l, "+-"[which], cnt_nei[which], cnt[which]);
+ 	}
+ 	kseq_destroy(ks);
+ 	gzclose(fp);
+@@ -1850,7 +1850,7 @@
+ 	int64_t sum = 0, qsum = 0, sum_low = 0;
+ 	double psum = 0;
+ 	if (pos <= 0) printf("ALL");
+-	else printf("%ld", pos);
++	else printf("%" PRId64 "", pos);
+ 	for (k = 0; k <= 4; ++k) sum += p->b[k];
+ 	printf("\t%lld", (long long)sum);
+ 	for (k = 0; k <= 4; ++k)
+@@ -1927,7 +1927,7 @@
+ 	}
+ 	for (k = n_diffQ = 0; k <= 93; ++k)
+ 		if (all.q[k]) ++n_diffQ;
+-	printf("min_len: %ld; max_len: %ld; avg_len: %.2f; %d distinct quality values\n", min_len, max_len, (double)tot_len/n, n_diffQ);
++	printf("min_len: %" PRId64 "; max_len: %" PRId64 "; avg_len: %.2f; %d distinct quality values\n", min_len, max_len, (double)tot_len/n, n_diffQ);
+ 	printf("POS\t#bases\t%%A\t%%C\t%%G\t%%T\t%%N\tavgQ\terrQ");
+ 	if (qthres <= 0) {
+ 		for (k = 0; k <= 93; ++k)
+@@ -2026,7 +2026,7 @@
+ 				if (++l >= len && kh_get(64, h, x) != kh_end(h)) // x is at least 6bp long and is a telomere motif
+ 					hit = 1;
+ 			} else l = 0, x = 0; // N, ambiguous base
+-			if (show_profile) printf("P\t%s\t%d\t%d\t%d\n", seq->name.s, i, score, max);
++			if (show_profile) printf("P\t%s\t%zd\t%" PRId64 "\t%" PRId64 "\n", seq->name.s, i, score, max);
+ 			if (i >= len) score += hit? 1 : -penalty;
+ 			if (score > max) max = score, max_i = i;
+ 			else if (max - score > max_drop) break;
+@@ -2044,7 +2044,7 @@
+ 				if (++l >= len && kh_get(64, h, x) != kh_end(h))
+ 					hit = 1;
+ 			} else l = 0, x = 0;
+-			if (show_profile) printf("Q\t%s\t%d\t%d\t%d\n", seq->name.s, seq->seq.l - i, score, max);
++			if (show_profile) printf("Q\t%s\t%zu\t%" PRId64 "\t%" PRId64 "\n", seq->name.s, seq->seq.l - i, score, max);
+ 			if (seq->seq.l - i >= len) score += hit? 1 : -penalty;
+ 			if (score > max) max = score, max_i = i;
+ 			else if (max - score > max_drop) break;

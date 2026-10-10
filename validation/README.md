@@ -192,3 +192,83 @@ Raw SAM, index bytes, process diagnostics, comparison reports, and the summary
 are written under `reports/<engine>/`. The summary records input and binary
 SHA-256 hashes. A successful Node run exercises the WebAssembly module and its
 worker API; browser compatibility requires the separate browser runs above.
+
+## Trimming checks
+
+`--tool seqtk` and `--tool adapterremoval` use the existing real NA12878 and yeast
+mitochondrial reads. Each command runs against the untouched native source, the
+patched native source, and WebAssembly. FASTQ files are compared byte for byte:
+read names, order, sequences, qualities, mate assignment, and discarded reads
+must all agree. The runner also parses the files, checks sequence/quality lengths
+and paired read names, and requires reads to be retained. No FASTQ fields are
+removed or normalized.
+
+The seqtk cases cover default Phred trimming, a stricter error threshold, fixed
+trimming at both ends, a maximum retained length, both mate files, empty input,
+and repeated calls. They check that each output is a contiguous segment of the
+original sequence with its corresponding quality string. Both quality thresholds
+must shorten actual reads. For these pinned fixtures, default trimming shortens
+13 human reads and 40 yeast reads from mate 1; the stricter setting shortens 271
+and 75 respectively. seqtk processes mates independently and does not merge or
+jointly filter pairs.
+
+AdapterRemoval cases cover paired adapter removal, quality/length filtering,
+fixed trimming, overlapping-pair collapse, single-end trimming, and repeated
+calls. Every output file is compared, including singleton, discarded, and both
+collapsed read files when present. The complete `.settings` report is also
+compared byte for byte. A fixed random seed of 42 makes equal-quality choices
+during collapse reproducible; no report fields need exceptions. The fixtures
+exercise real adapter trimming (4 human and 122 yeast reads) and collapse (181
+human and 291 yeast pairs). Quality trimming must reduce retained bases beyond
+adapter removal alone. Observed output counts and retained bases are pinned in
+`expected.json`, in addition to full output comparisons.
+
+Missing inputs must return the same nonzero status in all three builds.
+AdapterRemoval's explicit rejection of `--threads 2` is checked separately on
+the port builds, because upstream native AdapterRemoval supports more threads.
+
+## RNA alignment checks
+
+`--tool hisat2` and `--tool minimap2` use `datasets/rna-human` and
+`datasets/rna-yeast`. These contain 256 real RNA-seq read pairs each, bounded
+genomic references, and splice-junction hints. The runner verifies their source
+manifest with `scripts/fetch-rna-test-data.py --verify` before running a tool.
+See the dataset README for accessions, selection rules, coordinate changes, and
+the distinction between the human hints derived from observed alignments and
+the yeast hints derived from a gene annotation. Hints are inputs for testing
+the annotation options, not an independent accuracy benchmark.
+
+The RNA cases compare all eight HISAT2 `.ht2` index files and the minimap2 `.mmi`
+index byte for byte. Both native and WebAssembly indexes are read by all three
+builds. Complete SAM comparisons cover paired and single-end reads, changed
+alignment options, supplied splice hints, empty inputs, and repeated calls.
+Nonempty cases must contain the expected number of primary records **and** at
+least one alignment with a CIGAR `N` operation. Secondary and supplementary
+records remain part of the full comparison. HISAT2 also exercises its index
+inspection command; minimap2 exercises small read batches and increased match
+scores with requested `MD` tags. No alignment fields or tags have a numeric
+tolerance.
+
+The HISAT2 untouched native baseline uses the upstream small-index binaries
+behind a command dispatcher; the summary hashes those three binaries as well as
+the dispatcher. Patched native and WebAssembly use the same `build`, `align`, and
+`inspect` subcommands in a combined binary. All tools run with one thread.
+Missing inputs are compared against native failures. Port-only checks require
+HISAT2 `align` and `build` to reject `-p 2`, and minimap2 to reject `-t 2`, with an
+explicit diagnostic.
+
+## Running the suite
+
+```sh
+node scripts/validate.mjs --tool all --engine node
+node scripts/validate.mjs --tool all --engine chromium
+node scripts/validate.mjs --tool all --engine firefox
+node scripts/validate.mjs --tool all --engine webkit
+```
+
+`--dataset human` or `--dataset yeast` selects that organism's DNA fixture for
+the original tools and trimming tools, and its RNA fixture for the RNA aligners.
+`--dataset rna-human` and `--dataset rna-yeast` select RNA aligners only. Omit the
+dataset option to test both organisms. Every engine uses the same cases and
+comparisons. Browser tests execute the real WebAssembly modules through the
+worker API; Node results alone do not establish browser compatibility.

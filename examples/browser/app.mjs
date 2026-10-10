@@ -23,7 +23,39 @@ const examples = {
     { label: 'Call variants', args: ['--fasta-reference', 'reference.fa', 'alignment.bam'], outputs: [] },
     { label: 'Call haploid variants', args: ['--fasta-reference', 'reference.fa', '--ploidy', '1', 'alignment.bam'], outputs: [] },
   ],
+  adapterremoval: [
+    { label: 'Help', args: ['--help'], outputs: [] },
+    { label: 'Trim paired reads', args: ['--file1', 'reads_1.fq', '--file2', 'reads_2.fq', '--basename', 'trimmed', '--threads', '1', '--seed', '42', '--trimns', '--trimqualities', '--minquality', '20'], outputs: ['trimmed.pair1.truncated', 'trimmed.pair2.truncated', 'trimmed.singleton.truncated', 'trimmed.discarded', 'trimmed.settings'] },
+    { label: 'Trim single reads', args: ['--file1', 'reads.fq', '--basename', 'trimmed', '--threads', '1', '--seed', '42', '--trimns', '--trimqualities', '--minquality', '20'], outputs: ['trimmed.truncated', 'trimmed.discarded', 'trimmed.settings'] },
+  ],
+  seqtk: [
+    { label: 'Usage', args: [], outputs: [] },
+    { label: 'Trim by quality', args: ['trimfq', 'reads.fq'], outputs: [] },
+    { label: 'Trim fixed lengths', args: ['trimfq', '-b', '5', '-e', '10', 'reads.fq'], outputs: [] },
+  ],
+  hisat2: [
+    { label: 'Help', args: ['align', '--help'], outputs: [] },
+    { label: 'Index a reference', args: ['build', 'reference.fa', 'reference'], outputs: Array.from({ length: 8 }, (_, index) => `reference.${index + 1}.ht2`) },
+    { label: 'Align paired RNA reads', args: ['align', '-p', '1', '-x', 'reference', '-1', 'reads_1.fq', '-2', 'reads_2.fq', '-S', 'alignment.sam'], outputs: ['alignment.sam'] },
+    { label: 'Align single RNA reads', args: ['align', '-p', '1', '-x', 'reference', '-U', 'reads.fq', '-S', 'alignment.sam'], outputs: ['alignment.sam'] },
+    { label: 'Inspect an index', args: ['inspect', 'reference'], outputs: [] },
+  ],
+  minimap2: [
+    { label: 'Help', args: ['--help'], outputs: [] },
+    { label: 'Align short RNA reads', args: ['-ax', 'splice:sr', '-t', '1', 'reference.fa', 'reads_1.fq', 'reads_2.fq'], outputs: [] },
+    { label: 'Index for short RNA reads', args: ['-x', 'splice:sr', '-d', 'reference.mmi', 'reference.fa'], outputs: ['reference.mmi'] },
+    { label: 'Align short RNA reads with index', args: ['-ax', 'splice:sr', '-t', '1', 'reference.mmi', 'reads_1.fq', 'reads_2.fq'], outputs: [] },
+    { label: 'Align long RNA reads', args: ['-ax', 'splice', '-t', '1', 'reference.fa', 'reads.fq'], outputs: [] },
+  ],
 };
+
+function stdoutFilename(tool, args) {
+  if (tool === 'freebayes' && !args.includes('--help')) return 'calls.vcf';
+  if (['bwa', 'bwa-mem2'].includes(tool) && args[0] === 'mem') return 'alignment.sam';
+  if (tool === 'minimap2' && args.some(arg => /^-[^-]*a/.test(arg))) return 'alignment.sam';
+  if (tool === 'seqtk' && args[0] === 'trimfq') return 'trimmed.fq';
+  return `${tool}-stdout.txt`;
+}
 
 function selectExample() {
   const example = examples[$('tool').value][Number($('example').value)];
@@ -134,7 +166,7 @@ $('command-form').addEventListener('submit', async event => {
     $('stderr').textContent = preview(result.stderr);
     const seconds = ((performance.now() - started) / 1000).toFixed(2);
     $('status').textContent = `Exited with status ${result.exitCode} after ${seconds} seconds.${result.missingOutputs.length ? ` Missing requested files: ${result.missingOutputs.join(', ')}.` : ''}`;
-    download('Download standard output', tool === 'freebayes' && !args.includes('--help') ? 'calls.vcf' : ['bwa', 'bwa-mem2'].includes(tool) && args[0] === 'mem' ? 'alignment.sam' : `${tool}-stdout.txt`, result.stdout);
+    download('Download standard output', stdoutFilename(tool, args), result.stdout);
     download('Download standard error', `${tool}-stderr.txt`, result.stderr);
     for (const file of result.files) {
       workspace.set(file.path, file.data);

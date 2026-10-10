@@ -29,7 +29,9 @@ jobs:
       - name: Test runtime and comparators
         run: npm test
       - name: Verify real data fixtures
-        run: python3 scripts/fetch-test-data.py --verify
+        run: |
+          python3 scripts/fetch-test-data.py --verify
+          python3 scripts/fetch-rna-test-data.py --verify
       - name: Install pinned WebAssembly compiler
         run: bash scripts/setup-emsdk.sh
       - name: Build original native, patched native and WebAssembly programs
@@ -38,6 +40,10 @@ jobs:
           bash scripts/build-bwa.sh all
           bash scripts/build-bwa-mem2.sh all
           bash scripts/build-freebayes.sh all
+          bash scripts/build-seqtk.sh all
+          bash scripts/build-adapterremoval.sh all
+          bash scripts/build-hisat2.sh all
+          bash scripts/build-minimap2.sh all
       - name: Compare native and WebAssembly outputs in Node
         run: node scripts/validate.mjs --engine node
       - name: Prepare independent tool packages and corresponding sources
@@ -84,7 +90,7 @@ jobs:
         with:
           name: compiled-tools
           path: .
-      - run: chmod +x build/native/* build/patched-native/*
+      - run: chmod -R u+x build/native build/patched-native
       - name: Compare actual browser results against native programs
         run: node scripts/validate.mjs --engine ${{ matrix.browser }}
       - name: Test browser example using compiled programs
