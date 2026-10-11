@@ -109,6 +109,15 @@ class SomaticVCFTests(unittest.TestCase):
         path.write_bytes(text if isinstance(text, bytes) else gzip.compress(text.encode()) if name.endswith('.gz') else text.encode())
         return compare.parse_output(path, context or CONTEXT, SPEC if spec is None else spec, ('/work',))
 
+    def test_browser_program_name_uses_only_declared_alias_and_keeps_arguments(self):
+        plan = json.loads((ROOT / 'validation/somatic/cases.json').read_text())
+        context = {**CONTEXT, 'executableAliases': plan['tools']['lofreq']['executableAliases']}
+        native, _ = self.parse(context=context)
+        browser = VCF.replace('##source=lofreq ', '##source=./this.program ')
+        self.assertEqual(native, self.parse(browser, context=context)[0])
+        self.assertNotEqual(native, self.parse(browser.replace('--call-indels', '--only-indels'), context=context)[0])
+        self.assertNotEqual(native, self.parse(browser.replace('./this.program', './different-program'), context=context)[0])
+
     def test_positive_fixture_and_only_declared_metadata_normalisation(self):
         expected, counts = self.parse()
         changed = VCF.replace('20261011', '20261012').replace('##source=lofreq ', '##source=/runtime/worker.mjs ').replace('reference.fa', '/work/reference.fa').replace('\n', '\r\n')

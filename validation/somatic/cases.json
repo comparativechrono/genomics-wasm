@@ -380,7 +380,8 @@
     "lofreq": {
       "executableAliases": [
         "lofreq",
-        "worker.mjs"
+        "worker.mjs",
+        "this.program"
       ],
       "cases": [
         {
