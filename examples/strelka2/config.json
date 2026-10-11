@@ -1,0 +1,124 @@
+{
+  "tools": {
+    "strelka2": {
+      "label": "Strelka2",
+      "description": "The original caller and scoring models run locally in browser workers. The workflow runs its stages in sequence.",
+      "commands": {
+        "somatic": {
+          "label": "Call somatic SNVs and indels",
+          "description": "Run depth estimation, variant calling and scoring, then create compressed and indexed VCFs.",
+          "args": [
+            "somatic",
+            "--normalBam",
+            "normal.bam",
+            "--tumorBam",
+            "tumor.bam",
+            "--referenceFasta",
+            "reference.fa",
+            "--runDir",
+            "strelka"
+          ],
+          "outputs": [
+            "strelka/results/variants/somatic.snvs.vcf.gz",
+            "strelka/results/variants/somatic.snvs.vcf.gz.tbi",
+            "strelka/results/variants/somatic.indels.vcf.gz",
+            "strelka/results/variants/somatic.indels.vcf.gz.tbi",
+            "strelka/results/stats/runStats.xml",
+            "strelka/results/stats/runStats.tsv"
+          ],
+          "outputDirectories": []
+        },
+        "exome": {
+          "label": "Call variants in exome or targeted data",
+          "description": "Use the upstream exome setting, which disables the high-depth filter.",
+          "args": [
+            "somatic",
+            "--normalBam",
+            "normal.bam",
+            "--tumorBam",
+            "tumor.bam",
+            "--referenceFasta",
+            "reference.fa",
+            "--runDir",
+            "strelka",
+            "--exome"
+          ],
+          "outputs": [
+            "strelka/results/variants/somatic.snvs.vcf.gz",
+            "strelka/results/variants/somatic.snvs.vcf.gz.tbi",
+            "strelka/results/variants/somatic.indels.vcf.gz",
+            "strelka/results/variants/somatic.indels.vcf.gz.tbi",
+            "strelka/results/stats/runStats.xml",
+            "strelka/results/stats/runStats.tsv"
+          ],
+          "outputDirectories": []
+        },
+        "callable": {
+          "label": "Also report callable regions",
+          "description": "Include the regions that meet the caller\u2019s criteria for somatic analysis.",
+          "args": [
+            "somatic",
+            "--normalBam",
+            "normal.bam",
+            "--tumorBam",
+            "tumor.bam",
+            "--referenceFasta",
+            "reference.fa",
+            "--runDir",
+            "strelka",
+            "--outputCallableRegions"
+          ],
+          "outputs": [
+            "strelka/results/variants/somatic.snvs.vcf.gz",
+            "strelka/results/variants/somatic.snvs.vcf.gz.tbi",
+            "strelka/results/variants/somatic.indels.vcf.gz",
+            "strelka/results/variants/somatic.indels.vcf.gz.tbi",
+            "strelka/results/stats/runStats.xml",
+            "strelka/results/stats/runStats.tsv",
+            "strelka/results/regions/somatic.callable.regions.bed.gz",
+            "strelka/results/regions/somatic.callable.regions.bed.gz.tbi"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Somatic command help",
+          "description": "Show the available workflow options.",
+          "args": [
+            "somatic",
+            "--help"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        },
+        "core-help": {
+          "label": "Caller help and version",
+          "description": "Show the compiled caller\u2019s command options and upstream version.",
+          "args": [
+            "strelka2",
+            "--help"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    }
+  },
+  "datasets": {
+    "hcc1395": {
+      "label": "Human tumour/normal (HCC1395 / HCC1395BL)",
+      "description": "Real matched HCC1395 tumour and HCC1395BL normal reads from two small regions. Coordinates are local to the supplied reference; the data documentation records the original genome locations.",
+      "path": "../../datasets/strelka2/hcc1395/",
+      "files": [
+        "reference.fa",
+        "reference.fa.fai",
+        "tumor.bam",
+        "tumor.bam.bai",
+        "normal.bam",
+        "normal.bam.bai",
+        "regions.bed",
+        "truth.vcf",
+        "confidence.bed"
+      ]
+    }
+  }
+}

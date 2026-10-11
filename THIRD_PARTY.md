@@ -18,6 +18,13 @@ directory under `tools/`.
   Its package includes HTSlib, zlib and OpenLibm sources and their individual
   notices. The browser somatic coordinator is derived from the upstream Python
   workflow; variant calculations remain in the upstream C implementation.
+- Strelka2 2.9.10: Illumina and contributors; GPL-3.0-or-later in the pinned
+  source release. Source: https://github.com/Illumina/strelka/tree/v2.9.10
+  Its package retains the release's bundled dependencies, scoring models,
+  source archive and notices. The derived JavaScript somatic workflow retains
+  the upstream GPL-3.0-or-later licence. CPython 2.7.18 is included as source for running
+  the unchanged native workflow during validation, under its original notices.
+  The browser workflow does not require Python.
 - seqtk: Heng Li and contributors; MIT. Source: https://github.com/lh3/seqtk
 - AdapterRemoval: Mikkel Schubert and contributors; GPL-3.0-or-later.
   Source: https://github.com/MikkelSchubert/adapterremoval

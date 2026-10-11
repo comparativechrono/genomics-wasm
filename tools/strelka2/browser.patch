@@ -1,0 +1,15 @@
+--- a/src/c++/lib/appstats/RunStats.hh
++++ b/src/c++/lib/appstats/RunStats.hh
+@@ -62,10 +62,10 @@
+     CpuTimes lifeTime;
+ 
+     /// Total indels reaching candidate status in the report range and (if defined) call regions
+-    unsigned long candidateIndels = 0;
++    std::uint64_t candidateIndels = 0;
+ 
+     /// Total indels failing to reach candidate status in the report range and (if defined) call regions
+-    unsigned long nonCandidateIndels = 0;
++    std::uint64_t nonCandidateIndels = 0;
+ };
+ 
+ BOOST_CLASS_IMPLEMENTATION(RunStatsData, boost::serialization::object_serializable)

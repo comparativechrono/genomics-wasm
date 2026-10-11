@@ -1,0 +1,13 @@
+# Strelka2
+
+This package builds the Strelka2 2.9.10 somatic caller and its serial workflow helpers from the pinned upstream release. The calling and scoring algorithms run as compiled C++ in WebAssembly. The original somatic SNV and indel scoring models are included. The versioned release is GPL-3.0-or-later; its licence is included with the sources.
+
+The programs are `strelka2`, `GetChromDepth`, `MergeRunStats`, `bgzip`, `bgzf_cat`, `tabix` and `htsfile`. Each has a `.mjs` module and `.wasm` file under `dist/strelka2/`. They use the shared `ToolRunner` API in a fresh worker. They do not require SharedArrayBuffer or cross-origin isolation. The higher-level JavaScript workflow coordinates these programs; it does not replace their algorithms.
+
+Install CMake 3.15 or newer, a C/C++ compiler, make and Emscripten 3.1.64. Run `python3 scripts/setup-strelka2-python.py` to prepare the pinned Python 2.7.18 interpreter for the unchanged native workflow, then `bash scripts/build-strelka2.sh all`. The build produces `build/native/strelka2`, `build/patched-native/strelka2`, both complete `strelka2-package/` native execution trees, and the browser assets. Add `build/strelka2-python/bin` to PATH when running the native workflow. Python 2 is used only for this upstream comparison; browser users do not install Python.
+
+The native baseline uses upstream CMake and unchanged source. The patched native build and WebAssembly build use the same source selection in a separate cross-build layer. Recorded portability changes are applied: an unusable RapidJSON 1.1.0 assignment operator is explicitly deleted, and Strelka run-statistics counters use `uint64_t` to retain their native 64-bit range. The bundled `bgzip` rejects thread counts above one with status 2 instead of silently accepting an unavailable threading request. No model coefficients or calling calculations are replaced.
+
+The scope is serial somatic calling, including depth estimation, interval processing, empirical variant scoring and compressed/indexed VCF output. Germline workflows, remote file access, and realigned BAM output are not exposed by the browser workflow. Inputs, models and outputs are held in memory, with a maximum compiled heap of 2 GiB; this is not a whole-genome performance claim. The core retains upstream genomic-coordinate limits.
+
+Validation compares original native, patched native and browser executions on real HCC1395 tumour/normal reads, including the complete upstream Python workflow. Build manifests identify every compiled helper, model, source input and native execution file. Source archives and original licences are included; rebuilding can restore verified archives from `dist/strelka2/sources/`.

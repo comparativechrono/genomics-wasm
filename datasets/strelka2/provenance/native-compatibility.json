@@ -1,0 +1,178 @@
+{
+  "purpose": "Native upstream fixture compatibility and nonempty biology check; release native/WebAssembly parity is validated separately. Caller output is not an input fixture.",
+  "upstream": {
+    "version": "2.9.10",
+    "url": "https://github.com/Illumina/strelka/releases/download/v2.9.10/strelka-2.9.10.release_src.tar.bz2",
+    "sha256": "45e78efec6e5272697f1d0a95851c7ae0d623dc8f93846e11fe37f15da9f1e30"
+  },
+  "pythonVersion": "2.7.18",
+  "configure": [
+    "configureStrelkaSomaticWorkflow.py",
+    "--normalBam",
+    "hcc1395/normal.bam",
+    "--tumorBam",
+    "hcc1395/tumor.bam",
+    "--referenceFasta",
+    "hcc1395/reference.fa",
+    "--callRegions",
+    "hcc1395/regions.bed.gz",
+    "--runDir",
+    "strelka-run"
+  ],
+  "run": [
+    "strelka-run/runWorkflow.py",
+    "-m",
+    "local",
+    "-j",
+    "1",
+    "-g",
+    "2"
+  ],
+  "workflowExitCode": 0,
+  "allTasksCompleted": true,
+  "originalDictionaryControl": {
+    "exitCode": 1,
+    "message": "Reference genome mismatch: Reference fasta file is missing a chromosome found in the normal BAM/CRAM file: 'chr1'"
+  },
+  "inputs": {
+    "hcc1395/confidence.bed": {
+      "bytes": 313,
+      "sha256": "47a9fe9c9fc33462afd60a19b4481ab494dd37fc8112a41e01e24addc755ec41"
+    },
+    "hcc1395/confidence.bed.gz": {
+      "bytes": 144,
+      "sha256": "ea0220511bcf683060e0a0a8ec85a22c88b34c6795f3dc527db6b4bee01fea6f"
+    },
+    "hcc1395/confidence.bed.gz.tbi": {
+      "bytes": 155,
+      "sha256": "2634fd6ff0fc3aeecacfabeca0d270c3baa0e32291318c7236f37c5d2c23a059"
+    },
+    "hcc1395/extracted-regions.bed": {
+      "bytes": 64,
+      "sha256": "b4907d11e57d8d1f75ac4f15a623c075403ad649556202470d81a3b0309eff6b"
+    },
+    "hcc1395/normal.bam": {
+      "bytes": 827440,
+      "sha256": "7a65e42bc63992c8b546a9e5ec50c45e153f82c002b4a88d362903b5a50da71a"
+    },
+    "hcc1395/normal.bam.bai": {
+      "bytes": 208,
+      "sha256": "18e927bfbb57ea074fa2267e49bef6f7d8de1ff4f78919b8fe10f85f39f8ac98"
+    },
+    "hcc1395/reference.fa": {
+      "bytes": 29534,
+      "sha256": "50aff973f9aae16a477245dac3a6f524f96f1106ab13b0b6ba933100353a6325"
+    },
+    "hcc1395/reference.fa.fai": {
+      "bytes": 81,
+      "sha256": "76e4501f4fcf97c5fb03faf07c0c3dda7ce6238dbd8ea8dacd402863591026a7"
+    },
+    "hcc1395/regions.bed": {
+      "bytes": 69,
+      "sha256": "4963073890341c3bb57a6d165e8e3dad8cec2fddec1aa3644c7bc3b66c3f96a6"
+    },
+    "hcc1395/regions.bed.gz": {
+      "bytes": 101,
+      "sha256": "b397ba8c20ab9a7274fb87a0756a456291da3c1f9cb231becb063e22fc437180"
+    },
+    "hcc1395/regions.bed.gz.tbi": {
+      "bytes": 154,
+      "sha256": "688dabdaed59c4130052781fb07536f9b031ce0c1085e09ff36c9737b767fe94"
+    },
+    "hcc1395/truth-indel.vcf": {
+      "bytes": 11439,
+      "sha256": "f162d788f0a93a54cddf616c8fa57c9744f6b817f0fb515c854fe8cf624778ee"
+    },
+    "hcc1395/truth-snv.vcf": {
+      "bytes": 11631,
+      "sha256": "3b8769d31a85bdb14149ec66d6ec3fc80aae965cb2c2a76b6f275b07dabbbafe"
+    },
+    "hcc1395/truth.vcf": {
+      "bytes": 14510,
+      "sha256": "2fba5998446b581836bc3bab0f2920dd91d1a65719a2808dc046ab2bc1fa6fe8"
+    },
+    "hcc1395/tumor.bam": {
+      "bytes": 650995,
+      "sha256": "fb327c9b6ccb4929a2771f71097c748aa05e4eaad2038715d74c48bbecb45286"
+    },
+    "hcc1395/tumor.bam.bai": {
+      "bytes": 224,
+      "sha256": "77293ea58333f7321b2005694d6f6187583d31725391a5faa5002f30b30064bb"
+    }
+  },
+  "nativeProgramIdentities": {
+    "strelka2": {
+      "bytes": 6612592,
+      "sha256": "29d76cc20388091eb070d4368859c6a2f607fd1ef32ded6e54304bae3b193aea"
+    },
+    "GetChromDepth": {
+      "bytes": 4245264,
+      "sha256": "16c3652c98a76d95fe1b30994cab08c90e5c1af93a3aac79719e4ddf33a39968"
+    },
+    "MergeRunStats": {
+      "bytes": 2618912,
+      "sha256": "84268e65cae3f6e89e14f51b40f1e9db3cdb3ea17f2e59d66df2aefaf6ed942a"
+    },
+    "bgzip": {
+      "bytes": 1926224,
+      "sha256": "39228c0b32c34146d8f48698e70a9e09d3477bf040f01363b2784e5fc03f1b11"
+    },
+    "bgzf_cat": {
+      "bytes": 100352,
+      "sha256": "d9949c844ac17c617d3118fd4573ca5b389021be923c64b1aca2aeb642a057db"
+    },
+    "tabix": {
+      "bytes": 2399600,
+      "sha256": "ec9e8aebeebb7c142a0ca235d731bf2936cf8a14b2a6d171d2738549da5145f3"
+    }
+  },
+  "normalChromDepth": {
+    "chr21_21404501_21423500": 43.0,
+    "chr21_10572001_10582000": 80.0
+  },
+  "outputs": {
+    "snvs": {
+      "records": 13,
+      "filters": {
+        "LowEVS": 12,
+        "PASS": 1
+      },
+      "recordTextSHA256": "2e5cf2cf953bef0480c4393dc3c0e17c835beb2e06d475235dbad6a68d3a23f0",
+      "passAlleles": [
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4679,
+          "ref": "A",
+          "alt": "G"
+        }
+      ]
+    },
+    "indels": {
+      "records": 2,
+      "filters": {
+        "PASS": 2
+      },
+      "recordTextSHA256": "1a309877ce014c239a7870483a5e1315120d5021722010cd8f78bf3bb44f525e",
+      "passAlleles": [
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4939,
+          "ref": "CA",
+          "alt": "C"
+        },
+        {
+          "contig": "chr21_21404501_21423500",
+          "position": 5025,
+          "ref": "GA",
+          "alt": "G"
+        }
+      ]
+    }
+  },
+  "allPassAllelesMatchPublishedTruth": true,
+  "limitations": [
+    "The source is genuine, but the windows were chosen around known variants and are not an unbiased whole-genome accuracy benchmark.",
+    "Depth estimates describe the selected windows.",
+    "The low-frequency truth SNV chr21:21418545 has no alternate observations in this source replicate under the documented support filters."
+  ]
+}

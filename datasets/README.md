@@ -210,3 +210,8 @@ reference sequence and published SEQC2 reference calls. Coordinates are shifted
 to short local contigs; the original coordinates and every transformation are
 recorded. Complete mapped read pairs are retained. Native-equivalence tests and
 comparison with the published calls are separate checks.
+
+The separate [Strelka2 fixture](strelka2/README.md) contains those same read
+records with a BAM sequence dictionary matching the two-contig reference.
+Unused reference entries are removed and numeric reference IDs are remapped;
+read bases, qualities, alignment coordinates and tags are unchanged.

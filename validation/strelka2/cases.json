@@ -1,0 +1,916 @@
+{
+  "schema": 1,
+  "tool": "strelka2",
+  "datasets": [
+    "hcc1395"
+  ],
+  "executableAliases": [
+    "strelka2",
+    "strelka2.mjs",
+    "worker.mjs",
+    "this.program",
+    "configureStrelkaSomaticWorkflow.py"
+  ],
+  "cases": [
+    {
+      "id": "default",
+      "kind": "success",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        }
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+        "analysis/workspace/chromDepth.tsv",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "exome",
+      "kind": "success",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles",
+        "--exome"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        }
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "default"
+    },
+    {
+      "id": "disable-evs",
+      "kind": "success",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles",
+        "--disableEVS"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        }
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+        "analysis/workspace/chromDepth.tsv",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "default"
+    },
+    {
+      "id": "call-regions",
+      "kind": "success",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles",
+        "--callRegions",
+        "regions.bed.gz"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        }
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+        "analysis/workspace/chromDepth.tsv",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "default"
+    },
+    {
+      "id": "callable-features",
+      "kind": "success",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles",
+        "--outputCallableRegions",
+        "--reportEVSFeatures"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/results/regions/somatic.callable.regions.bed.gz",
+          "kind": "bed",
+          "minRecords": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        }
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+        "analysis/workspace/chromDepth.tsv",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi",
+        "analysis/results/regions/somatic.callable.regions.bed.gz",
+        "analysis/results/regions/somatic.callable.regions.bed.gz.tbi",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "default"
+    },
+    {
+      "id": "prior-config",
+      "kind": "success",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles",
+        "--config",
+        "parameters.ini"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        }
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+        "analysis/workspace/chromDepth.tsv",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "default",
+      "extraFiles": {
+        "parameters.ini": "[DEFAULT]\ndepthFilterMultiple=1.0\nminTier1Mapq=10\n[StrelkaSomatic]\nssnvPrior=0.001\nsindelPrior=0.00001\nminTier1Mapq=30\nextraVariantCallerArguments=--min-qscore 25\n"
+      }
+    },
+    {
+      "id": "single-region",
+      "kind": "success",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles",
+        "--region",
+        "chr21_10572001_10582000:1-10000"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000-1-10000_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        }
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000-1-10000_0000.xml",
+        "analysis/workspace/chromDepth.tsv",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "default"
+    },
+    {
+      "id": "index-query",
+      "kind": "success",
+      "program": "tabix",
+      "args": [
+        "-h",
+        "calls.vcf.gz",
+        "chr21_10572001_10582000:1-10000"
+      ],
+      "stdoutFile": "queried.vcf",
+      "outputs": [
+        "queried.vcf"
+      ],
+      "vcfs": [
+        {
+          "path": "queried.vcf",
+          "minSnvs": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "inputsFrom": [
+        {
+          "case": "default",
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "as": "calls.vcf.gz"
+        },
+        {
+          "case": "default",
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+          "as": "calls.vcf.gz.tbi"
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "statistics-64bit",
+      "kind": "success",
+      "program": "MergeRunStats",
+      "args": [
+        "--stats-file",
+        "stats-a.xml",
+        "--stats-file",
+        "stats-b.xml",
+        "--output-file",
+        "merged.xml",
+        "--report-file",
+        "merged.tsv"
+      ],
+      "outputs": [
+        "merged.xml",
+        "merged.tsv"
+      ],
+      "auxiliary": [
+        {
+          "path": "merged.xml",
+          "kind": "stats-xml",
+          "expectedCounts": {
+            "candidateIndels": 5000000017,
+            "nonCandidateIndels": 6000000023
+          }
+        },
+        {
+          "path": "merged.tsv",
+          "kind": "stats-tsv",
+          "expectedCounts": {
+            "CallRegionCandidateIndels": 5000000017,
+            "CallRegionNonCandidateIndels": 6000000023
+          }
+        }
+      ],
+      "statisticsBoundary": {
+        "case": "default",
+        "path": "analysis/results/stats/runStats.xml",
+        "values": [
+          [
+            5000000000,
+            6000000000
+          ],
+          [
+            17,
+            23
+          ]
+        ]
+      },
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "**comment": "Fresh workers must reproduce actual unchanged-native workflow results.",
+      "id": "repeat",
+      "kind": "repeat",
+      "baseline": "default",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles"
+      ],
+      "outputs": [
+        "analysis/results/variants/somatic.snvs.vcf.gz",
+        "analysis/results/variants/somatic.indels.vcf.gz",
+        "analysis/results/stats/runStats.xml",
+        "analysis/results/stats/runStats.tsv",
+        "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+        "analysis/workspace/chromDepth.tsv",
+        "analysis/results/variants/somatic.snvs.vcf.gz.tbi",
+        "analysis/results/variants/somatic.indels.vcf.gz.tbi",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+        "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500"
+      ],
+      "vcfs": [
+        {
+          "path": "analysis/results/variants/somatic.snvs.vcf.gz",
+          "minSnvs": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        },
+        {
+          "path": "analysis/results/variants/somatic.indels.vcf.gz",
+          "minIndels": 1,
+          "minSomatic": 1,
+          "expectedSamples": [
+            "NORMAL",
+            "TUMOR"
+          ]
+        }
+      ],
+      "auxiliary": [
+        {
+          "path": "analysis/results/stats/runStats.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/results/stats/runStats.tsv",
+          "kind": "stats-tsv"
+        },
+        {
+          "path": "analysis/workspace/genomeSegment.tmpdir/runStats.chromId_000_chr21_10572001_10582000_0000_to_chromId_001_chr21_21404501_21423500_0000.xml",
+          "kind": "stats-xml",
+          "minCandidateIndels": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        },
+        {
+          "path": "analysis/workspace/chromDepth.tsv.tmpdir/chromDepth.tsv.000.txt.tmpdir/chromDepth.tsv.000.txt_000_chr21_10572001_10582000_to_001_chr21_21404501_21423500",
+          "kind": "depth",
+          "minPositiveContigs": 1
+        }
+      ],
+      "executions": [
+        "wasm"
+      ],
+      "comparisons": [
+        "wasm"
+      ]
+    },
+    {
+      "id": "missing-tumor",
+      "kind": "failure",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "missing.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles"
+      ],
+      "outputs": [],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [],
+      "diagnosticRegex": "(not exist|cannot find|missing|not found)"
+    },
+    {
+      "id": "unsupported-parallel",
+      "kind": "restriction",
+      "workflow": true,
+      "args": [
+        "somatic",
+        "--normalBam",
+        "normal.bam",
+        "--tumorBam",
+        "tumor.bam",
+        "--referenceFasta",
+        "reference.fa",
+        "--runDir",
+        "analysis",
+        "--retainTempFiles",
+        "--jobs",
+        "2"
+      ],
+      "outputs": [],
+      "executions": [
+        "wasm"
+      ],
+      "comparisons": [],
+      "diagnosticRegex": "(unknown|unsupported|unrecognized|serial)"
+    },
+    {
+      "id": "bgzip-parallel",
+      "kind": "restriction",
+      "program": "bgzip",
+      "args": [
+        "-@",
+        "2",
+        "reference.fa"
+      ],
+      "outputs": [],
+      "executions": [
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [],
+      "diagnosticRegex": "supports at most one compression thread"
+    }
+  ]
+}

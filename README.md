@@ -20,6 +20,7 @@ DESeq2 session retains its R objects until the session is closed.
 | [FreeBayes](tools/freebayes/README.md) | 1.3.6 | Local BAM/SAM variant calling, one process |
 | [SomaticSniper](tools/somaticsniper/README.md) | 1.0.5.0 | Somatic SNVs from matched tumour/normal BAMs, one thread |
 | [LoFreq](tools/lofreq/README.md) | 2.1.5 | Variant calling, indel preparation and the serial somatic workflow |
+| [Strelka2](tools/strelka2/README.md) | 2.9.10 | Serial somatic workflow, depth estimation, scoring and indexed SNV/indel VCFs |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
@@ -64,6 +65,12 @@ with real HCC1395 tumour and HCC1395BL normal reads. LoFreq's
 the somatic workflow. Both tools use ordinary static hosting. SomaticSniper is
 archived upstream; LoFreq describes its somatic workflow as experimental.
 
+Strelka2 has its own [browser example](examples/strelka2/README.md) and
+[JavaScript runner](runtime/STRELKA2.md). Its serial somatic workflow includes
+the upstream depth estimation, caller, scoring models and output utilities.
+The real HCC1395 fixture has matching BAM and reference sequence dictionaries.
+It uses ordinary static hosting.
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
@@ -81,6 +88,8 @@ bash scripts/build-bwa-mem2.sh all
 bash scripts/build-freebayes.sh all
 bash scripts/build-somaticsniper.sh all
 bash scripts/build-lofreq.sh all
+python3 scripts/setup-strelka2-python.py
+bash scripts/build-strelka2.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
@@ -222,6 +231,19 @@ results and indel-quality BAMs. The real paired data include published reference
 calls, kept separate from the native-equivalence checks. See the
 [somatic comparison rules](validation/somatic/README.md).
 
+The **Build and validate Strelka2** workflow runs the original Python workflow
+and the browser workflow against the same real paired data:
+
+```sh
+python3 scripts/fetch-strelka2-test-data.py --verify
+node scripts/validate-strelka2.mjs --engine node
+```
+
+Repeat with `--engine chromium`, `firefox` and `webkit`. The
+[comparison rules](validation/strelka2/README.md) describe which outputs and
+workflow steps are checked. The original native scripts use the isolated
+interpreter built by `scripts/setup-strelka2-python.py`.
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -254,6 +276,11 @@ Somatic caller packages are created by `scripts/package-somatic.py` after all
 four engines pass. The `somatic-packages` workflow artifact contains a separate
 ZIP for each caller, with its browser example, runtime, real paired data,
 validation reports, corresponding sources and licences.
+
+Strelka2's `strelka2-package` artifact is assembled by
+`scripts/package-strelka2.py` after all four engines and browser examples pass.
+It includes the caller, helper programs, scoring models, JavaScript workflow,
+real data, sources, notices and comparison reports.
 
 ## Licence
 

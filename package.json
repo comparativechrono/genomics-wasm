@@ -17,7 +17,9 @@
     "validate:cutadapt": "node scripts/validate-cutadapt.mjs",
     "package:cutadapt": "python3 scripts/package-cutadapt.py",
     "validate:somatic": "node scripts/validate-somatic.mjs",
-    "package:somatic": "python3 scripts/package-somatic.py"
+    "package:somatic": "python3 scripts/package-somatic.py",
+    "validate:strelka2": "node scripts/validate-strelka2.mjs",
+    "package:strelka2": "python3 scripts/package-strelka2.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

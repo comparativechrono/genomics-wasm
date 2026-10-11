@@ -1,0 +1,22 @@
+--- a/bgzip.c
++++ b/bgzip.c
+@@ -126,7 +126,18 @@
+         case 'I': index_fname = optarg; break;
+         case 'g': rebgzip = 1; break;
+         case 'r': reindex = 1; compress = 0; break;
+-        case '@': threads = atoi(optarg); break;
++        case '@': {
++            char *end;
++            long long requested;
++            errno = 0;
++            requested = strtoll(optarg, &end, 10);
++            if (errno == ERANGE || end == optarg || *end || requested < 0 || requested > 1) {
++                fprintf(stderr, "Strelka2 browser package bgzip supports at most one compression thread\n");
++                return 2;
++            }
++            threads = (int)requested;
++            break;
++        }
+         case 1:
+             printf(
+ "bgzip (htslib) %s\n"

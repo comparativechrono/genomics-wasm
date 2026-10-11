@@ -1,0 +1,37 @@
+{
+  "method": "Remove the 2779 unused original SQ entries; retained reference names, lengths and order exactly match FASTA. Remap numeric read/mate reference IDs. Preserve all SAM alignment fields and all optional tags, including original-coordinate SA/XA annotations.",
+  "referenceDictionary": [
+    {
+      "SN": "chr21_10572001_10582000",
+      "LN": 10000
+    },
+    {
+      "SN": "chr21_21404501_21423500",
+      "LN": 19000
+    }
+  ],
+  "observations": {
+    "tumor": {
+      "records": 13130,
+      "pairs": 6565,
+      "inputHeaderContigs": 2781,
+      "outputHeaderContigs": 2,
+      "SARecords": 11,
+      "XARecords": 5356,
+      "inputSAMRecordsSHA256": "47f1442ca7deac2f03fc3052741ee9e3af0240abd9fd113fbac1da403d9b98e9",
+      "outputSAMRecordsSHA256": "47f1442ca7deac2f03fc3052741ee9e3af0240abd9fd113fbac1da403d9b98e9",
+      "allSAMAlignmentFieldsIdentical": true
+    },
+    "normal": {
+      "records": 16822,
+      "pairs": 8411,
+      "inputHeaderContigs": 2781,
+      "outputHeaderContigs": 2,
+      "SARecords": 15,
+      "XARecords": 6635,
+      "inputSAMRecordsSHA256": "ec872dd087fb0cfbba1d40a7d03a7a4bd2ca7a373c2cd6cd35d570e7153d3726",
+      "outputSAMRecordsSHA256": "ec872dd087fb0cfbba1d40a7d03a7a4bd2ca7a373c2cd6cd35d570e7153d3726",
+      "allSAMAlignmentFieldsIdentical": true
+    }
+  }
+}

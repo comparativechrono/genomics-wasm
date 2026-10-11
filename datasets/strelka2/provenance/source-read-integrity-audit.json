@@ -1,0 +1,147 @@
+{
+  "method": "Every final record compared with original primary record: SEQ,QUAL,CIGAR,TLEN,MAPQ,FLAG,all optional tags identical; both positions shift by declared offset. MD-derived reference checked against uppercase UCSC hg38 chr21. Pileup requiresBQ20 MQ20, excludesflags0x704 and avoids double-counting overlapping mates. Exploratory evidence, not truth calibration.",
+  "results": {
+    "tumor": {
+      "recordsAudited": 13130,
+      "MDReferenceChecks": 13130,
+      "MDReferenceMismatches": 0,
+      "truthPileupSupport": [
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4679,
+          "ref": "A",
+          "alt": "G",
+          "originalContig": "chr21",
+          "originalPosition": 10576679,
+          "filter": "PASS;HighConf",
+          "depth": 66,
+          "altReads": 17,
+          "vaf": 0.25757575757575757,
+          "baseCounts": {
+            "G": 17,
+            "A": 49
+          }
+        },
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4939,
+          "ref": "CA",
+          "alt": "C",
+          "originalContig": "chr21",
+          "originalPosition": 10576939,
+          "filter": "PASS;HighConf",
+          "depth": 57,
+          "altReads": 14,
+          "vaf": 0.24561403508771928,
+          "baseCounts": {
+            "C": 57,
+            "ALT_INDEL": 14
+          }
+        },
+        {
+          "contig": "chr21_21404501_21423500",
+          "position": 5025,
+          "ref": "GA",
+          "alt": "G",
+          "originalContig": "chr21",
+          "originalPosition": 21409525,
+          "filter": "PASS;HighConf",
+          "depth": 38,
+          "altReads": 14,
+          "vaf": 0.3684210526315789,
+          "baseCounts": {
+            "G": 38,
+            "ALT_INDEL": 14
+          }
+        },
+        {
+          "contig": "chr21_21404501_21423500",
+          "position": 14045,
+          "ref": "C",
+          "alt": "T",
+          "originalContig": "chr21",
+          "originalPosition": 21418545,
+          "filter": "PASS;MedConf",
+          "depth": 51,
+          "altReads": 0,
+          "vaf": 0.0,
+          "baseCounts": {
+            "C": 51
+          }
+        }
+      ]
+    },
+    "normal": {
+      "recordsAudited": 16822,
+      "MDReferenceChecks": 16822,
+      "MDReferenceMismatches": 0,
+      "truthPileupSupport": [
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4679,
+          "ref": "A",
+          "alt": "G",
+          "originalContig": "chr21",
+          "originalPosition": 10576679,
+          "filter": "PASS;HighConf",
+          "depth": 68,
+          "altReads": 0,
+          "vaf": 0.0,
+          "baseCounts": {
+            "A": 68
+          }
+        },
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4939,
+          "ref": "CA",
+          "alt": "C",
+          "originalContig": "chr21",
+          "originalPosition": 10576939,
+          "filter": "PASS;HighConf",
+          "depth": 72,
+          "altReads": 0,
+          "vaf": 0.0,
+          "baseCounts": {
+            "C": 72
+          }
+        },
+        {
+          "contig": "chr21_21404501_21423500",
+          "position": 5025,
+          "ref": "GA",
+          "alt": "G",
+          "originalContig": "chr21",
+          "originalPosition": 21409525,
+          "filter": "PASS;HighConf",
+          "depth": 50,
+          "altReads": 0,
+          "vaf": 0.0,
+          "baseCounts": {
+            "G": 50
+          }
+        },
+        {
+          "contig": "chr21_21404501_21423500",
+          "position": 14045,
+          "ref": "C",
+          "alt": "T",
+          "originalContig": "chr21",
+          "originalPosition": 21418545,
+          "filter": "PASS;MedConf",
+          "depth": 45,
+          "altReads": 0,
+          "vaf": 0.0,
+          "baseCounts": {
+            "C": 45
+          }
+        }
+      ]
+    }
+  },
+  "independentHttpHtslibExtractionCheck": {
+    "region": "chr21:10572001-10582000",
+    "tumorRecords": 7051,
+    "exactSAMRecordSetAgreement": true
+  }
+}
