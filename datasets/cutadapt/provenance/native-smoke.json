@@ -1,0 +1,962 @@
+{
+  "cutadapt_version": "5.2",
+  "python_version": "3.12.14",
+  "dnaio_version": "1.2.4",
+  "xopen_version": "2.1.0",
+  "purpose": "Native option-effect smoke test only; final three-runtime parity report is separate. Input biological sequences are unchanged.",
+  "cases": {
+    "yeast-paired": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 205,
+        "read2_with_adapter": 209
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 65507,
+        "output_read1": 32758,
+        "output_read2": 32749
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 86054,
+          "sha256": "3b69ece09944a12c744574b80c68c009921c38cee53da6a2a133f10923197c25"
+        },
+        "out_2.fastq": {
+          "bytes": 86036,
+          "sha256": "832a15effaf13b9eb833f4c20f030db4ec496666845bf2c52e0bd60aae93e38d"
+        }
+      }
+    },
+    "yeast-single": {
+      "dataset": "yeast",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 205,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 38784,
+        "input_read1": 38784,
+        "input_read2": null,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 32758,
+        "output_read1": 32758,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 86054,
+          "sha256": "3b69ece09944a12c744574b80c68c009921c38cee53da6a2a133f10923197c25"
+        }
+      }
+    },
+    "yeast-quality30": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-q",
+        "30",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": null,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": 4376,
+        "quality_trimmed_read1": 1994,
+        "quality_trimmed_read2": 2382,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 73192,
+        "output_read1": 36790,
+        "output_read2": 36402
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 94118,
+          "sha256": "0ee83963d0e2ce0cafe40c740fbe625d0906db69753cb5914216c359b5808400"
+        },
+        "out_2.fastq": {
+          "bytes": 93342,
+          "sha256": "506439cae247d998a027a00b18a3a2c89b9c5f56653b452363a3b5779cd55fba"
+        }
+      }
+    },
+    "human-quality5": {
+      "dataset": "human",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-q",
+        "5",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 256,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 256,
+        "reverse_complemented": null,
+        "read1_with_adapter": null,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 18432,
+        "input_read1": 18432,
+        "input_read2": null,
+        "quality_trimmed": 1882,
+        "quality_trimmed_read1": 1882,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 16550,
+        "output_read1": 16550,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 39217,
+          "sha256": "6a61c00d5b63b0a803d887994ece2cf0169846f0148657bb616a205ca794be99"
+        }
+      }
+    },
+    "human-quality5-min20": {
+      "dataset": "human",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-q",
+        "5",
+        "-m",
+        "20",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 256,
+        "filtered": {
+          "too_short": 10,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 246,
+        "reverse_complemented": null,
+        "read1_with_adapter": null,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 18432,
+        "input_read1": 18432,
+        "input_read2": null,
+        "quality_trimmed": 1882,
+        "quality_trimmed_read1": 1882,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 16479,
+        "output_read1": 16479,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 38836,
+          "sha256": "32b84cdd7c40b0603a6c3ccff5ee754f6356730c3bf7a21d7705c71f6aae77e1"
+        }
+      }
+    },
+    "yeast-min80": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-m",
+        "80",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": 138,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 246,
+        "reverse_complemented": null,
+        "read1_with_adapter": 205,
+        "read2_with_adapter": 209
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 47759,
+        "output_read1": 23884,
+        "output_read2": 23875
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 60928,
+          "sha256": "c49f43ace2dd4463f5d0f62b4e01314dfc4e58333ea4ac18b4913ea7d88727b0"
+        },
+        "out_2.fastq": {
+          "bytes": 60910,
+          "sha256": "9812a3bbf6350e9952cb758258713c3c960414ea78599e871b7cd48b3e2fd126"
+        }
+      }
+    },
+    "yeast-discard-untrimmed": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "--discard-untrimmed",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": 182
+        },
+        "output": 202,
+        "reverse_complemented": null,
+        "read1_with_adapter": 205,
+        "read2_with_adapter": 209
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 28776,
+        "output_read1": 14388,
+        "output_read2": 14388
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 39596,
+          "sha256": "3811a57b67adc7eb8b58a0d2447b61ff0bf3befcf0ada84c67781941bba909cc"
+        },
+        "out_2.fastq": {
+          "bytes": 39596,
+          "sha256": "ae6f5b49ec77853c1dcdc58b72b023bd0c1f6ae1dc62bdb875f5971bca2dc614"
+        }
+      }
+    },
+    "yeast-discard-trimmed": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "--discard-trimmed",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": 212,
+          "discard_untrimmed": null
+        },
+        "output": 172,
+        "reverse_complemented": null,
+        "read1_with_adapter": 205,
+        "read2_with_adapter": 209
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 34744,
+        "output_read1": 17372,
+        "output_read2": 17372
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 43928,
+          "sha256": "6ed5efc2f10bb79d0e8871b906424afff36f8183344e7aaaefa82ab12726e696"
+        },
+        "out_2.fastq": {
+          "bytes": 43928,
+          "sha256": "df612ec5ea9454bb0202b95e4b22730feb930f955587a2ffd9e13f391be0fb5c"
+        }
+      }
+    },
+    "yeast-trim-n": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "--trim-n",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": null,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 77375,
+        "output_read1": 38784,
+        "output_read2": 38591
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 98106,
+          "sha256": "1a586cc2fd113f48c72ac11154f2aab4b47dfa475f9d6c5b343fdcfa93d88f5f"
+        },
+        "out_2.fastq": {
+          "bytes": 97720,
+          "sha256": "591006e4300fa929d464a26f40a317506cb4bbd3908c3c0d3d649eaf22cbccce"
+        }
+      }
+    },
+    "yeast-fixed": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-u",
+        "5",
+        "-U",
+        "7",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": null,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 72960,
+        "output_read1": 36864,
+        "output_read2": 36096
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 94266,
+          "sha256": "e8924160f14d2ca6f97bae61190646c1d2070dc71078c5ff0da40f45a5ed047e"
+        },
+        "out_2.fastq": {
+          "bytes": 92730,
+          "sha256": "a21dfb9fbc53eaf43ecfd4645db78233f4a9485aeab191cdff6b56cc6cebcef0"
+        }
+      }
+    },
+    "yeast-exact": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-e",
+        "0",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 200,
+        "read2_with_adapter": 198
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 65887,
+        "output_read1": 32851,
+        "output_read2": 33036
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 86240,
+          "sha256": "dc2fc244007436dbd76c8d30d2c1dadfe128a42a147bf2e6e2bea6c164a09ef2"
+        },
+        "out_2.fastq": {
+          "bytes": 86610,
+          "sha256": "4d6ecf6e58c8c8109f2acb045dad5df1e8ea789d2aa776656ab0df354eb4ef5a"
+        }
+      }
+    },
+    "yeast-overlap20": {
+      "dataset": "yeast",
+      "paired": true,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-O",
+        "20",
+        "-o",
+        "out_1.fastq",
+        "-p",
+        "out_2.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 154,
+        "read2_with_adapter": 154
+      },
+      "basepair_counts": {
+        "input": 77568,
+        "input_read1": 38784,
+        "input_read2": 38784,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 66810,
+        "output_read1": 33405,
+        "output_read2": 33405
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 87348,
+          "sha256": "87030191258a36630add82eae788245f651e351d1f5830822520df89aca541f9"
+        },
+        "out_2.fastq": {
+          "bytes": 87348,
+          "sha256": "67e31dcc21c0bcb46852dca5d809cd66d964c524a373a91ae3d9566b9e5ce026"
+        }
+      }
+    },
+    "yeast-five-prime": {
+      "dataset": "yeast",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-g",
+        "CTAAAACTTGCC",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 15,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 38784,
+        "input_read1": 38784,
+        "input_read2": null,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 38377,
+        "output_read1": 38377,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 97292,
+          "sha256": "2af47861ab7f05b19c9e4a4ffe62fadeece6567c4c185aebd7549f756740d428"
+        }
+      }
+    },
+    "yeast-anchored-five-prime": {
+      "dataset": "yeast",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-g",
+        "^CTAAAACTTGCC",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 4,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 38784,
+        "input_read1": 38784,
+        "input_read2": null,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 38736,
+        "output_read1": 38736,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 98010,
+          "sha256": "467cffce629765a3cc622f9c24c9914e11b196f6b62f953ef3651c46b6571bb1"
+        }
+      }
+    },
+    "yeast-anchored-three-prime": {
+      "dataset": "yeast",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA$",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 45,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 38784,
+        "input_read1": 38784,
+        "input_read2": null,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 37266,
+        "output_read1": 37266,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 95070,
+          "sha256": "b9fc6de26f9a95661d928d98f9e3f670836adecab140027096abe52c7a47787b"
+        }
+      }
+    },
+    "yeast-linked": {
+      "dataset": "yeast",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "^CTAAAACTTGCC...AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 4,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 38784,
+        "input_read1": 38784,
+        "input_read2": null,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 38628,
+        "output_read1": 38628,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 97794,
+          "sha256": "95090bb394e68db04afaaf40c30d4174385c9b7f451c7da19024698d45e69076"
+        }
+      }
+    },
+    "yeast-adapter-wildcard": {
+      "dataset": "yeast",
+      "paired": false,
+      "argv": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAANAGC",
+        "-o",
+        "out_1.fastq",
+        "--json",
+        "report.json",
+        "reads_1.fastq"
+      ],
+      "read_counts": {
+        "input": 384,
+        "filtered": {
+          "too_short": null,
+          "too_long": null,
+          "too_many_n": null,
+          "too_many_expected_errors": null,
+          "casava_filtered": null,
+          "discard_trimmed": null,
+          "discard_untrimmed": null
+        },
+        "output": 384,
+        "reverse_complemented": null,
+        "read1_with_adapter": 205,
+        "read2_with_adapter": null
+      },
+      "basepair_counts": {
+        "input": 38784,
+        "input_read1": 38784,
+        "input_read2": null,
+        "quality_trimmed": null,
+        "quality_trimmed_read1": null,
+        "quality_trimmed_read2": null,
+        "poly_a_trimmed": null,
+        "poly_a_trimmed_read1": null,
+        "poly_a_trimmed_read2": null,
+        "output": 32758,
+        "output_read1": 32758,
+        "output_read2": null
+      },
+      "outputs": {
+        "out_1.fastq": {
+          "bytes": 86054,
+          "sha256": "3b69ece09944a12c744574b80c68c009921c38cee53da6a2a133f10923197c25"
+        }
+      }
+    }
+  }
+}

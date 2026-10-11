@@ -1,0 +1,39 @@
+{
+  "commands": {
+    "paired": {
+      "label": "Trim paired reads",
+      "description": "Trim the listed 3′ adapters and bases below quality 5. Discard pairs if either trimmed read is shorter than 20 bases.",
+      "args": ["--cores", "1", "-q", "5", "-m", "20", "-a", "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA", "-A", "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", "--json", "cutadapt.json", "-o", "trimmed_1.fastq", "-p", "trimmed_2.fastq", "reads_1.fastq", "reads_2.fastq"],
+      "outputs": ["trimmed_1.fastq", "trimmed_2.fastq", "cutadapt.json"],
+      "outputDirectories": []
+    },
+    "single": {
+      "label": "Trim one read file",
+      "description": "Trim the listed 3′ adapter and bases below quality 5 from the first read file. Discard trimmed reads shorter than 20 bases.",
+      "args": ["--cores", "1", "-q", "5", "-m", "20", "-a", "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA", "--json", "cutadapt.json", "-o", "trimmed.fastq", "reads_1.fastq"],
+      "outputs": ["trimmed.fastq", "cutadapt.json"],
+      "outputDirectories": []
+    },
+    "help": {
+      "label": "Show help",
+      "description": "Show Cutadapt's command-line options. No input files are needed.",
+      "args": ["--help"],
+      "outputs": [],
+      "outputDirectories": []
+    }
+  },
+  "datasets": {
+    "human": {
+      "label": "Human reads",
+      "description": "A small set of real human read pairs recovered from a BAM file. These reads have already been processed; their retained quality scores allow quality-trimming comparisons.",
+      "path": "../../datasets/cutadapt/human/",
+      "files": ["reads_1.fastq", "reads_2.fastq"]
+    },
+    "yeast": {
+      "label": "Yeast reads",
+      "description": "A small set of real yeast read pairs from raw FASTQ files, selected to include reads with adapter sequence. Results describe this selected subset.",
+      "path": "../../datasets/cutadapt/yeast/",
+      "files": ["reads_1.fastq", "reads_2.fastq"]
+    }
+  }
+}

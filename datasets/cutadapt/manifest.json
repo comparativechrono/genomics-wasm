@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-10-11",
+  "purpose": "Compact unchanged real read fixtures for native/patched-native/WebAssembly Cutadapt equivalence and meaningful trimming-option tests, not an accuracy or contamination-prevalence benchmark.",
+  "sources": {
+    "nfcore-SRR6357070_1.fastq.gz": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/SRR6357070_1.fastq.gz",
+      "sha256": "3f50541fa9cf2bedc87e7b682ada0fccfdfcd6d27b9bb81f17be230ff140ebe7",
+      "bytes": 2239317,
+      "cachePath": "build/cutadapt-sources/nfcore-SRR6357070_1.fastq.gz",
+      "usedForData": true
+    },
+    "nfcore-SRR6357070_2.fastq.gz": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/SRR6357070_2.fastq.gz",
+      "sha256": "8590e1e01e568fba256aa7dced40519604cbb111ee44ab106a3dcb869660aaf4",
+      "bytes": 2232117,
+      "cachePath": "build/cutadapt-sources/nfcore-SRR6357070_2.fastq.gz",
+      "usedForData": true
+    }
+  },
+  "datasets": {
+    "human": {
+      "name": "HeLa BAM-derived quality subset",
+      "organism": "Homo sapiens",
+      "run_accession": "ERR127306",
+      "read_pairs": 256,
+      "read1": "human/reads_1.fastq",
+      "read2": "human/reads_2.fastq",
+      "read1Gzip": "human/reads_1.fastq.gz",
+      "read2Gzip": "human/reads_2.fastq.gz",
+      "readSource": "Real biological reads, restored from public TopHat BAM; preserved numeric Phred qualities range0\u201310; not raw sequencer FASTQ.",
+      "adapters": {
+        "read1": "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "read2": "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "commonPrefix": "AGATCGGAAGAGC",
+        "interpretation": "Illumina-compatible user-configured sequence queries with exact full-length occurrences in the raw yeast source; not per-read contamination ground truth or an asserted kit identity."
+      },
+      "observations": {
+        "readPairs": 256,
+        "readRecords": 512,
+        "totalBases": 36864,
+        "mates": {
+          "read1": {
+            "records": 256,
+            "bases": 18432,
+            "readLengthCounts": {
+              "72": 256
+            },
+            "phredMin": 0,
+            "phredMax": 10,
+            "exactAdapterSeedRecords": 0,
+            "exactFullAdapterRecords": 0,
+            "containsNRecords": 0,
+            "terminalNRecords": 0,
+            "terminalNBases": 0,
+            "tailBelowQ20Records": 256
+          },
+          "read2": {
+            "records": 256,
+            "bases": 18432,
+            "readLengthCounts": {
+              "72": 256
+            },
+            "phredMin": 0,
+            "phredMax": 10,
+            "exactAdapterSeedRecords": 0,
+            "exactFullAdapterRecords": 0,
+            "containsNRecords": 0,
+            "terminalNRecords": 0,
+            "terminalNBases": 0,
+            "tailBelowQ20Records": 256
+          }
+        }
+      },
+      "provenance": "provenance/human-source.json"
+    },
+    "yeast": {
+      "name": "Yeast raw adapter-enriched subset",
+      "organism": "Saccharomyces cerevisiae",
+      "run_accession": "SRR6357070",
+      "read_pairs": 384,
+      "read1": "yeast/reads_1.fastq",
+      "read2": "yeast/reads_2.fastq",
+      "read1Gzip": "yeast/reads_1.fastq.gz",
+      "read2Gzip": "yeast/reads_2.fastq.gz",
+      "readSource": "Real biological raw FASTQ records copied verbatim from pinned nf-core SRR6357070 sources; adapter/quality-stratified selection.",
+      "adapters": {
+        "read1": "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "read2": "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "commonPrefix": "AGATCGGAAGAGC",
+        "interpretation": "Illumina-compatible user-configured sequence queries with exact full-length occurrences in the raw yeast source; not per-read contamination ground truth or an asserted kit identity."
+      },
+      "observations": {
+        "readPairs": 384,
+        "readRecords": 768,
+        "totalBases": 77568,
+        "mates": {
+          "read1": {
+            "records": 384,
+            "bases": 38784,
+            "readLengthCounts": {
+              "101": 384
+            },
+            "phredMin": 2,
+            "phredMax": 37,
+            "exactAdapterSeedRecords": 189,
+            "exactFullAdapterRecords": 100,
+            "containsNRecords": 1,
+            "terminalNRecords": 0,
+            "terminalNBases": 0,
+            "tailBelowQ20Records": 122
+          },
+          "read2": {
+            "records": 384,
+            "bases": 38784,
+            "readLengthCounts": {
+              "101": 384
+            },
+            "phredMin": 2,
+            "phredMax": 37,
+            "exactAdapterSeedRecords": 189,
+            "exactFullAdapterRecords": 96,
+            "containsNRecords": 4,
+            "terminalNRecords": 2,
+            "terminalNBases": 193,
+            "tailBelowQ20Records": 126
+          }
+        }
+      },
+      "provenance": "provenance/yeast-source.json",
+      "selection": "yeast/selection.tsv",
+      "selectionPopulation": "yeast/selection-population.json",
+      "matchingExamples": {
+        "observedBiologicalPrefix": "CTAAAACTTGCC",
+        "prefixEvidenceReadNames": [
+          "SRR6357070.9420721",
+          "SRR6357070.27904059"
+        ],
+        "fivePrime": "CTAAAACTTGCC",
+        "anchoredFivePrime": "^CTAAAACTTGCC",
+        "anchoredThreePrime": "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA$",
+        "linked": "^CTAAAACTTGCC...AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "linkedBothRequired": "^CTAAAACTTGCC...AGATCGGAAGAGCACACGTCTGAACTCCAGTCA;required",
+        "wildcard": "AGATCGGAANAGC",
+        "interpretation": "The 5-prime query is an observed biological prefix for interface/algorithm option tests, not asserted primer/adapter contamination. Reads are unchanged. Linked default versus explicit required semantics are distinct."
+      }
+    }
+  },
+  "native_smoke": "provenance/native-smoke.json",
+  "native_example_report": "provenance/native-example-report.json",
+  "regeneration": {
+    "script": "scripts/fetch-cutadapt-test-data.py",
+    "python": "3.10+ standard library only; prepared with3.12.14",
+    "zlibPrepared": "1.3.2",
+    "cache": "build/cutadapt-sources",
+    "sourceBytes": 4471434,
+    "requirements": [],
+    "scope": "Copies the included immutable human BAM-derived FASTQ snapshots and reselects unchanged yeast pairs from two pinned raw source files. Does not redownload or reextract the349MB human source BAM package.",
+    "commands": [
+      "python3 scripts/fetch-cutadapt-test-data.py --verify",
+      "python3 scripts/fetch-cutadapt-test-data.py --fetch-sources",
+      "python3 scripts/fetch-cutadapt-test-data.py --regenerate"
+    ],
+    "files": {
+      "scripts/fetch-cutadapt-test-data.py": {
+        "bytes": 7849,
+        "sha256": "5385765e73a53a6680ace2618c7f3fedc0ab9d33314b74c29247d9e3283c2d94"
+      }
+    }
+  },
+  "files": {
+    "README.md": {
+      "bytes": 6971,
+      "sha256": "c7be4ee180c4589ddbeff19caf28b2bd93b0dbd25b4627d598ae207b8e36bfb8",
+      "generated": false
+    },
+    "human/reads_1.fastq": {
+      "bytes": 42981,
+      "sha256": "300bbde9e95c66ea90c003ec0ca3a40f1dc7a012862e38e11e54ae47865ca70e",
+      "generated": true
+    },
+    "human/reads_1.fastq.gz": {
+      "bytes": 11984,
+      "sha256": "bfc126eea08aa1eb75995d94927c1ad737914d3d539fd177ae4a8c2c478fdf72",
+      "generated": true
+    },
+    "human/reads_2.fastq": {
+      "bytes": 42981,
+      "sha256": "f7147fe368ea37ac1f5fbf59274d4088ba719fe0779a9d0b9c89a75d692fe53f",
+      "generated": true
+    },
+    "human/reads_2.fastq.gz": {
+      "bytes": 12128,
+      "sha256": "7aa4769adeaa429b9897f0f45aefac166b557ead833f885dab90e7479f4dfda5",
+      "generated": true
+    },
+    "provenance/ERR127306.xml": {
+      "bytes": 3086,
+      "sha256": "c0e08c36345479e4c246a5056b23088025a3718b00c2a25659c259ab1d296462",
+      "generated": false
+    },
+    "provenance/SRR6357070.xml": {
+      "bytes": 2614,
+      "sha256": "a26bf38d74fa6995a5ff396aac5b9eaa57166edb0c3d222ec086465b26b10be0",
+      "generated": false
+    },
+    "provenance/human-package-DESCRIPTION.txt": {
+      "bytes": 1249,
+      "sha256": "159d570768310fd36cab1312bbd75cd7066a6cf79314cd36d1719cfbcb6f239b",
+      "generated": false
+    },
+    "provenance/human-source.json": {
+      "bytes": 3349,
+      "sha256": "3bbbac082e880d1b734dcb21cb00136b01809cf32b90e80cee8e1c11e5b45cf6",
+      "generated": false
+    },
+    "provenance/inputs/human/reads_1.fastq": {
+      "bytes": 42981,
+      "sha256": "300bbde9e95c66ea90c003ec0ca3a40f1dc7a012862e38e11e54ae47865ca70e",
+      "generated": false
+    },
+    "provenance/inputs/human/reads_2.fastq": {
+      "bytes": 42981,
+      "sha256": "f7147fe368ea37ac1f5fbf59274d4088ba719fe0779a9d0b9c89a75d692fe53f",
+      "generated": false
+    },
+    "provenance/native-example-report.json": {
+      "bytes": 8054,
+      "sha256": "ece77a3705a2acef845951359bc0a325d666e80f24b3af8ca7a9b9ab337f85dd",
+      "generated": false
+    },
+    "provenance/native-smoke.json": {
+      "bytes": 25439,
+      "sha256": "c3e08c07c24114510a103cd14fe869c96bd1c147191fec62010f1526bede787e",
+      "generated": false
+    },
+    "provenance/nfcore-LICENSE.txt": {
+      "bytes": 1064,
+      "sha256": "1fa2a62f20d23902c7aad04f3d728fbfc9d153df472e8f2ef163322a8c5557c8",
+      "generated": false
+    },
+    "provenance/nfcore-rnaseq-README.md": {
+      "bytes": 13240,
+      "sha256": "7c4fbdcc513b935f02735bc829834c891c4165e5c815bd47aa6ece2dbcdc23eb",
+      "generated": false
+    },
+    "provenance/yeast-source.json": {
+      "bytes": 2816,
+      "sha256": "db354a0995adb45262f9b6d6f42db6d59fbb5daea8792a2159ff28f142f12284",
+      "generated": false
+    },
+    "yeast/reads_1.fastq": {
+      "bytes": 98106,
+      "sha256": "1a586cc2fd113f48c72ac11154f2aab4b47dfa475f9d6c5b343fdcfa93d88f5f",
+      "generated": true
+    },
+    "yeast/reads_1.fastq.gz": {
+      "bytes": 17500,
+      "sha256": "44e70e1cc31195e497633fafc09df4ce28be02d2d7f2a851609eb3f4d83ec46f",
+      "generated": true
+    },
+    "yeast/reads_2.fastq": {
+      "bytes": 98106,
+      "sha256": "8eb2cd6f30c53d74075da14d30ed7102bb68dc0755467e5b44cf6c33a176dd8f",
+      "generated": true
+    },
+    "yeast/reads_2.fastq.gz": {
+      "bytes": 17545,
+      "sha256": "7315fc4f35c4fd885ef160e158d0d82c91cd705e3a6f050573d577d919250c9c",
+      "generated": true
+    },
+    "yeast/selection-population.json": {
+      "bytes": 431,
+      "sha256": "5264e488ed91b5850352e3d9338e96d7fabf8e08719a4bc12a6439809f25d164",
+      "generated": true
+    },
+    "yeast/selection.tsv": {
+      "bytes": 18712,
+      "sha256": "45e89d7fd9caad08d600a8c113e48518b58ba22952bf8b76638630e753eb9128",
+      "generated": true
+    }
+  }
+}

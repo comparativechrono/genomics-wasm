@@ -1,0 +1,40 @@
+{
+  "origin": {
+    "organism": "Saccharomyces cerevisiae",
+    "sample": "Wild-type total RNA-Seq biological replicate 1",
+    "run_accession": "SRR6357070",
+    "experiment_accession": "SRX3453465",
+    "study_accession": "SRP126328",
+    "geo_series": "GSE110004",
+    "geo_sample": "GSM2879618",
+    "sample_accession": "SRS2742168",
+    "library_strategy": "RNA-Seq",
+    "instrument": "Illumina HiSeq 2500",
+    "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/SRR6357070",
+    "source_repository": "https://github.com/nf-core/test-datasets",
+    "source_commit": "cad884e7fbe5617dcd55bdd07d9ddf65b54febe4",
+    "source_publication_doi": "10.1016/j.molcel.2018.10.018",
+    "reference": {
+      "assembly": "S. cerevisiae R64-1-1 (Ensembl iGenomes, as documented by nf-core)",
+      "chromosome": "I",
+      "start_1based": 1,
+      "end_1based_inclusive": 230218,
+      "length": 230218,
+      "note": "Copy upstream reference/genome.fa unchanged. Nuclear chromosome I includes annotated introns."
+    },
+    "upstream_fastq_pairs": 50000,
+    "fastq_pairs": 256,
+    "read_length": 101,
+    "junction_count": 5,
+    "junction_source": "Consecutive exon features grouped by transcript_id and strand, on contig I of the pinned nf-core reference/genes.gtf. These are existing source annotations, not inferred from our aligner results.",
+    "source_selection_bam": "nf-core WT_REP1.sorted.bam produced by STAR 2.7.11b. It also contains SRR6357071; selection explicitly restricts names to SRR6357070.",
+    "transformation": "From source BAM, retain complete primary SRR6357070 pairs on I with NH:i:1 for both mates. Divide by whether an N operation matches an annotated intron. Take first 128 names lexicographically in each group. Copy their original untrimmed FASTQ records unchanged from the two pinned nf-core files, in source order. The BAM is used only to choose read names, not to reconstruct sequences or qualities.",
+    "limitations": [
+      "Upstream nf-core enriched reads for chromosome I using Kraken2, then sampled 50,000 pairs with seqtk seed 100; its full procedure is preserved in provenance/nfcore-rnaseq-README.md.",
+      "Our further selection enriches for annotated splice-junction reads. It cannot measure splice-junction sensitivity or whole-genome specificity.",
+      "Upstream selection BAM contains trimmed reads and some very long apparent introns; our positive splice group requires a junction matching the source exon annotation. Distributed FASTQ reads remain the untrimmed original nf-core records.",
+      "No variant, junction or transcript truth set is supplied."
+    ]
+  },
+  "note": "This new Cutadapt selection uses the two raw nf-core FASTQ sources directly, not the previous alignment/splice-based fixture selection. Its raw records are unchanged."
+}

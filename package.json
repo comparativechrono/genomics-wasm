@@ -13,7 +13,9 @@
     "validate:quant": "node scripts/validate-quant.mjs",
     "package:quant": "python3 scripts/package-quant.py",
     "validate:rna-analysis": "node scripts/validate-rna-analysis.mjs",
-    "package:rna-analysis": "python3 scripts/package-rna-analysis.py"
+    "package:rna-analysis": "python3 scripts/package-rna-analysis.py",
+    "validate:cutadapt": "node scripts/validate-cutadapt.mjs",
+    "package:cutadapt": "python3 scripts/package-cutadapt.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

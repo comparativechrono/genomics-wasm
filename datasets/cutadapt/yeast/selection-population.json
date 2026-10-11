@@ -1,0 +1,16 @@
+{
+  "source_pairs": 50000,
+  "population": {
+    "full_adapter_both": 281,
+    "low_quality_tail_no_seed": 16907,
+    "ordinary_no_seed": 31116,
+    "other_adapter_seed": 1696
+  },
+  "selected": {
+    "full_adapter_both": 96,
+    "low_quality_tail_no_seed": 96,
+    "ordinary_no_seed": 96,
+    "other_adapter_seed": 96
+  },
+  "rule": "First 96 source-order pairs in each mutually exclusive stratum; output retains source order."
+}

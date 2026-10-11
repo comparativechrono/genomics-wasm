@@ -20,6 +20,7 @@ DESeq2 session retains its R objects until the session is closed.
 | [FreeBayes](tools/freebayes/README.md) | 1.3.6 | Local BAM/SAM variant calling, one process |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
+| [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
 | [HISAT2](tools/hisat2/README.md) | 2.2.2 | Small-index building and spliced RNA alignment, one thread |
 | [minimap2](tools/minimap2/README.md) | 2.31 | Indexing and alignment, including spliced RNA modes, one thread |
 | [kallisto](tools/kallisto/README.md) | 0.52.0 | Transcript indexing and bulk RNA-seq quantification, one thread |
@@ -49,11 +50,19 @@ output files between commands and includes real human and yeast RNA-seq alignmen
 with annotations. featureCounts uses shared memory and needs cross-origin isolation;
 StringTie and mosdepth can use ordinary static hosting.
 
+Cutadapt has its own [browser example](examples/cutadapt/README.md) and
+[JavaScript API](runtime/CUTADAPT.md). Its Python code and compiled Cython
+extensions run in the bundled Pyodide runtime. All runtime files are local;
+ordinary static hosting is sufficient. The example includes real human and
+yeast reads with documented selection and prior processing.
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
 Node.js 20 or newer. BWA-MEM2 and HISAT2 use Clang for their native baselines. The reproducible
-WebAssembly compiler target is Emscripten 3.1.64.
+WebAssembly compiler target for the C/C++ tools is Emscripten 3.1.64.
+Cutadapt uses Python 3.14.2 and a separate pinned Pyodide/Emscripten toolchain;
+see its tool README before building it.
 
 ```sh
 npm ci
@@ -174,6 +183,20 @@ program is checked against its unchanged native build and a native build with
 the portability patches. See [comparison rules](validation/rna-analysis/README.md)
 and the tool READMEs for the tested options and restrictions.
 
+The **Build and validate Cutadapt** workflow builds the unchanged native,
+patched native and WebAssembly versions from pinned inputs:
+
+```sh
+python3.14 scripts/build-cutadapt.py all
+python3 scripts/fetch-cutadapt-test-data.py --verify
+node scripts/validate-cutadapt.mjs --engine node
+```
+
+Repeat with `--engine chromium`, `firefox` and `webkit` for browser comparisons.
+The [Cutadapt comparison rules](validation/cutadapt/README.md) cover read
+sequences, qualities, pairing, output order and reported trimming statistics.
+Selected options must have an observed effect on the real test reads.
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -196,6 +219,11 @@ four engines pass. Each ZIP contains one compiled program, its runner, a browser
 example configured for that program, the real input data, source archives, patches,
 licences and comparison reports. The workflow's final artifact is
 `rna-analysis-packages`; compiled build artifacts alone have not passed the release gate.
+
+Cutadapt's final workflow artifact is `cutadapt-package`. Its independent ZIP
+is assembled by `scripts/package-cutadapt.py` only after all four engines pass.
+It contains the Python/WebAssembly runtime, compiled wheels, browser example,
+real reads, comparison reports, source archives and licence notices.
 
 ## Licence
 

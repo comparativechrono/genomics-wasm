@@ -17,6 +17,11 @@ directory under `tools/`.
   Its package includes the pinned zlib and bzip2 sources and notices.
 - HISAT2: Daehwan Kim and contributors, including code from Bowtie 2;
   GPL-3.0-or-later. Source: https://github.com/DaehwanKimLab/hisat2
+- Cutadapt, dnaio and xopen: Marcel Martin and contributors; MIT.
+  Source: https://github.com/marcelm/cutadapt
+  The package includes Pyodide (MPL-2.0), CPython and their runtime libraries,
+  with their corresponding sources and individual licences. See
+  `tools/cutadapt/runtime-notices/` and the pinned source manifests.
 - minimap2: Heng Li and contributors; MIT. Source: https://github.com/lh3/minimap2
 - kallisto: Nicolas Bray, Harold Pimentel, Páll Melsted, Lior Pachter and
   contributors; BSD-2-Clause. Source: https://github.com/pachterlab/kallisto

@@ -192,3 +192,11 @@ human and yeast RNA-seq reads, matching annotations and reference sequences.
 They support featureCounts, StringTie and mosdepth comparisons. The fixture
 manifest records source checksums, transformations and file hashes. These
 restricted subsets do not establish performance on whole samples.
+
+## Cutadapt reads
+
+The [Cutadapt fixtures](cutadapt/README.md) contain 384 real yeast read pairs
+selected to exercise adapter and quality trimming, and 256 real human read
+pairs recovered from a public BAM. The human qualities retain their prior
+processing; they are not presented as raw instrument qualities. Both datasets
+include plain and gzip FASTQ, exact provenance and reproducible preparation.

@@ -1,0 +1,694 @@
+{
+  "schema": 1,
+  "tool": "cutadapt",
+  "version": "5.2",
+  "archive": "cutadapt-5.2.tar.gz",
+  "url": "https://files.pythonhosted.org/packages/25/0a/2b4007e4577dd3e19affdf7aa716ebf9642e224d68a9205b2081d42ed08a/cutadapt-5.2.tar.gz",
+  "sha256": "2394deead42ecae5fe0fdf369e35f3e2afed770e14059582272779c2e8295d3c",
+  "python": "3.14.2",
+  "pyodide": "314.0.7",
+  "emscripten": "5.0.3",
+  "dependencies": {
+    "dnaio": {
+      "version": "1.2.4",
+      "archive": "dnaio-1.2.4.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/a9/f2/3b4d7f4ac4fc25742fde4c5b50ed1bc60ab731cf8cabd3089dd11e4ea1c9/dnaio-1.2.4.tar.gz",
+      "sha256": "a7570311f29e8b3c1ea39a60f57b7baf8dad8f2508595c58d4278c5571463166"
+    },
+    "xopen": {
+      "version": "2.1.0",
+      "archive": "xopen-2.1.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/77/bb/74a5222fc975fccb9f8bfb62613ca42a5a28008362c598df09806ecd12c1/xopen-2.1.0.tar.gz",
+      "sha256": "06584821588f813563863b63d5e02568a4328661b7507ea38c432f24c69ea4b7"
+    },
+    "pyodide-core": {
+      "version": "314.0.7",
+      "archive": "pyodide-core-314.0.7.tar.bz2",
+      "url": "https://github.com/pyodide/pyodide/releases/download/314.0.7/pyodide-core-314.0.7.tar.bz2",
+      "sha256": "2abdcc2e35208af406e07724cffa85bc582ced97e9028383ecf5462541393f95"
+    },
+    "xbuildenv": {
+      "version": "314.0.7",
+      "archive": "xbuildenv-314.0.7.tar.bz2",
+      "url": "https://github.com/pyodide/pyodide/releases/download/314.0.7/xbuildenv-314.0.7.tar.bz2",
+      "sha256": "9d69e6cd67d36ecb97c02c2df4ba4fbc4a66c81e3bb9edda48f57483d3ce9bc9"
+    },
+    "emsdk": {
+      "version": "5.0.3",
+      "archive": "emsdk-5.0.3.tar.gz",
+      "url": "https://codeload.github.com/emscripten-core/emsdk/tar.gz/refs/tags/5.0.3",
+      "sha256": "9a44a58bca0a3ea594ea7340d9a726cb58c772144dd37406d1c4e921823a75eb"
+    },
+    "runtime-pyodide": {
+      "name": "pyodide",
+      "version": "314.0.7",
+      "archive": "pyodide-314.0.7.tar.gz",
+      "url": "https://github.com/pyodide/pyodide/archive/refs/tags/314.0.7.tar.gz",
+      "sha256": "0731cd39bd1897c8cf0cac4da5cf9752594e5427cf4bad584200f8c9b617b9ef",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/pyodide/LICENSE",
+        "tools/cutadapt/runtime-notices/pyodide/src__js__vendor__stackframe__LICENSE"
+      ]
+    },
+    "runtime-emscripten": {
+      "name": "emscripten",
+      "version": "5.0.3",
+      "archive": "emscripten-5.0.3.tar.gz",
+      "url": "https://github.com/emscripten-core/emscripten/archive/refs/tags/5.0.3.tar.gz",
+      "sha256": "b32ce4192bae12f15b06b1eec67b7ea6ac8ae809fc81230a43354c3c24251360",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/emscripten/LICENSE",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__compiler-rt__LICENSE.TXT",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__libc__musl__COPYRIGHT",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__libcxx__LICENSE.TXT",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__libcxxabi__LICENSE.TXT",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__libunwind__LICENSE.TXT",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__llvm-libc__LICENSE.TXT",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__mimalloc__LICENSE",
+        "tools/cutadapt/runtime-notices/emscripten/third_party__mini-lz4.js.notice",
+        "tools/cutadapt/runtime-notices/emscripten/system__lib__dlmalloc.c.notice"
+      ]
+    },
+    "runtime-libffi": {
+      "name": "libffi",
+      "version": "f08493d249d2067c8b3207ba46693dd858f95db3",
+      "archive": "libffi-f08493d249d2067c8b3207ba46693dd858f95db3.tar.gz",
+      "url": "https://github.com/libffi/libffi/archive/f08493d249d2067c8b3207ba46693dd858f95db3.tar.gz",
+      "sha256": "0c4e5647b79e21b900eb872dd98a3e0a66be12b36ad89677f61fd901a2615778",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/libffi/LICENSE",
+        "tools/cutadapt/runtime-notices/libffi/LICENSE-BUILDTOOLS"
+      ]
+    },
+    "runtime-hiwire": {
+      "name": "hiwire",
+      "version": "6a1e67280a15d929ebeceee54a6358c9c8d5f697",
+      "archive": "hiwire-6a1e67280a15d929ebeceee54a6358c9c8d5f697.tar.gz",
+      "url": "https://github.com/pyodide/hiwire/archive/6a1e67280a15d929ebeceee54a6358c9c8d5f697.tar.gz",
+      "sha256": "0d64144f149c0de3bd157551421833c6c16fdc0492c312a6325ffc25d185c93c",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/hiwire/LICENSE"
+      ]
+    },
+    "runtime-xz": {
+      "name": "xz",
+      "version": "5.2.2",
+      "archive": "xz-5.2.2.tar.gz",
+      "url": "https://github.com/xz-mirror/xz/releases/download/v5.2.2/xz-5.2.2.tar.gz",
+      "sha256": "73df4d5d34f0468bd57d09f2d8af363e95ed6cc3a4a86129d2f2c366259902a2",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/xz/COPYING",
+        "tools/cutadapt/runtime-notices/xz/COPYING.LGPLv2.1",
+        "tools/cutadapt/runtime-notices/xz/COPYING.GPLv2",
+        "tools/cutadapt/runtime-notices/xz/COPYING.GPLv3"
+      ]
+    },
+    "runtime-zstd": {
+      "name": "zstd",
+      "version": "1.5.7",
+      "archive": "cpython-source-deps-zstd-1.5.7.tar.gz",
+      "url": "https://github.com/python/cpython-source-deps/archive/refs/tags/zstd-1.5.7.tar.gz",
+      "sha256": "f24b52470d12f466e9fa4fcc94e6c530625ada51d7b36de7fdc6ed7e6f499c8e",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/zstd/COPYING",
+        "tools/cutadapt/runtime-notices/zstd/LICENSE",
+        "tools/cutadapt/runtime-notices/zstd/build__LICENSE"
+      ]
+    },
+    "runtime-sqlite": {
+      "name": "sqlite",
+      "version": "3.39.0",
+      "archive": "sqlite-autoconf-3390000.tar.gz",
+      "url": "https://www.sqlite.org/2022/sqlite-autoconf-3390000.tar.gz",
+      "sha256": "e90bcaef6dd5813fcdee4e867f6b65f3c9bfd0aec0f1017f9f3bbce1e4ed09e2",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/sqlite/sqlite3.c.notice"
+      ]
+    },
+    "runtime-bzip2": {
+      "name": "bzip2",
+      "version": "1.0.6",
+      "archive": "bzip2-1.0.6.zip",
+      "url": "https://github.com/emscripten-ports/bzip2/archive/1.0.6.zip",
+      "sha256": "9628e7bc598719335ce1d1219c1a4fc241652c0a7b4d993fa82a9b98a6c5dec6",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/bzip2/LICENSE"
+      ]
+    },
+    "runtime-zlib": {
+      "name": "zlib",
+      "version": "1.3.1",
+      "archive": "zlib-1.3.1-emscripten.tar.gz",
+      "url": "https://github.com/madler/zlib/archive/refs/tags/v1.3.1.tar.gz",
+      "sha256": "17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/zlib/LICENSE"
+      ]
+    },
+    "runtime-cpython": {
+      "name": "cpython",
+      "version": "3.14.2",
+      "archive": "Python-3.14.2.tgz",
+      "url": "https://www.python.org/ftp/python/3.14.2/Python-3.14.2.tgz",
+      "sha256": "c609e078adab90e2c6bacb6afafacd5eaf60cd94cf670f1e159565725fcd448d",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/cpython/LICENSE",
+        "tools/cutadapt/runtime-notices/cpython/Doc__license.rst",
+        "tools/cutadapt/runtime-notices/cpython/Modules__expat__COPYING",
+        "tools/cutadapt/runtime-notices/cpython/Modules___decimal__libmpdec__mpdecimal.c.notice",
+        "tools/cutadapt/runtime-notices/cpython/Modules___hacl__Hacl_Hash_MD5.c.notice"
+      ]
+    },
+    "runtime-ws": {
+      "name": "ws",
+      "version": "8.18.3",
+      "archive": "ws-8.18.3.tgz",
+      "url": "https://registry.npmjs.org/ws/-/ws-8.18.3.tgz",
+      "sha256": "424be604c8e7926fc29a1f067bf2dac256af3bcea62fe30395018bbaf8a9be2a",
+      "licensePaths": [
+        "tools/cutadapt/runtime-notices/ws/LICENSE"
+      ]
+    }
+  },
+  "buildRequirements": [
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/attrs-26.1.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl",
+        "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/attrs-26.1.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/9a/8e/82a0fe20a541c03148528be8cac2408564a6c9a0cc7e9171802bc1d26985/attrs-26.1.0.tar.gz",
+        "sha256": "d03ceb89cb322a8fd706d4fb91940737b6642aa36998fe130a9bc96c985eff32"
+      }
+    },
+    {
+      "name": "auditwheel_emscripten",
+      "version": "0.3.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/auditwheel_emscripten-0.3.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/30/2e/771cb7d23bbc2fc5ef31c57f84542b27a36ad3a199203f6657326d30b095/auditwheel_emscripten-0.3.0-py3-none-any.whl",
+        "sha256": "2e6e731243d65560a9c7daccd9159cc2b6bb4e99a1625d9e5e44ab2b415a280e"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/auditwheel_emscripten-0.3.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/0c/87/17c9ff3abc9f0e031a37662aabac7ba9b9d526429579d58d8d6e308e5d13/auditwheel_emscripten-0.3.0.tar.gz",
+        "sha256": "a58fbd4adc7573548146ea64e73b3f603cbb52c7f9269cdf711818c0e9d69854"
+      }
+    },
+    {
+      "name": "build",
+      "version": "1.5.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/build-1.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/0d/fe/6bea5c9162869c5beba5d9c8abbed835ec85bf1ec1fba05a3822325c45f3/build-1.5.0-py3-none-any.whl",
+        "sha256": "13f3eecb844759ab66efec90ca17639bbf14dc06cb2fdf37a9010322d9c50a6f"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/build-1.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/78/e0/df5e171f685f82f37b12e1f208064e24244911079d7b767447d1af7e0d70/build-1.5.0.tar.gz",
+        "sha256": "302c22c3ba2a0fd5f3911918651341ebb3896176cbdec15bd421f80b1afc7647"
+      }
+    },
+    {
+      "name": "cattrs",
+      "version": "26.2.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/cattrs-26.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e8/cf/22794a399d99480486120e26e879ef008e21f5e85274c2ed591d568bb326/cattrs-26.2.1-py3-none-any.whl",
+        "sha256": "a12aaa3453dc8f633a815293179f08b7421ed18d2575c459c3c736f840beac24"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/cattrs-26.2.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/23/75/e72b839c3dc869c990b4842f3dba730bdcdf5215f68fc7955edf849a1792/cattrs-26.2.1.tar.gz",
+        "sha256": "679132bfdc225c5ee40c024fc42519954767c387f950dc6751946c586bccdc6d"
+      }
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/certifi-2026.7.22-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl",
+        "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/certifi-2026.7.22.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz",
+        "sha256": "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55"
+      }
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/18/24/bad3ac4271589df29cf5ce2f5ae490518a5739358052bd0d61209e6fea54/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "34276fd796040bf0993ab33a369aa572e6979c7aab225a88893667ad8eac8f7a"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/charset_normalizer-3.5.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz",
+        "sha256": "39de2a259fc954455c57274dc94c79d5842774e1247a016aff30bc0efed0f4ef"
+      }
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/click-8.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/58/50/6c0d534c5f134586a8e1ba4e330569e32f057e33372ae556463212fb4cd3/click-8.5.0-py3-none-any.whl",
+        "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/click-8.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c7/0e/7fa0ef50764b67090eca4114772a2abf8b6148198475e54c660b97caeee6/click-8.5.0.tar.gz",
+        "sha256": "ba0d2089de75ea0310e2dde03160e6ca10009947fb95a182f9b54021bb272e34"
+      }
+    },
+    {
+      "name": "Cython",
+      "version": "3.3.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/cython-3.3.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/9f/57/6d620ebee4fc24d89340427702f6ceaf7b956511d1f2222a88c92c1a72b7/cython-3.3.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "82f94565b6001bab8e31bf52a0911672910b5735910612a2c0f772c719670006"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/cython-3.3.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/a9/d8/4981ef716ad0e3ff0d3ef383aefc6b03c4a88dee33b272bf8e0d833001ca/cython-3.3.0.tar.gz",
+        "sha256": "eed0d93fbca7087f143b42c34b05a825849bdf17f101572c2105acfa49aa88b8"
+      }
+    },
+    {
+      "name": "distlib",
+      "version": "0.4.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/distlib-0.4.3-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/02/08/9c41fb51ab5b43eb21674aff13df270e8ba6c4b29c8624e328dc7a9482af/distlib-0.4.3-py2.py3-none-any.whl",
+        "sha256": "4b0ce306c966eb73bc3a7b6abad017c556dadd92c44701562cd528ac7fde4d5b"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/distlib-0.4.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c9/02/bd72be9134d25ed783ecbbc38a539ffaefbf90c78418c7fb7229600dbac7/distlib-0.4.3.tar.gz",
+        "sha256": "f152097224a0ae24be5a0f6bae1b9359af82133bce63f98a95f86cae1aede9ed"
+      }
+    },
+    {
+      "name": "filelock",
+      "version": "4.1.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/filelock-4.1.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ee/86/032133892a5de43b5a98200b01aadcad68cc255e274a762f08b8a76d2912/filelock-4.1.0-py3-none-any.whl",
+        "sha256": "2ce9818e3e2d8f284c1a964414447ef148d42a5fd5e2a477a7118e574b293ec1"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/filelock-4.1.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/4c/58/6fd434bec86eff7c38a3168454cb132b762b2bea9b3ac094101a2f7bc32a/filelock-4.1.0.tar.gz",
+        "sha256": "ad7f724afef953e731b1cc39bcd3a09166d72ed7fcdf29e6e88b1c3235c6715d"
+      }
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/idna-3.20-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl",
+        "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/idna-3.20.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz",
+        "sha256": "a7db850025b95ded1eae8a46181a1a6c56c92c96f0e2b005d9ff8dc0210cab44"
+      }
+    },
+    {
+      "name": "leb128",
+      "version": "1.0.9",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/leb128-1.0.9-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/0c/f6/62cd379fe8527c6d685013ebed11c85fd4fced125bde9b3c80ebd5759850/leb128-1.0.9-py2.py3-none-any.whl",
+        "sha256": "fef16ef20aca33dfdd2f4841d8004ec4acb7ed8545b63a7bc1183292c9a3e594"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/leb128-1.0.9.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/a4/3c/ef6fe994b4b45d84187fea994f124173d587f4f8ab0641693ef269e80f56/leb128-1.0.9.tar.gz",
+        "sha256": "8f8b0e2216ba8a318e2897360d9a34d88e2c968656fcb7c7bbb1aef31010f1c6"
+      }
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/markdown_it_py-4.2.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b3/81/4da04ced5a082363ecfa159c010d200ecbd959ae410c10c0264a38cac0f5/markdown_it_py-4.2.0-py3-none-any.whl",
+        "sha256": "9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/markdown_it_py-4.2.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz",
+        "sha256": "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
+      }
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/mdurl-0.1.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl",
+        "sha256": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/mdurl-0.1.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz",
+        "sha256": "bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"
+      }
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/packaging-26.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+        "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/packaging-26.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz",
+        "sha256": "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
+      }
+    },
+    {
+      "name": "pip",
+      "version": "25.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pip-25.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/44/3c/d717024885424591d5376220b5e836c2d5293ce2011523c9de23ff7bf068/pip-25.3-py3-none-any.whl",
+        "sha256": "9655943313a94722b7774661c21049070f6bbb0a1516bf02f7c8d5d9201514cd"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pip-25.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/fe/6e/74a3f0179a4a73a53d66ce57fdb4de0080a8baa1de0063de206d6167acc2/pip-25.3.tar.gz",
+        "sha256": "8d0538dbbd7babbd207f261ed969c65de439f6bc9e5dbd3b3b9a77f25d95f343"
+      }
+    },
+    {
+      "name": "platformdirs",
+      "version": "4.13.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/platformdirs-4.13.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/8d/15/1633010b26e88e872c93b67c0b6c5e174fb74cb6fb5c1472b4d51d4a8f22/platformdirs-4.13.0-py3-none-any.whl",
+        "sha256": "3dbcf4cd708f21cf876c4eaa90e58412bc4f033d87143f41b1493ff77c25b7e1"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/platformdirs-4.13.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/80/a8/66d45abadff219e36e2a824181b8f6a67e7ed4572934d6252c71c29d5731/platformdirs-4.13.0.tar.gz",
+        "sha256": "1aa0b0d3f224c1f07c295121e312a5a24a180d6ae5a8425ea1784b3e3863e9c0"
+      }
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pygments-2.21.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+        "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pygments-2.21.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz",
+        "sha256": "610ca751c9bc2492b38eb9a38a7fbc93edbbb2d7182edaf34e66ae493dee5c8c"
+      }
+    },
+    {
+      "name": "pyodide-build",
+      "version": "0.39.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyodide_build-0.39.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ba/dc/7e78309378fd03f9cb90b555639ffbdf97994d4a241ff43f0620e71531c9/pyodide_build-0.39.1-py3-none-any.whl",
+        "sha256": "80ee9e5e11ff0b4b97c6b170fb72da1293874e4a47e42324a505a7bc42d331e7"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyodide_build-0.39.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/d7/2c/607536e41516ee1968c9b40586372882d0cbb55898ec643d4e1fc8310379/pyodide_build-0.39.1.tar.gz",
+        "sha256": "c0882f7bf945c20dd60f7ceb6b186bde419c9fb5a3961533ba37a22ffaac1d6c"
+      }
+    },
+    {
+      "name": "pyodide-cli",
+      "version": "0.5.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyodide_cli-0.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/4a/07/76977bbd73c686df55fbc3685c6c336158dc11b2ba155abe3e3a802447b2/pyodide_cli-0.5.0-py3-none-any.whl",
+        "sha256": "24c02736f1d6c99396f5e9330fd30bd98db88cf49ef059b62b025fa1f5f6e29c"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyodide_cli-0.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/f1/44/fe74049e3e776bd56fae8bd9370900d6d6dc5e541299ae90cb2330a9a8a4/pyodide_cli-0.5.0.tar.gz",
+        "sha256": "14df0797e791558b6976d4612f9df9619334f8914bfe3efbdd22e3886f5275b7"
+      }
+    },
+    {
+      "name": "pyodide-lock",
+      "version": "0.2.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyodide_lock-0.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/d3/4a/bd0bfb7aabdada073774b4c7203069de4ba5cc515a92e489d3014c6a14d2/pyodide_lock-0.2.1-py3-none-any.whl",
+        "sha256": "5181ec109ab230d0539884b29b45ddb736e5df79d9378e68a2ccd41574346879"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyodide_lock-0.2.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/86/e1/72874a2efee51666c634d3eb3d04e5b297af3e54333f2febd7cd4e80d8ae/pyodide_lock-0.2.1.tar.gz",
+        "sha256": "a2a60f7e87d97391be887cb00050382c192bb5a86451b1dbd44abe7272e674c3"
+      }
+    },
+    {
+      "name": "pyproject_hooks",
+      "version": "1.3.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyproject_hooks-1.3.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/85/11/044d1ae1b4ec0d7af88ee5bc91e081be1022533032b906a7bdabdbb60977/pyproject_hooks-1.3.3-py3-none-any.whl",
+        "sha256": "5fc53fdac9f7bd63fbcdc868fb5f90b4784d78a53a3d3388cd738b807441a20b"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyproject_hooks-1.3.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/6d/5d/f2ddeef4a855a102aaae5e97826a0260007522ab504421b75addfdb1517c/pyproject_hooks-1.3.3.tar.gz",
+        "sha256": "defda19b854fa0d3bd4f76ea4ddcba8abd7dcfcdd585a6690ade050744fc5f43"
+      }
+    },
+    {
+      "name": "python-discovery",
+      "version": "1.6.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/python_discovery-1.6.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/61/3b/50ed32583bfffa737df67d33b9c15d7b25df232c55ab606d059f610ef6ca/python_discovery-1.6.2-py3-none-any.whl",
+        "sha256": "f0c697f95a3aaec4174a6e5e58f5885e25768684bafc76f1afde384709ebdcf2"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/python_discovery-1.6.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/b0/73/54993df8fc57e906dc9b7e01d1d9b0b2d3eb0ce3190639e33dccb12853f7/python_discovery-1.6.2.tar.gz",
+        "sha256": "cd1738ca1d37c86ef9d0b654dd46fcee1e41c97c6add12575e8501ced39afdb4"
+      }
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/requests-2.34.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl",
+        "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/requests-2.34.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179abd6d00ebd70bff6273f37fb3e0cc209f48b39d00cbf/requests-2.34.2.tar.gz",
+        "sha256": "f288924cae4e29463698d6d60bc6a4da69c89185ad1e0bcc4104f584e960b9ed"
+      }
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/rich-15.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/82/3b/64d4899d73f91ba49a8c18a8ff3f0ea8f1c1d75481760df8c68ef5235bf5/rich-15.0.0-py3-none-any.whl",
+        "sha256": "33bd4ef74232fb73fe9279a257718407f169c09b78a87ad3d296f548e27de0bb"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/rich-15.0.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c0/8f/0722ca900cc807c13a6a0c696dacf35430f72e0ec571c4275d2371fca3e9/rich-15.0.0.tar.gz",
+        "sha256": "edd07a4824c6b40189fb7ac9bc4c52536e9780fbbfbddf6f1e2502c31b068c36"
+      }
+    },
+    {
+      "name": "ruamel.yaml",
+      "version": "0.19.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/ruamel_yaml-0.19.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b8/0c/51f6841f1d84f404f92463fc2b1ba0da357ca1e3db6b7fbda26956c3b82a/ruamel_yaml-0.19.1-py3-none-any.whl",
+        "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/ruamel_yaml-0.19.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c7/3b/ebda527b56beb90cb7652cb1c7e4f91f48649fbcd8d2eb2fb6e77cd3329b/ruamel_yaml-0.19.1.tar.gz",
+        "sha256": "53eb66cd27849eff968ebf8f0bf61f46cdac2da1d1f3576dd4ccee9b25c31993"
+      }
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/setuptools-84.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/95/9c/c510029fc6ef33a6275cd2c5d3cecd6613dfd6aa401d57c54f1c18852ccf/setuptools-84.0.0-py3-none-any.whl",
+        "sha256": "51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/setuptools-84.0.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/6d/44/f5da03a8ef95d369145c5bb53050e7877c9f3d312e128605fd9504829143/setuptools-84.0.0.tar.gz",
+        "sha256": "f4695c21257f0d9b537ec2692c941d02ee143b7cc1276941349a546573b2ef73"
+      }
+    },
+    {
+      "name": "setuptools-scm",
+      "version": "10.3.4",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/setuptools_scm-10.3.4-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/da/f5/54538a1f17ea753c42b0928dc2e62986d463f8c393340b9a1e602f2d4dd9/setuptools_scm-10.3.4-py3-none-any.whl",
+        "sha256": "82f34c3e3084fc2b57d397200637cc13f2338004052d2fee47baa5f0e902464e"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/setuptools_scm-10.3.4.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/85/d8/fc143f88819ccf10ba2388ba86732ee2de193e578234e25a783f6cc14bf7/setuptools_scm-10.3.4.tar.gz",
+        "sha256": "a69f28bfc245608781205e912faae437c2b2165773afa4e7b979d77447a69dd2"
+      }
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/typing_extensions-4.16.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/typing_extensions-4.16.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz",
+        "sha256": "dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5"
+      }
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/urllib3-2.8.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl",
+        "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/urllib3-2.8.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz",
+        "sha256": "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
+      }
+    },
+    {
+      "name": "vcs-versioning",
+      "version": "2.6.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/vcs_versioning-2.6.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/73/1d/ad4064bf12f4503bf61e65d74c93c523672776d25ee0a06aaf42ae09ef3f/vcs_versioning-2.6.0-py3-none-any.whl",
+        "sha256": "f8bebd1302ebc12e67ceb30fc7dd698ec969414b6fa43b30c3f14ac9b1e72c41"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/vcs_versioning-2.6.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/ad/e7/2a691db7d076b75d099fdba1a14cd966931f2aeb591e77f6d22f15097326/vcs_versioning-2.6.0.tar.gz",
+        "sha256": "22e9159288e2d8bca2fa6f6c31c34c9c66aec157f60e9e526f5d160d2516d60f"
+      }
+    },
+    {
+      "name": "virtualenv",
+      "version": "21.14.6",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/virtualenv-21.14.6-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/c9/1f/e5182163bcee149dda4eec823d88b0f51f2c0c531b12da896f666f0b80c1/virtualenv-21.14.6-py3-none-any.whl",
+        "sha256": "eb1a20c5878569b69667f6a1af03458a8512b3afa7be771a2dafe92fdca05bb9"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/virtualenv-21.14.6.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/92/f3/589727d02bc832750cfa00ced4315d127535a22a6d7cfcb369b2fe219a2e/virtualenv-21.14.6.tar.gz",
+        "sha256": "c6b74616e64bffa9532cfa9dfd54ffbab0dc9b999df2bb8ec0d75e559b983661"
+      }
+    },
+    {
+      "name": "wheel",
+      "version": "0.48.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/wheel-0.48.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/2e/29/69cfbb602cd91690c55d38ba9fe53e6a7e76a6fa647bf38f19c138d25449/wheel-0.48.0-py3-none-any.whl",
+        "sha256": "3217dcc807155e45db462d7ef2431f5ddda0d7273b700d05a67b271ceb1287ab"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/wheel-0.48.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/d0/20/50ed6bdf27dec98b568a8ae25dc599f35baa3d9709f9e83fd1edb56b9a90/wheel-0.48.0.tar.gz",
+        "sha256": "94800765601e9171bf5d58d066e640662842bcedcbab982b2c90787a2c987322"
+      }
+    }
+  ],
+  "toolchainDownloads": [
+    {
+      "filename": "cutadapt-toolchain/065bfade0ee2c02138b83cb10049d8be95e146b6-wasm-binaries.tar.xz",
+      "url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/065bfade0ee2c02138b83cb10049d8be95e146b6/wasm-binaries.tar.xz",
+      "sha256": "7ae996db24911edc535cccf069fb8a3ed63e8dac7abe58e758431abfe3255165",
+      "role": "host-toolchain",
+      "distribute": false
+    },
+    {
+      "filename": "cutadapt-toolchain/node-v22.16.0-linux-x64.tar.xz",
+      "url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v22.16.0-linux-x64.tar.xz",
+      "sha256": "f4cb75bb036f0d0eddf6b79d9596df1aaab9ddccd6a20bf489be5abe9467e84e",
+      "role": "host-toolchain",
+      "distribute": false
+    }
+  ],
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.dnaio",
+    "LICENSE.xopen",
+    "THIRD_PARTY_LICENSES.txt",
+    "runtime-notices/README.md",
+    "runtime-notices/bzip2/LICENSE",
+    "runtime-notices/cpython/Doc__license.rst",
+    "runtime-notices/cpython/LICENSE",
+    "runtime-notices/cpython/Modules___decimal__libmpdec__mpdecimal.c.notice",
+    "runtime-notices/cpython/Modules___hacl__Hacl_Hash_MD5.c.notice",
+    "runtime-notices/cpython/Modules__expat__COPYING",
+    "runtime-notices/emscripten/LICENSE",
+    "runtime-notices/emscripten/system__lib__compiler-rt__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__dlmalloc.c.notice",
+    "runtime-notices/emscripten/system__lib__libc__musl__COPYRIGHT",
+    "runtime-notices/emscripten/system__lib__libcxx__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__libcxxabi__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__libunwind__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__llvm-libc__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__mimalloc__LICENSE",
+    "runtime-notices/emscripten/third_party__mini-lz4.js.notice",
+    "runtime-notices/hiwire/LICENSE",
+    "runtime-notices/libffi/LICENSE",
+    "runtime-notices/libffi/LICENSE-BUILDTOOLS",
+    "runtime-notices/manifest.json",
+    "runtime-notices/pyodide/LICENSE",
+    "runtime-notices/pyodide/src__js__vendor__stackframe__LICENSE",
+    "runtime-notices/sqlite/sqlite3.c.notice",
+    "runtime-notices/ws/LICENSE",
+    "runtime-notices/xz/COPYING",
+    "runtime-notices/xz/COPYING.GPLv2",
+    "runtime-notices/xz/COPYING.GPLv3",
+    "runtime-notices/xz/COPYING.LGPLv2.1",
+    "runtime-notices/zlib/LICENSE",
+    "runtime-notices/zstd/COPYING",
+    "runtime-notices/zstd/LICENSE",
+    "runtime-notices/zstd/build__LICENSE",
+    "cython-notices/COPYING.txt",
+    "cython-notices/LICENSE.txt"
+  ]
+}

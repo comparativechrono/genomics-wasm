@@ -1,0 +1,1179 @@
+{
+  "schema": 1,
+  "version": "5.2",
+  "datasets": [
+    "human",
+    "yeast"
+  ],
+  "cases": [
+    {
+      "id": "paired-baseline",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "single-baseline",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "reads_1.fastq"
+      ],
+      "inputKeys": [
+        "read1"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "paired-gzip",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq.gz",
+        "-p",
+        "out2.fastq.gz",
+        "reads_1.fastq.gz",
+        "reads_2.fastq.gz"
+      ],
+      "inputKeys": [
+        "read1Gzip",
+        "read2Gzip"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq.gz",
+          "out2.fastq.gz"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq.gz",
+        "out2.fastq.gz",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "equivalentTo": "paired-baseline"
+    },
+    {
+      "id": "fixed-trim",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-u",
+        "5",
+        "-U",
+        "-7",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "paired-baseline"
+    },
+    {
+      "id": "quality-human",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-q",
+        "5",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "human"
+      ],
+      "effect": "paired-baseline"
+    },
+    {
+      "id": "quality-yeast",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-q",
+        "30",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-baseline"
+    },
+    {
+      "id": "paired-adapters",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-baseline"
+    },
+    {
+      "id": "single-adapter",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "reads_1.fastq"
+      ],
+      "inputKeys": [
+        "read1"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "single-baseline"
+    },
+    {
+      "id": "stdin-stdout",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "--json",
+        "report.json",
+        "-o",
+        "-",
+        "-"
+      ],
+      "inputKeys": [
+        "read1"
+      ],
+      "readGroups": [
+        [
+          "stdout.fastq"
+        ]
+      ],
+      "outputs": [
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "stdinKey": "read1",
+      "stdoutFile": "stdout.fastq",
+      "equivalentTo": "single-adapter"
+    },
+    {
+      "id": "adapter-gzip",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq.gz",
+        "-p",
+        "out2.fastq.gz",
+        "reads_1.fastq.gz",
+        "reads_2.fastq.gz"
+      ],
+      "inputKeys": [
+        "read1Gzip",
+        "read2Gzip"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq.gz",
+          "out2.fastq.gz"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq.gz",
+        "out2.fastq.gz",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "equivalentTo": "paired-adapters"
+    },
+    {
+      "id": "minimum-length",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-m",
+        "80",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-adapters"
+    },
+    {
+      "id": "maximum-length",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-M",
+        "90",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-adapters"
+    },
+    {
+      "id": "discard-untrimmed",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "--discard-untrimmed",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-adapters"
+    },
+    {
+      "id": "discard-trimmed",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "--discard-trimmed",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-adapters"
+    },
+    {
+      "id": "anchored-five-prime",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-g",
+        "^CTAAAACTTGCC",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "reads_1.fastq"
+      ],
+      "inputKeys": [
+        "read1"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "single-baseline"
+    },
+    {
+      "id": "linked-adapter",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "^CTAAAACTTGCC...AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "reads_1.fastq"
+      ],
+      "inputKeys": [
+        "read1"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "single-baseline"
+    },
+    {
+      "id": "wildcard-adapter",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAANAGC",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "reads_1.fastq"
+      ],
+      "inputKeys": [
+        "read1"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "single-baseline"
+    },
+    {
+      "id": "exact-adapter",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-e",
+        "0",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-adapters"
+    },
+    {
+      "id": "longer-overlap",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "-O",
+        "8",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-adapters"
+    },
+    {
+      "id": "no-indels",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "-a",
+        "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        "-A",
+        "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+        "--no-indels",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-adapters"
+    },
+    {
+      "id": "trim-n",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "--trim-n",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "paired-baseline"
+    },
+    {
+      "id": "literal-adapter-n",
+      "kind": "success",
+      "args": [
+        "-j",
+        "1",
+        "--no-match-adapter-wildcards",
+        "-a",
+        "AGATCGGAANAGC",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "reads_1.fastq"
+      ],
+      "inputKeys": [
+        "read1"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "datasets": [
+        "yeast"
+      ],
+      "effect": "wildcard-adapter"
+    },
+    {
+      "id": "repeat-1",
+      "kind": "repeat",
+      "args": [
+        "-j",
+        "1",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "wasm"
+      ],
+      "comparisons": [
+        "wasm"
+      ],
+      "baseline": "paired-baseline"
+    },
+    {
+      "id": "repeat-2",
+      "kind": "repeat",
+      "args": [
+        "-j",
+        "1",
+        "--json",
+        "report.json",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "reads_2.fastq"
+      ],
+      "inputKeys": [
+        "read1",
+        "read2"
+      ],
+      "readGroups": [
+        [
+          "out1.fastq",
+          "out2.fastq"
+        ]
+      ],
+      "outputs": [
+        "out1.fastq",
+        "out2.fastq",
+        "report.json"
+      ],
+      "executions": [
+        "wasm"
+      ],
+      "comparisons": [
+        "wasm"
+      ],
+      "baseline": "paired-baseline"
+    },
+    {
+      "id": "missing-input",
+      "kind": "failure",
+      "args": [
+        "-j",
+        "1",
+        "-o",
+        "out.fastq",
+        "missing.fastq"
+      ],
+      "outputs": [],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [],
+      "oncePerTool": true,
+      "diagnosticRegex": "No such file|not found"
+    },
+    {
+      "id": "malformed-fastq",
+      "kind": "failure",
+      "args": [
+        "-j",
+        "1",
+        "-o",
+        "out.fastq",
+        "malformed.fastq"
+      ],
+      "outputs": [],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [],
+      "oncePerTool": true,
+      "diagnosticRegex": "Error in FASTQ|FASTQ|Length of sequence",
+      "fixtures": {
+        "malformed.fastq": "@broken\nACGT\n+\n!!!\n"
+      }
+    },
+    {
+      "id": "mismatched-pairs",
+      "kind": "failure",
+      "args": [
+        "-j",
+        "1",
+        "-o",
+        "out1.fastq",
+        "-p",
+        "out2.fastq",
+        "reads_1.fastq",
+        "mismatched.fastq"
+      ],
+      "outputs": [],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [],
+      "oncePerTool": true,
+      "diagnosticRegex": "properly paired|differ|paired",
+      "fixtures": {
+        "mismatched.fastq": "@not_the_same_read\nACGT\n+\nIIII\n"
+      }
+    },
+    {
+      "id": "unsupported-parallel",
+      "kind": "restriction",
+      "args": [
+        "-j",
+        "2",
+        "-o",
+        "out.fastq",
+        "reads_1.fastq"
+      ],
+      "outputs": [],
+      "executions": [
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [],
+      "oncePerTool": true,
+      "diagnosticRegex": "requires.*(?:-j|cores).*1|single.*core|parallel.*not supported"
+    }
+  ],
+  "pythonVersion": "3.14.2"
+}

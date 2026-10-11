@@ -1,0 +1,24 @@
+Cutadapt 5.2: MIT licence; see LICENSE.
+dnaio 1.2.4: MIT licence; see LICENSE.dnaio.
+xopen 2.1.0: MIT licence; see LICENSE.xopen.
+
+Cython 3.3.0 generates the extension C code. Its compiler is Apache-2.0;
+COPYING.txt states that embedded generated snippets impose no restrictions
+on the resulting output. The complete
+upstream notices are in cython-notices/LICENSE.txt and COPYING.txt, and the
+corresponding source archive is included with the other build dependencies.
+
+Pyodide 314.0.7 bundles CPython 3.14.2 and Emscripten 5.0.3 runtime code.
+runtime-notices/ contains unmodified notices for Pyodide, CPython, Emscripten,
+libffi, hiwire, xz, zstd, SQLite, bzip2, zlib and the Node.js ws dependency.
+runtime-sources.json records the exact source releases and notice paths;
+runtime-notices/manifest.json records checksums of the copied notices.
+See runtime-notices/README.md for the source and linked-library audit.
+
+sources.lock.json includes the remaining Python build tools, their exact
+host wheels and corresponding source archives. Their original notices remain
+inside those archives. Host Emscripten/LLVM and Node executable archives are
+verified build-time downloads and are not included in the runtime package.
+
+The complete sources, patches and build recipe accompany the distribution.
+The browser build modifies only Cutadapt's multiprocessing option handling.

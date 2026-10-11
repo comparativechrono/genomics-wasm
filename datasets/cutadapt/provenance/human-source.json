@@ -1,0 +1,62 @@
+{
+  "origin": {
+    "organism": "Homo sapiens",
+    "sample": "HeLa, HNRNPC knockdown and control experiment",
+    "run_accession": "ERR127306",
+    "experiment_accession": "ERX103445",
+    "study_accession": "ERP001458",
+    "arrayexpress_accession": "E-MTAB-1147",
+    "sample_accession": "ERS140920",
+    "library_strategy": "RNA-Seq",
+    "instrument": "Illumina Genome Analyzer II",
+    "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/ERR127306",
+    "source_package": "RNAseqData.HNRNPC.bam.chr14 0.50.0, Bioconductor 3.23",
+    "source_package_url": "https://bioconductor.org/packages/3.23/data/experiment/html/RNAseqData.HNRNPC.bam.chr14.html",
+    "source_package_license": "LGPL (upstream does not specify a version; package DESCRIPTION preserved)",
+    "source_bam_member": "RNAseqData.HNRNPC.bam.chr14/inst/extdata/ERR127306_chr14.bam",
+    "source_bam": {
+      "sha256": "3fda44ba3d7b898583dad1022b167dd246c674582c76b7be67e7997b6a2d0507",
+      "bytes": 38359360
+    },
+    "reference": {
+      "assembly": "GRCh37/hg19",
+      "chromosome": "chr14",
+      "start_0based": 102480000,
+      "end_0based_exclusive": 102520000,
+      "start_1based": 102480001,
+      "end_1based_inclusive": 102520000,
+      "fixture_contig": "chr14_102480001_102520000",
+      "length": 40000,
+      "case": "uppercase"
+    },
+    "fastq_pairs": 256,
+    "read_length": 72,
+    "source_spliced_records": 216,
+    "junction_count": 42,
+    "junction_source": "Unique N operations and XS strands from selected upstream TopHat2 2.0.8b alignments, shifted to local window coordinates. Observations from these reads, not independent annotations or truth.",
+    "transformation": "Read primary paired alignments in the pinned chr14 BAM. Keep complete pairs whose two alignments fit wholly within hg19 chr14:[102480000,102520000). Sort names lexicographically and take the first 256 pairs. Restore sequence/quality orientation using the SAM reverse flag. Write Phred+33 FASTQ. Extract matching UCSC reference bases, uppercase them and wrap at 60 bp. No read bases or numeric quality scores are modified.",
+    "limitations": [
+      "Reads are recovered from TopHat2 alignments rather than copied from raw sequencer files; prior clipping, quality conversion and processing remain.",
+      "The source TopHat command uses --solexa-quals; the fixture preserves numeric qualities from that BAM and emits Phred+33.",
+      "Reads were selected for mapping to a narrow window. This cannot establish whole-genome mapping specificity or quantitative expression accuracy.",
+      "Human splice hints are derived from the same selected reads. Hint-assisted cases test port equivalence only, not an independent biological prediction."
+    ]
+  },
+  "archive": {
+    "url": "https://bioconductor.posit.co/packages/3.23/data/experiment/src/contrib/RNAseqData.HNRNPC.bam.chr14_0.50.0.tar.gz",
+    "sha256": "7ff48935edf883440b1dd7257471059478a5d489514b4c44d161dd7a16894068",
+    "bytes": 348683558
+  },
+  "input_snapshot_hashes": {
+    "reads_1.fastq": {
+      "sha256": "300bbde9e95c66ea90c003ec0ca3a40f1dc7a012862e38e11e54ae47865ca70e",
+      "bytes": 42981,
+      "generated": true
+    },
+    "reads_2.fastq": {
+      "sha256": "f7147fe368ea37ac1f5fbf59274d4088ba719fe0779a9d0b9c89a75d692fe53f",
+      "bytes": 42981,
+      "generated": true
+    }
+  }
+}

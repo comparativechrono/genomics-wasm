@@ -1,0 +1,13 @@
+--- a/src/cutadapt/cli.py
++++ b/src/cutadapt/cli.py
+@@ -1204,7 +1204,9 @@
+     if args.cores < 0:
+         parser.error("Value for --cores cannot be negative")
+ 
+-    cores = available_cpu_count() if args.cores == 0 else args.cores
++    if args.cores != 1:
++        parser.error("WebAssembly port requires --cores 1; multiprocessing is unavailable")
++    cores = args.cores
+     file_opener = FileOpener(
+         compression_level=args.compression_level,
+         threads=estimate_compression_threads(cores),
