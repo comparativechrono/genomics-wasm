@@ -180,6 +180,18 @@ try {
   original = await downloadBytes(page, name);
   summary.cases.push({ id: 'callable-regions', status: 'passed', bytes: callable.length });
 
+  phase('Switch back to somatic calling in the same output directory');
+  await page.locator('#command').selectOption('somatic');
+  await run(page);
+  original = await downloadBytes(page, name);
+  assert.deepEqual(variantRecords(gunzipSync(original)), records);
+  assert.equal(await page.getByRole('link', { name: 'Download strelka/results/regions/somatic.callable.regions.bed.gz', exact: true }).count(), 0, 'The superseded callable output is removed after successful replacement');
+  assert.equal(await page.getByRole('link', { name: 'Download strelka/results/regions/somatic.callable.regions.bed.gz.tbi', exact: true }).count(), 0);
+  assert.deepEqual(await downloadBytes(page, uploadName), uploaded, 'Results from another run directory remain unchanged');
+  assert.equal(await page.locator('#files li').filter({ hasText: /^uploaded\.bam \(/ }).count(), 1, 'Uploaded BAM remains available');
+  assert.equal(await page.locator('#files li').filter({ hasText: /^uploaded\.bam\.bai \(/ }).count(), 1, 'Uploaded index remains available');
+  summary.cases.push({ id: 'somatic-rerun-replaces-generated-group', status: 'passed', variants: records.length });
+
   phase('Reject invalid arguments without starting the tool');
   await page.locator('#arguments').fill('["--help", 5]');
   await page.locator('#run').click();

@@ -55,7 +55,7 @@ test('INI DEFAULT inheritance agrees with an independent ConfigParser oracle', (
     '[StrelkaSomatic]\ndepthFilterMultiple = 2.0\n[DEFAULT]\ndepthFilterMultiple = 1.0\n',
     '[DEFAULT]\ndepthFilterMultiple = 1.0\n',
   ];
-  const oracle = spawnSync(interpreter, ['-B', '-c', `import sys,json\ntry:\n import ConfigParser as configparser\n from StringIO import StringIO\nexcept ImportError:\n import configparser\n from io import StringIO\nanswers=[]\nfor text in json.load(sys.stdin):\n p=configparser.RawConfigParser(); p.optionxform=str; p.readfp(StringIO(text))\n answers.append(dict(p.items('StrelkaSomatic')) if p.has_section('StrelkaSomatic') else {})\nprint(json.dumps(answers))`], { input: JSON.stringify(configs), encoding: 'utf8', env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });
+  const oracle = spawnSync(interpreter, ['-B', '-c', `import sys,json\ntry:\n import ConfigParser as configparser\n from StringIO import StringIO\nexcept ImportError:\n import configparser\n from io import StringIO\nanswers=[]\nfor text in json.load(sys.stdin):\n p=configparser.RawConfigParser(); p.optionxform=str; (p.read_file if hasattr(p, 'read_file') else p.readfp)(StringIO(text))\n answers.append(dict(p.items('StrelkaSomatic')) if p.has_section('StrelkaSomatic') else {})\nprint(json.dumps(answers))`], { input: JSON.stringify(configs), encoding: 'utf8', env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });
   assert.equal(oracle.status, 0, oracle.stderr);
   assert.deepEqual(configs.map(parseConfig), JSON.parse(oracle.stdout));
 });

@@ -35,6 +35,16 @@ function refreshFiles() {
 
 function revoke(urls) { urls.splice(0).forEach(url => URL.revokeObjectURL(url)); }
 
+function somaticRunDirectory(args) {
+  if (args[0] !== 'somatic' || args.some(arg => ['-h', '--help', '--allHelp', '--version'].includes(arg))) return null;
+  let directory = 'StrelkaSomaticWorkflow';
+  for (let index = 1; index < args.length; index++) {
+    if (args[index] === '--runDir') directory = args[++index];
+    else if (args[index].startsWith('--runDir=')) directory = args[index].slice('--runDir='.length);
+  }
+  return workspacePath(directory);
+}
+
 function link(container, urls, label, name, bytes) {
   const url = URL.createObjectURL(new Blob([bytes], { type: 'application/octet-stream' }));
   urls.push(url);
@@ -121,16 +131,23 @@ $('upload').addEventListener('change', async event => {
 $('command-form').addEventListener('submit', async event => {
   event.preventDefault();
   if (controller) return;
-  let args, outputs, outputDirectories, timeoutMs;
+  let args, outputs, outputDirectories, timeoutMs, runDirectory;
   try {
     args = JSON.parse($('arguments').value);
     if (!Array.isArray(args) || args.some(arg => typeof arg !== 'string')) throw new Error('Arguments must be a JSON array of strings.');
+    runDirectory = somaticRunDirectory(args);
     outputs = [...new Set($('outputs').value.split('\n').map(path => path.trim()).filter(Boolean).map(workspacePath))];
     outputDirectories = [...new Set($('output-directories').value.split('\n').map(path => path.trim()).filter(Boolean).map(workspacePath))];
     timeoutMs = Number($('timeout').value) * 1000;
     if (!Number.isFinite(timeoutMs) || timeoutMs < 1000 || timeoutMs > 3600000) throw new Error('The time limit must be between 1 and 3600 seconds.');
   } catch (error) { $('status').textContent = `Check command: ${error.message}`; return; }
   const isOutput = path => outputs.includes(path) || outputDirectories.some(output => path === output || path.startsWith(`${output}/`));
+  // A configured Strelka workflow requires a fresh run directory. Previously
+  // generated results from that run form one replaceable group, including
+  // optional files no longer requested by the newly selected preset. Uploaded
+  // inputs remain mounted, and no workspace bytes change before full success.
+  const previousRunOutputs = new Set([...generated].filter(path => runDirectory && path.startsWith(`${runDirectory}/`)));
+  const isReplacedOutput = path => (generated.has(path) && isOutput(path)) || previousRunOutputs.has(path);
   controller = new AbortController();
   busy(true);
   revoke(streamUrls);
@@ -143,7 +160,7 @@ $('command-form').addEventListener('submit', async event => {
   try {
     const runner = new Strelka2Runner({ baseUrl: new URL('../../dist/strelka2/', import.meta.url) });
     const result = await runner.run(args, {
-      files: [...workspace].filter(([path]) => !isOutput(path)).map(([path, data]) => ({ path, data })),
+      files: [...workspace].filter(([path]) => !isReplacedOutput(path)).map(([path, data]) => ({ path, data })),
       outputs, outputDirectories, signal: controller.signal, timeoutMs,
     });
     $('stdout').textContent = preview(result.stdout);
@@ -151,7 +168,7 @@ $('command-form').addEventListener('submit', async event => {
     link('stream-downloads', streamUrls, 'Download standard output', `${tool}-stdout.txt`, result.stdout);
     link('stream-downloads', streamUrls, 'Download standard error', `${tool}-stderr.txt`, result.stderr);
     if (result.exitCode === 0 && !result.missingOutputs.length) {
-      for (const path of workspace.keys()) if (isOutput(path)) { workspace.delete(path); generated.delete(path); }
+      for (const path of workspace.keys()) if (isReplacedOutput(path)) { workspace.delete(path); generated.delete(path); }
       for (const file of result.files) { workspace.set(file.path, file.data); generated.add(file.path); }
       refreshFiles(); refreshResults(result.files.find(file => /\.vcf$/.test(file.path))?.path);
     }
