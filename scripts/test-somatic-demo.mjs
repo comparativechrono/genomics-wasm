@@ -200,7 +200,10 @@ try {
   } finally { held.release(); }
   assert.deepEqual(await downloadBytes(page, name), original);
   await run(page);
-  assert.match((await page.locator('#stdout').innerText()) + (await page.locator('#stderr').innerText()), tool === 'lofreq' ? /lofreq/i : /somatic.?sniper|1\.0\.5/i);
+  const upstream = JSON.parse(await readFile(join(root, `tools/${tool}/sources.lock.json`), 'utf8'));
+  const versionOutput = (await page.locator('#stdout').innerText()) + (await page.locator('#stderr').innerText());
+  assert.ok(versionOutput.includes(upstream.version), 'Version command reports the pinned upstream version');
+  assert.ok(versionOutput.includes(upstream.revision), 'Version command reports the pinned upstream revision');
   summary.cases.push({ id: 'cancel-restart-help', status: 'passed' });
   await page.screenshot({ path: join(reportDir, 'example.png'), fullPage: true });
 
