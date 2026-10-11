@@ -1,0 +1,299 @@
+--- a/source/crates/salmon-cli/Cargo.toml
++++ b/source/crates/salmon-cli/Cargo.toml
+@@ -14,6 +14,8 @@
+ 
+ [dependencies]
+ salmon-core = { workspace = true }
++# Direct dependency for the standalone portability regression binary.
++salmon-model = { workspace = true }
+ mimalloc = "0.1"
+ rayon = { workspace = true }
+ salmon-index = { workspace = true }
+--- a/source/crates/salmon-cli/src/main.rs
++++ b/source/crates/salmon-cli/src/main.rs
+@@ -3117,7 +3117,8 @@
+     // Parse with a friendly hint: on an unrecognized flag/subcommand (the common
+     // failure mode for an old C++ command line), append the migration pointer to
+     // clap's error. Help/version/other errors keep clap's normal behavior.
+-    let cli = match Cli::try_parse() {
++    #[allow(unused_mut)]
++    let mut cli = match Cli::try_parse() {
+         Ok(cli) => cli,
+         Err(e) => {
+             use clap::error::ErrorKind;
+@@ -3132,6 +3133,23 @@
+             e.exit();
+         }
+     };
++    // A fixed compute-worker budget keeps the browser's preloaded pthread pool
++    // bounded. Upstream index, I/O and inference threads still execute normally.
++    #[cfg(target_os = "emscripten")]
++    match &mut cli.command {
++        Command::Index(args) => {
++            anyhow::ensure!(args.threads <= 1,
++                "this WebAssembly build supports one compute worker; use --threads 1");
++            args.threads = 1;
++            args.ram_limit_gib.get_or_insert(1);
++        }
++        Command::Quant(args) => {
++            anyhow::ensure!(args.threads <= 1,
++                "this WebAssembly build supports one compute worker; use --threads 1");
++            args.threads = 1;
++        }
++        _ => {}
++    }
+     // Single-cell quant was removed; redirect to alevin-fry and exit.
+     if let Command::Alevin(_) = cli.command {
+         eprintln!(
+--- a/source/crates/salmon-model/src/gcbias.rs
++++ b/source/crates/salmon-model/src/gcbias.rs
+@@ -301,7 +301,7 @@
+ /// exactly a prefix sum, at roughly 1/25th of the memory: on a human
+ /// transcriptome plus genome decoy, ~300 MB becomes ~12 MB.
+ pub struct GcRank {
+-    rank: sux::rank_sel::Rank9,
++    rank: sux::rank_sel::Rank9<sux::bits::BitVec<Vec<u64>>>,
+ }
+ 
+ impl GcRank {
+@@ -309,7 +309,8 @@
+     /// (`seq[i]` is G/C ⇒ bit `i` set).
+     pub fn new(concat: &[u8]) -> GcRank {
+         use sux::traits::bit_vec_ops::BitVecOpsMut;
+-        let mut bv = sux::bits::BitVec::new(concat.len());
++        // Rank9 requires 64-bit words, including on 32-bit WebAssembly.
++        let mut bv = sux::bits::BitVec::<Vec<u64>>::new(concat.len());
+         for (i, &b) in concat.iter().enumerate() {
+             if matches!(b, b'G' | b'g' | b'C' | b'c') {
+                 bv.set(i, true);
+@@ -345,7 +346,7 @@
+ pub enum GcView<'a> {
+     Dense(&'a [u32]),
+     Rank {
+-        rank: &'a sux::rank_sel::Rank9,
++        rank: &'a sux::rank_sel::Rank9<sux::bits::BitVec<Vec<u64>>>,
+         off: usize,
+         /// `rank(off)` — precomputed so `cum` is a single rank query.
+         base: usize,
+--- a/vendor/piscem-rs-0.10.0/Cargo.toml
++++ b/vendor/piscem-rs-0.10.0/Cargo.toml
+@@ -80,6 +80,8 @@
+ version = "6"
+ 
+ [dependencies.epserde]
++default-features = false
++features = ["std", "derive"]
+ version = "0.12.5"
+ 
+ [dependencies.flate2]
+--- a/vendor/piscem-rs-0.10.0/src/index/contig_table.rs
++++ b/vendor/piscem-rs-0.10.0/src/index/contig_table.rs
+@@ -28,6 +28,14 @@
+ use value_traits::slices::SliceByValue;
+ use value_traits::slices::SliceByValueMut;
+ 
++// Packed transcript, position, and orientation fields may exceed 32 bits.
++// Use an explicit 64-bit word on wasm32; retain the upstream native format.
++#[cfg(target_os = "emscripten")]
++type EntryWord = u64;
++#[cfg(not(target_os = "emscripten"))]
++type EntryWord = usize;
++type PackedEntries = BitFieldVec<Vec<EntryWord>>;
++
+ // ---------------------------------------------------------------------------
+ // Entry encoding / decoding helpers
+ // ---------------------------------------------------------------------------
+@@ -134,7 +142,7 @@
+ #[derive(Clone)]
+ pub enum ContigSpan<'a> {
+     Packed {
+-        entries: &'a BitFieldVec,
++        entries: &'a PackedEntries,
+         start: usize,
+         len: usize,
+     },
+@@ -145,7 +153,7 @@
+ impl<'a> ContigSpan<'a> {
+     /// Construct a `Packed` span (the common [`ContigTable`] case).
+     #[inline]
+-    pub(crate) fn packed(entries: &'a BitFieldVec, start: usize, len: usize) -> Self {
++    pub(crate) fn packed(entries: &'a PackedEntries, start: usize, len: usize) -> Self {
+         ContigSpan::Packed {
+             entries,
+             start,
+@@ -222,7 +230,7 @@
+ /// Iterator over packed entries in a contig span.
+ pub enum ContigSpanIter<'a> {
+     Packed {
+-        iter: BitFieldVecUncheckedIter<'a, Vec<usize>>,
++        iter: BitFieldVecUncheckedIter<'a, Vec<EntryWord>>,
+         remaining: usize,
+     },
+     Inline(Option<u64>),
+@@ -280,7 +288,7 @@
+     /// `[ctg_offsets[i], ctg_offsets[i+1])`.
+     ctg_offsets: EfSeq,
+     /// Bit-packed entry vector. Each entry is `ref_len_bits + num_ref_bits + 1` bits.
+-    ctg_entries: BitFieldVec,
++    ctg_entries: PackedEntries,
+ }
+ 
+ impl ContigTable {
+@@ -386,7 +394,7 @@
+         };
+ 
+         let ctg_entries = unsafe {
+-            BitFieldVec::deserialize_full(reader)
++            PackedEntries::deserialize_full(reader)
+                 .map_err(std::io::Error::other)
+                 .context("failed to deserialize contig entries")?
+         };
+@@ -571,11 +579,11 @@
+ 
+         // Build BitFieldVec with packed entries
+         let entry_width = self.encoding.entry_width as usize;
+-        let mut ctg_entries = BitFieldVec::new(entry_width, total as usize);
++        let mut ctg_entries = PackedEntries::new(entry_width, total as usize);
+         let mut idx = 0usize;
+         for occ_list in &self.occurrences {
+             for &encoded in occ_list {
+-                ctg_entries.set_value(idx, encoded as usize);
++                ctg_entries.set_value(idx, encoded as EntryWord);
+                 idx += 1;
+             }
+         }
+@@ -606,7 +614,7 @@
+ pub struct ContigTableDirectBuilder {
+     encoding: EntryEncoding,
+     ctg_offsets: EfSeq,
+-    ctg_entries: BitFieldVec,
++    ctg_entries: PackedEntries,
+     /// Per-unitig write cursor (index into ctg_entries).
+     cursors: Vec<u64>,
+ }
+@@ -649,7 +657,7 @@
+ 
+         // Allocate entries at exact final size
+         let entry_width = encoding.entry_width as usize;
+-        let ctg_entries = BitFieldVec::new(entry_width, total as usize);
++        let ctg_entries = PackedEntries::new(entry_width, total as usize);
+ 
+         Self {
+             encoding,
+@@ -664,7 +672,7 @@
+     pub fn add_occurrence(&mut self, unitig_rank: u32, ref_id: u32, position: u32, is_fw: bool) {
+         let encoded = self.encoding.encode(ref_id, position, is_fw);
+         let idx = self.cursors[unitig_rank as usize];
+-        self.ctg_entries.set_value(idx as usize, encoded as usize);
++        self.ctg_entries.set_value(idx as usize, encoded as EntryWord);
+         self.cursors[unitig_rank as usize] = idx + 1;
+     }
+ 
+--- a/vendor/sshash-lib-0.7.1/Cargo.toml
++++ b/vendor/sshash-lib-0.7.1/Cargo.toml
+@@ -55,6 +55,8 @@
+ version = "1.0"
+ 
+ [dependencies.epserde]
++default-features = false
++features = ["std", "derive"]
+ version = "0.12.6"
+ 
+ [dependencies.mem_dbg]
+--- a/vendor/sshash-lib-0.7.1/src/builder/external_sort.rs
++++ b/vendor/sshash-lib-0.7.1/src/builder/external_sort.rs
+@@ -181,8 +181,12 @@
+     /// Formula: `(ram_limit * GiB) / (2 * sizeof(tuple) * num_threads)`
+     /// The factor of 2 accounts for temporary memory during parallel sort.
+     pub fn buffer_size_per_thread(&self) -> usize {
+-        let total_bytes = self.ram_limit_gib * GIB;
+-        let bytes_per_thread = total_bytes / (2 * self.num_threads.max(1));
++        // A budget may exceed the address space on 32-bit targets. Preserve
++        // representable budgets exactly and cap larger ones instead of wrapping
++        // to zero. Divide in stages to avoid overflowing the thread divisor.
++        // This changes buffer capacity only; tuple ordering and merge stay intact.
++        let total_bytes = self.ram_limit_gib.checked_mul(GIB).unwrap_or(usize::MAX);
++        let bytes_per_thread = total_bytes / self.num_threads.max(1) / 2;
+         bytes_per_thread / TUPLE_SIZE_BYTES
+     }
+ 
+@@ -710,6 +714,20 @@
+     use tempfile::TempDir;
+ 
+     #[test]
++    fn test_buffer_budget_does_not_wrap() {
++        let tmp_dir = TempDir::new().unwrap();
++        for gib in [0, 1, 3, 4, 8, usize::MAX] {
++            for threads in [0, 1, 2, usize::MAX] {
++                let sorter = ExternalSorter::new(tmp_dir.path(), gib, threads, false).unwrap();
++                let bounded_bytes = (gib as u128 * GIB as u128).min(usize::MAX as u128);
++                let expected = bounded_bytes / (2 * threads.max(1) as u128)
++                    / TUPLE_SIZE_BYTES as u128;
++                assert_eq!(sorter.buffer_size_per_thread(), expected as usize);
++            }
++        }
++    }
++
++    #[test]
+     fn test_tuple_external_size() {
+         // Verify packed size
+         assert_eq!(std::mem::size_of::<MinimizerTupleExternal>(), TUPLE_SIZE_BYTES);
+--- a/vendor/needletail-0.7.3/Cargo.toml
++++ b/vendor/needletail-0.7.3/Cargo.toml
+@@ -60,7 +60,6 @@
+ [lib]
+ name = "needletail"
+ crate-type = [
+-    "cdylib",
+     "rlib",
+ ]
+ path = "src/lib.rs"
+--- a/vendor/sux-0.14.0/Cargo.toml
++++ b/vendor/sux-0.14.0/Cargo.toml
+@@ -465,7 +465,7 @@
+ [dependencies.thiserror]
+ version = "2.0.11"
+ 
+-[dependencies.thread-priority]
++[target.'cfg(not(target_os = "emscripten"))'.dependencies.thread-priority]
+ version = "3.0.0"
+ optional = true
+ 
+--- a/vendor/sux-0.14.0/src/func/vbuilder.rs
++++ b/vendor/sux-0.14.0/src/func/vbuilder.rs
+@@ -34,6 +34,7 @@
+ use std::sync::Arc;
+ use std::sync::atomic::{AtomicBool, Ordering};
+ use std::time::Instant;
++#[cfg(not(target_os = "emscripten"))]
+ use thread_priority::ThreadPriority;
+ use value_traits::slices::{SliceByValue, SliceByValueMut};
+ 
+@@ -1566,6 +1567,7 @@
+ 
+         let result = std::thread::scope(|scope| {
+             scope.spawn(move || {
++                #[cfg(not(target_os = "emscripten"))]
+                 let _ = thread_priority::set_current_thread_priority(ThreadPriority::Max);
+                 for val in shard_iter
+                     .into_iter()
+--- a/vendor/voracious_radix_sort-1.2.0/src/types/usize.rs
++++ b/vendor/voracious_radix_sort-1.2.0/src/types/usize.rs
+@@ -1,3 +1,7 @@
++#[cfg(target_pointer_width = "32")]
++use super::super::sorts::lsd_sort::lsd_radixsort_heu;
++#[cfg(target_pointer_width = "32")]
++use super::super::sorts::rollercoaster_sort::rollercoaster_sort_heu;
+ #[cfg(feature = "voracious_multithread")]
+ use rayon::slice::ParallelSliceMut;
+ 
+--- a/vendor/voracious_radix_sort-1.2.0/src/types/isize.rs
++++ b/vendor/voracious_radix_sort-1.2.0/src/types/isize.rs
+@@ -1,3 +1,7 @@
++#[cfg(target_pointer_width = "32")]
++use super::super::sorts::lsd_sort::lsd_radixsort_heu;
++#[cfg(target_pointer_width = "32")]
++use super::super::sorts::rollercoaster_sort::rollercoaster_sort_heu;
+ #[cfg(feature = "voracious_multithread")]
+ use rayon::slice::ParallelSliceMut;
+ 

@@ -1,0 +1,110 @@
+{
+  "tools": {
+    "kallisto": {
+      "label": "kallisto",
+      "requiresIsolation": false,
+      "commands": {
+        "index": {
+          "args": [
+            "index",
+            "-i",
+            "kallisto.idx",
+            "transcripts.fa"
+          ],
+          "outputs": [
+            "kallisto.idx"
+          ],
+          "outputDirectories": []
+        },
+        "quant": {
+          "args": [
+            "quant",
+            "-i",
+            "kallisto.idx",
+            "-o",
+            "kallisto-out",
+            "--plaintext",
+            "-t",
+            "1",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [],
+          "outputDirectories": [
+            "kallisto-out"
+          ]
+        },
+        "help": {
+          "args": [
+            "version"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    },
+    "salmon": {
+      "label": "Salmon",
+      "requiresIsolation": true,
+      "waitForExit": true,
+      "commands": {
+        "index": {
+          "args": [
+            "index",
+            "-t",
+            "transcripts.fa",
+            "-i",
+            "salmon-index",
+            "-p",
+            "1",
+            "--ramLimit",
+            "1"
+          ],
+          "outputs": [],
+          "outputDirectories": [
+            "salmon-index"
+          ]
+        },
+        "quant": {
+          "args": [
+            "quant",
+            "-i",
+            "salmon-index",
+            "-l",
+            "A",
+            "-1",
+            "reads_1.fastq",
+            "-2",
+            "reads_2.fastq",
+            "-o",
+            "salmon-out",
+            "-p",
+            "1",
+            "--deterministic"
+          ],
+          "outputs": [],
+          "outputDirectories": [
+            "salmon-out"
+          ]
+        },
+        "help": {
+          "args": [
+            "--version"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    }
+  },
+  "datasets": {
+    "human": {
+      "label": "Human RNA reads (ERR127306)",
+      "path": "../../datasets/rna-quant/human/"
+    },
+    "yeast": {
+      "label": "Yeast RNA reads (SRR6357070)",
+      "path": "../../datasets/rna-quant/yeast/"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 # Genomics WebAssembly tools
 
-Sequence trimming, DNA and RNA alignment, variant calling and differential
-expression tools for web browsers and Node.js. Each tool has an independent
+Sequence trimming, DNA and RNA alignment, transcript quantification, variant
+calling and differential expression tools for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
 using webR.
@@ -22,6 +22,8 @@ DESeq2 session retains its R objects until the session is closed.
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [HISAT2](tools/hisat2/README.md) | 2.2.2 | Small-index building and spliced RNA alignment, one thread |
 | [minimap2](tools/minimap2/README.md) | 2.31 | Indexing and alignment, including spliced RNA modes, one thread |
+| [kallisto](tools/kallisto/README.md) | 0.52.0 | Transcript indexing and bulk RNA-seq quantification, one thread |
+| [Salmon](tools/salmon/README.md) | 2.8.0 | Transcript indexing and bulk RNA-seq quantification, real worker threads and shared memory |
 | [DESeq2](tools/deseq2/README.md) | 1.52.0 | Count-matrix analysis using R 4.6.0 and webR 0.6.0, one R process |
 
 See the individual tool documentation for supported features, build changes,
@@ -31,6 +33,12 @@ small validation fixtures.
 DESeq2 has a separate build, browser example and validation workflow. It uses
 existing upstream WebAssembly packages, with a compiler configuration fix for
 the missing `locfit` dependency. See its [instructions](tools/deseq2/README.md).
+
+kallisto and Salmon also have a separate [browser example](examples/quant/README.md)
+and validation workflow. Both use real human and yeast RNA-seq reads with matching
+transcript references. Salmon needs cross-origin isolation for its worker threads;
+the example includes a static server and a service worker for hosts without custom
+response headers. Read the hosting instructions before deploying it.
 
 ## Build
 
@@ -126,6 +134,15 @@ Chromium, Firefox and WebKit. Each run stores raw outputs and JSON reports as
 artifacts. The `release-gate` job requires every build and browser test to pass.
 There is no automatic publication of a release from an unvalidated build.
 
+The **Build and validate RNA quantifiers** workflow builds and checks kallisto
+and Salmon separately. Run `bash scripts/build-kallisto.sh all` or
+`bash scripts/build-salmon.sh all` after installing the toolchains described in
+their tool directories. Then run
+`node scripts/validate-quant.mjs --tool kallisto --engine node` (or `salmon`).
+The same suite accepts `chromium`, `firefox` and `webkit` as its engine. It compares
+transcript identities, lengths, abundance tables and read accounting with the
+original native program. See its [comparison rules](validation/quant/README.md).
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -135,6 +152,13 @@ these files in its `tool-packages` artifact; check the complete workflow status
 before using a build. That artifact is created only after all browser jobs
 pass. The earlier `candidate-packages` artifact is an unvalidated build input
 to that final step.
+
+Quantifier packages are created by `scripts/package-quant.py` with the matching
+validation reports from all four engines. Their final workflow artifact is
+`quant-packages`. Each ZIP contains one quantifier, the shared runner, its browser
+example, real test data, corresponding sources, licences and validation summaries.
+Salmon's native and browser indexes have different word sizes; build the index in
+the environment that will use it.
 
 ## Licence
 

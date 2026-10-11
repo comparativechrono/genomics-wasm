@@ -1,0 +1,159 @@
+name: Build and validate RNA quantifiers
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: quant-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        tool: [kallisto, salmon]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang cmake pkg-config curl xz-utils libssl-dev
+          npm ci
+      - name: Test the runner and comparators
+        run: npm test
+      - name: Verify real transcript and read fixtures
+        run: python3 scripts/fetch-quant-test-data.py --verify
+      - name: Install pinned WebAssembly compiler
+        run: bash scripts/setup-emsdk.sh
+      - name: Install the pinned Rust compiler and standard library sources
+        if: matrix.tool == 'salmon'
+        run: rustup toolchain install nightly-2026-09-25 --profile minimal --component rust-src --target wasm32-unknown-emscripten
+      - name: Build original native, patched native and WebAssembly programs
+        run: |
+          source toolchain/emsdk/emsdk_env.sh
+          bash scripts/build-${{ matrix.tool }}.sh all
+      - name: Compare quantification against the native program in Node
+        run: node scripts/validate-quant.mjs --tool ${{ matrix.tool }} --engine node
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quant-validation-${{ matrix.tool }}-node
+          path: reports/quant/node/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quant-compiled-${{ matrix.tool }}
+          path: |
+            dist/${{ matrix.tool }}/
+            build/native/${{ matrix.tool }}
+            build/patched-native/${{ matrix.tool }}
+          if-no-files-found: error
+          retention-days: 14
+  browsers:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        tool: [kallisto, salmon]
+        browser: [chromium, firefox, webkit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: quant-compiled-${{ matrix.tool }}
+          path: .
+      - run: chmod u+x build/native/${{ matrix.tool }} build/patched-native/${{ matrix.tool }}
+      - name: Compare actual browser results against native programs
+        run: node scripts/validate-quant.mjs --tool ${{ matrix.tool }} --engine ${{ matrix.browser }}
+      - name: Test the browser example with real quantification
+        env:
+          BROWSER: ${{ matrix.browser }}
+          QUANT_TOOL: ${{ matrix.tool }}
+        run: node scripts/test-quant-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quant-validation-${{ matrix.tool }}-${{ matrix.browser }}
+          path: reports/quant/${{ matrix.browser }}/
+          if-no-files-found: ignore
+  release-gate:
+    needs: [build, browsers]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Require every build and browser check
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          BROWSER_RESULT: ${{ needs.browsers.result }}
+        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: quant-compiled-*
+          merge-multiple: true
+          path: .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: quant-validation-*
+          path: build/quant-validation-artifacts
+      - name: Reproduce reference extraction and collect validation reports
+        run: |
+          python3 scripts/fetch-quant-test-data.py --regenerate
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          base = Path('build/quant-validation-artifacts')
+          for tool in ('kallisto', 'salmon'):
+              for engine in ('node', 'chromium', 'firefox', 'webkit'):
+                  filename = f'summary-{tool}-all.json'
+                  matches = list((base / f'quant-validation-{tool}-{engine}').rglob(filename))
+                  if len(matches) != 1:
+                      raise RuntimeError(f'Expected one {tool}/{engine} report, found {len(matches)}')
+                  target = Path('reports/quant') / engine / filename
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copyfile(matches[0], target)
+          PY
+      - name: Package the exact tested programs with sources and reports
+        run: |
+          reports=()
+          for tool in kallisto salmon; do
+            for engine in node chromium firefox webkit; do
+              reports+=(--validation-report "reports/quant/$engine/summary-$tool-all.json")
+            done
+          done
+          python3 scripts/package-quant.py --tool all --output releases "${reports[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quant-packages
+          path: |
+            releases/kallisto-*-wasm.zip
+            releases/salmon-*-wasm.zip
+            releases/*-wasm.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

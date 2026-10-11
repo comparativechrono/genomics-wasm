@@ -9,7 +9,9 @@
     "validate": "node scripts/validate.mjs",
     "package": "python3 scripts/package.py",
     "validate:deseq2": "node scripts/validate-deseq2.mjs",
-    "package:deseq2": "python3 scripts/package-deseq2.py"
+    "package:deseq2": "python3 scripts/package-deseq2.py",
+    "validate:quant": "node scripts/validate-quant.mjs",
+    "package:quant": "python3 scripts/package-quant.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

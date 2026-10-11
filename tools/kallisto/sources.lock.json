@@ -1,0 +1,15 @@
+{
+  "tool": "kallisto",
+  "version": "0.52.0",
+  "revision": "4e9f29cf3b021260415430c057a22469ca081391",
+  "url": "https://codeload.github.com/pachterlab/kallisto/tar.gz/4e9f29cf3b021260415430c057a22469ca081391",
+  "sha256": "e742c36bf8b48b81c18444e212c93ac7ba6e315363c6930e0fb2f0d27923ff56",
+  "emscripten": "3.1.64",
+  "dependencies": {
+    "zlib": {
+      "version": "1.3.1",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    }
+  }
+}

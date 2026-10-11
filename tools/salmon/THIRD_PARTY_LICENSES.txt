@@ -1,0 +1,436 @@
+Third-party sources for Salmon 2.8.0 WebAssembly
+
+Salmon: BSD-3-Clause. See LICENSE and the pinned source archive.
+Each dependency below is supplied as its original checksum-verified .crate archive.
+Those archives contain the corresponding complete source and license notices.
+The SPDX expression is read from the published crate manifest; it is not a replacement for those notices.
+
+addr2line 0.27.1: Apache-2.0 OR MIT — salmon-crates/addr2line-0.27.1.crate
+adler2 2.0.1: 0BSD OR MIT OR Apache-2.0 — salmon-crates/adler2-2.0.1.crate
+ahash 0.8.12: MIT OR Apache-2.0 — salmon-crates/ahash-0.8.12.crate
+aho-corasick 1.1.5: Unlicense OR MIT — salmon-crates/aho-corasick-1.1.5.crate
+aliasable 0.1.3: MIT — salmon-crates/aliasable-0.1.3.crate
+alloca 0.4.0: MIT — salmon-crates/alloca-0.4.0.crate
+allocator-api2 0.2.21: MIT OR Apache-2.0 — salmon-crates/allocator-api2-0.2.21.crate
+ambassador 0.5.1: MIT OR Apache-2.0 — salmon-crates/ambassador-0.5.1.crate
+anes 0.1.6: MIT OR Apache-2.0 — salmon-crates/anes-0.1.6.crate
+anstream 1.0.0: MIT OR Apache-2.0 — salmon-crates/anstream-1.0.0.crate
+anstyle 1.0.14: MIT OR Apache-2.0 — salmon-crates/anstyle-1.0.14.crate
+anstyle-parse 1.0.0: MIT OR Apache-2.0 — salmon-crates/anstyle-parse-1.0.0.crate
+anstyle-query 1.1.5: MIT OR Apache-2.0 — salmon-crates/anstyle-query-1.1.5.crate
+anstyle-wincon 3.0.11: MIT OR Apache-2.0 — salmon-crates/anstyle-wincon-3.0.11.crate
+anyhow 1.0.104: MIT OR Apache-2.0 — salmon-crates/anyhow-1.0.104.crate
+approx 0.5.1: Apache-2.0 — salmon-crates/approx-0.5.1.crate
+ar_archive_writer 0.5.3: Apache-2.0 WITH LLVM-exception — salmon-crates/ar_archive_writer-0.5.3.crate
+arbitrary-chunks 0.4.1: Apache-2.0 OR MIT — salmon-crates/arbitrary-chunks-0.4.1.crate
+ariadne 0.5.1: MIT — salmon-crates/ariadne-0.5.1.crate
+arrayvec 0.7.8: MIT OR Apache-2.0 — salmon-crates/arrayvec-0.7.8.crate
+atomic-primitive 0.1.4: MIT OR Apache-2.0 — salmon-crates/atomic-primitive-0.1.4.crate
+autocfg 1.5.1: Apache-2.0 OR MIT — salmon-crates/autocfg-1.5.1.crate
+bgzip 0.3.1: MIT — salmon-crates/bgzip-0.3.1.crate
+bincode 1.3.3: MIT — salmon-crates/bincode-1.3.3.crate
+binout 0.3.2: MIT OR Apache-2.0 — salmon-crates/binout-0.3.2.crate
+bio-types 1.0.4: MIT — salmon-crates/bio-types-1.0.4.crate
+bit-vec 0.10.1: Apache-2.0 OR MIT — salmon-crates/bit-vec-0.10.1.crate
+bitflags 1.3.2: MIT/Apache-2.0 — salmon-crates/bitflags-1.3.2.crate
+bitflags 2.13.2: MIT OR Apache-2.0 — salmon-crates/bitflags-2.13.2.crate
+bitm 0.5.2: MIT OR Apache-2.0 — salmon-crates/bitm-0.5.2.crate
+block-buffer 0.12.1: MIT OR Apache-2.0 — salmon-crates/block-buffer-0.12.1.crate
+block-pseudorand 0.1.2: Apache-2.0 OR MIT — salmon-crates/block-pseudorand-0.1.2.crate
+bon 3.10.1: MIT OR Apache-2.0 — salmon-crates/bon-3.10.1.crate
+bon-macros 3.10.1: MIT OR Apache-2.0 — salmon-crates/bon-macros-3.10.1.crate
+borsh 1.8.1: MIT OR Apache-2.0 — salmon-crates/borsh-1.8.1.crate
+borsh-derive 1.8.1: Apache-2.0 — salmon-crates/borsh-derive-1.8.1.crate
+bramble-rs 0.1.9: MIT — salmon-crates/bramble-rs-0.1.9.crate
+bstr 1.13.1: MIT OR Apache-2.0 — salmon-crates/bstr-1.13.1.crate
+buffer-redux 1.1.0: MIT OR Apache-2.0 — salmon-crates/buffer-redux-1.1.0.crate
+bumpalo 3.20.3: MIT OR Apache-2.0 — salmon-crates/bumpalo-3.20.3.crate
+bytecount 0.6.9: Apache-2.0/MIT — salmon-crates/bytecount-0.6.9.crate
+bytemuck 1.25.2: Zlib OR Apache-2.0 OR MIT — salmon-crates/bytemuck-1.25.2.crate
+bytemuck_derive 1.12.1: Zlib OR Apache-2.0 OR MIT — salmon-crates/bytemuck_derive-1.12.1.crate
+byteorder 1.5.0: Unlicense OR MIT — salmon-crates/byteorder-1.5.0.crate
+bytes 1.12.1: MIT — salmon-crates/bytes-1.12.1.crate
+bzip2 0.5.2: MIT OR Apache-2.0 — salmon-crates/bzip2-0.5.2.crate
+bzip2 0.6.1: MIT OR Apache-2.0 — salmon-crates/bzip2-0.6.1.crate
+bzip2-sys 0.1.13+1.0.8: MIT/Apache-2.0 — salmon-crates/bzip2-sys-0.1.13+1.0.8.crate
+cast 0.3.0: MIT OR Apache-2.0 — salmon-crates/cast-0.3.0.crate
+cc 1.4.3: MIT OR Apache-2.0 — salmon-crates/cc-1.4.3.crate
+cc 1.4.7: MIT OR Apache-2.0 — salmon-crates/cc-1.4.7.crate
+cf1-rs 0.5.1: BSD-3-Clause — salmon-crates/cf1-rs-0.5.1.crate
+cfg-if 1.0.4: MIT OR Apache-2.0 — salmon-crates/cfg-if-1.0.4.crate
+cfg-if 1.0.5: MIT OR Apache-2.0 — salmon-crates/cfg-if-1.0.5.crate
+cfg_aliases 0.2.2: MIT — salmon-crates/cfg_aliases-0.2.2.crate
+chacha20 0.10.2: MIT OR Apache-2.0 — salmon-crates/chacha20-0.10.2.crate
+chiapos-chacha8 0.1.0: Apache-2.0 OR MIT — salmon-crates/chiapos-chacha8-0.1.0.crate
+chumsky 0.12.0: MIT — salmon-crates/chumsky-0.12.0.crate
+ciborium 0.2.2: Apache-2.0 — salmon-crates/ciborium-0.2.2.crate
+ciborium-io 0.2.2: Apache-2.0 — salmon-crates/ciborium-io-0.2.2.crate
+ciborium-ll 0.2.2: Apache-2.0 — salmon-crates/ciborium-ll-0.2.2.crate
+clap 4.6.7: MIT OR Apache-2.0 — salmon-crates/clap-4.6.7.crate
+clap_builder 4.6.7: MIT OR Apache-2.0 — salmon-crates/clap_builder-4.6.7.crate
+clap_derive 4.6.7: MIT OR Apache-2.0 — salmon-crates/clap_derive-4.6.7.crate
+clap_lex 1.1.1: MIT OR Apache-2.0 — salmon-crates/clap_lex-1.1.1.crate
+coitrees 0.4.0: See LICENSE — salmon-crates/coitrees-0.4.0.crate
+colorchoice 1.0.5: MIT OR Apache-2.0 — salmon-crates/colorchoice-1.0.5.crate
+combine 4.6.8: MIT — salmon-crates/combine-4.6.8.crate
+condtype 1.3.0: MIT OR Apache-2.0 — salmon-crates/condtype-1.3.0.crate
+console 0.16.6: MIT — salmon-crates/console-0.16.6.crate
+const-oid 0.10.2: Apache-2.0 OR MIT — salmon-crates/const-oid-0.10.2.crate
+cpu-time 1.0.0: MIT/Apache-2.0 — salmon-crates/cpu-time-1.0.0.crate
+cpufeatures 0.3.1: MIT OR Apache-2.0 — salmon-crates/cpufeatures-0.3.1.crate
+crc32fast 1.5.2: MIT OR Apache-2.0 — salmon-crates/crc32fast-1.5.2.crate
+criterion 0.5.1: Apache-2.0 OR MIT — salmon-crates/criterion-0.5.1.crate
+criterion 0.8.2: Apache-2.0 OR MIT — salmon-crates/criterion-0.8.2.crate
+criterion-plot 0.5.0: MIT/Apache-2.0 — salmon-crates/criterion-plot-0.5.0.crate
+criterion-plot 0.8.2: Apache-2.0 OR MIT — salmon-crates/criterion-plot-0.8.2.crate
+crossbeam 0.8.5: MIT OR Apache-2.0 — salmon-crates/crossbeam-0.8.5.crate
+crossbeam-channel 0.5.17: MIT OR Apache-2.0 — salmon-crates/crossbeam-channel-0.5.17.crate
+crossbeam-deque 0.8.8: MIT OR Apache-2.0 — salmon-crates/crossbeam-deque-0.8.8.crate
+crossbeam-epoch 0.9.21: MIT OR Apache-2.0 — salmon-crates/crossbeam-epoch-0.9.21.crate
+crossbeam-queue 0.3.14: MIT OR Apache-2.0 — salmon-crates/crossbeam-queue-0.3.14.crate
+crossbeam-utils 0.8.23: MIT OR Apache-2.0 — salmon-crates/crossbeam-utils-0.8.23.crate
+crunchy 0.2.4: MIT — salmon-crates/crunchy-0.2.4.crate
+crypto-common 0.2.2: MIT OR Apache-2.0 — salmon-crates/crypto-common-0.2.2.crate
+darling 0.21.3: MIT — salmon-crates/darling-0.21.3.crate
+darling 0.24.1: MIT — salmon-crates/darling-0.24.1.crate
+darling_core 0.21.3: MIT — salmon-crates/darling_core-0.21.3.crate
+darling_core 0.24.1: MIT — salmon-crates/darling_core-0.24.1.crate
+darling_macro 0.21.3: MIT — salmon-crates/darling_macro-0.21.3.crate
+darling_macro 0.24.1: MIT — salmon-crates/darling_macro-0.24.1.crate
+dashmap 6.2.1: MIT — salmon-crates/dashmap-6.2.1.crate
+defmt 1.1.1: MIT OR Apache-2.0 — salmon-crates/defmt-1.1.1.crate
+defmt-macros 1.1.1: MIT OR Apache-2.0 — salmon-crates/defmt-macros-1.1.1.crate
+defmt-parser 1.0.0: MIT OR Apache-2.0 — salmon-crates/defmt-parser-1.0.0.crate
+derivative 2.2.0: MIT/Apache-2.0 — salmon-crates/derivative-2.2.0.crate
+derive-new 0.6.0: MIT — salmon-crates/derive-new-0.6.0.crate
+derive_setters 0.1.9: MIT/Apache-2.0 — salmon-crates/derive_setters-0.1.9.crate
+digest 0.11.3: MIT OR Apache-2.0 — salmon-crates/digest-0.11.3.crate
+divan 0.1.21: MIT OR Apache-2.0 — salmon-crates/divan-0.1.21.crate
+divan-macros 0.1.21: MIT OR Apache-2.0 — salmon-crates/divan-macros-0.1.21.crate
+dlmalloc 0.2.14: MIT/Apache-2.0 — salmon-crates/dlmalloc-0.2.14.crate
+dsi-progress-logger 0.8.9: Apache-2.0 OR MIT — salmon-crates/dsi-progress-logger-0.8.9.crate
+dyn_size_of 0.4.5: MIT OR Apache-2.0 — salmon-crates/dyn_size_of-0.4.5.crate
+educe 0.7.6: MIT — salmon-crates/educe-0.7.6.crate
+either 1.18.0: MIT OR Apache-2.0 — salmon-crates/either-1.18.0.crate
+encode_unicode 1.0.0: Apache-2.0 OR MIT — salmon-crates/encode_unicode-1.0.0.crate
+ensure_simd 0.1.0: MIT — salmon-crates/ensure_simd-0.1.0.crate
+enum-as-inner 0.6.1: MIT/Apache-2.0 — salmon-crates/enum-as-inner-0.6.1.crate
+enum-ordinalize 4.4.2: MIT — salmon-crates/enum-ordinalize-4.4.2.crate
+enum-ordinalize-derive 4.4.2: MIT — salmon-crates/enum-ordinalize-derive-4.4.2.crate
+env_filter 2.0.0: MIT OR Apache-2.0 — salmon-crates/env_filter-2.0.0.crate
+env_logger 0.11.11: MIT OR Apache-2.0 — salmon-crates/env_logger-0.11.11.crate
+epserde 0.12.6: Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/epserde-0.12.6.crate
+epserde-derive 0.12.5: Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/epserde-derive-0.12.5.crate
+equivalent 1.0.2: Apache-2.0 OR MIT — salmon-crates/equivalent-1.0.2.crate
+errno 0.3.14: MIT OR Apache-2.0 — salmon-crates/errno-0.3.14.crate
+fallible-iterator 0.3.0: MIT/Apache-2.0 — salmon-crates/fallible-iterator-0.3.0.crate
+fastrand 2.5.0: Apache-2.0 OR MIT — salmon-crates/fastrand-2.5.0.crate
+find-msvc-tools 0.1.11: MIT OR Apache-2.0 — salmon-crates/find-msvc-tools-0.1.11.crate
+find-msvc-tools 0.1.13: MIT OR Apache-2.0 — salmon-crates/find-msvc-tools-0.1.13.crate
+flate2 1.1.10: MIT OR Apache-2.0 — salmon-crates/flate2-1.1.10.crate
+fnv 1.0.7: Apache-2.0 / MIT — salmon-crates/fnv-1.0.7.crate
+foldhash 0.1.5: Zlib — salmon-crates/foldhash-0.1.5.crate
+foldhash 0.2.0: Zlib — salmon-crates/foldhash-0.2.0.crate
+fortanix-sgx-abi 0.6.1: MPL-2.0 — salmon-crates/fortanix-sgx-abi-0.6.1.crate
+futures-core 0.3.34: MIT OR Apache-2.0 — salmon-crates/futures-core-0.3.34.crate
+futures-task 0.3.34: MIT OR Apache-2.0 — salmon-crates/futures-task-0.3.34.crate
+futures-util 0.3.34: MIT OR Apache-2.0 — salmon-crates/futures-util-0.3.34.crate
+getopts 0.2.24: MIT OR Apache-2.0 — salmon-crates/getopts-0.2.24.crate
+getrandom 0.3.4: MIT OR Apache-2.0 — salmon-crates/getrandom-0.3.4.crate
+getrandom 0.4.3: MIT OR Apache-2.0 — salmon-crates/getrandom-0.4.3.crate
+gimli 0.34.0: MIT OR Apache-2.0 — salmon-crates/gimli-0.34.0.crate
+glam 0.30.10: MIT OR Apache-2.0 — salmon-crates/glam-0.30.10.crate
+glam 0.31.1: MIT OR Apache-2.0 — salmon-crates/glam-0.31.1.crate
+glam 0.32.1: MIT OR Apache-2.0 — salmon-crates/glam-0.32.1.crate
+glam 0.33.8: MIT OR Apache-2.0 — salmon-crates/glam-0.33.8.crate
+half 2.7.1: MIT OR Apache-2.0 — salmon-crates/half-2.7.1.crate
+hashbrown 0.14.5: MIT OR Apache-2.0 — salmon-crates/hashbrown-0.14.5.crate
+hashbrown 0.15.5: MIT OR Apache-2.0 — salmon-crates/hashbrown-0.15.5.crate
+hashbrown 0.16.1: MIT OR Apache-2.0 — salmon-crates/hashbrown-0.16.1.crate
+hashbrown 0.17.1: MIT OR Apache-2.0 — salmon-crates/hashbrown-0.17.1.crate
+heck 0.5.0: MIT OR Apache-2.0 — salmon-crates/heck-0.5.0.crate
+hermit-abi 0.5.3: MIT OR Apache-2.0 — salmon-crates/hermit-abi-0.5.3.crate
+hybrid-array 0.4.15: MIT OR Apache-2.0 — salmon-crates/hybrid-array-0.4.15.crate
+ident_case 1.0.1: MIT/Apache-2.0 — salmon-crates/ident_case-1.0.1.crate
+impl-tools 0.11.4: MIT/Apache-2.0 — salmon-crates/impl-tools-0.11.4.crate
+impl-tools-lib 0.11.4: MIT/Apache-2.0 — salmon-crates/impl-tools-lib-0.11.4.crate
+indexmap 2.14.2: Apache-2.0 OR MIT — salmon-crates/indexmap-2.14.2.crate
+indicatif 0.18.6: MIT — salmon-crates/indicatif-0.18.6.crate
+is-terminal 0.4.17: MIT — salmon-crates/is-terminal-0.4.17.crate
+is_terminal_polyfill 1.70.2: MIT OR Apache-2.0 — salmon-crates/is_terminal_polyfill-1.70.2.crate
+itertools 0.10.5: MIT/Apache-2.0 — salmon-crates/itertools-0.10.5.crate
+itertools 0.13.0: MIT OR Apache-2.0 — salmon-crates/itertools-0.13.0.crate
+itertools 0.14.0: MIT OR Apache-2.0 — salmon-crates/itertools-0.14.0.crate
+itertools 0.15.0: MIT OR Apache-2.0 — salmon-crates/itertools-0.15.0.crate
+itoa 1.0.18: MIT OR Apache-2.0 — salmon-crates/itoa-1.0.18.crate
+jiff 0.2.37: Unlicense OR MIT — salmon-crates/jiff-0.2.37.crate
+jiff-core 0.1.1: Unlicense OR MIT — salmon-crates/jiff-core-0.1.1.crate
+jiff-static 0.2.37: Unlicense OR MIT — salmon-crates/jiff-static-0.2.37.crate
+jiff-tzdb 0.1.8: Unlicense OR MIT — salmon-crates/jiff-tzdb-0.1.8.crate
+jiff-tzdb-platform 0.1.3: Unlicense OR MIT — salmon-crates/jiff-tzdb-platform-0.1.3.crate
+jobserver 0.1.35: MIT OR Apache-2.0 — salmon-crates/jobserver-0.1.35.crate
+js-sys 0.3.105: MIT OR Apache-2.0 — salmon-crates/js-sys-0.3.105.crate
+ksw2rs 0.2.0: BSD-3-Clause — salmon-crates/ksw2rs-0.2.0.crate
+lambert_w 1.2.34: MIT OR Apache-2.0 — salmon-crates/lambert_w-1.2.34.crate
+lazy_static 1.5.0: MIT OR Apache-2.0 — salmon-crates/lazy_static-1.5.0.crate
+lender 0.6.2: Apache-2.0 OR LGPL-2.1-or-later OR MIT — salmon-crates/lender-0.6.2.crate
+lender-derive 0.1.3: Apache-2.0 OR LGPL-2.1-or-later OR MIT — salmon-crates/lender-derive-0.1.3.crate
+lexical-core 1.0.6: MIT/Apache-2.0 — salmon-crates/lexical-core-1.0.6.crate
+lexical-parse-float 1.0.6: MIT/Apache-2.0 — salmon-crates/lexical-parse-float-1.0.6.crate
+lexical-parse-integer 1.0.6: MIT/Apache-2.0 — salmon-crates/lexical-parse-integer-1.0.6.crate
+lexical-util 1.0.7: MIT/Apache-2.0 — salmon-crates/lexical-util-1.0.7.crate
+lexical-write-float 1.0.6: MIT/Apache-2.0 — salmon-crates/lexical-write-float-1.0.6.crate
+lexical-write-integer 1.0.6: MIT/Apache-2.0 — salmon-crates/lexical-write-integer-1.0.6.crate
+libbz2-rs-sys 0.2.5: bzip2-1.0.6 — salmon-crates/libbz2-rs-sys-0.2.5.crate
+libc 0.2.189: MIT OR Apache-2.0 — salmon-crates/libc-0.2.189.crate
+liblzma 0.3.6: MIT OR Apache-2.0 — salmon-crates/liblzma-0.3.6.crate
+liblzma-sys 0.3.13: MIT OR Apache-2.0 — salmon-crates/liblzma-sys-0.3.13.crate
+libm 0.2.16: MIT — salmon-crates/libm-0.2.16.crate
+libmimalloc-sys 0.1.49: MIT — salmon-crates/libmimalloc-sys-0.1.49.crate
+libradicl 0.21.0: BSD-3-Clause — salmon-crates/libradicl-0.21.0.crate
+libradicl-macros 0.21.0: BSD-3-Clause — salmon-crates/libradicl-macros-0.21.0.crate
+libz-rs-sys 0.6.8: Zlib — salmon-crates/libz-rs-sys-0.6.8.crate
+linux-raw-sys 0.12.1: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/linux-raw-sys-0.12.1.crate
+lock_api 0.4.14: MIT OR Apache-2.0 — salmon-crates/lock_api-0.4.14.crate
+log 0.4.34: MIT OR Apache-2.0 — salmon-crates/log-0.4.34.crate
+lz4_flex 0.14.0: MIT — salmon-crates/lz4_flex-0.14.0.crate
+mach2 0.4.3: BSD-2-Clause OR MIT OR Apache-2.0 — salmon-crates/mach2-0.4.3.crate
+matchers 0.2.0: MIT — salmon-crates/matchers-0.2.0.crate
+matrixmultiply 0.3.11: MIT/Apache-2.0 — salmon-crates/matrixmultiply-0.3.11.crate
+maybe-dangling 0.1.2: Zlib OR MIT OR Apache-2.0 — salmon-crates/maybe-dangling-0.1.2.crate
+mem_dbg 0.4.4: Apache-2.0 OR MIT — salmon-crates/mem_dbg-0.4.4.crate
+mem_dbg-derive 0.3.4: Apache-2.0 OR MIT — salmon-crates/mem_dbg-derive-0.3.4.crate
+memchr 2.8.3: Unlicense OR MIT — salmon-crates/memchr-2.8.3.crate
+memmap2 0.9.11: MIT OR Apache-2.0 — salmon-crates/memmap2-0.9.11.crate
+mimalloc 0.1.52: MIT — salmon-crates/mimalloc-0.1.52.crate
+miniz_oxide 0.9.1: MIT OR Zlib OR Apache-2.0 — salmon-crates/miniz_oxide-0.9.1.crate
+mmap-rs 0.7.0: Apache-2.0 OR MIT — salmon-crates/mmap-rs-0.7.0.crate
+moto-rt 0.17.4: MIT OR Apache-2.0 — salmon-crates/moto-rt-0.17.4.crate
+nalgebra 0.35.0: Apache-2.0 — salmon-crates/nalgebra-0.35.0.crate
+nanorand 0.6.1: Zlib — salmon-crates/nanorand-0.6.1.crate
+needletail 0.7.3: MIT — salmon-crates/needletail-0.7.3.crate
+niffler 3.0.0: MIT/Apache-2.0 — salmon-crates/niffler-3.0.0.crate
+nix 0.30.1: MIT — salmon-crates/nix-0.30.1.crate
+nohash-hasher 0.2.0: Apache-2.0 OR MIT — salmon-crates/nohash-hasher-0.2.0.crate
+noodles 0.116.0: MIT — salmon-crates/noodles-0.116.0.crate
+noodles-bam 0.95.0: MIT — salmon-crates/noodles-bam-0.95.0.crate
+noodles-bgzf 0.51.0: MIT — salmon-crates/noodles-bgzf-0.51.0.crate
+noodles-core 0.20.0: MIT — salmon-crates/noodles-core-0.20.0.crate
+noodles-csi 0.61.0: MIT — salmon-crates/noodles-csi-0.61.0.crate
+noodles-gff 0.62.0: MIT — salmon-crates/noodles-gff-0.62.0.crate
+noodles-gtf 0.57.0: MIT — salmon-crates/noodles-gtf-0.57.0.crate
+noodles-sam 0.90.0: MIT — salmon-crates/noodles-sam-0.90.0.crate
+ntapi 0.4.3: Apache-2.0 OR MIT — salmon-crates/ntapi-0.4.3.crate
+nu-ansi-term 0.50.3: MIT — salmon-crates/nu-ansi-term-0.50.3.crate
+num 0.4.3: MIT OR Apache-2.0 — salmon-crates/num-0.4.3.crate
+num-bigint 0.4.8: MIT OR Apache-2.0 — salmon-crates/num-bigint-0.4.8.crate
+num-complex 0.4.6: MIT OR Apache-2.0 — salmon-crates/num-complex-0.4.6.crate
+num-format 0.4.4: MIT/Apache-2.0 — salmon-crates/num-format-0.4.4.crate
+num-integer 0.1.47: MIT OR Apache-2.0 — salmon-crates/num-integer-0.1.47.crate
+num-iter 0.1.46: MIT OR Apache-2.0 — salmon-crates/num-iter-0.1.46.crate
+num-primitive 0.2.1: MIT OR Apache-2.0 — salmon-crates/num-primitive-0.2.1.crate
+num-rational 0.4.2: MIT OR Apache-2.0 — salmon-crates/num-rational-0.4.2.crate
+num-traits 0.2.19: MIT OR Apache-2.0 — salmon-crates/num-traits-0.2.19.crate
+num_cpus 1.17.0: MIT OR Apache-2.0 — salmon-crates/num_cpus-1.17.0.crate
+objc2-core-foundation 0.3.2: Zlib OR Apache-2.0 OR MIT — salmon-crates/objc2-core-foundation-0.3.2.crate
+objc2-io-kit 0.3.2: Zlib OR Apache-2.0 OR MIT — salmon-crates/objc2-io-kit-0.3.2.crate
+object 0.39.1: Apache-2.0 OR MIT — salmon-crates/object-0.39.1.crate
+once_cell 1.21.4: MIT OR Apache-2.0 — salmon-crates/once_cell-1.21.4.crate
+once_cell_polyfill 1.70.2: MIT OR Apache-2.0 — salmon-crates/once_cell_polyfill-1.70.2.crate
+oorandom 11.1.5: MIT — salmon-crates/oorandom-11.1.5.crate
+packed-seq 5.0.0: MIT — salmon-crates/packed-seq-5.0.0.crate
+page_size 0.6.0: MIT/Apache-2.0 — salmon-crates/page_size-0.6.0.crate
+paraseq-temp 0.5.0-pre.2: MIT — salmon-crates/paraseq-temp-0.5.0-pre.2.crate
+parking_lot 0.12.5: MIT OR Apache-2.0 — salmon-crates/parking_lot-0.12.5.crate
+parking_lot_core 0.9.12: MIT OR Apache-2.0 — salmon-crates/parking_lot_core-0.9.12.crate
+partition 0.1.2: MIT OR Apache-2.0 — salmon-crates/partition-0.1.2.crate
+percent-encoding 2.3.2: MIT OR Apache-2.0 — salmon-crates/percent-encoding-2.3.2.crate
+ph 0.11.0: MIT OR Apache-2.0 — salmon-crates/ph-0.11.0.crate
+ph-temp 0.12.0: MIT OR Apache-2.0 — salmon-crates/ph-temp-0.12.0.crate
+pin-project-lite 0.2.17: Apache-2.0 OR MIT — salmon-crates/pin-project-lite-0.2.17.crate
+piscem-rs 0.10.0: BSD-3-Clause — salmon-crates/piscem-rs-0.10.0.crate
+pkg-config 0.3.34: MIT OR Apache-2.0 — salmon-crates/pkg-config-0.3.34.crate
+plotters 0.3.7: MIT — salmon-crates/plotters-0.3.7.crate
+plotters-backend 0.3.7: MIT — salmon-crates/plotters-backend-0.3.7.crate
+plotters-svg 0.3.7: MIT — salmon-crates/plotters-svg-0.3.7.crate
+pluralizer 0.5.0: MIT/Apache-2.0 — salmon-crates/pluralizer-0.5.0.crate
+portable-atomic 1.15.0: Apache-2.0 OR MIT — salmon-crates/portable-atomic-1.15.0.crate
+portable-atomic-util 0.2.8: Apache-2.0 OR MIT — salmon-crates/portable-atomic-util-0.2.8.crate
+prettyplease 0.3.0: MIT OR Apache-2.0 — salmon-crates/prettyplease-0.3.0.crate
+primal-check 0.3.4: MIT OR Apache-2.0 — salmon-crates/primal-check-0.3.4.crate
+proc-macro-crate 3.5.0: MIT OR Apache-2.0 — salmon-crates/proc-macro-crate-3.5.0.crate
+proc-macro-error-attr2 2.0.0: MIT OR Apache-2.0 — salmon-crates/proc-macro-error-attr2-2.0.0.crate
+proc-macro-error2 2.0.1: MIT OR Apache-2.0 — salmon-crates/proc-macro-error2-2.0.1.crate
+proc-macro2 1.0.107: MIT OR Apache-2.0 — salmon-crates/proc-macro2-1.0.107.crate
+psm 0.1.32: MIT OR Apache-2.0 — salmon-crates/psm-0.1.32.crate
+quote 1.0.47: MIT OR Apache-2.0 — salmon-crates/quote-1.0.47.crate
+r-efi 5.3.0: MIT OR Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/r-efi-5.3.0.crate
+r-efi 6.0.0: MIT OR Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/r-efi-6.0.0.crate
+r-efi-alloc 2.1.0: MIT OR Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/r-efi-alloc-2.1.0.crate
+rand 0.10.3: MIT OR Apache-2.0 — salmon-crates/rand-0.10.3.crate
+rand 0.9.5: MIT OR Apache-2.0 — salmon-crates/rand-0.9.5.crate
+rand_core 0.10.1: MIT OR Apache-2.0 — salmon-crates/rand_core-0.10.1.crate
+rand_core 0.6.4: MIT OR Apache-2.0 — salmon-crates/rand_core-0.6.4.crate
+rand_core 0.9.5: MIT OR Apache-2.0 — salmon-crates/rand_core-0.9.5.crate
+rand_distr 0.6.0: MIT OR Apache-2.0 — salmon-crates/rand_distr-0.6.0.crate
+rand_pcg 0.10.2: MIT OR Apache-2.0 — salmon-crates/rand_pcg-0.10.2.crate
+rand_xorshift 0.4.0: MIT OR Apache-2.0 — salmon-crates/rand_xorshift-0.4.0.crate
+rapidgzip-core 0.3.1: BSD-3-Clause AND MIT — salmon-crates/rapidgzip-core-0.3.1.crate
+rapidhash 1.4.0: MIT OR Apache-2.0 — salmon-crates/rapidhash-1.4.0.crate
+rapidhash 4.5.1: MIT OR Apache-2.0 — salmon-crates/rapidhash-4.5.1.crate
+rawpointer 0.2.1: MIT/Apache-2.0 — salmon-crates/rawpointer-0.2.1.crate
+rayon 1.12.0: MIT OR Apache-2.0 — salmon-crates/rayon-1.12.0.crate
+rayon-core 1.13.0: MIT OR Apache-2.0 — salmon-crates/rayon-core-1.13.0.crate
+rdst 0.20.14: Apache-2.0 OR MIT — salmon-crates/rdst-0.20.14.crate
+realfft 3.5.0: MIT — salmon-crates/realfft-3.5.0.crate
+redox_syscall 0.5.18: MIT — salmon-crates/redox_syscall-0.5.18.crate
+regex 1.13.1: MIT OR Apache-2.0 — salmon-crates/regex-1.13.1.crate
+regex-automata 0.3.9: MIT OR Apache-2.0 — salmon-crates/regex-automata-0.3.9.crate
+regex-automata 0.4.18: MIT OR Apache-2.0 — salmon-crates/regex-automata-0.4.18.crate
+regex-lite 0.1.9: MIT OR Apache-2.0 — salmon-crates/regex-lite-0.1.9.crate
+regex-syntax 0.7.5: MIT OR Apache-2.0 — salmon-crates/regex-syntax-0.7.5.crate
+regex-syntax 0.8.11: MIT OR Apache-2.0 — salmon-crates/regex-syntax-0.8.11.crate
+rustc-demangle 0.1.28: MIT/Apache-2.0 — salmon-crates/rustc-demangle-0.1.28.crate
+rustc-literal-escaper 0.0.8: Apache-2.0 OR MIT — salmon-crates/rustc-literal-escaper-0.0.8.crate
+rustfft 6.4.1: MIT OR Apache-2.0 — salmon-crates/rustfft-6.4.1.crate
+rustix 1.1.5: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/rustix-1.1.5.crate
+rustversion 1.0.23: MIT OR Apache-2.0 — salmon-crates/rustversion-1.0.23.crate
+safe_arch 1.2.0: Zlib OR Apache-2.0 OR MIT — salmon-crates/safe_arch-1.2.0.crate
+same-file 1.0.6: Unlicense/MIT — salmon-crates/same-file-1.0.6.crate
+scopeguard 1.2.0: MIT OR Apache-2.0 — salmon-crates/scopeguard-1.2.0.crate
+scroll 0.13.0: MIT — salmon-crates/scroll-0.13.0.crate
+sealed 0.6.0: MIT OR Apache-2.0 — salmon-crates/sealed-0.6.0.crate
+seedable_hash 0.2.3: MIT OR Apache-2.0 — salmon-crates/seedable_hash-0.2.3.crate
+seq-hash 0.2.0: MIT — salmon-crates/seq-hash-0.2.0.crate
+seq-macro 0.3.6: MIT OR Apache-2.0 — salmon-crates/seq-macro-0.3.6.crate
+seq_geom_parser 1.1.0: BSD-3-Clause — salmon-crates/seq_geom_parser-1.1.0.crate
+serde 1.0.229: MIT OR Apache-2.0 — salmon-crates/serde-1.0.229.crate
+serde_core 1.0.229: MIT OR Apache-2.0 — salmon-crates/serde_core-1.0.229.crate
+serde_derive 1.0.229: MIT OR Apache-2.0 — salmon-crates/serde_derive-1.0.229.crate
+serde_json 1.0.151: MIT OR Apache-2.0 — salmon-crates/serde_json-1.0.151.crate
+sha2 0.11.0: MIT OR Apache-2.0 — salmon-crates/sha2-0.11.0.crate
+sharded-slab 0.1.7: MIT — salmon-crates/sharded-slab-0.1.7.crate
+shlex 2.0.1: MIT OR Apache-2.0 — salmon-crates/shlex-2.0.1.crate
+simba 0.10.2: Apache-2.0 — salmon-crates/simba-0.10.2.crate
+simd-adler32 0.3.10: MIT — salmon-crates/simd-adler32-0.3.10.crate
+simd-minimizers 3.0.0: MIT — salmon-crates/simd-minimizers-3.0.0.crate
+slab 0.4.12: MIT — salmon-crates/slab-0.4.12.crate
+smallvec 1.16.1: MIT OR Apache-2.0 — salmon-crates/smallvec-1.16.1.crate
+snap 1.1.2: BSD-3-Clause — salmon-crates/snap-1.1.2.crate
+sshash-lib 0.7.1: See LICENSE — salmon-crates/sshash-lib-0.7.1.crate
+stable_try_trait_v2 1.75.1: Apache-2.0 OR MIT — salmon-crates/stable_try_trait_v2-1.75.1.crate
+stacker 0.1.25: MIT OR Apache-2.0 — salmon-crates/stacker-0.1.25.crate
+statrs 0.19.1: MIT — salmon-crates/statrs-0.19.1.crate
+strength_reduce 0.2.4: MIT OR Apache-2.0 — salmon-crates/strength_reduce-0.2.4.crate
+strsim 0.11.1: MIT — salmon-crates/strsim-0.11.1.crate
+strum_macros 0.26.4: MIT — salmon-crates/strum_macros-0.26.4.crate
+succinctly 0.6.0: MIT — salmon-crates/succinctly-0.6.0.crate
+sux 0.14.0: Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/sux-0.14.0.crate
+syn 1.0.109: MIT OR Apache-2.0 — salmon-crates/syn-1.0.109.crate
+syn 2.0.119: MIT OR Apache-2.0 — salmon-crates/syn-2.0.119.crate
+syn 3.0.6: MIT OR Apache-2.0 — salmon-crates/syn-3.0.6.crate
+sync-cell-slice 0.9.14: Apache-2.0 OR MIT — salmon-crates/sync-cell-slice-0.9.14.crate
+sysctl 0.6.0: MIT — salmon-crates/sysctl-0.6.0.crate
+sysinfo 0.36.1: MIT — salmon-crates/sysinfo-0.36.1.crate
+tempfile 3.27.0: MIT OR Apache-2.0 — salmon-crates/tempfile-3.27.0.crate
+terminal_size 0.4.4: MIT OR Apache-2.0 — salmon-crates/terminal_size-0.4.4.crate
+thiserror 1.0.69: MIT OR Apache-2.0 — salmon-crates/thiserror-1.0.69.crate
+thiserror 2.0.20: MIT OR Apache-2.0 — salmon-crates/thiserror-2.0.20.crate
+thiserror-impl 1.0.69: MIT OR Apache-2.0 — salmon-crates/thiserror-impl-1.0.69.crate
+thiserror-impl 2.0.20: MIT OR Apache-2.0 — salmon-crates/thiserror-impl-2.0.20.crate
+thread-broker 0.1.0: BSD-3-Clause — salmon-crates/thread-broker-0.1.0.crate
+thread-priority 3.1.1: MIT — salmon-crates/thread-priority-3.1.1.crate
+thread_local 1.1.10: MIT OR Apache-2.0 — salmon-crates/thread_local-1.1.10.crate
+tikv-jemalloc-sys 0.5.4+5.3.0-patched: MIT/Apache-2.0 — salmon-crates/tikv-jemalloc-sys-0.5.4+5.3.0-patched.crate
+tikv-jemallocator 0.5.4: MIT/Apache-2.0 — salmon-crates/tikv-jemallocator-0.5.4.crate
+tiny-dict 0.7.1: See LICENSE — salmon-crates/tiny-dict-0.7.1.crate
+tinytemplate 1.2.1: Apache-2.0 OR MIT — salmon-crates/tinytemplate-1.2.1.crate
+toml_datetime 1.1.1+spec-1.1.0: MIT OR Apache-2.0 — salmon-crates/toml_datetime-1.1.1+spec-1.1.0.crate
+toml_edit 0.25.15+spec-1.1.0: MIT OR Apache-2.0 — salmon-crates/toml_edit-0.25.15+spec-1.1.0.crate
+toml_parser 1.1.3+spec-1.1.0: MIT OR Apache-2.0 — salmon-crates/toml_parser-1.1.3+spec-1.1.0.crate
+tracing 0.1.44: MIT — salmon-crates/tracing-0.1.44.crate
+tracing-attributes 0.1.31: MIT — salmon-crates/tracing-attributes-0.1.31.crate
+tracing-core 0.1.36: MIT — salmon-crates/tracing-core-0.1.36.crate
+tracing-log 0.2.0: MIT — salmon-crates/tracing-log-0.2.0.crate
+tracing-subscriber 0.3.23: MIT — salmon-crates/tracing-subscriber-0.3.23.crate
+transpose 0.2.3: MIT OR Apache-2.0 — salmon-crates/transpose-0.2.3.crate
+twox-hash 2.1.4: MIT — salmon-crates/twox-hash-2.1.4.crate
+typenum 1.20.1: MIT OR Apache-2.0 — salmon-crates/typenum-1.20.1.crate
+unicode-ident 1.0.26: (MIT OR Apache-2.0) AND Unicode-3.0 — salmon-crates/unicode-ident-1.0.26.crate
+unicode-segmentation 1.13.3: MIT OR Apache-2.0 — salmon-crates/unicode-segmentation-1.13.3.crate
+unicode-width 0.1.14: MIT OR Apache-2.0 — salmon-crates/unicode-width-0.1.14.crate
+unicode-width 0.2.2: MIT OR Apache-2.0 — salmon-crates/unicode-width-0.2.2.crate
+unit-prefix 0.5.2: MIT — salmon-crates/unit-prefix-0.5.2.crate
+unwinding 0.2.10: MIT OR Apache-2.0 — salmon-crates/unwinding-0.2.10.crate
+utf8parse 0.2.2: Apache-2.0 OR MIT — salmon-crates/utf8parse-0.2.2.crate
+valuable 0.1.1: MIT — salmon-crates/valuable-0.1.1.crate
+value-traits 0.2.1: Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/value-traits-0.2.1.crate
+value-traits-derive 0.2.1: Apache-2.0 OR LGPL-2.1-or-later — salmon-crates/value-traits-derive-0.2.1.crate
+version_check 0.9.5: MIT/Apache-2.0 — salmon-crates/version_check-0.9.5.crate
+vex-sdk 0.27.1: MIT — salmon-crates/vex-sdk-0.27.1.crate
+voracious_radix_sort 1.2.0: MIT — salmon-crates/voracious_radix_sort-1.2.0.crate
+walkdir 2.5.0: Unlicense/MIT — salmon-crates/walkdir-2.5.0.crate
+wasip1 1.0.0: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/wasip1-1.0.0.crate
+wasip2 1.0.4+wasi-0.2.12: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/wasip2-1.0.4+wasi-0.2.12.crate
+wasip2 2.0.1+wasi-0.2.12: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/wasip2-2.0.1+wasi-0.2.12.crate
+wasip3 0.9.0+wasi-0.3.0: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/wasip3-0.9.0+wasi-0.3.0.crate
+wasm-bindgen 0.2.128: MIT OR Apache-2.0 — salmon-crates/wasm-bindgen-0.2.128.crate
+wasm-bindgen-macro 0.2.128: MIT OR Apache-2.0 — salmon-crates/wasm-bindgen-macro-0.2.128.crate
+wasm-bindgen-macro-support 0.2.128: MIT OR Apache-2.0 — salmon-crates/wasm-bindgen-macro-support-0.2.128.crate
+wasm-bindgen-shared 0.2.128: MIT OR Apache-2.0 — salmon-crates/wasm-bindgen-shared-0.2.128.crate
+web-sys 0.3.105: MIT OR Apache-2.0 — salmon-crates/web-sys-0.3.105.crate
+web-time 1.1.0: MIT OR Apache-2.0 — salmon-crates/web-time-1.1.0.crate
+wide 1.7.1: Zlib OR Apache-2.0 OR MIT — salmon-crates/wide-1.7.1.crate
+widestring 1.2.1: MIT OR Apache-2.0 — salmon-crates/widestring-1.2.1.crate
+winapi 0.3.9: MIT/Apache-2.0 — salmon-crates/winapi-0.3.9.crate
+winapi-i686-pc-windows-gnu 0.4.0: MIT/Apache-2.0 — salmon-crates/winapi-i686-pc-windows-gnu-0.4.0.crate
+winapi-util 0.1.11: Unlicense OR MIT — salmon-crates/winapi-util-0.1.11.crate
+winapi-x86_64-pc-windows-gnu 0.4.0: MIT/Apache-2.0 — salmon-crates/winapi-x86_64-pc-windows-gnu-0.4.0.crate
+windows 0.48.0: MIT OR Apache-2.0 — salmon-crates/windows-0.48.0.crate
+windows 0.61.3: MIT OR Apache-2.0 — salmon-crates/windows-0.61.3.crate
+windows 0.62.2: MIT OR Apache-2.0 — salmon-crates/windows-0.62.2.crate
+windows-collections 0.2.0: MIT OR Apache-2.0 — salmon-crates/windows-collections-0.2.0.crate
+windows-collections 0.3.2: MIT OR Apache-2.0 — salmon-crates/windows-collections-0.3.2.crate
+windows-core 0.61.2: MIT OR Apache-2.0 — salmon-crates/windows-core-0.61.2.crate
+windows-core 0.62.2: MIT OR Apache-2.0 — salmon-crates/windows-core-0.62.2.crate
+windows-future 0.2.1: MIT OR Apache-2.0 — salmon-crates/windows-future-0.2.1.crate
+windows-future 0.3.2: MIT OR Apache-2.0 — salmon-crates/windows-future-0.3.2.crate
+windows-implement 0.60.2: MIT OR Apache-2.0 — salmon-crates/windows-implement-0.60.2.crate
+windows-interface 0.59.3: MIT OR Apache-2.0 — salmon-crates/windows-interface-0.59.3.crate
+windows-link 0.1.3: MIT OR Apache-2.0 — salmon-crates/windows-link-0.1.3.crate
+windows-link 0.2.1: MIT OR Apache-2.0 — salmon-crates/windows-link-0.2.1.crate
+windows-numerics 0.2.0: MIT OR Apache-2.0 — salmon-crates/windows-numerics-0.2.0.crate
+windows-numerics 0.3.1: MIT OR Apache-2.0 — salmon-crates/windows-numerics-0.3.1.crate
+windows-result 0.3.4: MIT OR Apache-2.0 — salmon-crates/windows-result-0.3.4.crate
+windows-result 0.4.1: MIT OR Apache-2.0 — salmon-crates/windows-result-0.4.1.crate
+windows-strings 0.4.2: MIT OR Apache-2.0 — salmon-crates/windows-strings-0.4.2.crate
+windows-strings 0.5.1: MIT OR Apache-2.0 — salmon-crates/windows-strings-0.5.1.crate
+windows-sys 0.61.2: MIT OR Apache-2.0 — salmon-crates/windows-sys-0.61.2.crate
+windows-targets 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows-targets-0.48.5.crate
+windows-threading 0.1.0: MIT OR Apache-2.0 — salmon-crates/windows-threading-0.1.0.crate
+windows-threading 0.2.1: MIT OR Apache-2.0 — salmon-crates/windows-threading-0.2.1.crate
+windows_aarch64_gnullvm 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows_aarch64_gnullvm-0.48.5.crate
+windows_aarch64_msvc 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows_aarch64_msvc-0.48.5.crate
+windows_i686_gnu 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows_i686_gnu-0.48.5.crate
+windows_i686_msvc 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows_i686_msvc-0.48.5.crate
+windows_x86_64_gnu 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows_x86_64_gnu-0.48.5.crate
+windows_x86_64_gnullvm 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows_x86_64_gnullvm-0.48.5.crate
+windows_x86_64_msvc 0.48.5: MIT OR Apache-2.0 — salmon-crates/windows_x86_64_msvc-0.48.5.crate
+winnow 1.0.4: MIT — salmon-crates/winnow-1.0.4.crate
+wit-bindgen 0.57.1: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/wit-bindgen-0.57.1.crate
+wit-bindgen 0.62.0: Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT — salmon-crates/wit-bindgen-0.62.0.crate
+wyhash 0.5.0: MIT OR Apache-2.0 — salmon-crates/wyhash-0.5.0.crate
+xxhash-rust 0.8.18: BSL-1.0 — salmon-crates/xxhash-rust-0.8.18.crate
+yansi 1.0.1: MIT OR Apache-2.0 — salmon-crates/yansi-1.0.1.crate
+zerocopy 0.8.57: BSD-2-Clause OR Apache-2.0 OR MIT — salmon-crates/zerocopy-0.8.57.crate
+zerocopy-derive 0.8.57: BSD-2-Clause OR Apache-2.0 OR MIT — salmon-crates/zerocopy-derive-0.8.57.crate
+zlib-rs 0.6.8: Zlib — salmon-crates/zlib-rs-0.6.8.crate
+zmij 1.0.23: MIT — salmon-crates/zmij-1.0.23.crate
+zstd 0.13.3: MIT — salmon-crates/zstd-0.13.3.crate
+zstd 0.14.0: BSD-3-Clause — salmon-crates/zstd-0.14.0.crate
+zstd-safe 7.3.0: BSD-3-Clause — salmon-crates/zstd-safe-7.3.0.crate
+zstd-safe 8.0.0: BSD-3-Clause — salmon-crates/zstd-safe-8.0.0.crate
+zstd-sys 2.1.0+zstd.1.5.7: BSD-3-Clause — salmon-crates/zstd-sys-2.1.0+zstd.1.5.7.crate
+
+Rust standard library: MIT OR Apache-2.0; see the accompanying Rust license files.
+Emscripten runtime and system libraries: see LICENSE.emscripten.

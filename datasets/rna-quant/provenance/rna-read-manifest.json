@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-10-10",
+  "purpose": "Small real public RNA-seq subsets for native-versus-WebAssembly equivalence tests, not accuracy or expression benchmarks.",
+  "sources": {
+    "human.tar.gz": {
+      "url": "https://bioconductor.posit.co/packages/3.23/data/experiment/src/contrib/RNAseqData.HNRNPC.bam.chr14_0.50.0.tar.gz",
+      "sha256": "7ff48935edf883440b1dd7257471059478a5d489514b4c44d161dd7a16894068",
+      "bytes": 348683558
+    },
+    "hg19-chr14.fa.gz": {
+      "url": "https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr14.fa.gz",
+      "sha256": "42c92c7b285bcfbbe1b81803fb2a57529abd756cc25bef573c1c7ffc07cdfaaf",
+      "bytes": 28970334
+    },
+    "nfcore-genome.fa": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/reference/genome.fa",
+      "sha256": "df70973809f672aa58a414fef3f01e0e465bf26f10159174a616b0dee2d458e1",
+      "bytes": 234058
+    },
+    "nfcore-genes.gtf": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/reference/genes.gtf",
+      "sha256": "8d9e66311d90f14517cdb8683066d4b376547ea7c2153b05b510fb9ba7988835",
+      "bytes": 204286
+    },
+    "nfcore-WT_REP1.sorted.bam": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/WT_REP1.sorted.bam",
+      "sha256": "9d17fefdd5e1b4e3af57636941cfe198037d6b26db7756efa285522e8810e25f",
+      "bytes": 6582836
+    },
+    "nfcore-SRR6357070_1.fastq.gz": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/SRR6357070_1.fastq.gz",
+      "sha256": "3f50541fa9cf2bedc87e7b682ada0fccfdfcd6d27b9bb81f17be230ff140ebe7",
+      "bytes": 2239317
+    },
+    "nfcore-SRR6357070_2.fastq.gz": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/SRR6357070_2.fastq.gz",
+      "sha256": "8590e1e01e568fba256aa7dced40519604cbb111ee44ab106a3dcb869660aaf4",
+      "bytes": 2232117
+    }
+  },
+  "datasets": {
+    "rna-human": {
+      "organism": "Homo sapiens",
+      "sample": "HeLa, HNRNPC knockdown and control experiment",
+      "run_accession": "ERR127306",
+      "experiment_accession": "ERX103445",
+      "study_accession": "ERP001458",
+      "arrayexpress_accession": "E-MTAB-1147",
+      "sample_accession": "ERS140920",
+      "library_strategy": "RNA-Seq",
+      "instrument": "Illumina Genome Analyzer II",
+      "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/ERR127306",
+      "source_package": "RNAseqData.HNRNPC.bam.chr14 0.50.0, Bioconductor 3.23",
+      "source_package_url": "https://bioconductor.org/packages/3.23/data/experiment/html/RNAseqData.HNRNPC.bam.chr14.html",
+      "source_package_license": "LGPL (upstream does not specify a version; package DESCRIPTION preserved)",
+      "source_bam_member": "RNAseqData.HNRNPC.bam.chr14/inst/extdata/ERR127306_chr14.bam",
+      "source_bam": {
+        "sha256": "3fda44ba3d7b898583dad1022b167dd246c674582c76b7be67e7997b6a2d0507",
+        "bytes": 38359360
+      },
+      "reference": {
+        "assembly": "GRCh37/hg19",
+        "chromosome": "chr14",
+        "start_0based": 102480000,
+        "end_0based_exclusive": 102520000,
+        "start_1based": 102480001,
+        "end_1based_inclusive": 102520000,
+        "fixture_contig": "chr14_102480001_102520000",
+        "length": 40000,
+        "case": "uppercase"
+      },
+      "fastq_pairs": 256,
+      "read_length": 72,
+      "source_spliced_records": 216,
+      "junction_count": 42,
+      "junction_source": "Unique N operations and XS strands from selected upstream TopHat2 2.0.8b alignments, shifted to local window coordinates. Observations from these reads, not independent annotations or truth.",
+      "transformation": "Read primary paired alignments in the pinned chr14 BAM. Keep complete pairs whose two alignments fit wholly within hg19 chr14:[102480000,102520000). Sort names lexicographically and take the first 256 pairs. Restore sequence/quality orientation using the SAM reverse flag. Write Phred+33 FASTQ. Extract matching UCSC reference bases, uppercase them and wrap at 60 bp. No read bases or numeric quality scores are modified.",
+      "limitations": [
+        "Reads are recovered from TopHat2 alignments rather than copied from raw sequencer files; prior clipping, quality conversion and processing remain.",
+        "The source TopHat command uses --solexa-quals; the fixture preserves numeric qualities from that BAM and emits Phred+33.",
+        "Reads were selected for mapping to a narrow window. This cannot establish whole-genome mapping specificity or quantitative expression accuracy.",
+        "Human splice hints are derived from the same selected reads. Hint-assisted cases test port equivalence only, not an independent biological prediction."
+      ]
+    },
+    "rna-yeast": {
+      "organism": "Saccharomyces cerevisiae",
+      "sample": "Wild-type total RNA-Seq biological replicate 1",
+      "run_accession": "SRR6357070",
+      "experiment_accession": "SRX3453465",
+      "study_accession": "SRP126328",
+      "geo_series": "GSE110004",
+      "geo_sample": "GSM2879618",
+      "sample_accession": "SRS2742168",
+      "library_strategy": "RNA-Seq",
+      "instrument": "Illumina HiSeq 2500",
+      "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/SRR6357070",
+      "source_repository": "https://github.com/nf-core/test-datasets",
+      "source_commit": "cad884e7fbe5617dcd55bdd07d9ddf65b54febe4",
+      "source_publication_doi": "10.1016/j.molcel.2018.10.018",
+      "reference": {
+        "assembly": "S. cerevisiae R64-1-1 (Ensembl iGenomes, as documented by nf-core)",
+        "chromosome": "I",
+        "start_1based": 1,
+        "end_1based_inclusive": 230218,
+        "length": 230218,
+        "note": "Copy upstream reference/genome.fa unchanged. Nuclear chromosome I includes annotated introns."
+      },
+      "upstream_fastq_pairs": 50000,
+      "fastq_pairs": 256,
+      "read_length": 101,
+      "junction_count": 5,
+      "junction_source": "Consecutive exon features grouped by transcript_id and strand, on contig I of the pinned nf-core reference/genes.gtf. These are existing source annotations, not inferred from our aligner results.",
+      "source_selection_bam": "nf-core WT_REP1.sorted.bam produced by STAR 2.7.11b. It also contains SRR6357071; selection explicitly restricts names to SRR6357070.",
+      "transformation": "From source BAM, retain complete primary SRR6357070 pairs on I with NH:i:1 for both mates. Divide by whether an N operation matches an annotated intron. Take first 128 names lexicographically in each group. Copy their original untrimmed FASTQ records unchanged from the two pinned nf-core files, in source order. The BAM is used only to choose read names, not to reconstruct sequences or qualities.",
+      "limitations": [
+        "Upstream nf-core enriched reads for chromosome I using Kraken2, then sampled 50,000 pairs with seqtk seed 100; its full procedure is preserved in provenance/nfcore-rnaseq-README.md.",
+        "Our further selection enriches for annotated splice-junction reads. It cannot measure splice-junction sensitivity or whole-genome specificity.",
+        "Upstream selection BAM contains trimmed reads and some very long apparent introns; our positive splice group requires a junction matching the source exon annotation. Distributed FASTQ reads remain the untrimmed original nf-core records.",
+        "No variant, junction or transcript truth set is supplied."
+      ]
+    }
+  },
+  "splice_hint_formats": {
+    "splice-sites.tsv": "Tab-separated reference name, zero-based final base of left exon, zero-based first base of right exon, strand; suitable for HISAT2 --known-splicesite-infile.",
+    "junctions.bed": "BED12, two 20 bp blocks flanking each intron. Blocks encode junction positions only and do not represent complete exon boundaries or asserted transcript models."
+  },
+  "provenance_snapshots": {
+    "provenance/ERR127306.xml": "https://www.ebi.ac.uk/ena/browser/api/xml/ERR127306",
+    "provenance/SRR6357070.xml": "https://www.ebi.ac.uk/ena/browser/api/xml/SRR6357070",
+    "provenance/nfcore-rnaseq-README.md": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/README.md",
+    "rna-yeast/UPSTREAM_LICENSE.txt": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/LICENSE",
+    "rna-human/UPSTREAM_DESCRIPTION.txt": "Member RNAseqData.HNRNPC.bam.chr14/DESCRIPTION in pinned source tarball"
+  },
+  "regeneration": {
+    "script": "scripts/fetch-rna-test-data.py",
+    "python": "3.12",
+    "pysam": "0.23.3",
+    "note": "Regeneration downloads about 389 MB (mostly the complete Bioconductor data package). Normal tests verify committed compact text files offline. Only rewrite generated files if all expected hashes match."
+  },
+  "files": {
+    "rna-human/UPSTREAM_DESCRIPTION.txt": {
+      "sha256": "159d570768310fd36cab1312bbd75cd7066a6cf79314cd36d1719cfbcb6f239b",
+      "bytes": 1249,
+      "generated": false
+    },
+    "rna-human/junctions.bed": {
+      "sha256": "79280c9a8e9756c807ebae8ea56d5fbcc93f348b0c85a2fc6b6b5c5280fb1629",
+      "bytes": 3413,
+      "generated": true
+    },
+    "rna-human/reads_1.fastq": {
+      "sha256": "300bbde9e95c66ea90c003ec0ca3a40f1dc7a012862e38e11e54ae47865ca70e",
+      "bytes": 42981,
+      "generated": true
+    },
+    "rna-human/reads_2.fastq": {
+      "sha256": "f7147fe368ea37ac1f5fbf59274d4088ba719fe0779a9d0b9c89a75d692fe53f",
+      "bytes": 42981,
+      "generated": true
+    },
+    "rna-human/reference.fa": {
+      "sha256": "6759a362504a3c5d3c6c24656ad80f0fcda2931dd0d0feef338c142b479cb8fd",
+      "bytes": 40694,
+      "generated": true
+    },
+    "rna-human/splice-sites.tsv": {
+      "sha256": "7da4eeb6cb284fdd41c118e9d51c69f614772a9cc3b81619218cfdd408fccbaa",
+      "bytes": 1665,
+      "generated": true
+    },
+    "rna-yeast/UPSTREAM_LICENSE.txt": {
+      "sha256": "1fa2a62f20d23902c7aad04f3d728fbfc9d153df472e8f2ef163322a8c5557c8",
+      "bytes": 1064,
+      "generated": false
+    },
+    "rna-yeast/junctions.bed": {
+      "sha256": "9cbcecb17e71d69ba9bc69e520461e4cb577eb5e150291902db7b52bdf877ce1",
+      "bytes": 304,
+      "generated": true
+    },
+    "rna-yeast/reads_1.fastq": {
+      "sha256": "98d6e4d70c64a1cd75a388f4fa1fa794b1890a6388bd18e41ff67cb762e7cd45",
+      "bytes": 65464,
+      "generated": true
+    },
+    "rna-yeast/reads_2.fastq": {
+      "sha256": "abdc1e3e6167435ae8f77631568d23c95b1d84c5e53c683d3e80418a8112055e",
+      "bytes": 65464,
+      "generated": true
+    },
+    "rna-yeast/reference.fa": {
+      "sha256": "df70973809f672aa58a414fef3f01e0e465bf26f10159174a616b0dee2d458e1",
+      "bytes": 234058,
+      "generated": true
+    },
+    "rna-yeast/splice-sites.tsv": {
+      "sha256": "e737f3c8c6271ea39b04867d713fb6c0b81f3e74504585b6fbd225d10b84c6f8",
+      "bytes": 88,
+      "generated": true
+    },
+    "provenance/ERR127306.xml": {
+      "sha256": "c0e08c36345479e4c246a5056b23088025a3718b00c2a25659c259ab1d296462",
+      "bytes": 3086,
+      "generated": false
+    },
+    "provenance/SRR6357070.xml": {
+      "sha256": "a26bf38d74fa6995a5ff396aac5b9eaa57166edb0c3d222ec086465b26b10be0",
+      "bytes": 2614,
+      "generated": false
+    },
+    "provenance/nfcore-rnaseq-README.md": {
+      "sha256": "7c4fbdcc513b935f02735bc829834c891c4165e5c815bd47aa6ece2dbcdc23eb",
+      "bytes": 13240,
+      "generated": false
+    }
+  }
+}

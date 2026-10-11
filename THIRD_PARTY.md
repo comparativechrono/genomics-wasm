@@ -18,6 +18,14 @@ directory under `tools/`.
 - HISAT2: Daehwan Kim and contributors, including code from Bowtie 2;
   GPL-3.0-or-later. Source: https://github.com/DaehwanKimLab/hisat2
 - minimap2: Heng Li and contributors; MIT. Source: https://github.com/lh3/minimap2
+- kallisto: Nicolas Bray, Harold Pimentel, Páll Melsted, Lior Pachter and
+  contributors; BSD-2-Clause. Source: https://github.com/pachterlab/kallisto
+  Its package includes Bifrost and its bundled components, pinned zlib, their
+  corresponding sources and individual licence notices.
+- Salmon 2: COMBINE lab and contributors; BSD-3-Clause.
+  Source: https://github.com/COMBINE-lab/salmon
+  The Rust dependencies, Rust standard library and bundled C/C++ components
+  retain their own licences; see the source and notices included in its package.
 - DESeq2: Michael Love, Simon Anders, Wolfgang Huber and contributors;
   LGPL-3.0-or-later. Source: https://github.com/thelovelab/DESeq2
   Its separate package uses webR and R, together with the Bioconductor and CRAN

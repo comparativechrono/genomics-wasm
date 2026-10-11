@@ -1,20 +1,23 @@
 /** Run one command in an isolated worker. No shell parsing or shared tool state. */
 export class ToolRunner {
-  constructor({ moduleUrl, workerUrl = new URL('./worker.mjs', import.meta.url) } = {}) {
+  constructor({ moduleUrl, workerUrl = new URL('./worker.mjs', import.meta.url), waitForExit = false } = {}) {
+    if (typeof waitForExit !== 'boolean') throw new TypeError('waitForExit must be a boolean');
     this.moduleUrl = absoluteUrl(moduleUrl, 'moduleUrl');
     this.workerUrl = absoluteUrl(workerUrl, 'workerUrl');
+    this.waitForExit = waitForExit;
   }
 
-  async run(args = [], { files = [], outputs = [], stdin = new Uint8Array(), signal, timeoutMs = 0 } = {}) {
+  async run(args = [], { files = [], outputs = [], outputDirectories = [], stdin = new Uint8Array(), signal, timeoutMs = 0 } = {}) {
     if (!Array.isArray(args) || args.some(arg => typeof arg !== 'string' || arg.includes('\0'))) {
       throw new TypeError('args must be an array of strings without NUL characters');
     }
-    if (!Array.isArray(files) || !Array.isArray(outputs)) throw new TypeError('files and outputs must be arrays');
+    if (!Array.isArray(files) || !Array.isArray(outputs) || !Array.isArray(outputDirectories)) throw new TypeError('files, outputs and outputDirectories must be arrays');
     if (!Number.isFinite(timeoutMs) || timeoutMs < 0) throw new TypeError('timeoutMs must be a non-negative number');
     if (signal?.aborted) throw abortError();
     const inputFiles = files.map(file => ({ path: workspacePath(file.path), data: bytes(file.data) }));
     if (new Set(inputFiles.map(file => file.path)).size !== inputFiles.length) throw new TypeError('Input file paths must be unique');
     const requestedOutputs = [...new Set(outputs.map(workspacePath))];
+    const requestedDirectories = [...new Set(outputDirectories.map(workspacePath))];
     const input = bytes(stdin);
 
     return new Promise((resolve, reject) => {
@@ -68,7 +71,7 @@ export class ToolRunner {
           worker.addEventListener('messageerror', () => finish(new Error('Could not read tool worker response')));
         }
         // Structured cloning leaves caller-owned input buffers intact.
-        worker.postMessage({ moduleUrl: this.moduleUrl, args, files: inputFiles, outputs: requestedOutputs, stdin: input });
+        worker.postMessage({ moduleUrl: this.moduleUrl, waitForExit: this.waitForExit, args, files: inputFiles, outputs: requestedOutputs, outputDirectories: requestedDirectories, stdin: input });
       };
       start().catch(error => finish(error));
     });

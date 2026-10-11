@@ -1,0 +1,710 @@
+--- a/src/Bootstrap.cpp
++++ b/src/Bootstrap.cpp
+@@ -35,7 +35,7 @@
+   mean_fls_(mean_fls)
+ {
+   for (size_t i = 0; i < n_threads_; ++i) {
+-    threads_.push_back( std::thread(BootstrapWorker(*this, i)) );
++    threads_.push_back( genomics_wasm::SerialThread(BootstrapWorker(*this, i)) );
+   }
+ }
+ 
+--- a/src/Bootstrap.h
++++ b/src/Bootstrap.h
+@@ -86,7 +86,7 @@
+     std::vector<size_t> seeds_;
+     size_t n_threads_;
+ 
+-    std::vector<std::thread> threads_;
++    std::vector<genomics_wasm::SerialThread> threads_;
+     std::mutex seeds_mutex_;
+     std::mutex write_lock_;
+ 
+--- a/src/KmerIndex.cpp
++++ b/src/KmerIndex.cpp
+@@ -901,7 +901,7 @@
+ 
+   for (auto& fasta : dlist_fasta_files) {
+     std::vector<std::string> seqs_v(max_threads_read, "");
+-    std::vector<std::thread> workers;
++    std::vector<genomics_wasm::SerialThread> workers;
+     std::mutex mutex_file;
+     std::mutex mutex_kmers;
+     fp = gzopen(fasta.c_str(), "r");
+@@ -1470,7 +1470,7 @@
+   const size_t max_num_nodes_buffer = 524288;
+   std::vector<std::pair<char*, std::pair<Kmer, uint32_t>>> in_buf_v;
+   in_buf_v.reserve(max_num_nodes_buffer);
+-  std::vector<std::thread> workers;
++  std::vector<genomics_wasm::SerialThread> workers;
+   workers.reserve(opt.threads);
+   for (size_t i = 0; i < tmp_size; ++i) {
+     // 3.1 read head kmer
+@@ -1532,7 +1532,7 @@
+   buffer = nullptr;
+   std::vector<std::pair<char*, std::pair<Kmer, uint32_t>>>().swap(
+       in_buf_v);  // potentially free up memory
+-  std::vector<std::thread>().swap(workers);
++  std::vector<genomics_wasm::SerialThread>().swap(workers);
+ 
+   // 4. read number of targets
+   in.read((char*)&num_trans, sizeof(num_trans));
+--- a/src/ProcessReads.cpp
++++ b/src/ProcessReads.cpp
+@@ -315,9 +315,9 @@
+ void MasterProcessor::processReads() {
+   // start worker threads
+   if (!opt.batch_mode && !opt.bus_mode) {
+-    std::vector<std::thread> workers;
++    std::vector<genomics_wasm::SerialThread> workers;
+     for (int i = 0; i < opt.threads; i++) {
+-      workers.emplace_back(std::thread(ReadProcessor(index, opt, tc, *this, -1, i)));
++      workers.emplace_back(genomics_wasm::SerialThread(ReadProcessor(index, opt, tc, *this, -1, i)));
+     }
+ 
+     // let the workers do their thing
+@@ -338,7 +338,7 @@
+       }
+     }
+   } else if (opt.bus_mode) {
+-    std::vector<std::thread> workers;
++    std::vector<genomics_wasm::SerialThread> workers;
+     parallel_bus_read = opt.threads > 4 && opt.files.size() > opt.busOptions.nfiles && !opt.num &&
+                         !opt.pseudobam && opt.input_interleaved_nfiles == 0;
+     if (parallel_bus_read) {
+@@ -358,7 +358,7 @@
+     }
+ 
+     for (int i = 0; i < opt.threads; i++) {
+-      workers.emplace_back(std::thread(BUSProcessor(index, opt, tc, *this, -1, i)));
++      workers.emplace_back(genomics_wasm::SerialThread(BUSProcessor(index, opt, tc, *this, -1, i)));
+     }
+ 
+     // let the workers do their thing
+@@ -375,7 +375,7 @@
+     tc.counts.resize(index.ecmapinv.size(), 0);
+ 
+   } else if (opt.batch_mode) {
+-    std::vector<std::thread> workers;
++    std::vector<genomics_wasm::SerialThread> workers;
+     int num_ids = opt.batch_ids.size();
+     int id = 0;
+     while (id < num_ids) {
+@@ -399,10 +399,10 @@
+       }
+ 
+       for (int i = 0; i < nt; i++, id++, local_id++) {
+-        workers.emplace_back(std::thread(BUSProcessor(index, opt, tc, *this, id, local_id)));
++        workers.emplace_back(genomics_wasm::SerialThread(BUSProcessor(index, opt, tc, *this, id, local_id)));
+       }
+       for (int i = 0; i < num_threads - nt; i++, local_id++) {  // Use up remaining threads
+-        workers.emplace_back(std::thread(
++        workers.emplace_back(genomics_wasm::SerialThread(
+             BUSProcessor(index, opt, tc, *this, start_id + (i % nt), local_id)));  // id will cycle
+       }
+       // let the workers do their thing
+@@ -748,9 +748,9 @@
+   pseudobatchf_in.open(opt.output + "/pseudoaln.bin", std::ios::in | std::ios::binary);
+   SR->reset();
+ 
+-  std::vector<std::thread> workers;
++  std::vector<genomics_wasm::SerialThread> workers;
+   for (int i = 0; i < opt.threads; i++) {
+-    workers.emplace_back(std::thread(AlnProcessor(index, opt, *this, em, model, useEM)));
++    workers.emplace_back(genomics_wasm::SerialThread(AlnProcessor(index, opt, *this, em, model, useEM)));
+   }
+ 
+   // let the workers do their thing
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -1050,11 +1050,11 @@
+     }
+   }
+ 
+-  if (opt.threads <= 0) {
+-    std::cerr << "Error: invalid number of threads " << opt.threads << std::endl;
++  if (opt.threads != 1) {
++    std::cerr << "Error: this build requires exactly one thread; requested " << opt.threads << std::endl;
+     ret = false;
+   } else {
+-    unsigned int n = std::thread::hardware_concurrency();
++    unsigned int n = genomics_wasm::SerialThread::hardware_concurrency();
+     if (n != 0 && n < opt.threads) {
+       std::cerr << "Warning: you asked for " << opt.threads << ", but only " << n
+            << " cores on the machine" << std::endl;
+@@ -1606,11 +1606,11 @@
+ bool CheckOptionsIndex(ProgramOptions &opt) {
+   bool ret = true;
+ 
+-  if (opt.threads <= 0) {
+-    std::cerr << "Error: invalid number of threads " << opt.threads << std::endl;
++  if (opt.threads != 1) {
++    std::cerr << "Error: this build requires exactly one thread; requested " << opt.threads << std::endl;
+     ret = false;
+   } else {
+-    unsigned int n = std::thread::hardware_concurrency();
++    unsigned int n = genomics_wasm::SerialThread::hardware_concurrency();
+     if (n != 0 && n < opt.threads) {
+       std::cerr << "Warning: you asked for " << opt.threads << ", but only " << n
+            << " cores on the machine" << std::endl;
+@@ -1853,11 +1853,11 @@
+     }
+   }
+ 
+-  if (opt.threads <= 0) {
+-    std::cerr << "Error: invalid number of threads " << opt.threads << std::endl;
++  if (opt.threads != 1) {
++    std::cerr << "Error: this build requires exactly one thread; requested " << opt.threads << std::endl;
+     ret = false;
+   } else {
+-    unsigned int n = std::thread::hardware_concurrency();
++    unsigned int n = genomics_wasm::SerialThread::hardware_concurrency();
+     if (n != 0 && n < opt.threads) {
+       std::cerr << "Warning: you asked for " << opt.threads << ", but only " << n
+            << " cores on the machine" << std::endl;
+@@ -2034,11 +2034,11 @@
+     }
+   }
+ 
+-  if (opt.threads <= 0) {
+-    std::cerr << ERROR_STR << " invalid number of threads " << opt.threads << std::endl;
++  if (opt.threads != 1) {
++    std::cerr << ERROR_STR << " this build requires exactly one thread; requested " << opt.threads << std::endl;
+     ret = false;
+   } else {
+-    unsigned int n = std::thread::hardware_concurrency();
++    unsigned int n = genomics_wasm::SerialThread::hardware_concurrency();
+     if (n != 0 && n < opt.threads) {
+       std::cerr << "Warning: you asked for " << opt.threads << ", but only " << n
+            << " cores on the machine" << std::endl;
+@@ -2056,11 +2056,11 @@
+ bool CheckOptionsInspect(ProgramOptions &opt) {
+   bool ret = true;
+ 
+-  if (opt.threads <= 0) {
+-    std::cerr << "Error: invalid number of threads " << opt.threads << std::endl;
++  if (opt.threads != 1) {
++    std::cerr << "Error: this build requires exactly one thread; requested " << opt.threads << std::endl;
+     ret = false;
+   } else {
+-    unsigned int n = std::thread::hardware_concurrency();
++    unsigned int n = genomics_wasm::SerialThread::hardware_concurrency();
+     if (n != 0 && n < opt.threads) {
+       std::cerr << "Warning: you asked for " << opt.threads << ", but only " << n
+            << " cores on the machine" << std::endl;
+@@ -2454,6 +2454,14 @@
+ }
+ 
+ int main(int argc, char *argv[]) {
++  if (argc > 1) {
++    const std::string command(argv[1]);
++    if (command != "index" && command != "quant" && command != "inspect" &&
++        command != "version" && command != "cite") {
++      std::cerr << "This build supports index, quant, inspect, version and cite." << std::endl;
++      return 1;
++    }
++  }
+   std::cout.sync_with_stdio(false);
+   setvbuf(stdout, NULL, _IOFBF, 1048576);
+ 
+@@ -3388,7 +3396,7 @@
+           }
+         };  // end of EM_lambda
+ 
+-        std::vector<std::thread> workers;
++        std::vector<genomics_wasm::SerialThread> workers;
+         int num_ids = nrow;
+         int id = 0;
+         while (id < num_ids) {
+@@ -3396,7 +3404,7 @@
+           int nt = std::min(opt.threads, (num_ids - id));
+           int first_id = id;
+           for (int i = 0; i < nt; i++, id++) {
+-            workers.emplace_back(std::thread(EM_lambda, id));
++            workers.emplace_back(genomics_wasm::SerialThread(EM_lambda, id));
+           }
+           for (int i = 0; i < nt; i++) {
+             workers[i].join();
+--- a/ext/bifrost/src/Bifrost.cpp
++++ b/ext/bifrost/src/Bifrost.cpp
+@@ -245,7 +245,7 @@
+ 
+     bool ret = true;
+ 
+-    size_t max_threads = std::thread::hardware_concurrency();
++    size_t max_threads = genomics_wasm::SerialThread::hardware_concurrency();
+ 
+     auto check_files = [&](vector<string>& v_files) {
+ 
+--- a/ext/bifrost/src/BooPHF.h
++++ b/ext/bifrost/src/BooPHF.h
+@@ -1138,17 +1138,17 @@
+                     so, casting to (void*) because of that; and we remember the type in the template */
+ 
+                 for(int ii=0;ii<_num_thread;ii++)
+-                    pthread_create (&tab_threads[ii], NULL,  thread_processLevel<elem_t, Hasher_t, Range, fastmode_it_type>, &t_arg); //&t_arg[ii]
++                    genomics_wasm::serial_pthread_create (&tab_threads[ii], NULL,  thread_processLevel<elem_t, Hasher_t, Range, fastmode_it_type>, &t_arg); //&t_arg[ii]
+             }
+             else
+             {
+                 for(int ii=0;ii<_num_thread;ii++)
+-                    pthread_create (&tab_threads[ii], NULL,  thread_processLevel<elem_t, Hasher_t, Range, decltype(input_range.begin())>, &t_arg); //&t_arg[ii]
++                    genomics_wasm::serial_pthread_create (&tab_threads[ii], NULL,  thread_processLevel<elem_t, Hasher_t, Range, decltype(input_range.begin())>, &t_arg); //&t_arg[ii]
+             }
+             //joining
+             for(int ii=0;ii<_num_thread;ii++)
+             {
+-                pthread_join(tab_threads[ii], NULL);
++                genomics_wasm::serial_pthread_join(tab_threads[ii], NULL);
+ 
+             }
+             //printf("\ngoing to level %i  : %llu elems  %.2f %%  expected : %.2f %% \n",i,_cptLevel,100.0* _cptLevel/(float)_nelem,100.0* pow(_proba_collision,i) );
+--- a/ext/bifrost/src/ColoredCDBG.tcc
++++ b/ext/bifrost/src/ColoredCDBG.tcc
+@@ -512,7 +512,7 @@
+     {
+         const size_t chunk = 10000;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+ 
+@@ -729,7 +729,7 @@
+ 
+     const size_t chunk = 1000;
+ 
+-    std::vector<std::thread> workers; // need to keep track of threads so we can join them
++    std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+     typename ColoredCDBG<U>::iterator g_a = this->begin();
+     typename ColoredCDBG<U>::iterator g_b = this->end();
+@@ -782,7 +782,7 @@
+ 
+     const size_t chunk = 100;
+ 
+-    std::vector<std::thread> workers; // need to keep track of threads so we can join them
++    std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+     typename ColoredCDBG<U>::iterator g_a = this->begin();
+     typename ColoredCDBG<U>::iterator g_b = this->end();
+@@ -848,7 +848,7 @@
+ 
+     const size_t chunk = 100;
+ 
+-    std::vector<std::thread> workers; // need to keep track of threads so we can join them
++    std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+     typename ColoredCDBG<void>::iterator g_a = this->begin();
+     typename ColoredCDBG<void>::iterator g_b = this->end();
+@@ -1055,7 +1055,7 @@
+     {
+         bool stop = false;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+ 
+@@ -1168,7 +1168,7 @@
+ 
+     std::mutex mutex_u_map;
+ 
+-    std::vector<std::thread> workers;
++    std::vector<genomics_wasm::SerialThread> workers;
+ 
+     auto add_hash_function = [&](typename ColoredCDBG<U>::iterator it_a, typename ColoredCDBG<U>::iterator it_b) {
+ 
+@@ -1389,9 +1389,9 @@
+         return false;
+     }
+ 
+-    if (nb_threads > std::thread::hardware_concurrency()){
+-
+-        std::cerr << "ColoredCDBG::search(): Number of threads cannot be greater than or equal to " << std::thread::hardware_concurrency() << "." << std::endl;
++    if (nb_threads > genomics_wasm::SerialThread::hardware_concurrency()){
++
++        std::cerr << "ColoredCDBG::search(): Number of threads cannot be greater than or equal to " << genomics_wasm::SerialThread::hardware_concurrency() << "." << std::endl;
+         return false;
+     }
+ 
+@@ -1711,7 +1711,7 @@
+ 
+         bool stop = false;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::atomic<size_t> nb_queries_found;
+ 
+--- a/ext/bifrost/src/CompactedDBG.tcc
++++ b/ext/bifrost/src/CompactedDBG.tcc
+@@ -112,7 +112,7 @@
+     if ((nb_threads == 1) || (v_unitigs.size() < 1024)) moveUnitigs(0, v_unitigs.size());
+     else {
+ 
+-        std::vector<std::thread> workers;
++        std::vector<genomics_wasm::SerialThread> workers;
+ 
+         const size_t slice = (v_unitigs.size() / nb_threads) + 1;
+ 
+@@ -242,7 +242,7 @@
+ /*template<typename U, typename G>
+ bool CompactedDBG<U, G>::build(CDBG_Build_opt& opt){
+ 
+-    size_t max_threads = std::thread::hardware_concurrency();
++    size_t max_threads = genomics_wasm::SerialThread::hardware_concurrency();
+ 
+     bool construct_finished = true;
+ 
+@@ -484,7 +484,7 @@
+ template<typename U, typename G>
+ bool CompactedDBG<U, G>::build(CDBG_Build_opt& opt){
+ 
+-    size_t max_threads = std::thread::hardware_concurrency();
++    size_t max_threads = genomics_wasm::SerialThread::hardware_concurrency();
+ 
+     bool construct_finished = true;
+ 
+@@ -2252,7 +2252,7 @@
+             const size_t chunk = 100;
+             const size_t nb_locks = nb_threads * 1024;
+ 
+-            std::vector<std::thread> workers; // need to keep track of threads so we can join them
++            std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+             typename CompactedDBG<U, G>::const_iterator g_a(o.begin());
+             typename CompactedDBG<U, G>::const_iterator g_b(o.end());
+@@ -2356,7 +2356,7 @@
+ 
+         const size_t chunk = 100;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         typename CompactedDBG<U, G>::const_iterator g_a = o.begin();
+         typename CompactedDBG<U, G>::const_iterator g_b = o.end();
+@@ -2458,7 +2458,7 @@
+ 
+         const size_t chunk = 100;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         typename CompactedDBG<U, G>::iterator g_a = o.begin();
+         typename CompactedDBG<U, G>::iterator g_b = o.end();
+@@ -2718,7 +2718,7 @@
+     {
+         bool stop = false;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+         std::mutex mutex_bitmap;
+@@ -2926,7 +2926,7 @@
+ 
+         size_t ticket_id = 0;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+         std::vector< std::pair<size_t, std::vector< std::pair<size_t, bool>>>> v_path;
+ 
+         std::mutex mutex_file;
+@@ -3233,7 +3233,7 @@
+     {
+         bool stop = false;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+ 
+@@ -3692,7 +3692,7 @@
+ 
+         FileParser fp(filename_in);
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+ 
+@@ -3746,7 +3746,7 @@
+ 
+         FileParser fp(filename_in);
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+ 
+@@ -6825,7 +6825,7 @@
+             {
+                 typename h_kmers_ccov_t::const_iterator it = h_kmers_ccov.begin(), it_end = h_kmers_ccov.end();
+ 
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_it;
+ 
+@@ -6865,7 +6865,7 @@
+ 
+                 size_t it_km = 0, it_km_end = km_unitigs.size();
+ 
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_it_km;
+ 
+@@ -6902,7 +6902,7 @@
+                 auto it_unitig = v_unitigs.begin();
+                 auto it_unitig_end = v_unitigs.end();
+ 
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_it_unitig;
+ 
+@@ -7145,7 +7145,7 @@
+             {
+                 typename h_kmers_ccov_t::const_iterator it = h_kmers_ccov.begin(), it_end = h_kmers_ccov.end();
+ 
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_it;
+ 
+@@ -7185,7 +7185,7 @@
+ 
+                 size_t it_km = 0, it_km_end = km_unitigs.size();
+ 
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_it_km;
+ 
+@@ -7222,7 +7222,7 @@
+                 auto it_unitig = v_unitigs.begin();
+                 auto it_unitig_end = v_unitigs.end();
+ 
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_it_unitig;
+ 
+--- a/ext/bifrost/src/DataStorage.tcc
++++ b/ext/bifrost/src/DataStorage.tcc
+@@ -78,7 +78,7 @@
+ 
+         unitig_cs_link = new std::atomic<uint64_t>[sz_link];
+ 
+-        for (size_t i = 0; i != sz_link; ++i) unitig_cs_link[i] = o.sz_link[i].load();
++        for (size_t i = 0; i != sz_link; ++i) unitig_cs_link[i] = o.unitig_cs_link[i].load();
+     }
+ 
+     if ((o.data != nullptr) && (o.sz_cs != 0)){
+@@ -961,7 +961,7 @@
+ 
+             std::mutex m_colors_in_pos;
+ 
+-            std::vector<std::thread> workers; // need to keep track of threads so we can join them
++            std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+             std::atomic<size_t> i;
+ 
+@@ -1253,7 +1253,7 @@
+ 
+             std::mutex m_colors_in_pos;
+ 
+-            std::vector<std::thread> workers; // need to keep track of threads so we can join them
++            std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+             std::atomic<size_t> i;
+ 
+@@ -1646,7 +1646,7 @@
+             sz_in_bytes += cpt;
+         };
+ 
+-        std::vector<std::thread> workers;
++        std::vector<genomics_wasm::SerialThread> workers;
+ 
+         const size_t load_per_thread = nb_cs / nb_threads;
+ 
+--- a/ext/bifrost/src/IO.tcc
++++ b/ext/bifrost/src/IO.tcc
+@@ -16,9 +16,9 @@
+         return false;
+     }
+ 
+-    if (nb_threads > std::thread::hardware_concurrency()){
+-
+-        std::cerr << "CompactedDBG::write(): Number of threads cannot exceed " << std::thread::hardware_concurrency() << "threads" << std::endl;
++    if (nb_threads > genomics_wasm::SerialThread::hardware_concurrency()){
++
++        std::cerr << "CompactedDBG::write(): Number of threads cannot exceed " << genomics_wasm::SerialThread::hardware_concurrency() << "threads" << std::endl;
+         return false;
+     }
+ 
+@@ -698,7 +698,7 @@
+             std::atomic<size_t> label(1);
+ 
+             std::vector<std::vector<std::pair<std::pair<size_t, bool>, std::pair<size_t, bool>>>> v_out(nb_threads);
+-            std::vector<std::thread> workers; // need to keep track of threads so we can join them
++            std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+             std::mutex mutex_file;
+ 
+@@ -746,7 +746,7 @@
+             std::atomic<size_t> label(v_unitigs_sz + 1);
+ 
+             std::vector<std::vector<std::pair<std::pair<size_t, bool>, std::pair<size_t, bool>>>> v_out(nb_threads);
+-            std::vector<std::thread> workers; // need to keep track of threads so we can join them
++            std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+             std::mutex mutex_file;
+ 
+@@ -792,7 +792,7 @@
+             KmerHashTable<size_t>::iterator it = idmap.begin(), it_end = idmap.end();
+ 
+             std::vector<std::vector<std::pair<std::pair<size_t, bool>, std::pair<size_t, bool>>>> v_out(nb_threads);
+-            std::vector<std::thread> workers; // need to keep track of threads so we can join them
++            std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+             std::mutex mutex_file, mutex_it;
+ 
+@@ -1455,7 +1455,7 @@
+ 
+                 const auto bmp_unitigs_size = v_bmp_unitigs[i].size();
+                 unitig_pos_ids.reserve(n_elems_buffer > bmp_unitigs_size ? bmp_unitigs_size : n_elems_buffer);
+-                std::vector<std::thread> workers;
++                std::vector<genomics_wasm::SerialThread> workers;
+                 size_t n = 0;
+                 for (const auto pos_bmp : v_bmp_unitigs[i]) {
+ 
+@@ -2024,7 +2024,7 @@
+             }
+             else {
+ 
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_minz_idx;
+ 
+@@ -2264,7 +2264,7 @@
+ 
+         SpinLock lck_unitig, lck_kmer;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+ 
+@@ -2338,7 +2338,7 @@
+ 
+         SpinLock lck_unitig, lck_kmer;
+ 
+-        std::vector<std::thread> workers; // need to keep track of threads so we can join them
++        std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+         std::mutex mutex_file;
+ 
+--- a/ext/bifrost/src/KmerCovIndex.tcc
++++ b/ext/bifrost/src/KmerCovIndex.tcc
+@@ -95,7 +95,7 @@
+     if ((nb_threads == 1) || (v_blocks.size() < nb_threads)) copyBlock(0, v_blocks.size());
+     else {
+ 
+-        std::vector<std::thread> workers;
++        std::vector<genomics_wasm::SerialThread> workers;
+ 
+         const size_t slice = (v_blocks.size() / nb_threads) + 1;
+ 
+--- a/ext/bifrost/src/KmerStream.hpp
++++ b/ext/bifrost/src/KmerStream.hpp
+@@ -1580,7 +1580,7 @@
+         KmerStream(const KmerStream_Build_opt& opt) :   k(opt.k), g(opt.g), q(opt.q), q_base(opt.q_base), e(opt.e),
+                                                         nb_threads(opt.threads), chunksize(opt.chunksize), invalid(false), verbose(opt.verbose) {
+ 
+-            const size_t max_threads = std::thread::hardware_concurrency();
++            const size_t max_threads = genomics_wasm::SerialThread::hardware_concurrency();
+ 
+             if (nb_threads <= 0){
+ 
+@@ -1783,7 +1783,7 @@
+             };
+ 
+             {
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 bool stop = false;
+ 
+@@ -1925,7 +1925,7 @@
+             };
+ 
+             {
+-                std::vector<std::thread> workers; // need to keep track of threads so we can join them
++                std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 std::mutex mutex_file;
+ 
+--- a/ext/bifrost/src/MinimizerIndex.cpp
++++ b/ext/bifrost/src/MinimizerIndex.cpp
+@@ -1115,7 +1115,7 @@
+             {
+                 bool stop = false;
+ 
+-               std::vector<thread> workers; // need to keep track of threads so we can join them
++               std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+                 mutex mutex_mi;
+ 
+--- a/ext/bifrost/src/Search.tcc
++++ b/ext/bifrost/src/Search.tcc
+@@ -1054,9 +1054,9 @@
+         return false;
+     }
+ 
+-    if (nb_threads > std::thread::hardware_concurrency()){
+-
+-        std::cerr << "CompactedDBG::search(): Number of threads cannot be greater than or equal to " << std::thread::hardware_concurrency() << "." << std::endl;
++    if (nb_threads > genomics_wasm::SerialThread::hardware_concurrency()){
++
++        std::cerr << "CompactedDBG::search(): Number of threads cannot be greater than or equal to " << genomics_wasm::SerialThread::hardware_concurrency() << "." << std::endl;
+         return false;
+     }
+ 
+@@ -1174,7 +1174,7 @@
+         {
+             bool stop = false;
+ 
+-            std::vector<std::thread> workers; // need to keep track of threads so we can join them
++            std::vector<genomics_wasm::SerialThread> workers; // need to keep track of threads so we can join them
+ 
+             std::mutex mutex_files_in, mutex_file_out;
+ 
+--- a/ext/bifrost/src/rw_spin_lock.h
++++ b/ext/bifrost/src/rw_spin_lock.h
+@@ -221,7 +221,7 @@
+                                                     load_lock_pool(0), mask_it(rndup(nb_readers + 1) - 1),
+                                                     padding1{0}, padding2{0}, padding3{0}, padding4{0} {
+ 
+-            if (nb_readers <= std::thread::hardware_concurrency()){
++            if (nb_readers <= genomics_wasm::SerialThread::hardware_concurrency()){
+ 
+                 lock_pool = new Lock[mask_it + 1];
+                 lock_pool[0].is_locked = false;
+@@ -345,11 +345,11 @@
+ 
+             static_assert(N <= 62, "Hybrid_SpinLockRW_MCS(): Number of reader/writer per block cannot be more than 62");
+ 
+-            if (nb_threads <= std::thread::hardware_concurrency()) lcks[mask_id].bits = mask_full;
++            if (nb_threads <= genomics_wasm::SerialThread::hardware_concurrency()) lcks[mask_id].bits = mask_full;
+             else {
+ 
+                 std::cerr << "Hybrid_SpinLockRW_MCS(): Number of threads required is greater than number of threads possible on this machine (" <<
+-                std::thread::hardware_concurrency() << ")" << std::endl;
++                genomics_wasm::SerialThread::hardware_concurrency() << ")" << std::endl;
+             }
+         }
+ 
