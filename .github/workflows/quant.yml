@@ -152,7 +152,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode: [direct, passthrough, heartbeat, listener, stdio, workers]
+        mode: [direct, heartbeat, message-probe, no-wait-async, full]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -167,9 +167,9 @@ jobs:
         with:
           name: quant-compiled-salmon
           path: .
-      - name: Observe one startup condition
+      - name: Repeat startup under one diagnostic condition
         continue-on-error: true
-        run: node scripts/diagnose-salmon-browser.mjs --engine webkit --case index --mode ${{ matrix.mode }}
+        run: node scripts/diagnose-salmon-browser.mjs --engine webkit --case index --repeat 100 --mode ${{ matrix.mode }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:

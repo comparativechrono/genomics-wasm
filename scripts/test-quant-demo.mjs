@@ -29,6 +29,7 @@ for (const tool of tools) {
 
 const mime = { '.html': 'text/html', '.mjs': 'text/javascript', '.js': 'text/javascript', '.css': 'text/css', '.wasm': 'application/wasm', '.json': 'application/json' };
 async function serve(isolated) {
+  const heldRequests = new Map();
   const server = createServer(async (request, response) => {
     if (isolated) {
       response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
@@ -37,6 +38,12 @@ async function serve(isolated) {
     response.setHeader('Cache-Control', 'no-store');
     try {
       const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+      const held = heldRequests.get(pathname);
+      if (held) {
+        heldRequests.delete(pathname);
+        held.arrived();
+        await held.unblocked;
+      }
       if (pathname === '/outside-example.html') {
         response.writeHead(200, { 'Content-Type': 'text/html' }).end('<!doctype html><title>Outside quant example</title>');
         return;
@@ -48,7 +55,24 @@ async function serve(isolated) {
     } catch { response.writeHead(404).end('Not found'); }
   });
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
-  return { server, origin: `http://127.0.0.1:${server.address().port}` };
+  return {
+    server, origin: `http://127.0.0.1:${server.address().port}`,
+    holdNextRequest(pathname) {
+      assert.equal(heldRequests.has(pathname), false, `A request hold already exists for ${pathname}`);
+      let arrived, unblock;
+      const requested = new Promise(resolve => { arrived = resolve; });
+      const unblocked = new Promise(resolve => { unblock = resolve; });
+      const held = { arrived, unblocked };
+      heldRequests.set(pathname, held);
+      return {
+        requested,
+        release() {
+          if (heldRequests.get(pathname) === held) heldRequests.delete(pathname);
+          unblock();
+        },
+      };
+    },
+  };
 }
 
 function observe(page, label) {
@@ -137,23 +161,18 @@ try {
       return result;
     };
     await cancelStep('select command', () => page.locator('#command').selectOption('help'));
-    let releaseRequest, moduleRequested;
-    const pendingRequest = new Promise(resolve => { releaseRequest = resolve; });
-    const requestEntered = new Promise(resolve => { moduleRequested = resolve; });
-    const moduleRoute = `**/dist/${tool}/${tool}.mjs`;
+    // Hold the actual HTTP response. Enabling Chromium's DevTools request
+    // interception after pthread workers exit can itself stall page.route().
+    const heldModule = withHeaders.holdNextRequest(`/dist/${tool}/${tool}.mjs`);
+    phase(`${tool}: cancellation request hold installed`);
     try {
-      await cancelStep('install request hold', () => page.route(moduleRoute, async route => {
-        moduleRequested();
-        await pendingRequest;
-        await route.continue().catch(() => {});
-      }));
       await cancelStep('start command', () => page.locator('#run').click());
-      await cancelStep('wait for held module request', () => requestEntered);
+      await cancelStep('wait for held module request', () => heldModule.requested);
       await cancelStep('click cancel', () => page.locator('#cancel').click());
       await cancelStep('check cancelled status', () => page.waitForFunction(() => document.getElementById('status').textContent === 'Command cancelled.'));
     } finally {
-      releaseRequest();
-      await cancelStep('remove request hold', () => page.unroute(moduleRoute));
+      heldModule.release();
+      phase(`${tool}: cancellation request hold released`);
     }
     phase(`${tool}: cancellation restart starting`);
     await run(page);

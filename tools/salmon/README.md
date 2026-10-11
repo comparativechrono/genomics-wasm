@@ -2,7 +2,7 @@
 
 This package builds Salmon 2.8.0, the upstream Rust implementation, for browsers and Node.js. It runs the upstream transcriptome indexer, selective alignment, and abundance estimation. Quantification is performed on the supplied reads; no results are precomputed.
 
-The Node.js validation suite checks real human and yeast data against untouched and patched native Salmon. All 31 cases pass with exact agreement; no numerical tolerance is needed for these datasets. Browser engine checks are still pending.
+The validation suite checks 31 cases on real human and yeast data against untouched and patched native Salmon in Node.js, Chromium, Firefox and WebKit. It requires exact numerical agreement for these datasets. The release gate also requires the browser example tests to pass; see the validation reports for a particular build.
 
 ## Requirements
 
@@ -13,7 +13,7 @@ Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Embedder-Policy: require-corp
 ```
 
-Use a browser with WebAssembly threads, SIMD, and `crossOriginIsolated === true`. Ordinary GitHub Pages hosting does not provide these headers. Node.js does not require the headers.
+Use a browser with WebAssembly threads, SIMD, and `crossOriginIsolated === true`. Ordinary GitHub Pages hosting does not provide these headers. The [browser example](../../examples/quant/README.md#hosting) includes a static server and an optional service worker that supplies them within the example's scope. Node.js does not require the headers.
 
 The command accepts one compute worker (`--threads 1`). Omitting the thread count selects one worker. The indexer, input parser, and inference libraries still use their normal auxiliary threads. Requests for more compute workers fail with an explanation.
 

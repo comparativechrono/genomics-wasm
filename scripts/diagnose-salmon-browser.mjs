@@ -10,9 +10,9 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const modes = ['direct', 'passthrough', 'heartbeat', 'listener', 'stdio', 'workers', 'full'];
-const options = { engine: 'webkit', case: 'index', dataset: 'human', timeout: '60000', mode: 'full' };
-const usage = `diagnose-salmon-browser.mjs [--engine chromium|firefox|webkit] [--case index|version] [--dataset human|yeast] [--timeout milliseconds] [--mode ${modes.join('|')}]`;
+const modes = ['direct', 'passthrough', 'heartbeat', 'listener', 'stdio', 'workers', 'full', 'message-probe', 'no-wait-async'];
+const options = { engine: 'webkit', case: 'index', dataset: 'human', timeout: '60000', mode: 'full', repeat: '1' };
+const usage = `diagnose-salmon-browser.mjs [--engine chromium|firefox|webkit] [--case index|version] [--dataset human|yeast] [--timeout milliseconds] [--repeat 1..100] [--mode ${modes.join('|')}]`;
 if (process.argv.includes('--help')) { console.log(usage); process.exit(0); }
 for (let i = 2; i < process.argv.length; i += 2) {
   const key = process.argv[i].replace(/^--/, '');
@@ -21,17 +21,19 @@ for (let i = 2; i < process.argv.length; i += 2) {
 }
 if (!['chromium', 'firefox', 'webkit'].includes(options.engine) || !['index', 'version'].includes(options.case)
     || !['human', 'yeast'].includes(options.dataset) || !modes.includes(options.mode) || !/^\d+$/.test(options.timeout)
+    || !/^\d+$/.test(options.repeat) || Number(options.repeat) < 1 || Number(options.repeat) > 100
     || Number(options.timeout) < 1000 || Number(options.timeout) > 120000) throw new Error(usage);
 const timeoutMs = Number(options.timeout);
+const maxEvents = Math.max(10000, Number(options.repeat) * 500);
 const reportDirectory = join(root, 'reports', 'quant', options.engine);
 const reportPath = join(reportDirectory, `diagnostic-salmon-${options.case}-${options.dataset}-${options.mode}.json`);
-const report = { schema: 2, diagnosticOnly: true, startedAt: new Date().toISOString(), options,
-  node: process.version, status: 'running', events: [] };
-let browser, server;
+const report = { schema: 3, diagnosticOnly: true, startedAt: new Date().toISOString(), options,
+  node: process.version, status: 'running', attempts: [], events: [] };
+let browser, server, activeAttempt = 0, runtimeWorkersStarted = 0;
 const digest = data => createHash('sha256').update(data).digest('hex');
 function record(type, detail) {
-  const event = { at: new Date().toISOString(), type, detail };
-  if (report.events.length < 10000) report.events.push(event);
+  const event = { at: new Date().toISOString(), attempt: activeAttempt || null, type, detail };
+  if (report.events.length < maxEvents) report.events.push(event);
   else report.eventsTruncated = true;
   console.log(`[${event.at}] ${type}: ${typeof detail === 'string' ? detail : JSON.stringify(detail)}`);
 }
@@ -201,6 +203,10 @@ export default async function diagnosticFactory(options) {
 // the proxied application. Test a pending message handler independently of a
 // timer; the outer ToolRunner still terminates this worker after one command.
 const listenerSource = `self.addEventListener('message', () => {});\n` + passthroughSource;
+// Affect only the outer runtime worker before its factory starts. Child pthread
+// workers load the original module in their own globals. Emscripten therefore
+// uses its existing postMessage mailbox fallback for the runtime worker.
+const noWaitAsyncSource = `Atomics.waitAsync = undefined;\n` + passthroughSource;
 const tracePrelude = String.raw`
 const prefix = '[salmon-diag] ';
 let sequence = 0;
@@ -232,8 +238,8 @@ export default async function diagnosticFactory(options) {
 }
 `;
 const wrapperSource = { passthrough: passthroughSource, heartbeat: heartbeatSource, listener: listenerSource,
-  stdio: stdioSource, workers: workersSource, full: fullWrapperSource }[options.mode];
-const modulePath = options.mode === 'direct' ? '/dist/salmon/salmon.mjs' : '/diagnostic-factory.mjs';
+  stdio: stdioSource, workers: workersSource, full: fullWrapperSource, 'no-wait-async': noWaitAsyncSource }[options.mode];
+const modulePath = ['direct', 'message-probe'].includes(options.mode) ? '/dist/salmon/salmon.mjs' : '/diagnostic-factory.mjs';
 report.modulePath = modulePath;
 report.wrapperSha256 = wrapperSource === undefined ? null : digest(wrapperSource);
 
@@ -283,32 +289,80 @@ try {
   page.on('pageerror', error => record('page-error', error.stack || error.message));
   page.on('crash', () => record('page-crash', 'Browser page crashed'));
   page.on('requestfailed', request => record('request-failed', { url: request.url(), failure: request.failure() }));
-  page.on('worker', worker => record('page-worker', worker.url()));
+  page.on('worker', worker => {
+    if (new URL(worker.url()).pathname === '/runtime/worker.mjs') runtimeWorkersStarted++;
+    record('page-worker', { url: worker.url(), runtimeWorkersStarted });
+  });
   await page.goto(`http://127.0.0.1:${server.address().port}/`);
   report.environment = await page.evaluate(() => ({ crossOriginIsolated, isSecureContext,
     userAgent: navigator.userAgent, hardwareConcurrency: navigator.hardwareConcurrency }));
   if (!report.environment.crossOriginIsolated) throw new Error('Diagnostic server did not enable cross-origin isolation');
-  record('command-starting', { args: report.args, timeoutMs, environment: report.environment });
-  report.result = await bounded(page.evaluate(async ({ args, files, timeoutMs, index, modulePath }) => {
-    const { ToolRunner } = await import('/runtime/index.mjs');
-    const runner = new ToolRunner({ moduleUrl: new URL(modulePath, location.href), waitForExit: true });
-    const result = await runner.run(args, { timeoutMs, outputDirectories: index ? ['index'] : [],
-      files: files.map(file => ({ path: file.path, data: Uint8Array.from(atob(file.data), character => character.charCodeAt(0)) })) });
-    return { exitCode: result.exitCode, missingOutputs: result.missingOutputs,
-      stdout: new TextDecoder().decode(result.stdout), stderr: new TextDecoder().decode(result.stderr),
-      files: result.files.map(file => ({ path: file.path, bytes: file.data.length })) };
-  }, { args: report.args, timeoutMs, index: options.case === 'index', modulePath,
-    files: files.map(file => ({ path: file.path, data: file.data.toString('base64') })) }),
-  timeoutMs + 15000, 'Browser evaluation');
-  if (report.result.exitCode !== 0 || report.result.missingOutputs.length) throw new Error(`Command returned exit ${report.result.exitCode}`);
+  for (activeAttempt = 1; activeAttempt <= Number(options.repeat); activeAttempt++) {
+    const attempt = { attempt: activeAttempt, startedAt: new Date().toISOString(), status: 'running', workersBefore: runtimeWorkersStarted };
+    report.attempts.push(attempt);
+    record('command-starting', { args: report.args, timeoutMs, environment: report.environment });
+    // ToolRunner allocates and terminates a fresh runtime Worker on every run;
+    // keeping the page/browser alive also exercises repeated worker disposal.
+    attempt.result = await bounded(page.evaluate(async ({ args, files, timeoutMs, index, modulePath, probe }) => {
+      const OriginalWorker = globalThis.Worker;
+      const probeTimers = new Set();
+      const probeEvents = [];
+      const commandStarted = performance.now();
+      if (probe) {
+        // Only the page's outer runtime Worker is captured. Its script and the
+        // Salmon module remain unchanged. One ignored message after ten seconds
+        // tests whether dispatching a task wakes an otherwise stalled command.
+        globalThis.Worker = class MessageProbeWorker extends OriginalWorker {
+          constructor(...args) {
+            super(...args);
+            this.probeTimer = setTimeout(() => {
+              const event = { event: 'message-probe-sent', elapsedMs: Math.round(performance.now() - commandStarted) };
+              probeEvents.push(event);
+              console.log('[salmon-diag] ' + JSON.stringify(event));
+              this.postMessage({ diagnosticWakeup: true });
+            }, 10000);
+            probeTimers.add(this.probeTimer);
+          }
+          terminate() { clearTimeout(this.probeTimer); return super.terminate(); }
+        };
+      }
+      try {
+        const { ToolRunner } = await import('/runtime/index.mjs');
+        const runner = new ToolRunner({ moduleUrl: new URL(modulePath, location.href), waitForExit: true });
+        const result = await runner.run(args, { timeoutMs, outputDirectories: index ? ['index'] : [],
+          files: files.map(file => ({ path: file.path, data: Uint8Array.from(atob(file.data), character => character.charCodeAt(0)) })) });
+        return { exitCode: result.exitCode, missingOutputs: result.missingOutputs,
+          elapsedMs: Math.round(performance.now() - commandStarted), probeEvents,
+          stdout: new TextDecoder().decode(result.stdout), stderr: new TextDecoder().decode(result.stderr),
+          files: result.files.map(file => ({ path: file.path, bytes: file.data.length })) };
+      } finally {
+        globalThis.Worker = OriginalWorker;
+        for (const timer of probeTimers) clearTimeout(timer);
+      }
+    }, { args: report.args, timeoutMs, index: options.case === 'index', modulePath, probe: options.mode === 'message-probe',
+      files: files.map(file => ({ path: file.path, data: file.data.toString('base64') })) }),
+    timeoutMs + 15000, 'Browser evaluation');
+    attempt.runtimeWorkersStarted = runtimeWorkersStarted - attempt.workersBefore;
+    if (attempt.runtimeWorkersStarted !== 1) throw new Error(`Expected one fresh runtime worker, observed ${attempt.runtimeWorkersStarted}`);
+    if (attempt.result.exitCode !== 0 || attempt.result.missingOutputs.length) throw new Error(`Command returned exit ${attempt.result.exitCode}`);
+    attempt.status = 'passed';
+    attempt.finishedAt = new Date().toISOString();
+    report.completedAttempts = activeAttempt;
+    report.result = attempt.result;
+    record('command-completed', attempt.result);
+    await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n');
+  }
   report.status = 'passed';
-  record('command-completed', report.result);
+  activeAttempt = 0;
 } catch (error) {
   report.status = 'failed'; report.error = { name: error.name, message: error.message, stack: error.stack };
+  const attempt = report.attempts.at(-1);
+  if (attempt?.status === 'running') { attempt.status = 'failed'; attempt.finishedAt = new Date().toISOString(); attempt.error = report.error; }
   record('diagnostic-failed', report.error);
   process.exitCode = 1;
 } finally {
   report.finishedAt = new Date().toISOString();
+  report.runtimeWorkersStarted = runtimeWorkersStarted;
   await mkdir(reportDirectory, { recursive: true });
   await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n');
   console.log(`Diagnostic report: ${relative(root, reportPath)}`);
