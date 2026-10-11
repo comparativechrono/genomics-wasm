@@ -143,6 +143,13 @@ The same suite accepts `chromium`, `firefox` and `webkit` as its engine. It comp
 transcript identities, lengths, abundance tables and read accounting with the
 original native program. See its [comparison rules](validation/quant/README.md).
 
+For browser or hosting changes, the quantifier workflow can reuse the compiled
+programs pinned in `.github/quant-build-reuse.json`. It checks their source,
+compiler settings and binary hashes, then reruns every Node and browser test.
+Delete that file or set `enabled` to `false` when changing build inputs. Missing
+or expired artifacts trigger a fresh build; mismatched provenance stops the job.
+Forks ignore another repository's pinned build and compile their own programs.
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates

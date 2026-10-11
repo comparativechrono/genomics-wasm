@@ -3,6 +3,13 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      compiled_run_id:
+        description: 'Optional same-repository run containing a successful compiled build'
+        type: string
+      compiled_head_sha:
+        description: 'Full source commit SHA of compiled_run_id (required when reusing it)'
+        type: string
 permissions:
   contents: read
 concurrency:
@@ -10,6 +17,9 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
+    permissions:
+      contents: read
+      actions: read
     strategy:
       fail-fast: false
       matrix:
@@ -25,21 +35,52 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: npm ci
+      # Remove/disable this hint to force a clean build after changing build
+      # inputs. Expired artifacts fall back to compilation; mismatches fail.
+      - name: Check the pinned compiled build
+        id: reuse
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMPILED_RUN_ID: ${{ inputs.compiled_run_id }}
+          COMPILED_HEAD_SHA: ${{ inputs.compiled_head_sha }}
+        run: python3 scripts/reuse-quant-build.py plan --tool ${{ matrix.tool }}
+      - uses: actions/download-artifact@v4
+        if: steps.reuse.outputs.available == 'true'
+        with:
+          artifact-ids: ${{ steps.reuse.outputs.compiled_id }}
+          run-id: ${{ steps.reuse.outputs.run_id }}
+          github-token: ${{ github.token }}
+          merge-multiple: true
+          path: build/quant-reuse/${{ matrix.tool }}/compiled
+      - uses: actions/download-artifact@v4
+        if: steps.reuse.outputs.available == 'true'
+        with:
+          artifact-ids: ${{ steps.reuse.outputs.report_id }}
+          run-id: ${{ steps.reuse.outputs.run_id }}
+          github-token: ${{ github.token }}
+          merge-multiple: true
+          path: build/quant-reuse/${{ matrix.tool }}/report
+      - name: Verify compiled source, runtime and native binary hashes
+        if: steps.reuse.outputs.available == 'true'
+        run: python3 scripts/reuse-quant-build.py verify --tool ${{ matrix.tool }}
       - name: Install build dependencies
+        if: steps.reuse.outputs.available != 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential clang cmake pkg-config curl xz-utils libssl-dev
-          npm ci
       - name: Test the runner and comparators
         run: npm test
       - name: Verify real transcript and read fixtures
         run: python3 scripts/fetch-quant-test-data.py --verify
       - name: Install pinned WebAssembly compiler
+        if: steps.reuse.outputs.available != 'true'
         run: bash scripts/setup-emsdk.sh
       - name: Install the pinned Rust compiler and standard library sources
-        if: matrix.tool == 'salmon'
+        if: matrix.tool == 'salmon' && steps.reuse.outputs.available != 'true'
         run: rustup toolchain install nightly-2026-09-25 --profile minimal --component rust-src --target wasm32-unknown-emscripten
       - name: Build original native, patched native and WebAssembly programs
+        if: steps.reuse.outputs.available != 'true'
         run: |
           source toolchain/emsdk/emsdk_env.sh
           bash scripts/build-${{ matrix.tool }}.sh all
@@ -51,6 +92,12 @@ jobs:
           name: quant-validation-${{ matrix.tool }}-node
           path: reports/quant/node/
           if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: steps.reuse.outputs.available == 'true'
+        with:
+          name: quant-build-provenance-${{ matrix.tool }}
+          path: build/quant-reuse/${{ matrix.tool }}/verified.json
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: quant-compiled-${{ matrix.tool }}
@@ -85,6 +132,16 @@ jobs:
           name: quant-compiled-${{ matrix.tool }}
           path: .
       - run: chmod u+x build/native/${{ matrix.tool }} build/patched-native/${{ matrix.tool }}
+      - name: Record Salmon WebKit worker startup
+        if: matrix.tool == 'salmon' && matrix.browser == 'webkit'
+        continue-on-error: true
+        run: node scripts/diagnose-salmon-browser.mjs --engine webkit --case index
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.tool == 'salmon' && matrix.browser == 'webkit'
+        with:
+          name: quant-startup-salmon-webkit
+          path: reports/quant/webkit/diagnostic-salmon-index-human.json
+          if-no-files-found: error
       - name: Compare actual browser results against native programs
         run: node scripts/validate-quant.mjs --tool ${{ matrix.tool }} --engine ${{ matrix.browser }}
       - name: Test the browser example with real quantification

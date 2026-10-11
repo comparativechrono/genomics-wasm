@@ -17,7 +17,7 @@ const tools = selected.split(',');
 if (!tools.length || tools.some(tool => !['kallisto', 'salmon'].includes(tool))) throw new Error('QUANT_TOOLS must contain kallisto and/or salmon, separated by commas');
 const reportDir = resolve(process.env.QUANT_DEMO_REPORT || join(root, 'reports/quant', engine, 'demo'));
 await mkdir(reportDir, { recursive: true });
-const summary = { schema: 1, engine, status: 'running', startedAt: new Date().toISOString(), phases: [], cases: [], builds: {}, browserErrors: [] };
+const summary = { schema: 1, engine, status: 'running', startedAt: new Date().toISOString(), phases: [], cases: [], builds: {}, browserErrors: [], browserConsole: [], failedRequests: [] };
 const phase = message => { summary.phases.push({ at: new Date().toISOString(), message }); console.log(`[quant demo] ${message}`); };
 for (const tool of tools) {
   await stat(join(root, 'dist', tool, `${tool}.wasm`));
@@ -51,7 +51,23 @@ async function serve(isolated) {
   return { server, origin: `http://127.0.0.1:${server.address().port}` };
 }
 
-let browser, page, withHeaders, plain;
+function observe(page, label) {
+  page.on('pageerror', error => summary.browserErrors.push(`${label}: ${error.message}`));
+  page.on('console', message => summary.browserConsole.push({ page: label, type: message.type(), text: message.text() }));
+  page.on('requestfailed', request => summary.failedRequests.push({ page: label, url: request.url(), error: request.failure()?.errorText }));
+}
+
+async function deadline(promise, timeoutMs, message) {
+  let timer;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(message)), timeoutMs); }),
+    ]);
+  } finally { clearTimeout(timer); }
+}
+
+let browser, page, activePage, withHeaders, plain;
 try {
   withHeaders = await serve(true);
   plain = await serve(false);
@@ -59,8 +75,10 @@ try {
   summary.browserVersion = browser.version();
   phase(`Browser ${engine} ${summary.browserVersion}`);
   const context = await browser.newContext({ viewport: { width: 1100, height: 900 } });
+  context.setDefaultTimeout(30000);
   page = await context.newPage();
-  page.on('pageerror', error => summary.browserErrors.push(error.message));
+  activePage = page;
+  observe(page, 'header-hosting');
   await page.goto(`${withHeaders.origin}/examples/quant/`);
   await ready(page);
   assert.equal(await page.evaluate(() => crossOriginIsolated), true);
@@ -137,8 +155,10 @@ try {
   if (tools.includes('salmon')) {
     phase('Salmon: static hosting service worker');
     const staticContext = await browser.newContext();
+    staticContext.setDefaultTimeout(30000);
     const staticPage = await staticContext.newPage();
-    staticPage.on('pageerror', error => summary.browserErrors.push(error.message));
+    activePage = staticPage;
+    observe(staticPage, 'static-hosting');
     await staticPage.goto(`${plain.origin}/examples/quant/`);
     await ready(staticPage);
     assert.equal(await staticPage.evaluate(() => crossOriginIsolated), false);
@@ -147,11 +167,37 @@ try {
     await staticPage.locator('#run').click();
     assert.match(await staticPage.locator('#status').innerText(), /^Salmon cannot start:/);
     await Promise.all([
-      staticPage.waitForEvent('load'),
+      staticPage.waitForEvent('load', { timeout: 45000 }),
       staticPage.locator('#enable-threads').click(),
     ]);
     await ready(staticPage);
     assert.equal(await staticPage.evaluate(() => crossOriginIsolated), true, 'The example becomes isolated on plain static hosting');
+    phase('Salmon: verify service-worker asset headers and bytes');
+    const assetHashes = { 'dist/salmon/salmon.mjs': summary.builds.salmon['salmon.mjs'], 'dist/salmon/salmon.wasm': summary.builds.salmon['salmon.wasm'] };
+    for (const name of ['runtime/worker.mjs', 'runtime/execute.mjs']) assetHashes[name] = createHash('sha256').update(await readFile(join(root, name))).digest('hex');
+    const mappedAssets = await deadline(staticPage.evaluate(async names => {
+      const results = [];
+      for (const name of names) {
+        const response = await fetch(new URL(`__assets__/${name}`, location.href), { signal: AbortSignal.timeout(30000) });
+        const bytes = await response.arrayBuffer();
+        const sha256 = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(byte => byte.toString(16).padStart(2, '0')).join('');
+        results.push({ name, status: response.status, coop: response.headers.get('Cross-Origin-Opener-Policy'), coep: response.headers.get('Cross-Origin-Embedder-Policy'), sha256 });
+      }
+      return results;
+    }, Object.keys(assetHashes)), 45000, 'Service-worker asset verification exceeded 45 seconds');
+    for (const asset of mappedAssets) {
+      assert.equal(asset.status, 200, asset.name);
+      assert.equal(asset.coop, 'same-origin', asset.name);
+      assert.equal(asset.coep, 'require-corp', asset.name);
+      assert.equal(asset.sha256, assetHashes[asset.name], `The service worker returns unchanged ${asset.name}`);
+    }
+    summary.staticAssets = mappedAssets;
+    const rejected = await deadline(staticPage.evaluate(async () => {
+      const names = ['not-a-tool.mjs', 'runtime/%2e%2e%2f%2e%2e%2fpackage.json'];
+      return Promise.all(names.map(async name => (await fetch(new URL(`__assets__/${name}`, location.href), { signal: AbortSignal.timeout(30000) })).status));
+    }), 45000, 'Service-worker path checks exceeded 45 seconds');
+    assert.deepEqual(rejected, [404, 404], 'The service worker rejects unknown assets and encoded traversal');
+    phase('Salmon: static-hosting version');
     await staticPage.locator('#tool').selectOption('salmon');
     await staticPage.locator('#command').selectOption('help');
     await run(staticPage);
@@ -160,8 +206,10 @@ try {
     // Exercise the actual program through service-worker headers as well.
     await staticPage.locator('#load-data').click();
     await staticPage.waitForFunction(() => document.getElementById('status').textContent.startsWith('Example data loaded.'), null, { timeout: 60000 });
+    phase('Salmon: static-hosting index');
     await staticPage.locator('#command').selectOption('index');
     await run(staticPage);
+    phase('Salmon: static-hosting quantification');
     await staticPage.locator('#command').selectOption('quant');
     await run(staticPage);
     const staticResult = await downloadBytes(staticPage, 'Download salmon-out/quant.sf');
@@ -170,7 +218,8 @@ try {
     await staticPage.goto(`${plain.origin}/outside-example.html`);
     assert.equal(await staticPage.evaluate(() => !!navigator.serviceWorker.controller), false, 'The isolation worker does not control other examples');
     assert.equal(await staticPage.evaluate(() => crossOriginIsolated), false);
-    await staticContext.close();
+    // Both contexts are closed by the bounded browser cleanup below.
+    activePage = page;
     summary.cases.push({ id: 'salmon-demo-static-hosting', status: 'passed' });
   }
   assert.deepEqual(summary.browserErrors, [], 'No uncaught browser errors');
@@ -179,19 +228,40 @@ try {
 } catch (error) {
   summary.status = 'failed';
   summary.error = error.stack;
-  if (page) {
-    await page.screenshot({ path: join(reportDir, 'failure.png'), fullPage: true }).catch(() => {});
+  if (activePage) {
+    summary.failurePage = activePage.url();
+    await activePage.screenshot({ path: join(reportDir, 'failure.png'), fullPage: true }).catch(() => {});
     for (const id of ['status', 'arguments', 'outputs', 'output-directories', 'stdout', 'stderr']) {
-      await writeFile(join(reportDir, `${id}.txt`), await page.locator(`#${id}`).evaluate(element => element.value ?? element.textContent).catch(() => '(unavailable)'));
+      await writeFile(join(reportDir, `${id}.txt`), await activePage.locator(`#${id}`).evaluate(element => element.value ?? element.textContent, undefined, { timeout: 2000 }).catch(() => '(unavailable)'));
     }
+    console.error(JSON.stringify({ page: summary.failurePage, status: await activePage.locator('#status').textContent({ timeout: 2000 }).catch(() => null), console: summary.browserConsole.slice(-15), failedRequests: summary.failedRequests.slice(-15) }, null, 2));
   }
   process.exitCode = 1;
   console.error(error);
 } finally {
-  await browser?.close();
-  for (const host of [withHeaders, plain]) if (host) await new Promise(resolve => host.server.close(resolve));
   summary.finishedAt = new Date().toISOString();
+  // Preserve the result before asking a failed browser process to shut down.
   await writeFile(join(reportDir, 'summary.json'), `${JSON.stringify(summary, null, 2)}\n`);
+  let closingDeadline;
+  try {
+    await Promise.race([
+      browser?.close(),
+      new Promise((_, reject) => { closingDeadline = setTimeout(() => reject(new Error('Browser cleanup exceeded 30 seconds')), 30000); }),
+    ]);
+  } catch (error) {
+    summary.status = 'failed';
+    summary.cleanupError = error.message;
+    process.exitCode = 1;
+    console.error(error);
+  } finally { clearTimeout(closingDeadline); }
+  for (const host of [withHeaders, plain]) if (host) {
+    host.server.closeAllConnections();
+    await new Promise(resolve => host.server.close(resolve));
+  }
+  await writeFile(join(reportDir, 'summary.json'), `${JSON.stringify(summary, null, 2)}\n`);
+  // A disconnected Playwright client can otherwise keep Node alive forever.
+  // This is a failed test, never a way to convert a browser failure to success.
+  if (summary.cleanupError) process.exit(1);
 }
 
 async function ready(page) {

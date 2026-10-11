@@ -25,6 +25,8 @@ Cross-Origin-Embedder-Policy: require-corp
 
 The supplied local server sets both. On static hosts such as GitHub Pages, select Salmon and choose **Enable threaded tools and reload** before loading data. This installs the included same-origin service worker for the `examples/quant/` path. The worker adds the headers to responses for this example; it does not cache data, fetch third-party scripts or control the other example pages. It needs HTTPS (localhost also works) and a browser that permits service workers. The reload clears the files in the tab. Hosting-level headers are preferable when you control the server.
 
+While the example is controlled by this service worker, it loads the JavaScript runtime and compiled programs through `examples/quant/__assets__/` URLs. The worker maps only the named runtime and quantifier assets to their existing files. This keeps the main worker and Salmon's pthread workers within its scope, so their responses also receive isolation headers. The compiled files are unchanged.
+
 If your browser still reports that isolation is unavailable after the reload, use the local server or hosting-level headers. The page checks isolation before starting Salmon and does not repeatedly reload itself. You can remove the worker in your browser's site settings to undo this hosting setup.
 
 ## Arguments and files

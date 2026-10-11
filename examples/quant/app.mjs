@@ -112,17 +112,21 @@ $('enable-threads').addEventListener('click', async () => {
   $('cancel').disabled = true;
   $('status').textContent = 'Enabling threaded tools…';
   try {
-    const registration = await navigator.serviceWorker.register(new URL('isolation-worker.js', import.meta.url), { scope: './' });
-    if (!registration.active) await new Promise((resolve, reject) => {
-      const worker = registration.installing || registration.waiting;
-      const timer = setTimeout(() => reject(new Error('Service worker activation timed out. Use the included local server or set hosting headers.')), 30000);
-      const changed = () => {
-        if (worker?.state === 'activated') { clearTimeout(timer); resolve(); }
-        else if (worker?.state === 'redundant') { clearTimeout(timer); reject(new Error('Service worker activation failed.')); }
-      };
-      worker?.addEventListener('statechange', changed);
-      changed();
-    });
+    const scriptUrl = new URL('isolation-worker.js', import.meta.url).href;
+    const scope = new URL('./', import.meta.url).href;
+    let timer;
+    const ready = await Promise.race([
+      (async () => {
+        await navigator.serviceWorker.register(scriptUrl, { scope });
+        return navigator.serviceWorker.ready;
+      })(),
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error('Service worker activation timed out. Use the included local server or set hosting headers.')), 30000);
+      }),
+    ]).finally(() => clearTimeout(timer));
+    if (ready.scope !== scope || ready.active?.scriptURL !== scriptUrl) {
+      throw new Error('A different service worker controls this page. Use the included local server or set hosting headers.');
+    }
     // The activated worker handles this next navigation and supplies isolation
     // headers. There is deliberately no automatic reload loop if a browser
     // declines service-worker isolation.
@@ -173,7 +177,16 @@ $('command-form').addEventListener('submit', async event => {
   $('status').textContent = `Running ${config.tools[tool].label}…`;
   const started = performance.now();
   try {
-    const runner = new ToolRunner({ moduleUrl: new URL(`../../dist/${tool}/${tool}.mjs`, import.meta.url), waitForExit: config.tools[tool].waitForExit ?? false });
+    // A worker is a separate client. Its entry URL must be inside the service
+    // worker's scope to receive the isolation headers on plain static hosts.
+    // Relative imports and Emscripten's pthread URLs then stay in that scope.
+    const usesIsolationWorker = navigator.serviceWorker?.controller?.scriptURL === new URL('isolation-worker.js', import.meta.url).href;
+    const assetBase = new URL(usesIsolationWorker ? '__assets__/' : '../../', import.meta.url);
+    const runner = new ToolRunner({
+      moduleUrl: new URL(`dist/${tool}/${tool}.mjs`, assetBase),
+      workerUrl: new URL('runtime/worker.mjs', assetBase),
+      waitForExit: config.tools[tool].waitForExit ?? false,
+    });
     const result = await runner.run(args, {
       files: [...workspace].filter(([path]) => !isOutput(path)).map(([path, data]) => ({ path, data })),
       outputs, outputDirectories, signal: controller.signal, timeoutMs,
