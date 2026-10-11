@@ -24,7 +24,7 @@ import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-SUFFIXES = {'.patch', '.h', '.hpp', '.c', '.cc', '.cpp', '.rs', '.py', '.sh', '.json', '.lock'}
+SUFFIXES = {'.patch', '.h', '.hpp', '.c', '.cc', '.cpp', '.rs', '.py', '.sh', '.js', '.json', '.lock'}
 COMPILE_STEPS = (
     'Install build dependencies',
     'Install pinned WebAssembly compiler',

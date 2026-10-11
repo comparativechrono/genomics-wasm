@@ -63,5 +63,6 @@ The port keeps the upstream index, mapping, and statistical algorithms. Its chan
 - Omit native operating-system thread-priority adjustment in browser workers.
 - Build needletail as a Rust library without its unused shared-library output.
 - Use the upstream system-allocator option and set a bounded browser compute-worker count.
+- Use Emscripten's existing `postMessage` mailbox notifications for the browser's main runtime worker. WebKit testing exposed intermittent `Atomics.waitAsync` wakeup stalls; an unrelated message immediately resumed them. The Salmon-only `mailbox.js` linker library preserves the SDK's `waitAsync` path for Node.js and child pthreads without changing global JavaScript APIs.
 
-See `browser.patch` for the complete changes. Numerical agreement, input handling and index round trips are checked using real human and yeast RNA-seq reads and independent native builds. Numerical tolerances, where needed, are recorded in the validation reports.
+See `browser.patch` and `mailbox.js` for the complete changes. Numerical agreement, input handling and index round trips are checked using real human and yeast RNA-seq reads and independent native builds. Numerical tolerances, where needed, are recorded in the validation reports.

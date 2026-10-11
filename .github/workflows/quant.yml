@@ -145,14 +145,14 @@ jobs:
           name: quant-validation-${{ matrix.tool }}-${{ matrix.browser }}
           path: reports/quant/${{ matrix.browser }}/
           if-no-files-found: ignore
-  startup-diagnostics:
-    # These observations isolate a WebKit lifecycle issue. Only the unchanged
-    # full native comparisons and browser interface tests can accept a release.
+  startup-reliability:
+    # Exercise fresh workers repeatedly: a single successful command did not
+    # expose WebKit's intermittent Atomics.waitAsync notification stalls.
     needs: build
     strategy:
       fail-fast: false
       matrix:
-        mode: [direct, heartbeat, message-probe, no-wait-async, full]
+        mode: [direct]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -167,8 +167,7 @@ jobs:
         with:
           name: quant-compiled-salmon
           path: .
-      - name: Repeat startup under one diagnostic condition
-        continue-on-error: true
+      - name: Require 100 successful starts with the normal runtime
         run: node scripts/diagnose-salmon-browser.mjs --engine webkit --case index --repeat 100 --mode ${{ matrix.mode }}
       - uses: actions/upload-artifact@v4
         if: always()
@@ -177,7 +176,7 @@ jobs:
           path: reports/quant/webkit/diagnostic-salmon-index-human-${{ matrix.mode }}.json
           if-no-files-found: error
   release-gate:
-    needs: [build, browsers]
+    needs: [build, browsers, startup-reliability]
     if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -186,7 +185,8 @@ jobs:
         env:
           BUILD_RESULT: ${{ needs.build.result }}
           BROWSER_RESULT: ${{ needs.browsers.result }}
-        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success
+          STARTUP_RESULT: ${{ needs['startup-reliability'].result }}
+        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success && test "$STARTUP_RESULT" = success
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:

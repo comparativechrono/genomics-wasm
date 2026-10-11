@@ -2,6 +2,7 @@
 # Rust calls this linker only for the WebAssembly target.
 set -euo pipefail
 : "${SALMON_LINK_OUTPUT:?Set SALMON_LINK_OUTPUT to the distribution module path}"
+SALMON_LINKER_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 arguments=("$@")
 requested=''
 for ((i=0; i<${#arguments[@]}; i++)); do
@@ -16,6 +17,7 @@ mkdir -p "$(dirname "$SALMON_LINK_OUTPUT")"
 # Keep Rust release optimization; skip the old SDK's optional Binaryen
 # optimization pass, which cannot parse Rust LLVM 23 feature metadata.
 emcc "${arguments[@]}" -O0 -pthread \
+    --js-library "$SALMON_LINKER_DIR/mailbox.js" \
     -sPROXY_TO_PTHREAD=1 -sMODULARIZE=1 -sEXPORT_ES6=1 -sEXPORT_NAME=createSalmon -sINVOKE_RUN=0 \
     -sEXPORTED_RUNTIME_METHODS=FS,callMain,PThread \
     -sINCOMING_MODULE_JS_API=preRun,noInitialRun,stdin,stdout,stderr,onExit,quit,locateFile,wasmBinary,print,printErr,onAbort,thisProgram,mainScriptUrlOrBlob,instantiateWasm \

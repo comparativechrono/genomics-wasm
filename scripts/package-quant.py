@@ -59,7 +59,7 @@ def check_build_identity(tool: str, assets: dict[str, str]) -> None:
     manifest = json.loads(required(ROOT / f'dist/{tool}/build-manifest.json'))
     if manifest.get('schema') != 1 or manifest.get('tool') != tool or manifest.get('assets') != assets:
         raise RuntimeError(f'{tool}: build manifest does not identify the compiled distribution')
-    source_suffixes = {'.patch', '.h', '.hpp', '.c', '.cc', '.cpp', '.rs', '.py', '.sh', '.json', '.lock'}
+    source_suffixes = {'.patch', '.h', '.hpp', '.c', '.cc', '.cpp', '.rs', '.py', '.sh', '.js', '.json', '.lock'}
     expected = {f'scripts/build-{tool}.sh', f'tools/{tool}/sources.lock.json'}
     expected.update(path.relative_to(ROOT).as_posix() for path in (ROOT / f'tools/{tool}').rglob('*')
                     if path.is_file() and path.suffix in source_suffixes)
