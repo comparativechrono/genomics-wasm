@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "tool": "kraken2",
+  "version": "2.17.2",
+  "upstreamVersion": "2.17.1",
+  "revision": "8c190b1b668825935dbf6dee5f969227dc8269bb",
+  "archive": "kraken2-2.17.2.tar.gz",
+  "url": "https://codeload.github.com/DerrickWood/kraken2/tar.gz/refs/tags/2.17.2",
+  "sha256": "84ff95cd6d8a4c9e93ab6bf1d9b3892099baaefb0277bcf2edc3eb4948566035",
+  "emscripten": "3.1.64",
+  "license": "MIT",
+  "dependencies": {},
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.kseq",
+    "COPYRIGHT.krakenuniq",
+    "LICENSE.emscripten",
+    "THIRD_PARTY_LICENSES.txt"
+  ],
+  "programs": [
+    "classify",
+    "build_db",
+    "estimate_capacity",
+    "dump_table",
+    "lookup_accession_numbers"
+  ]
+}

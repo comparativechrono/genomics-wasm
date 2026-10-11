@@ -1,0 +1,250 @@
+[
+  {
+    "component": "pyodide",
+    "archive": "pyodide-314.0.7.tar.gz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/pyodide/LICENSE",
+    "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "pyodide",
+    "archive": "pyodide-314.0.7.tar.gz",
+    "sourcePath": "src/js/vendor/stackframe/LICENSE",
+    "destination": "tools/bracken/runtime-notices/pyodide/src__js__vendor__stackframe__LICENSE",
+    "sha256": "899da9d991cb211a3642b84e82a9ae0b4b4e44546fd207e34d7d4ec2eb40f420",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/emscripten/LICENSE",
+    "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/compiler-rt/LICENSE.TXT",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__compiler-rt__LICENSE.TXT",
+    "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/libc/musl/COPYRIGHT",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__libc__musl__COPYRIGHT",
+    "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/libcxx/LICENSE.TXT",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__libcxx__LICENSE.TXT",
+    "sha256": "539dd7aed86e8a4f12cbdd0e6c50c189c7d74847e4fecc64ce2c6ee3a01da38b",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/libcxxabi/LICENSE.TXT",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__libcxxabi__LICENSE.TXT",
+    "sha256": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/libunwind/LICENSE.TXT",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__libunwind__LICENSE.TXT",
+    "sha256": "b5efebcaca80879234098e52d1725e6d9eb8fb96a19fce625d39184b705f7b6d",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/llvm-libc/LICENSE.TXT",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__llvm-libc__LICENSE.TXT",
+    "sha256": "ebcd9bbf783a73d05c53ba4d586b8d5813dcdf3bbec50265860ccc885e606f47",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/mimalloc/LICENSE",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__mimalloc__LICENSE",
+    "sha256": "19c99805e7a44a34b297a75d1edea9985e300066dfc024d5c99d4236d4573b5d",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "third_party/mini-lz4.js",
+    "destination": "tools/bracken/runtime-notices/emscripten/third_party__mini-lz4.js.notice",
+    "sha256": "d27097e98c94f60e7f96e31e90296f32789738c1f8f271df785fe1dda9d52baa",
+    "extraction": "complete attribution/license comment"
+  },
+  {
+    "component": "emscripten",
+    "archive": "emscripten-5.0.3.tar.gz",
+    "sourcePath": "system/lib/dlmalloc.c",
+    "destination": "tools/bracken/runtime-notices/emscripten/system__lib__dlmalloc.c.notice",
+    "sha256": "46fdfb7382ff0119b2246609c343fafefef5521976f73d17cbcbb025432daecb",
+    "extraction": "complete attribution/license comment"
+  },
+  {
+    "component": "libffi",
+    "archive": "libffi-f08493d249d2067c8b3207ba46693dd858f95db3.tar.gz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/libffi/LICENSE",
+    "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "libffi",
+    "archive": "libffi-f08493d249d2067c8b3207ba46693dd858f95db3.tar.gz",
+    "sourcePath": "LICENSE-BUILDTOOLS",
+    "destination": "tools/bracken/runtime-notices/libffi/LICENSE-BUILDTOOLS",
+    "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "hiwire",
+    "archive": "hiwire-6a1e67280a15d929ebeceee54a6358c9c8d5f697.tar.gz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/hiwire/LICENSE",
+    "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "xz",
+    "archive": "xz-5.2.2.tar.gz",
+    "sourcePath": "COPYING",
+    "destination": "tools/bracken/runtime-notices/xz/COPYING",
+    "sha256": "c4f8e14fafe458d84808a4cd8b69f94673ebe2bf8fc992291629a69ac12218f8",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "xz",
+    "archive": "xz-5.2.2.tar.gz",
+    "sourcePath": "COPYING.LGPLv2.1",
+    "destination": "tools/bracken/runtime-notices/xz/COPYING.LGPLv2.1",
+    "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "xz",
+    "archive": "xz-5.2.2.tar.gz",
+    "sourcePath": "COPYING.GPLv2",
+    "destination": "tools/bracken/runtime-notices/xz/COPYING.GPLv2",
+    "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "xz",
+    "archive": "xz-5.2.2.tar.gz",
+    "sourcePath": "COPYING.GPLv3",
+    "destination": "tools/bracken/runtime-notices/xz/COPYING.GPLv3",
+    "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "zstd",
+    "archive": "cpython-source-deps-zstd-1.5.7.tar.gz",
+    "sourcePath": "COPYING",
+    "destination": "tools/bracken/runtime-notices/zstd/COPYING",
+    "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "zstd",
+    "archive": "cpython-source-deps-zstd-1.5.7.tar.gz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/zstd/LICENSE",
+    "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "zstd",
+    "archive": "cpython-source-deps-zstd-1.5.7.tar.gz",
+    "sourcePath": "build/LICENSE",
+    "destination": "tools/bracken/runtime-notices/zstd/build__LICENSE",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "sqlite",
+    "archive": "sqlite-autoconf-3390000.tar.gz",
+    "sourcePath": "sqlite3.c",
+    "destination": "tools/bracken/runtime-notices/sqlite/sqlite3.c.notice",
+    "sha256": "49cf7bcb103eb3244150a23bb23d840370a4762914faf1b450072a4b03c14670",
+    "extraction": "complete attribution/license comment"
+  },
+  {
+    "component": "bzip2",
+    "archive": "bzip2-1.0.6.zip",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/bzip2/LICENSE",
+    "sha256": "4919cfb14a73cd64fcef67b107613970cf1659a09aa675dba31314f373bc7204",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "zlib",
+    "archive": "zlib-1.3.1-emscripten.tar.gz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/zlib/LICENSE",
+    "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "cpython",
+    "archive": "Python-3.14.2.tgz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/cpython/LICENSE",
+    "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "cpython",
+    "archive": "Python-3.14.2.tgz",
+    "sourcePath": "Doc/license.rst",
+    "destination": "tools/bracken/runtime-notices/cpython/Doc__license.rst",
+    "sha256": "c695d550b135e53e38807e76496d1db17d22c40e461d1f3f354c86188d3305dd",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "cpython",
+    "archive": "Python-3.14.2.tgz",
+    "sourcePath": "Modules/expat/COPYING",
+    "destination": "tools/bracken/runtime-notices/cpython/Modules__expat__COPYING",
+    "sha256": "122f2c27000472a201d337b9b31f7eb2b52d091b02857061a8880371612d9534",
+    "extraction": "complete unmodified file"
+  },
+  {
+    "component": "cpython",
+    "archive": "Python-3.14.2.tgz",
+    "sourcePath": "Modules/_decimal/libmpdec/mpdecimal.c",
+    "destination": "tools/bracken/runtime-notices/cpython/Modules___decimal__libmpdec__mpdecimal.c.notice",
+    "sha256": "b07528d8b1dbf1e2d2741052996f0876e23342ce2d30d0effa39c5457716c25a",
+    "extraction": "complete attribution/license comment"
+  },
+  {
+    "component": "cpython",
+    "archive": "Python-3.14.2.tgz",
+    "sourcePath": "Modules/_hacl/Hacl_Hash_MD5.c",
+    "destination": "tools/bracken/runtime-notices/cpython/Modules___hacl__Hacl_Hash_MD5.c.notice",
+    "sha256": "998ce04fb8ad9dedb0bc1b44938f8c3dcf1089780fa105ce1c8c30fb5554d78c",
+    "extraction": "complete attribution/license comment"
+  },
+  {
+    "component": "ws",
+    "archive": "ws-8.18.3.tgz",
+    "sourcePath": "LICENSE",
+    "destination": "tools/bracken/runtime-notices/ws/LICENSE",
+    "sha256": "2b29dcfe0d6471f7e8c92c5fb38c9f93edee10330937055440192f1832b1ecef",
+    "extraction": "complete unmodified file"
+  }
+]

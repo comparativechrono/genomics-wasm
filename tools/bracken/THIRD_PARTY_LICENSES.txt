@@ -1,0 +1,3 @@
+Bracken v3.1 is GPL-3.0-or-later, copyright Jennifer Lu. Its Python algorithms are distributed unchanged. The serial C++ port removes OpenMP scheduling and corrects a diagnostic printf argument type; a bounds check prevents a nonexistent EOF record after the final newline. No abundance or distribution algorithm is replaced.
+
+The bundled Pyodide 314.0.7 runtime uses CPython 3.14.2 and Emscripten 5.0.3. The independently compiled C++ helper uses Emscripten 3.1.64. Runtime source archives, exact pins and all linked-library notices are included. See runtime-sources.json and runtime-notices/. No OpenSSL library is linked: Pyodide supplies its documented SSL stub.
