@@ -1,0 +1,164 @@
+name: Build and validate metagenomics tools
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+permissions:
+  contents: read
+concurrency:
+  group: metagenomics-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang make git curl gzip bzip2 xz-utils patch perl
+      - run: npm ci
+      - name: Test runtimes, comparators and package checks
+        run: npm test
+      - name: Verify and regenerate the real input data
+        run: |
+          python3 scripts/fetch-metagenomics-test-data.py --verify
+          python3 scripts/fetch-metagenomics-test-data.py --fetch-sources
+          python3 scripts/fetch-metagenomics-test-data.py --regenerate
+      - name: Install pinned WebAssembly compiler
+        run: bash scripts/setup-emsdk.sh
+      - name: Build unchanged native, patched native and WebAssembly programs
+        run: |
+          source toolchain/emsdk/emsdk_env.sh
+          export BRACKEN_PYTHON="$(command -v python3)"
+          bash scripts/build-kraken2.sh all
+          bash scripts/build-bracken.sh all
+      - name: Compare Node results with the unchanged native programs
+        run: BRACKEN_PYTHON="$(command -v python3)" node scripts/validate-metagenomics.mjs --engine node --tool all
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: metagenomics-validation-node
+          path: reports/metagenomics/node/
+          if-no-files-found: ignore
+      - name: Preserve native program permissions
+        run: |
+          tar -czf build/metagenomics-compiled.tar.gz \
+            dist/kraken2 dist/bracken \
+            build/native/kraken2 build/native/kraken2-package \
+            build/patched-native/kraken2 build/patched-native/kraken2-package \
+            build/native/bracken build/native/bracken-build build/native/kmer2read_distr build/native/bracken-package \
+            build/patched-native/bracken build/patched-native/bracken-build build/patched-native/kmer2read_distr build/patched-native/bracken-package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: metagenomics-compiled
+          path: build/metagenomics-compiled.tar.gz
+          if-no-files-found: error
+          retention-days: 14
+  browsers:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: metagenomics-compiled
+          path: build
+      - run: tar -xzf build/metagenomics-compiled.tar.gz
+      - name: Compare browser results with the unchanged native programs
+        run: BRACKEN_PYTHON="$(command -v python3)" node scripts/validate-metagenomics.mjs --engine ${{ matrix.browser }} --tool all
+      - name: Check uploads, downloads, cancellation and ordinary static hosting
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: node scripts/test-metagenomics-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: metagenomics-validation-${{ matrix.browser }}
+          path: reports/metagenomics/${{ matrix.browser }}/
+          if-no-files-found: ignore
+  release-gate:
+    needs: [build, browsers]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Require the build and every browser comparison
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          BROWSER_RESULT: ${{ needs.browsers.result }}
+        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
+      - uses: actions/download-artifact@v4
+        with:
+          name: metagenomics-compiled
+          path: build
+      - run: tar -xzf build/metagenomics-compiled.tar.gz
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: metagenomics-validation-*
+          path: build/metagenomics-validation-artifacts
+      - name: Collect the exact comparison reports
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          base = Path('build/metagenomics-validation-artifacts')
+          for engine in ('node', 'chromium', 'firefox', 'webkit'):
+              for tool in ('kraken2', 'bracken'):
+                  filename = f'summary-{tool}-all.json'
+                  matches = list((base / f'metagenomics-validation-{engine}').rglob(filename))
+                  if len(matches) != 1:
+                      raise RuntimeError(f'Expected one {engine}/{tool} report, found {len(matches)}')
+                  target = Path('reports/metagenomics') / engine / filename
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copyfile(matches[0], target)
+          PY
+      - name: Fetch pinned sources and assemble the tested packages
+        run: |
+          python3 scripts/fetch-metagenomics-test-data.py --fetch-sources
+          python3 scripts/fetch-metagenomics-test-data.py --verify
+          reports=()
+          for engine in node chromium firefox webkit; do
+            for tool in kraken2 bracken; do
+              reports+=(--validation-report "reports/metagenomics/$engine/summary-$tool-all.json")
+            done
+          done
+          python3 scripts/package-metagenomics.py --tool all --output releases "${reports[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: metagenomics-packages
+          path: |
+            releases/kraken2-*-wasm.zip
+            releases/kraken2-*-wasm.zip.sha256
+            releases/bracken-*-wasm.zip
+            releases/bracken-*-wasm.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

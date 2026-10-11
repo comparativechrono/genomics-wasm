@@ -19,10 +19,14 @@
     "validate:somatic": "node scripts/validate-somatic.mjs",
     "package:somatic": "python3 scripts/package-somatic.py",
     "validate:strelka2": "node scripts/validate-strelka2.mjs",
-    "package:strelka2": "python3 scripts/package-strelka2.py"
+    "package:strelka2": "python3 scripts/package-strelka2.py",
+    "validate:metagenomics": "node scripts/validate-metagenomics.mjs",
+    "package:metagenomics": "python3 scripts/package-metagenomics.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }

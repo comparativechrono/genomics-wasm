@@ -202,6 +202,15 @@ pairs recovered from a public BAM. The human qualities retain their prior
 processing; they are not presented as raw instrument qualities. Both datasets
 include plain and gzip FASTQ, exact provenance and reproducible preparation.
 
+## Metagenomics
+
+The [metagenomics fixture](metagenomics/README.md) contains 4,096 real paired
+reads from the sequenced Zymo mock community ERR2984773, plus selected genuine
+reference regions and a small Kraken2 database. Native/browser comparisons
+cover classification, database exchange and Bracken abundance estimation.
+This deliberately limited reference collection is for implementation testing;
+it cannot measure the original community's composition accurately.
+
 ## Somatic variants
 
 The [somatic fixtures](somatic/README.md) contain real HCC1395 tumour and

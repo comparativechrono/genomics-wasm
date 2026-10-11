@@ -25,6 +25,15 @@ directory under `tools/`.
   the upstream GPL-3.0-or-later licence. CPython 2.7.18 is included as source for running
   the unchanged native workflow during validation, under its original notices.
   The browser workflow does not require Python.
+- Kraken2: Derrick Wood and contributors; MIT.
+  Source: https://github.com/DerrickWood/kraken2
+  The pinned 2.17.2 release retains an upstream version banner of 2.17.1.
+  Its package includes the original source, portability patches and notices.
+- Bracken: Jennifer Lu and contributors; GPL-3.0-or-later.
+  Source: https://github.com/jenniferlu717/Bracken
+  The original Python abundance and distribution programs run in bundled
+  Pyodide. The package includes CPython, Pyodide and runtime dependency sources
+  and notices, plus the Kraken2 dependency used for database preparation.
 - seqtk: Heng Li and contributors; MIT. Source: https://github.com/lh3/seqtk
 - AdapterRemoval: Mikkel Schubert and contributors; GPL-3.0-or-later.
   Source: https://github.com/MikkelSchubert/adapterremoval
