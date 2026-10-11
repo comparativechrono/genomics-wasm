@@ -1,0 +1,43 @@
+{
+  "tool": "somaticsniper",
+  "version": "1.0.5.0",
+  "revision": "136bac782dc2a761f63fa29cfd8ff1d1e162faf5",
+  "url": "https://codeload.github.com/genome/somatic-sniper/tar.gz/refs/tags/v1.0.5.0",
+  "archive": "somatic-sniper-1.0.5.0.tar.gz",
+  "sha256": "fc41e90237b059fcc591e404830c4b1be678642dd5afd76ce545b97b4b7b3de1",
+  "emscripten": "3.1.64",
+  "runtime": {
+    "pthread": false,
+    "crossOriginIsolated": false,
+    "pointerWidth": 32,
+    "exportName": "createSomaticSniper",
+    "entryModule": "somaticsniper.mjs",
+    "wasmBinary": "somaticsniper.wasm",
+    "maximumMemory": 2147483648,
+    "waitForExit": false
+  },
+  "dependencies": {
+    "samtools": {
+      "version": "0.1.6",
+      "url": "https://raw.githubusercontent.com/genome/somatic-sniper/136bac782dc2a761f63fa29cfd8ff1d1e162faf5/vendor/samtools-0.1.6.tar.gz",
+      "archive": "samtools-0.1.6.tar.gz",
+      "sha256": "40e8a713211ba49434eff2c96359e0d980885a141559e7113850785bbc8c5b04",
+      "vendoredPath": "vendor/samtools-0.1.6.tar.gz"
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "archive": "zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    }
+  },
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.samtools",
+    "LICENSE.bgzf",
+    "LICENSE.razf",
+    "LICENSE.zlib",
+    "LICENSE.emscripten",
+    "THIRD_PARTY_LICENSES.txt"
+  ]
+}

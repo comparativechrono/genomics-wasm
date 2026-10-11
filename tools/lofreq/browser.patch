@@ -1,0 +1,468 @@
+--- a/src/lofreq/lofreq_call.c
++++ b/src/lofreq/lofreq_call.c
+@@ -67,6 +67,7 @@
+ #include "log.h"
+ #include "plp.h"
+ #include "defaults.h"
++#include "lofreq_filter.h"
+ 
+ #if 1
+ #define MYNAME "lofreq call"
+@@ -1495,6 +1496,10 @@
+     } else {
+          char cmd[BUF_SIZE];
+          int len;
++         char snv_threshold[32], indel_threshold[32];
++         char *filter_argv[12] = {"lofreq", "filter", "-i", vcf_tmp_out,
++                                 "-o", NULL==vcf_out ? "-" : vcf_out};
++         int filter_argc = 6;
+ 
+          snprintf(cmd, BUF_SIZE,
+                   "lofreq filter -i %s -o %s",
+@@ -1503,6 +1508,7 @@
+ 
+          if (no_default_filter) {
+               len += sprintf(cmd+len, " %s", "--no-defaults");
++              filter_argv[filter_argc++] = "--no-defaults";
+          }
+ 
+          if (varcall_conf.bonf_dynamic) {
+@@ -1525,12 +1531,29 @@
+               len += sprintf(cmd+len,/* appending to str with format. see http://stackoverflow.com/questions/14023024/strcat-for-formatted-strings */
+                              " --snvqual-thresh %d --indelqual-thresh %d",
+                              snvqual_thresh, indelqual_thresh);
++              snprintf(snv_threshold, sizeof(snv_threshold), "%d", snvqual_thresh);
++              snprintf(indel_threshold, sizeof(indel_threshold), "%d", indelqual_thresh);
++              filter_argv[filter_argc++] = "--snvqual-thresh";
++              filter_argv[filter_argc++] = snv_threshold;
++              filter_argv[filter_argc++] = "--indelqual-thresh";
++              filter_argv[filter_argc++] = indel_threshold;
+          } else {
+               LOG_VERBOSE("%s\n", "No SNV/indel-quality filtering needed (already applied during call since bonf was fixed)");
+          }
+ 
+          LOG_VERBOSE("Executing %s\n", cmd);
+-         if (0 != (rc = system(cmd))) {
++         /* Run the same upstream filter without a host subprocess.  Reset
++          * parser/log state to the values a fresh process would receive. */
++         int saved_optind = optind, saved_opterr = opterr, saved_optopt = optopt;
++         char *saved_optarg = optarg;
++         int saved_verbose = verbose, saved_debug = debug;
++         optind = 0; opterr = 1; optopt = 0; optarg = NULL;
++         verbose = 0; debug = 0;
++         filter_argv[filter_argc] = NULL;
++         rc = main_filter(filter_argc, filter_argv);
++         optind = saved_optind; opterr = saved_opterr; optopt = saved_optopt;
++         optarg = saved_optarg; verbose = saved_verbose; debug = saved_debug;
++         if (0 != rc) {
+               LOG_ERROR("The following command failed: %s\n", cmd);
+               rc = 1;
+ 
+--- a/src/lofreq/lofreq_main.c
++++ b/src/lofreq/lofreq_main.c
+@@ -200,6 +200,14 @@
+ 
+ int main(int argc, char *argv[])
+ {
++#ifdef __EMSCRIPTEN__
++     if (argc > 1 && (strcmp(argv[1], "somatic") == 0 ||
++                     strcmp(argv[1], "call-parallel") == 0 ||
++                     strcmp(argv[1], "vcfplot") == 0)) {
++          fprintf(stderr, "LoFreq WebAssembly core cannot launch external scripts; use LoFreqRunner for somatic\n");
++          return 2;
++     }
++#endif
+      add_local_dir_to_path(argv[0]);
+ 
+      if (argc < 2) {
+--- a/src/lofreq/plp.c
++++ b/src/lofreq/plp.c
+@@ -35,6 +35,7 @@
+ #include <assert.h>
+ #include <errno.h>
+ #include <fenv.h>
++#include "portable_math.h"
+ 
+ #include "htslib/kstring.h"
+ #include "htslib/sam.h"
+@@ -555,9 +556,9 @@
+                         num_err_probs, num_non_matches, 1.0, 0.05);
+      /* need prob not pv */
+      errno = 0;
+-     feclearexcept(FE_ALL_EXCEPT);
+-     src_prob = exp(probvec[num_non_matches-1]);
+-     if (errno || fetestexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW)) {
++     lofreq_math_clear();
++     src_prob = lofreq_exp(probvec[num_non_matches-1]);
++     if (errno || lofreq_math_failed()) {
+           if (src_prob < DBL_EPSILON) {
+                src_prob = DBL_MIN;/* to zero but prevent actual 0 value */
+           } else {
+--- a/src/lofreq/snpcaller.c
++++ b/src/lofreq/snpcaller.c
+@@ -39,6 +39,7 @@
+ #include <float.h>
+ #include <errno.h>
+ #include <fenv.h>
++#include "portable_math.h"
+ 
+ #include "fet.h"
+ #include "utils.h"
+@@ -670,7 +671,7 @@
+ 
+ 
+ /**
+- * @brief Computes log(exp(log_a) + exp(log_b))
++ * @brief Computes log(lofreq_exp(log_a) + lofreq_exp(log_b))
+  *
+  * Taken from util.h of FAST source code:
+  * http://www.cs.cornell.edu/~keich/FAST/fast.tar.gz
+@@ -680,16 +681,16 @@
+ log_sum(double log_a, double log_b)
+ {
+     if (log_a > log_b) {
+-        return log_a + log1p(exp(log_b-log_a));
++        return log_a + lofreq_log1p(lofreq_exp(log_b-log_a));
+     } else {
+-        return log_b + log1p(exp(log_a-log_b));
++        return log_b + lofreq_log1p(lofreq_exp(log_a-log_b));
+     }
+ }
+ /* log_sum() */
+ 
+ 
+ /**
+- * @brief Computes log(exp(log_a) - exp(log_b))
++ * @brief Computes log(lofreq_exp(log_a) - lofreq_exp(log_b))
+  *
+  * Adapted from log_sum above and scala/breeze/numerics logDiff
+  * See also http://stackoverflow.com/questions/778047/we-know-log-add-but-how-to-do-log-subtract
+@@ -699,9 +700,9 @@
+ log_diff(double log_a, double log_b)
+ {
+     if (log_a >= log_b) {
+-        return log_a + log1p(- exp(log_b-log_a));
++        return log_a + lofreq_log1p(- lofreq_exp(log_b-log_a));
+     } else {
+-        return log_b + log1p(- exp(log_a-log_b));
++        return log_b + lofreq_log1p(- lofreq_exp(log_a-log_b));
+     }
+ }
+ /* log_diff() */
+@@ -766,16 +767,16 @@
+ 
+ 
+         /* if pn=0 log(on) will fail. likewise if pn=1 (Q0) then
+-         * log1p(-pn) = log(1-1) = log(0) will fail. therefore test */
++         * lofreq_log1p(-pn) = log(1-1) = log(0) will fail. therefore test */
+         if (fabs(pn) < DBL_EPSILON) {
+              log_pn = log(DBL_EPSILON);
+         } else {
+              log_pn = log(pn);
+         }
+         if (fabs(pn-1.0) < DBL_EPSILON) {
+-             log_1_pn = log1p(-pn+DBL_EPSILON);
++             log_1_pn = lofreq_log1p(-pn+DBL_EPSILON);
+         } else {
+-             log_1_pn = log1p(-pn);
++             log_1_pn = lofreq_log1p(-pn);
+         }
+ 
+ #if 0
+@@ -855,16 +856,16 @@
+         double log_pn, log_1_pn;
+ 
+         /* if pn=0 log(on) will fail. likewise if pn=1 (Q0) then
+-         * log1p(-pn) = log(1-1) = log(0) will fail. therefore test */
++         * lofreq_log1p(-pn) = log(1-1) = log(0) will fail. therefore test */
+         if (fabs(pn) < DBL_EPSILON) {
+              log_pn = log(DBL_EPSILON);
+         } else {
+              log_pn = log(pn);
+         }
+         if (fabs(pn-1.0) < DBL_EPSILON) {
+-             log_1_pn = log1p(-pn+DBL_EPSILON);
++             log_1_pn = lofreq_log1p(-pn+DBL_EPSILON);
+         } else {
+-             log_1_pn = log1p(-pn);/* 0.0 = log(1.0) */
++             log_1_pn = lofreq_log1p(-pn);/* 0.0 = log(1.0) */
+         }
+ 
+ #ifdef TRACE
+@@ -909,12 +910,12 @@
+              probvec[K] = log_sum(probvec_prev[K], probvec_prev[K-1]+log_pn);
+ 
+              errno = 0;
+-             feclearexcept(FE_ALL_EXCEPT);
+-
+-             pvalue = expl(probvec[K]);
++             lofreq_math_clear();
++
++             pvalue = lofreq_expl(probvec[K]);
+ 
+              errsv = errno;
+-             if (errsv || fetestexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW)) {
++             if (errsv || lofreq_math_failed()) {
+                   if (pvalue < DBL_EPSILON) {
+                        pvalue = LDBL_MIN;/* to zero but prevent actual 0 value */
+                   } else {
+@@ -997,7 +998,7 @@
+ 
+ /* main logic. return of probvec (needs to be freed by caller allows
+  * to check pvalues for other numbers < (original num_failures), like
+- * so: exp(probvec_tailsum(probvec, smaller_numl, orig_num+1)) but
++ * so: lofreq_exp(probvec_tailsum(probvec, smaller_numl, orig_num+1)) but
+  * only if first pvalue was below limits implied by bonf and sig.
+  * default pvalue is DBL_MAX (1 might still be significant).
+  *
+@@ -1032,12 +1033,12 @@
+ #endif
+ 
+     errno = 0;
+-    feclearexcept(FE_ALL_EXCEPT);
+-
+-    *pvalue = expl(probvec[num_failures]); /* no need for tailsum here */
++    lofreq_math_clear();
++
++    *pvalue = lofreq_expl(probvec[num_failures]); /* no need for tailsum here */
+ 
+     errsv = errno;
+-    if (errsv || fetestexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW)) {
++    if (errsv || lofreq_math_failed()) {
+          if (*pvalue < DBL_EPSILON) {
+               *pvalue = LDBL_MIN;/* to zero but prevent actual 0 value */
+          } else {
+@@ -1107,7 +1108,7 @@
+     for (i=1; i<max_noncons_count+1; i++) {
+         fprintf(stderr, "DEBUG(%s:%s():%d): prob for count %d=%Lg\n",
+                 __FILE__, __FUNCTION__, __LINE__,
+-                i, expl(probvec[i]));
++                i, lofreq_expl(probvec[i]));
+     }
+ #endif
+ 
+@@ -1127,12 +1128,12 @@
+         if (0 != noncons_counts[i]) {
+              int errsv;
+              errno = 0;
+-             feclearexcept(FE_ALL_EXCEPT);
+-
+-             pvalue = expl(probvec_tailsum(probvec, noncons_counts[i], max_noncons_count+1));
++             lofreq_math_clear();
++
++             pvalue = lofreq_expl(probvec_tailsum(probvec, noncons_counts[i], max_noncons_count+1));
+ 
+              errsv = errno;
+-             if (errsv || fetestexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW)) {
++             if (errsv || lofreq_math_failed()) {
+                   /* failed expl will set pvalue either to 0 or 1,
+                    * both of which is not wanted here: this function
+                    * should never return 0.0 but only just (LDBL_MIN)
+--- a/src/lofreq/lofreq_filter.c
++++ b/src/lofreq/lofreq_filter.c
+@@ -42,6 +42,7 @@
+ #include "log.h"
+ #include "utils.h"
+ #include "multtest.h"
++#include "counts.h"
+ #include "defaults.h"
+ 
+ 
+@@ -74,7 +75,7 @@
+      int thresh;/* use if > 0; otherwise use multiple testing correction that's if >0 */
+      int mtc_type;/* holm; holmbonf; fdr; none */
+      double alpha;
+-     long int ntests;
++     long long int ntests;
+      char id[FILTER_ID_STRSIZE];
+      int no_compound; /* otherwise ALT_STRAND_RATIO of var bases have to be on one strand as well */
+      int incl_indels; /* if 1, also apply to indels */
+@@ -84,7 +85,7 @@
+      int thresh;/* use if > 0; otherwise use multiple testing correction that's if >0 */
+      int mtc_type;/* holm; holmbonf; fdr; none */
+      double alpha;
+-     long int ntests;
++     long long int ntests;
+      char id[FILTER_ID_STRSIZE];
+ } snvqual_filter_t;
+ 
+@@ -92,7 +93,7 @@
+      int thresh;/* use if > 0; otherwise use multiple testing correction that's if >0 */
+      int mtc_type;/* holm; holmbonf; fdr; none */
+      double alpha;
+-     long int ntests;
++     long long int ntests;
+      char id[FILTER_ID_STRSIZE];
+ } indelqual_filter_t;
+ 
+@@ -137,13 +138,13 @@
+              cfg->dp_filter.min, cfg->dp_filter.max);
+      fprintf(stderr, "  af_filter min=%f max=%f\n",
+              cfg->af_filter.min, cfg->af_filter.max);
+-     fprintf(stderr, "  sb_filter thresh=%d mtc_type=%d|%s alpha=%f ntests=%ld no_compound=%d incl_indel=%d\n",
++     fprintf(stderr, "  sb_filter thresh=%d mtc_type=%d|%s alpha=%f ntests=%lld no_compound=%d incl_indel=%d\n",
+              cfg->sb_filter.thresh, cfg->sb_filter.mtc_type, mtc_type_str[cfg->sb_filter.mtc_type],
+              cfg->sb_filter.alpha, cfg->sb_filter.ntests, cfg->sb_filter.no_compound, cfg->sb_filter.incl_indels);
+-     fprintf(stderr, "  snvqual_filter thresh=%d mtc_type=%d|%s alpha=%f ntests=%ld\n",
++     fprintf(stderr, "  snvqual_filter thresh=%d mtc_type=%d|%s alpha=%f ntests=%lld\n",
+              cfg->snvqual_filter.thresh, cfg->snvqual_filter.mtc_type, mtc_type_str[cfg->snvqual_filter.mtc_type],
+              cfg->snvqual_filter.alpha, cfg->snvqual_filter.ntests);
+-     fprintf(stderr, "  indelqual_filter thresh=%d mtc_type=%d|%s alpha=%f ntests=%ld\n",
++     fprintf(stderr, "  indelqual_filter thresh=%d mtc_type=%d|%s alpha=%f ntests=%lld\n",
+              cfg->indelqual_filter.thresh, cfg->indelqual_filter.mtc_type, mtc_type_str[cfg->indelqual_filter.mtc_type],
+              cfg->indelqual_filter.alpha, cfg->indelqual_filter.ntests);
+ }
+@@ -416,7 +417,7 @@
+           snvqual_filter->ntests = num_vars-num_ign;
+      } else {
+           if (num_vars-num_ign > snvqual_filter->ntests) {
+-               LOG_WARN("Number of variants (%ld) larger than the number of predefined tests (%ld). Are you sure that makes sense?\n",
++               LOG_WARN("Number of variants (%ld) larger than the number of predefined tests (%lld). Are you sure that makes sense?\n",
+                         num_vars-num_ign, snvqual_filter->ntests);
+           }
+      }
+@@ -521,7 +522,7 @@
+           indelqual_filter->ntests = num_vars-num_ign;
+      } else {
+           if (num_vars-num_ign > indelqual_filter->ntests) {
+-               LOG_WARN("Number of variants (%ld) larger than the number of predefined tests (%ld). Are you sure that makes sense?\n",
++               LOG_WARN("Number of variants (%ld) larger than the number of predefined tests (%lld). Are you sure that makes sense?\n",
+                         num_vars-num_ign, indelqual_filter->ntests);
+           }
+      }
+@@ -622,7 +623,7 @@
+           sb_filter->ntests = num_vars - num_ign;
+      } else {
+           if (num_vars - num_ign > sb_filter->ntests) {
+-               LOG_WARN("Number of variants (%ld) in SB filter larger than the number of predefined tests (%ld). Are you sure that makes sense?\n",
++               LOG_WARN("Number of variants (%ld) in SB filter larger than the number of predefined tests (%lld). Are you sure that makes sense?\n",
+                         num_vars-num_ign, sb_filter->ntests);
+           }
+      }
+@@ -1035,7 +1036,10 @@
+                    LOG_FATAL("Non-numeric argument provided: %s\n", optarg);
+                    return -1;
+               }
+-              cfg.snvqual_filter.ntests = atol(optarg);
++              if (!lofreq_parse_test_count(optarg, &cfg.snvqual_filter.ntests)) {
++                   LOG_FATAL("Invalid test count (expected an integer from 0 to 9223372036854775807): %s\n", optarg);
++                   return 2;
++              }
+               break;
+ 
+          case 'K':
+@@ -1064,7 +1068,10 @@
+                    LOG_FATAL("Non-numeric argument provided: %s\n", optarg);
+                    return -1;
+               }
+-              cfg.indelqual_filter.ntests = atol(optarg);
++              if (!lofreq_parse_test_count(optarg, &cfg.indelqual_filter.ntests)) {
++                   LOG_FATAL("Invalid test count (expected an integer from 0 to 9223372036854775807): %s\n", optarg);
++                   return 2;
++              }
+               break;
+ 
+          case '?':
+--- a/src/lofreq/lofreq_uniq.c
++++ b/src/lofreq/lofreq_uniq.c
+@@ -66,6 +66,7 @@
+ #include "defaults.h"
+ #include "snpcaller.h"
+ #include "multtest.h"
++#include "counts.h"
+ 
+ #if 1
+ #define MYNAME "lofreq uniq"
+@@ -89,7 +90,7 @@
+      int thresh;/* use if > 0; otherwise use multiple testing correction that's if >0 */
+      int mtc_type;/* holm; holmbonf; fdr; none */
+      double alpha;
+-     long int ntests;
++     long long int ntests;
+      char id[FILTER_ID_STRSIZE];
+ } uniq_filter_t;
+ 
+@@ -569,7 +570,10 @@
+                    LOG_FATAL("Non-numeric argument provided: %s\n", optarg);
+                    return -1;
+               }
+-              uniq_conf.uniq_filter.ntests = atol(optarg);
++              if (!lofreq_parse_test_count(optarg, &uniq_conf.uniq_filter.ntests)) {
++                   LOG_FATAL("Invalid test count (expected an integer from 0 to 9223372036854775807): %s\n", optarg);
++                   return 2;
++              }
+               break;
+ 
+          case '?':
+@@ -593,7 +597,7 @@
+     LOG_DEBUG("uniq_conf.uniq_filter.thresh = %d\n", uniq_conf.uniq_filter.thresh);
+     LOG_DEBUG("uniq_conf.uniq_filter.mtc_type = %d\n", uniq_conf.uniq_filter.mtc_type);
+     LOG_DEBUG("uniq_conf.uniq_filter.alpha = %f\n", uniq_conf.uniq_filter.alpha);
+-    LOG_DEBUG("uniq_conf.uniq_filter.ntests = %d\n", uniq_conf.uniq_filter.ntests);
++    LOG_DEBUG("uniq_conf.uniq_filter.ntests = %lld\n", uniq_conf.uniq_filter.ntests);
+ #endif
+     
+     if (uniq_conf.uniq_filter.thresh && uniq_conf.uniq_filter.mtc_type != MTC_NONE) {
+--- a/src/lofreq/multtest.c
++++ b/src/lofreq/multtest.c
+@@ -63,10 +63,10 @@
+  * will use size as bonferroni factor if num_test (AKA bonf fac) < 1
+  */
+ void
+-bonf_corr(double data[], long int size, long int num_tests)
++bonf_corr(double data[], long int size, long long int num_tests)
+ {
+      long int i;
+-     long int bonf_fac;
++     long long int bonf_fac;
+ 
+      if (num_tests<1) {
+           bonf_fac = size;
+@@ -88,10 +88,10 @@
+  * 
+  */
+ void
+-holm_bonf_corr(double data[], long int size, double alpha, long int num_tests)
++holm_bonf_corr(double data[], long int size, double alpha, long long int num_tests)
+ {
+      long int i;
+-     long int lp = size;
++     long long int lp = size;
+      double tp;
+      double pp;
+      ixp_t *iarr;
+@@ -145,13 +145,13 @@
+  * content of data will not be overwritten
+  */
+ long int
+-fdr(double data[], long int size, double alpha, long int num_tests, long int **irejected)
++fdr(double data[], long int size, double alpha, long long int num_tests, long int **irejected)
+ {
+ 
+      ixp_t *iarr;
+      long int i;
+      long int nrejected = 0;
+-     long int n;
++     long long int n;
+ 
+      iarr = malloc(size * sizeof(ixp_t));
+      if (num_tests<1) {
+--- a/src/lofreq/multtest.h
++++ b/src/lofreq/multtest.h
+@@ -50,13 +50,13 @@
+ 
+ 
+ void
+-bonf_corr(double data[], long int size, long int num_tests);
++bonf_corr(double data[], long int size, long long int num_tests);
+ 
+ void
+-holm_bonf_corr(double data[], long int size, double alpha, long int num_tests);
++holm_bonf_corr(double data[], long int size, double alpha, long long int num_tests);
+ 
+ long int
+-fdr(double data[], long int size, double alpha, long int num_tests, long int **irejected);
++fdr(double data[], long int size, double alpha, long long int num_tests, long int **irejected);
+ 
+ int
+ mtc_str_to_type(char *t);

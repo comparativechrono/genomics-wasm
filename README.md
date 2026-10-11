@@ -18,6 +18,8 @@ DESeq2 session retains its R objects until the session is closed.
 | [BWA](tools/bwa/README.md) | 0.7.19 | `index` and `mem`, local files, one thread |
 | [BWA-MEM2](tools/bwa-mem2/README.md) | 2.2.1 | `index` and `mem`, local files, one thread |
 | [FreeBayes](tools/freebayes/README.md) | 1.3.6 | Local BAM/SAM variant calling, one process |
+| [SomaticSniper](tools/somaticsniper/README.md) | 1.0.5.0 | Somatic SNVs from matched tumour/normal BAMs, one thread |
+| [LoFreq](tools/lofreq/README.md) | 2.1.5 | Variant calling, indel preparation and the serial somatic workflow |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
@@ -56,6 +58,12 @@ extensions run in the bundled Pyodide runtime. All runtime files are local;
 ordinary static hosting is sufficient. The example includes real human and
 yeast reads with documented selection and prior processing.
 
+SomaticSniper and LoFreq share a [browser example](examples/somatic/README.md)
+with real HCC1395 tumour and HCC1395BL normal reads. LoFreq's
+[JavaScript runner](runtime/LOFREQ.md) coordinates the upstream C commands for
+the somatic workflow. Both tools use ordinary static hosting. SomaticSniper is
+archived upstream; LoFreq describes its somatic workflow as experimental.
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
@@ -71,6 +79,8 @@ source toolchain/emsdk/emsdk_env.sh
 bash scripts/build-bwa.sh all
 bash scripts/build-bwa-mem2.sh all
 bash scripts/build-freebayes.sh all
+bash scripts/build-somaticsniper.sh all
+bash scripts/build-lofreq.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
@@ -197,6 +207,21 @@ The [Cutadapt comparison rules](validation/cutadapt/README.md) cover read
 sequences, qualities, pairing, output order and reported trimming statistics.
 Selected options must have an observed effect on the real test reads.
 
+The **Build and validate somatic callers** workflow checks SomaticSniper and
+LoFreq against their unchanged native programs and patched native builds:
+
+```sh
+python3 scripts/fetch-somatic-test-data.py --verify
+node scripts/validate-somatic.mjs --tool somaticsniper --engine node
+node scripts/validate-somatic.mjs --tool lofreq --engine node
+```
+
+Repeat with `--engine chromium`, `firefox` and `webkit` for browser comparisons.
+The tests compare complete variant records, LoFreq's intermediate somatic
+results and indel-quality BAMs. The real paired data include published reference
+calls, kept separate from the native-equivalence checks. See the
+[somatic comparison rules](validation/somatic/README.md).
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -224,6 +249,11 @@ Cutadapt's final workflow artifact is `cutadapt-package`. Its independent ZIP
 is assembled by `scripts/package-cutadapt.py` only after all four engines pass.
 It contains the Python/WebAssembly runtime, compiled wheels, browser example,
 real reads, comparison reports, source archives and licence notices.
+
+Somatic caller packages are created by `scripts/package-somatic.py` after all
+four engines pass. The `somatic-packages` workflow artifact contains a separate
+ZIP for each caller, with its browser example, runtime, real paired data,
+validation reports, corresponding sources and licences.
 
 ## Licence
 

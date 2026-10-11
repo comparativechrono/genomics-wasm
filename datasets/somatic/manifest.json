@@ -1,0 +1,1477 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-10-11",
+  "purpose": "Unchanged biological read content from genuine SEQC2 HCC1395/HCC1395BL matched cell lines, with explicit regional coordinate rebasing, for native/patched-native/WebAssembly somatic caller parity; not an unbiased clinical accuracy benchmark.",
+  "sources": {
+    "T-header-0-65535.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 0,
+        "endInclusive": 65535
+      },
+      "bytes": 65536,
+      "sha256": "2542bc34df76d3717448e353fdb5cca1d026abd3206c01900f91da002c57c6fe",
+      "cachePath": "build/somatic-sources/T-header-0-65535.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73781119305-73781839184.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73781119305,
+        "endInclusive": 73781839184
+      },
+      "bytes": 719880,
+      "sha256": "cbd285b11e58d82cf11dd684efe152a8f1efffd90df4bc196eef8898d20f72a9",
+      "cachePath": "build/somatic-sources/T-range-73781119305-73781839184.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73782456070-73782534329.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73782456070,
+        "endInclusive": 73782534329
+      },
+      "bytes": 78260,
+      "sha256": "5b41333acb5b263132781f47abf97bc4aad858114b4917bfb01fb6133f974c62",
+      "cachePath": "build/somatic-sources/T-range-73782456070-73782534329.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73783156924-73783222459.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73783156924,
+        "endInclusive": 73783222459
+      },
+      "bytes": 65536,
+      "sha256": "37406af456d93f34f3999badc98f1227543e0a79caa27319197d992b04d86bf3",
+      "cachePath": "build/somatic-sources/T-range-73783156924-73783222459.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73794320255-73794385790.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73794320255,
+        "endInclusive": 73794385790
+      },
+      "bytes": 65536,
+      "sha256": "df3b96d434abc019e069007d2c3339a0170bc10c49f1f3b25011ab94840b9c14",
+      "cachePath": "build/somatic-sources/T-range-73794320255-73794385790.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73817112847-73817178382.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73817112847,
+        "endInclusive": 73817178382
+      },
+      "bytes": 65536,
+      "sha256": "8591444794a36faa12bd874225cc6f2460959b1336ad2c66259de8b96cd09e10",
+      "cachePath": "build/somatic-sources/T-range-73817112847-73817178382.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73836207949-73836273484.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73836207949,
+        "endInclusive": 73836273484
+      },
+      "bytes": 65536,
+      "sha256": "b8d89f9bfe259ec6525b43173046fb7bc0f83b96f4ca217496011dd85db6992c",
+      "cachePath": "build/somatic-sources/T-range-73836207949-73836273484.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73854438442-73854503977.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73854438442,
+        "endInclusive": 73854503977
+      },
+      "bytes": 65536,
+      "sha256": "3ea8594c8380480e59567c0cff57be40d202645953366e1d070f533566803ee9",
+      "cachePath": "build/somatic-sources/T-range-73854438442-73854503977.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73872466810-73872532345.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73872466810,
+        "endInclusive": 73872532345
+      },
+      "bytes": 65536,
+      "sha256": "f5949012b38d94e0a9be6f7be4ded519d44d2d73effa582b009d937cb700f059",
+      "cachePath": "build/somatic-sources/T-range-73872466810-73872532345.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73952547779-73953155357.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73952547779,
+        "endInclusive": 73953155357
+      },
+      "bytes": 607579,
+      "sha256": "78952de5b8298d36486d6d5bd960af8d0727f2034e928d42bd16189554090eea",
+      "cachePath": "build/somatic-sources/T-range-73952547779-73953155357.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73953368042-73953433577.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73953368042,
+        "endInclusive": 73953433577
+      },
+      "bytes": 65536,
+      "sha256": "b6bb2810b2b94717e418523edbdde4dfcbc6d14ceb36b6df38c6066b629923c8",
+      "cachePath": "build/somatic-sources/T-range-73953368042-73953433577.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73953633760-73953699295.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73953633760,
+        "endInclusive": 73953699295
+      },
+      "bytes": 65536,
+      "sha256": "ca41a5692021d7d2ffd7b6cb38ba5f3ee391be376eeed33f34aca200583688f6",
+      "cachePath": "build/somatic-sources/T-range-73953633760-73953699295.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73953905206-73953970741.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73953905206,
+        "endInclusive": 73953970741
+      },
+      "bytes": 65536,
+      "sha256": "94536fba780ee4df954bea9633b92f6599c69a2f1af6422067686ac5f648dd7b",
+      "cachePath": "build/somatic-sources/T-range-73953905206-73953970741.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73954189665-73954255200.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73954189665,
+        "endInclusive": 73954255200
+      },
+      "bytes": 65536,
+      "sha256": "1e80e67e8754dc45990c6ffd75080c62d7d93754bd1b1abbf44d68e09812c512",
+      "cachePath": "build/somatic-sources/T-range-73954189665-73954255200.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73956386981-73956452516.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73956386981,
+        "endInclusive": 73956452516
+      },
+      "bytes": 65536,
+      "sha256": "6d8b713d3d4a87dbc24c5f8c8deaea42bcdc3d5926297097a9b4e12146e4d759",
+      "cachePath": "build/somatic-sources/T-range-73956386981-73956452516.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73958582471-73958648006.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73958582471,
+        "endInclusive": 73958648006
+      },
+      "bytes": 65536,
+      "sha256": "4dc8c062443b61595d600703c738b3e6d624ecdddda5663f7bc54681d6d209ae",
+      "cachePath": "build/somatic-sources/T-range-73958582471-73958648006.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73960798581-73960864116.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73960798581,
+        "endInclusive": 73960864116
+      },
+      "bytes": 65536,
+      "sha256": "11659510de3e87950f36a7b82f5b4c07121355a3a444aee2b9985d053cb1f15f",
+      "cachePath": "build/somatic-sources/T-range-73960798581-73960864116.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73963054137-73963119672.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73963054137,
+        "endInclusive": 73963119672
+      },
+      "bytes": 65536,
+      "sha256": "0ec2a319ebbb654c1cec93a698270dcad09d32e18075bae15488a5365c01cf5c",
+      "cachePath": "build/somatic-sources/T-range-73963054137-73963119672.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73980872708-73980938243.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73980872708,
+        "endInclusive": 73980938243
+      },
+      "bytes": 65536,
+      "sha256": "89808b3b7326c8b17b8f047c0f31b28e6d9d35b3cfa6ac690248ff0edb46b47e",
+      "cachePath": "build/somatic-sources/T-range-73980872708-73980938243.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-73998724973-73998790508.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 73998724973,
+        "endInclusive": 73998790508
+      },
+      "bytes": 65536,
+      "sha256": "2840b79bd390f7bf97af9a9641b4e7829dbbac2691057bb7bd537d0047dabaf8",
+      "cachePath": "build/somatic-sources/T-range-73998724973-73998790508.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-74016804188-74016869723.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 74016804188,
+        "endInclusive": 74016869723
+      },
+      "bytes": 65536,
+      "sha256": "e1b3ba23e2d4a968869c0134034683ac3e68d58a207972133fbc97a7c769c8c4",
+      "cachePath": "build/somatic-sources/T-range-74016804188-74016869723.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-74170372485-74170438020.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 74170372485,
+        "endInclusive": 74170438020
+      },
+      "bytes": 65536,
+      "sha256": "79ec00cb3f6e4025b64ce49c8fc9995db1e1820decbb80c56bc0ffa5b3d16b28",
+      "cachePath": "build/somatic-sources/T-range-74170372485-74170438020.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "T-range-74310439829-74310516455.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "range": {
+        "start": 74310439829,
+        "endInclusive": 74310516455
+      },
+      "bytes": 76627,
+      "sha256": "2c25dd22c5a611fc99a37bfb6d6a81d2028a7b061ad1bed8d60e4ca81fc7912a",
+      "cachePath": "build/somatic-sources/T-range-74310439829-74310516455.bgzf",
+      "fullObjectBytes": 80288336808,
+      "usedForData": true
+    },
+    "N-header-0-65535.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 0,
+        "endInclusive": 65535
+      },
+      "bytes": 65536,
+      "sha256": "d84b492e0af399a39782640dfe5ae44b5a47631ea67d16a19fd223b75e569e07",
+      "cachePath": "build/somatic-sources/N-header-0-65535.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62000313346-62001174569.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62000313346,
+        "endInclusive": 62001174569
+      },
+      "bytes": 861224,
+      "sha256": "dea011663bcebd51f624f8cfce2f6af1d84c4be6c2a7f99a7515018a4cc13a45",
+      "cachePath": "build/somatic-sources/N-range-62000313346-62001174569.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62001929395-62002006814.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62001929395,
+        "endInclusive": 62002006814
+      },
+      "bytes": 77420,
+      "sha256": "a83b1983d5034be0bcb2b4998e8f3ccddccbf422e9e37b33ebef44d58996edba",
+      "cachePath": "build/somatic-sources/N-range-62001929395-62002006814.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62002777447-62002842982.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62002777447,
+        "endInclusive": 62002842982
+      },
+      "bytes": 65536,
+      "sha256": "34a0cdccd9a909372448c68e060503fee6306e91f6d94aba95196a687a1acd74",
+      "cachePath": "build/somatic-sources/N-range-62002777447-62002842982.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62014553244-62014631109.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62014553244,
+        "endInclusive": 62014631109
+      },
+      "bytes": 77866,
+      "sha256": "0f3e29a59bf51b981ae3b6b32af962bda8f93b206beb34551225a44a7d95044f",
+      "cachePath": "build/somatic-sources/N-range-62014553244-62014631109.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62039584239-62039649774.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62039584239,
+        "endInclusive": 62039649774
+      },
+      "bytes": 65536,
+      "sha256": "3920a699580ef29355d69f411268f798a758e157403fc48383c44eef4098c488",
+      "cachePath": "build/somatic-sources/N-range-62039584239-62039649774.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62063811141-62063876676.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62063811141,
+        "endInclusive": 62063876676
+      },
+      "bytes": 65536,
+      "sha256": "760bfb803dff253df986d3cc01eda9f9dc6b3a8e6ee89148ccba6998c0f85507",
+      "cachePath": "build/somatic-sources/N-range-62063811141-62063876676.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62086949760-62087026240.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62086949760,
+        "endInclusive": 62087026240
+      },
+      "bytes": 76481,
+      "sha256": "f18a8c4afde19f0913c4df565f7badeda74542cd73c3555c18da86e28b392379",
+      "cachePath": "build/somatic-sources/N-range-62086949760-62087026240.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62109688016-62109753551.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62109688016,
+        "endInclusive": 62109753551
+      },
+      "bytes": 65536,
+      "sha256": "25d53d4fb2cead3349373436e96937df054d20d07e29887548f7f9dfc6d62f23",
+      "cachePath": "build/somatic-sources/N-range-62109688016-62109753551.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62209004504-62209778965.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62209004504,
+        "endInclusive": 62209778965
+      },
+      "bytes": 774462,
+      "sha256": "328044b89d2ad6c6ceecd17bcae69f94d6cf9004b85b5766cd10f4cf9fad7ca4",
+      "cachePath": "build/somatic-sources/N-range-62209004504-62209778965.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62210074924-62210152045.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62210074924,
+        "endInclusive": 62210152045
+      },
+      "bytes": 77122,
+      "sha256": "15079a7a0125fc971665a011da66bb4583cfd0551c79a4edf15bac83ec0b6455",
+      "cachePath": "build/somatic-sources/N-range-62210074924-62210152045.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62210433888-62210499423.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62210433888,
+        "endInclusive": 62210499423
+      },
+      "bytes": 65536,
+      "sha256": "560a0e7af49ca6efd2b8b361dd855e85adebbb747ba5d980ad7910cafa8e7720",
+      "cachePath": "build/somatic-sources/N-range-62210433888-62210499423.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62210786605-62210852140.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62210786605,
+        "endInclusive": 62210852140
+      },
+      "bytes": 65536,
+      "sha256": "2c7192aaf0ab76218757b13b6d566cf87f76b99378a299a1a873938831e61dbb",
+      "cachePath": "build/somatic-sources/N-range-62210786605-62210852140.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62211151324-62211216859.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62211151324,
+        "endInclusive": 62211216859
+      },
+      "bytes": 65536,
+      "sha256": "07853c570cfb61e76bd8d124353381f14c54dfb3e9ea3bf47e7490c1908d9fe7",
+      "cachePath": "build/somatic-sources/N-range-62211151324-62211216859.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62213981558-62214047093.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62213981558,
+        "endInclusive": 62214047093
+      },
+      "bytes": 65536,
+      "sha256": "63325a91655350ae775df0109700dc1213939adaab66d14af7fb3342df5e31c0",
+      "cachePath": "build/somatic-sources/N-range-62213981558-62214047093.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62216848585-62216914120.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62216848585,
+        "endInclusive": 62216914120
+      },
+      "bytes": 65536,
+      "sha256": "75b5e8240aa7eef0b176b5e3c96818a49ecb151751e55b924cda02c676955d9f",
+      "cachePath": "build/somatic-sources/N-range-62216848585-62216914120.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62219675685-62219752677.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62219675685,
+        "endInclusive": 62219752677
+      },
+      "bytes": 76993,
+      "sha256": "bfd31fa3727fbc4ff395bf7f37c82ef911108cac2cba32fa4a063cb2912b0c9b",
+      "cachePath": "build/somatic-sources/N-range-62219675685-62219752677.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62222502569-62222568104.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62222502569,
+        "endInclusive": 62222568104
+      },
+      "bytes": 65536,
+      "sha256": "8b780b8dad245a40d91481832801fadd1836dd5b43a682c1d17321ca31e5d9b8",
+      "cachePath": "build/somatic-sources/N-range-62222502569-62222568104.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62244975296-62245040831.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62244975296,
+        "endInclusive": 62245040831
+      },
+      "bytes": 65536,
+      "sha256": "159a73ef0a22524ce30dc13968290a5a42c0c3a3fa5f6160bacdd6340b7938a7",
+      "cachePath": "build/somatic-sources/N-range-62244975296-62245040831.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62267386500-62267463453.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62267386500,
+        "endInclusive": 62267463453
+      },
+      "bytes": 76954,
+      "sha256": "44e536f38e21d9cd1262c01dd68fa33fed2e768452590c3d2898263f8b009620",
+      "cachePath": "build/somatic-sources/N-range-62267386500-62267463453.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62291094297-62291159832.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62291094297,
+        "endInclusive": 62291159832
+      },
+      "bytes": 65536,
+      "sha256": "f11c535d3ddd4b167a726edcf4860bdb05a8c69bfc3d4820d457bc82c34a3c19",
+      "cachePath": "build/somatic-sources/N-range-62291094297-62291159832.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62291106069-62291171604.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62291106069,
+        "endInclusive": 62291171604
+      },
+      "bytes": 65536,
+      "sha256": "19a520fa0cde9409ce4dee4caf416bafeeb3938fe91962873a6c0ced574e1a64",
+      "cachePath": "build/somatic-sources/N-range-62291106069-62291171604.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62479716891-62479782426.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62479716891,
+        "endInclusive": 62479782426
+      },
+      "bytes": 65536,
+      "sha256": "1dbc9069f1d93cb943b136b17b9f7490649a223340abb3694911951f98058aab",
+      "cachePath": "build/somatic-sources/N-range-62479716891-62479782426.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "N-range-62668690933-62668756468.bgzf": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "range": {
+        "start": 62668690933,
+        "endInclusive": 62668756468
+      },
+      "bytes": 65536,
+      "sha256": "48409789e64cabdaea76621953258c9c8456d448d091fb77a92937e091802d64",
+      "cachePath": "build/somatic-sources/N-range-62668690933-62668756468.bgzf",
+      "fullObjectBytes": 67380504186,
+      "usedForData": true
+    },
+    "WGS_NS_T_1.bwa.dedup.bai": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bai",
+      "bytes": 9564224,
+      "sha256": "d44f7684950bf0e67aaee302bbf29b7b93e6ef9c8cfaf01d1a011ce8f140d053",
+      "cachePath": "build/somatic-sources/WGS_NS_T_1.bwa.dedup.bai",
+      "usedForData": false,
+      "purpose": "Upstream published BAM MD5 and original indexes documenting byte-range selection"
+    },
+    "WGS_NS_N_1.bwa.dedup.bai": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bai",
+      "bytes": 9507752,
+      "sha256": "59152e4ee9590c2f70718310d11a96e2f4a434d30d66f1f0137a9ce1e5fed732",
+      "cachePath": "build/somatic-sources/WGS_NS_N_1.bwa.dedup.bai",
+      "usedForData": false,
+      "purpose": "Upstream published BAM MD5 and original indexes documenting byte-range selection"
+    },
+    "WGS.md5": {
+      "url": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS.md5",
+      "bytes": 3066,
+      "sha256": "b29be139e7483245fd35386f0730b3e42db53bd06f121624858b5786bc34f915",
+      "cachePath": "build/somatic-sources/WGS.md5",
+      "usedForData": false,
+      "purpose": "Upstream published BAM MD5 and original indexes documenting byte-range selection"
+    },
+    "hg38-chr21.fa.gz": {
+      "url": "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/chromosomes/chr21.fa.gz",
+      "bytes": 12709705,
+      "sha256": "c979ca1e5065c2521a50773473e0d0cc018fd6f3e9bb3aa90493fe7b45d57d1b",
+      "cachePath": "build/somatic-sources/hg38-chr21.fa.gz",
+      "usedForData": true,
+      "purpose": "Real reference source"
+    },
+    "truth.vcf.gz": {
+      "bytes": 5108710,
+      "sha256": "3b477e40d1598d0cb4a287323dcfb7f7883c9a9f29494e2391b3517d5bf035aa",
+      "url": "https://storage.googleapis.com/deepvariant/deepsomatic-case-studies/SEQC2-S1395-truth/high-confidence_sINDEL_sSNV_in_HC_regions_v1.2.1.merged.vcf.gz",
+      "cachePath": "build/somatic-sources/truth.vcf.gz",
+      "usedForData": true
+    },
+    "confidence.bed": {
+      "bytes": 16879606,
+      "sha256": "dedaa36a956d6121fb8fccd9ae1891a4fefd608ff31ab277cb55d7c96bb4a6c4",
+      "url": "https://storage.googleapis.com/deepvariant/deepsomatic-case-studies/SEQC2-S1395-truth/High-Confidence_Regions_v1.2.bed",
+      "cachePath": "build/somatic-sources/confidence.bed",
+      "usedForData": true
+    },
+    "pysam-0.23.3.tar.gz": {
+      "url": "https://files.pythonhosted.org/packages/7c/2b/1cf19890a0e4c73ad2672ce7eb485606c4bd2846eef2d892c078ab193c92/pysam-0.23.3.tar.gz",
+      "sha256": "9ebcb1f004b296fd139b103ec6fd7e415e80f89f194eb7d0d972ac6d11bbaf24",
+      "bytes": 4974405,
+      "cachePath": "build/somatic-sources/pysam-0.23.3.tar.gz",
+      "usedForData": false,
+      "purpose": "Pinned optional regeneration library source; installed pysam 0.23.3 is required for exact BAM/index writing."
+    }
+  },
+  "originalSamples": {
+    "tumor": {
+      "sample": "HCC1395",
+      "sourceBamUrl": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_T_1.bwa.dedup.bam",
+      "fullBamBytes": 80288336808,
+      "publishedFullBamMD5": "ddc0cf78eb1fa9a59eab284f904e4195",
+      "fullBamMD5Status": "Published NCBI WGS.md5 checksum; the full 67/80 GB BAM was not downloaded or rehashed. Every retrieved byte range is independently SHA256-pinned.",
+      "originalReadGroup": "WGS_NS_T_1",
+      "originalSnapshot": "provenance/original/tumor.bam"
+    },
+    "normal": {
+      "sample": "HCC1395BL",
+      "sourceBamUrl": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/seqc/Somatic_Mutation_WG/data/WGS/WGS_NS_N_1.bwa.dedup.bam",
+      "fullBamBytes": 67380504186,
+      "publishedFullBamMD5": "0efba0d0d81289de0fd9707bcb29bab4",
+      "fullBamMD5Status": "Published NCBI WGS.md5 checksum; the full 67/80 GB BAM was not downloaded or rehashed. Every retrieved byte range is independently SHA256-pinned.",
+      "originalReadGroup": "WGS_NS_N_1",
+      "originalSnapshot": "provenance/original/normal.bam"
+    }
+  },
+  "regionMappings": [
+    {
+      "originalContig": "chr21",
+      "start0": 10572000,
+      "end0": 10582000,
+      "contig": "chr21_10572001_10582000",
+      "flank": 2000
+    },
+    {
+      "originalContig": "chr21",
+      "start0": 21404500,
+      "end0": 21423500,
+      "contig": "chr21_21404501_21423500",
+      "flank": 2000
+    }
+  ],
+  "extraction": {
+    "tumor": {
+      "headerSource": "T-header-0-65535.bgzf",
+      "chunks": [
+        {
+          "source": "T-range-73781119305-73781839184.bgzf",
+          "virtualStart": 4835319434782966,
+          "virtualEnd": 4835362317894483
+        },
+        {
+          "source": "T-range-73782456070-73782534329.bgzf",
+          "virtualStart": 4835407041058255,
+          "virtualEnd": 4835407874901067
+        },
+        {
+          "source": "T-range-73783156924-73783222459.bgzf",
+          "virtualStart": 4835452972212910,
+          "virtualEnd": 4835452972228986
+        },
+        {
+          "source": "T-range-73794320255-73794385790.bgzf",
+          "virtualStart": 4836184572254467,
+          "virtualEnd": 4836184572282796
+        },
+        {
+          "source": "T-range-73817112847-73817178382.bgzf",
+          "virtualStart": 4837678307555147,
+          "virtualEnd": 4837678307562221
+        },
+        {
+          "source": "T-range-73836207949-73836273484.bgzf",
+          "virtualStart": 4838929724182723,
+          "virtualEnd": 4838929724194025
+        },
+        {
+          "source": "T-range-73854438442-73854503977.bgzf",
+          "virtualStart": 4840124477784503,
+          "virtualEnd": 4840124477800283
+        },
+        {
+          "source": "T-range-73872466810-73872532345.bgzf",
+          "virtualStart": 4841305984894446,
+          "virtualEnd": 4841305984907559
+        },
+        {
+          "source": "T-range-73952547779-73953155357.bgzf",
+          "virtualStart": 4846554171277811,
+          "virtualEnd": 4846589694603017
+        },
+        {
+          "source": "T-range-73953368042-73953433577.bgzf",
+          "virtualStart": 4846607928024510,
+          "virtualEnd": 4846607928038764
+        },
+        {
+          "source": "T-range-73953633760-73953699295.bgzf",
+          "virtualStart": 4846625342121373,
+          "virtualEnd": 4846625342133471
+        },
+        {
+          "source": "T-range-73953905206-73953970741.bgzf",
+          "virtualStart": 4846643131589751,
+          "virtualEnd": 4846643131602452
+        },
+        {
+          "source": "T-range-73954189665-73954255200.bgzf",
+          "virtualStart": 4846661773899179,
+          "virtualEnd": 4846661773910745
+        },
+        {
+          "source": "T-range-73956386981-73956452516.bgzf",
+          "virtualStart": 4846805777234597,
+          "virtualEnd": 4846805777250492
+        },
+        {
+          "source": "T-range-73958582471-73958648006.bgzf",
+          "virtualStart": 4846949660872492,
+          "virtualEnd": 4846949660884776
+        },
+        {
+          "source": "T-range-73960798581-73960864116.bgzf",
+          "virtualStart": 4847094895850356,
+          "virtualEnd": 4847094895856911
+        },
+        {
+          "source": "T-range-73963054137-73963119672.bgzf",
+          "virtualStart": 4847242715947418,
+          "virtualEnd": 4847242715962703
+        },
+        {
+          "source": "T-range-73980872708-73980938243.bgzf",
+          "virtualStart": 4848410473817823,
+          "virtualEnd": 4848410473837017
+        },
+        {
+          "source": "T-range-73998724973-73998790508.bgzf",
+          "virtualStart": 4849580439864618,
+          "virtualEnd": 4849580439881627
+        },
+        {
+          "source": "T-range-74016804188-74016869723.bgzf",
+          "virtualStart": 4850765279285527,
+          "virtualEnd": 4850765279305988
+        },
+        {
+          "source": "T-range-74170372485-74170438020.bgzf",
+          "virtualStart": 4860829531202051,
+          "virtualEnd": 4860829531216793
+        },
+        {
+          "source": "T-range-74310439829-74310516455.bgzf",
+          "virtualStart": 4870008984690890,
+          "virtualEnd": 4870009711501580
+        }
+      ]
+    },
+    "normal": {
+      "headerSource": "N-header-0-65535.bgzf",
+      "chunks": [
+        {
+          "source": "N-range-62000313346-62001174569.bgzf",
+          "virtualStart": 4063252535492067,
+          "virtualEnd": 4063304681703003
+        },
+        {
+          "source": "N-range-62001929395-62002006814.bgzf",
+          "virtualStart": 4063358444867539,
+          "virtualEnd": 4063359223666157
+        },
+        {
+          "source": "N-range-62002777447-62002842982.bgzf",
+          "virtualStart": 4063414022797867,
+          "virtualEnd": 4063414022810821
+        },
+        {
+          "source": "N-range-62014553244-62014631109.bgzf",
+          "virtualStart": 4064185761443372,
+          "virtualEnd": 4064186569469902
+        },
+        {
+          "source": "N-range-62039584239-62039649774.bgzf",
+          "virtualStart": 4065826192733900,
+          "virtualEnd": 4065826192744244
+        },
+        {
+          "source": "N-range-62063811141-62063876676.bgzf",
+          "virtualStart": 4067413926943418,
+          "virtualEnd": 4067413926962736
+        },
+        {
+          "source": "N-range-62086949760-62087026240.bgzf",
+          "virtualStart": 4068930339530611,
+          "virtualEnd": 4068931056774224
+        },
+        {
+          "source": "N-range-62109688016-62109753551.bgzf",
+          "virtualStart": 4070420513858998,
+          "virtualEnd": 4070420513874776
+        },
+        {
+          "source": "N-range-62209004504-62209778965.bgzf",
+          "virtualStart": 4076929319191392,
+          "virtualEnd": 4076975779393430
+        },
+        {
+          "source": "N-range-62210074924-62210152045.bgzf",
+          "virtualStart": 4076999470259673,
+          "virtualEnd": 4077000229521138
+        },
+        {
+          "source": "N-range-62210433888-62210499423.bgzf",
+          "virtualStart": 4077022995313827,
+          "virtualEnd": 4077022995329610
+        },
+        {
+          "source": "N-range-62210786605-62210852140.bgzf",
+          "virtualStart": 4077046110974437,
+          "virtualEnd": 4077046110984711
+        },
+        {
+          "source": "N-range-62211151324-62211216859.bgzf",
+          "virtualStart": 4077070013176305,
+          "virtualEnd": 4077070013192864
+        },
+        {
+          "source": "N-range-62213981558-62214047093.bgzf",
+          "virtualStart": 4077255495388945,
+          "virtualEnd": 4077255495404299
+        },
+        {
+          "source": "N-range-62216848585-62216914120.bgzf",
+          "virtualStart": 4077443388881257,
+          "virtualEnd": 4077443388895445
+        },
+        {
+          "source": "N-range-62219675685-62219752677.bgzf",
+          "virtualStart": 4077628665740877,
+          "virtualEnd": 4077629416543631
+        },
+        {
+          "source": "N-range-62222502569-62222568104.bgzf",
+          "virtualStart": 4077813928386720,
+          "virtualEnd": 4077813928400823
+        },
+        {
+          "source": "N-range-62244975296-62245040831.bgzf",
+          "virtualStart": 4079286701022589,
+          "virtualEnd": 4079286701038602
+        },
+        {
+          "source": "N-range-62267386500-62267463453.bgzf",
+          "virtualStart": 4080755441714707,
+          "virtualEnd": 4080756189961255
+        },
+        {
+          "source": "N-range-62291094297-62291159832.bgzf",
+          "virtualStart": 4082309155903947,
+          "virtualEnd": 4082309155913276
+        },
+        {
+          "source": "N-range-62291106069-62291171604.bgzf",
+          "virtualStart": 4082309927338018,
+          "virtualEnd": 4082309927356540
+        },
+        {
+          "source": "N-range-62479716891-62479782426.bgzf",
+          "virtualStart": 4094670726186332,
+          "virtualEnd": 4094670726198255
+        },
+        {
+          "source": "N-range-62668690933-62668756468.bgzf",
+          "virtualStart": 4107055329023308,
+          "virtualEnd": 4107055329039947
+        }
+      ]
+    }
+  },
+  "datasets": {
+    "hcc1395": {
+      "name": "SEQC2 HCC1395 / HCC1395BL real matched tumour-normal windows",
+      "organism": "Homo sapiens",
+      "assembly": "GRCh38/hg38 primary chr21",
+      "tumorSample": "HCC1395",
+      "normalSample": "HCC1395BL",
+      "tumorBam": "hcc1395/tumor.bam",
+      "tumorBai": "hcc1395/tumor.bam.bai",
+      "normalBam": "hcc1395/normal.bam",
+      "normalBai": "hcc1395/normal.bam.bai",
+      "reference": "hcc1395/reference.fa",
+      "fai": "hcc1395/reference.fa.fai",
+      "regionsBed": "hcc1395/regions.bed",
+      "extractedRegionsBed": "hcc1395/extracted-regions.bed",
+      "truth": "hcc1395/truth.vcf",
+      "truthSnv": "hcc1395/truth-snv.vcf",
+      "truthIndel": "hcc1395/truth-indel.vcf",
+      "highConfidenceBed": "hcc1395/confidence.bed",
+      "referenceLength": 29000,
+      "observations": {
+        "tumor": {
+          "records": 13130,
+          "pairs": 6565,
+          "pairsPerContig": {
+            "chr21_10572001_10582000": 3318,
+            "chr21_21404501_21423500": 3247
+          },
+          "duplicateRecords": 1086,
+          "qcFailRecords": 0,
+          "mapqCounts": {
+            "0": 36,
+            "1": 2,
+            "3": 9,
+            "7": 6,
+            "9": 2,
+            "10": 1,
+            "12": 5,
+            "13": 4,
+            "14": 1,
+            "15": 4,
+            "16": 1,
+            "18": 2,
+            "20": 2,
+            "21": 12,
+            "22": 1,
+            "24": 5,
+            "25": 25,
+            "27": 112,
+            "30": 14,
+            "31": 5,
+            "32": 1,
+            "33": 18,
+            "36": 4,
+            "37": 9,
+            "39": 16,
+            "40": 791,
+            "41": 16,
+            "42": 24,
+            "43": 24,
+            "44": 16,
+            "45": 25,
+            "46": 27,
+            "47": 46,
+            "48": 161,
+            "49": 157,
+            "50": 166,
+            "51": 165,
+            "52": 118,
+            "53": 93,
+            "54": 53,
+            "55": 32,
+            "56": 26,
+            "57": 88,
+            "58": 28,
+            "59": 28,
+            "60": 10749
+          },
+          "readLengthCounts": {
+            "53": 86,
+            "54": 140,
+            "55": 106,
+            "56": 165,
+            "57": 187,
+            "58": 187,
+            "59": 162,
+            "60": 155,
+            "61": 139,
+            "62": 156,
+            "63": 133,
+            "64": 152,
+            "65": 143,
+            "66": 119,
+            "67": 124,
+            "68": 106,
+            "69": 112,
+            "70": 129,
+            "71": 120,
+            "72": 140,
+            "73": 120,
+            "74": 128,
+            "75": 127,
+            "76": 119,
+            "77": 130,
+            "78": 146,
+            "79": 122,
+            "80": 107,
+            "81": 120,
+            "82": 136,
+            "83": 153,
+            "84": 131,
+            "85": 125,
+            "86": 123,
+            "87": 130,
+            "88": 153,
+            "89": 128,
+            "90": 129,
+            "91": 124,
+            "92": 107,
+            "93": 146,
+            "94": 111,
+            "95": 127,
+            "96": 101,
+            "97": 122,
+            "98": 123,
+            "99": 110,
+            "100": 98,
+            "101": 108,
+            "102": 108,
+            "103": 115,
+            "104": 94,
+            "105": 121,
+            "106": 111,
+            "107": 112,
+            "108": 138,
+            "109": 101,
+            "110": 125,
+            "111": 106,
+            "112": 114,
+            "113": 113,
+            "114": 127,
+            "115": 114,
+            "116": 95,
+            "117": 99,
+            "118": 118,
+            "119": 109,
+            "120": 113,
+            "121": 85,
+            "122": 95,
+            "123": 95,
+            "124": 104,
+            "125": 109,
+            "126": 94,
+            "127": 89,
+            "128": 116,
+            "129": 102,
+            "130": 107,
+            "131": 117,
+            "132": 85,
+            "133": 109,
+            "134": 107,
+            "135": 97,
+            "136": 127,
+            "137": 100,
+            "138": 95,
+            "139": 106,
+            "140": 101,
+            "141": 114,
+            "142": 101,
+            "143": 126,
+            "144": 92,
+            "145": 107,
+            "146": 98,
+            "147": 112,
+            "148": 147,
+            "149": 188,
+            "150": 561,
+            "151": 946
+          },
+          "cigarOperations": {
+            "0": 13495,
+            "1": 213,
+            "2": 152,
+            "4": 139
+          },
+          "readGroups": [
+            {
+              "ID": "WGS_NS_T_1",
+              "LB": "na",
+              "PL": "ILLUMINA",
+              "SM": "WGS_NS_T_1",
+              "PU": "na",
+              "CN": "na",
+              "DS": "WGS_NS_T_1.bwa.bam"
+            }
+          ]
+        },
+        "normal": {
+          "records": 16822,
+          "pairs": 8411,
+          "pairsPerContig": {
+            "chr21_10572001_10582000": 4149,
+            "chr21_21404501_21423500": 4262
+          },
+          "duplicateRecords": 1202,
+          "qcFailRecords": 0,
+          "mapqCounts": {
+            "0": 44,
+            "1": 1,
+            "2": 2,
+            "3": 18,
+            "5": 4,
+            "6": 3,
+            "7": 3,
+            "8": 4,
+            "9": 11,
+            "11": 2,
+            "12": 9,
+            "13": 8,
+            "14": 1,
+            "15": 9,
+            "16": 1,
+            "17": 1,
+            "18": 5,
+            "19": 10,
+            "21": 8,
+            "24": 11,
+            "25": 41,
+            "27": 125,
+            "28": 2,
+            "29": 2,
+            "30": 17,
+            "31": 3,
+            "33": 24,
+            "35": 1,
+            "36": 8,
+            "37": 9,
+            "38": 3,
+            "39": 23,
+            "40": 940,
+            "41": 14,
+            "42": 22,
+            "43": 30,
+            "44": 15,
+            "45": 37,
+            "46": 41,
+            "47": 61,
+            "48": 223,
+            "49": 204,
+            "50": 201,
+            "51": 259,
+            "52": 180,
+            "53": 98,
+            "54": 71,
+            "55": 58,
+            "56": 32,
+            "57": 105,
+            "58": 33,
+            "59": 34,
+            "60": 13751
+          },
+          "readLengthCounts": {
+            "53": 147,
+            "54": 143,
+            "55": 160,
+            "56": 268,
+            "57": 309,
+            "58": 248,
+            "59": 222,
+            "60": 186,
+            "61": 183,
+            "62": 176,
+            "63": 170,
+            "64": 187,
+            "65": 173,
+            "66": 162,
+            "67": 179,
+            "68": 178,
+            "69": 147,
+            "70": 156,
+            "71": 187,
+            "72": 172,
+            "73": 210,
+            "74": 170,
+            "75": 165,
+            "76": 171,
+            "77": 159,
+            "78": 175,
+            "79": 159,
+            "80": 189,
+            "81": 171,
+            "82": 184,
+            "83": 183,
+            "84": 160,
+            "85": 159,
+            "86": 184,
+            "87": 169,
+            "88": 154,
+            "89": 172,
+            "90": 145,
+            "91": 162,
+            "92": 141,
+            "93": 174,
+            "94": 156,
+            "95": 139,
+            "96": 117,
+            "97": 140,
+            "98": 147,
+            "99": 144,
+            "100": 156,
+            "101": 165,
+            "102": 139,
+            "103": 130,
+            "104": 131,
+            "105": 143,
+            "106": 155,
+            "107": 115,
+            "108": 129,
+            "109": 146,
+            "110": 154,
+            "111": 124,
+            "112": 121,
+            "113": 134,
+            "114": 158,
+            "115": 134,
+            "116": 134,
+            "117": 139,
+            "118": 142,
+            "119": 147,
+            "120": 115,
+            "121": 115,
+            "122": 119,
+            "123": 114,
+            "124": 139,
+            "125": 107,
+            "126": 139,
+            "127": 101,
+            "128": 141,
+            "129": 137,
+            "130": 124,
+            "131": 164,
+            "132": 114,
+            "133": 104,
+            "134": 129,
+            "135": 128,
+            "136": 142,
+            "137": 126,
+            "138": 132,
+            "139": 156,
+            "140": 106,
+            "141": 125,
+            "142": 129,
+            "143": 128,
+            "144": 134,
+            "145": 108,
+            "146": 120,
+            "147": 155,
+            "148": 172,
+            "149": 244,
+            "150": 777,
+            "151": 1130
+          },
+          "cigarOperations": {
+            "0": 17252,
+            "1": 272,
+            "2": 158,
+            "4": 214
+          },
+          "readGroups": [
+            {
+              "ID": "WGS_NS_N_1",
+              "LB": "na",
+              "PL": "ILLUMINA",
+              "SM": "WGS_NS_N_1",
+              "PU": "na",
+              "CN": "na",
+              "DS": "WGS_NS_N_1.bwa.bam"
+            }
+          ]
+        }
+      },
+      "truthVariants": [
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4679,
+          "ref": "A",
+          "alt": "G",
+          "originalContig": "chr21",
+          "originalPosition": 10576679,
+          "filter": "PASS;HighConf"
+        },
+        {
+          "contig": "chr21_10572001_10582000",
+          "position": 4939,
+          "ref": "CA",
+          "alt": "C",
+          "originalContig": "chr21",
+          "originalPosition": 10576939,
+          "filter": "PASS;HighConf"
+        },
+        {
+          "contig": "chr21_21404501_21423500",
+          "position": 5025,
+          "ref": "GA",
+          "alt": "G",
+          "originalContig": "chr21",
+          "originalPosition": 21409525,
+          "filter": "PASS;HighConf"
+        },
+        {
+          "contig": "chr21_21404501_21423500",
+          "position": 14045,
+          "ref": "C",
+          "alt": "T",
+          "originalContig": "chr21",
+          "originalPosition": 21418545,
+          "filter": "PASS;MedConf"
+        }
+      ],
+      "readSource": "Real biological WGS paired reads from NCBI SEQC2 matched tumour HCC1395 and normal HCC1395BL. Complete primary pairs were selected and coordinates rebased consistently; no synthetic or spiked variants or reads.",
+      "ploidy": 2,
+      "ploidyNote": "Ploidy 2 is a caller model/default, not an assertion of diploid tumour copy number.",
+      "truthCaveat": "SEQC2 truth aggregates many replicates. The low-frequency truth SNV chr21:21418545 has 0/51 tumour observations at MQ20/BQ20 in this NS_T_1 subset, so its absence does not establish a numerical port failure."
+    }
+  },
+  "regeneration": {
+    "script": "scripts/fetch-somatic-test-data.py",
+    "python": "3.10+; prepared with Python 3.12.14",
+    "requirements": [
+      "pysam==0.23.3 (bundled SAMtools/HTSlib 1.21)"
+    ],
+    "dependencyPins": "provenance/pysam-source.json",
+    "cache": "build/somatic-sources",
+    "sourceBytes": 64622096,
+    "commands": [
+      "python3 scripts/fetch-somatic-test-data.py --verify",
+      "python3 scripts/fetch-somatic-test-data.py --fetch-sources",
+      "python3 -m pip install pysam==0.23.3",
+      "python3 scripts/fetch-somatic-test-data.py --regenerate"
+    ],
+    "files": {
+      "scripts/fetch-somatic-test-data.py": {
+        "bytes": 17380,
+        "sha256": "40106ee5eb2b0de78f5a8fe9e0086cbd1a4ebbd48ddddb122b2389465187e2ab"
+      }
+    },
+    "determinism": "Raw BGZF source ranges and headers are pinned. Final BAM preparation changes coordinates only and passes exact regeneration with pysam 0.23.3. --regenerate replaces files only after all generated SHA256 values match."
+  },
+  "provenance": {
+    "readIntegrityAudit": "provenance/read-integrity-audit.json",
+    "originalBamMd5": "provenance/WGS.md5",
+    "dataStudy": "SRP162370",
+    "dataPublication": "https://doi.org/10.1038/s41587-021-00993-6",
+    "officialProject": "https://sites.google.com/view/seqc2/home/data-analysis/high-confidence-somatic-snv-and-indel-v1-2",
+    "truthMirrorDocumentation": "https://github.com/google/deepsomatic/blob/r1.10/docs/deepsomatic-case-study-wgs.md",
+    "publicSourceNotes": "Public research cell-line data, not a clinical patient sample. No assertion that all upstream data has the same license as this software project. Preserve upstream attribution and provider terms."
+  },
+  "files": {
+    "README.md": {
+      "bytes": 9130,
+      "sha256": "25c7da3d589e9cf6cefce36014861896b7271805156475fa669411b23f60e83d",
+      "generated": false
+    },
+    "hcc1395/confidence.bed": {
+      "bytes": 313,
+      "sha256": "47a9fe9c9fc33462afd60a19b4481ab494dd37fc8112a41e01e24addc755ec41",
+      "generated": true
+    },
+    "hcc1395/extracted-regions.bed": {
+      "bytes": 64,
+      "sha256": "b4907d11e57d8d1f75ac4f15a623c075403ad649556202470d81a3b0309eff6b",
+      "generated": true
+    },
+    "hcc1395/normal.bam": {
+      "bytes": 854997,
+      "sha256": "3d5cafbd0d6f2a7d27adc5c646355ffb8ea8c17a57c7f4bd11b07ae5d16ca754",
+      "generated": true
+    },
+    "hcc1395/normal.bam.bai": {
+      "bytes": 22440,
+      "sha256": "1ee175dcec5aa8d327cc88cb6388fc14e6855988ea0734df0d3209155d05b126",
+      "generated": true
+    },
+    "hcc1395/reference.fa": {
+      "bytes": 29534,
+      "sha256": "50aff973f9aae16a477245dac3a6f524f96f1106ab13b0b6ba933100353a6325",
+      "generated": true
+    },
+    "hcc1395/reference.fa.fai": {
+      "bytes": 81,
+      "sha256": "76e4501f4fcf97c5fb03faf07c0c3dda7ce6238dbd8ea8dacd402863591026a7",
+      "generated": true
+    },
+    "hcc1395/regions.bed": {
+      "bytes": 69,
+      "sha256": "4963073890341c3bb57a6d165e8e3dad8cec2fddec1aa3644c7bc3b66c3f96a6",
+      "generated": true
+    },
+    "hcc1395/truth-indel.vcf": {
+      "bytes": 11439,
+      "sha256": "f162d788f0a93a54cddf616c8fa57c9744f6b817f0fb515c854fe8cf624778ee",
+      "generated": true
+    },
+    "hcc1395/truth-snv.vcf": {
+      "bytes": 11631,
+      "sha256": "3b8769d31a85bdb14149ec66d6ec3fc80aae965cb2c2a76b6f275b07dabbbafe",
+      "generated": true
+    },
+    "hcc1395/truth.vcf": {
+      "bytes": 14510,
+      "sha256": "2fba5998446b581836bc3bab0f2920dd91d1a65719a2808dc046ab2bc1fa6fe8",
+      "generated": true
+    },
+    "hcc1395/tumor.bam": {
+      "bytes": 678804,
+      "sha256": "040581af8cba05c6c2ad7d5647cb0608565b3853a9aefd8e9e2e14da3b998e10",
+      "generated": true
+    },
+    "hcc1395/tumor.bam.bai": {
+      "bytes": 22456,
+      "sha256": "186611a32a81c617d30a1e4378dbc2bd182704ec9951159fe2f73984998fdc81",
+      "generated": true
+    },
+    "provenance/WGS.md5": {
+      "bytes": 3066,
+      "sha256": "b29be139e7483245fd35386f0730b3e42db53bd06f121624858b5786bc34f915",
+      "generated": false
+    },
+    "provenance/normal-original-header.sam": {
+      "bytes": 109680,
+      "sha256": "d33ac269d0fcf8eeeea975c9cfaad2a72a9b23878d4b3d181f1f6d3d13607b6d",
+      "generated": true
+    },
+    "provenance/observations.json": {
+      "bytes": 8174,
+      "sha256": "e756199ab770447f67b303ec59748abf4b9ad5b0e0622c2504e30c4727438a54",
+      "generated": true
+    },
+    "provenance/original-truth-records.tsv": {
+      "bytes": 5893,
+      "sha256": "2ad8e1f6ef16910b195d348ca53e4e1d03565d581efe8454e657bc2f207605b5",
+      "generated": true
+    },
+    "provenance/original/normal.bam": {
+      "bytes": 902191,
+      "sha256": "5e2561126eb4e450a0607a1c143deb3e6cc4d669e08fb364d5b88ad267637d79",
+      "generated": true
+    },
+    "provenance/original/normal.bam.bai": {
+      "bytes": 32848,
+      "sha256": "17fa70f8fca5dd655ce5d17d4fb669e3619ef72c5785eb4b7b1bd46c328e0748",
+      "generated": true
+    },
+    "provenance/original/tumor.bam": {
+      "bytes": 718042,
+      "sha256": "4c760c1cddfc23c514d197f763809cb6a107dffb3b782717fc366165ae84b0dc",
+      "generated": true
+    },
+    "provenance/original/tumor.bam.bai": {
+      "bytes": 32848,
+      "sha256": "aacb5b4c736890ace6f1b0e5e3c5970a4cb6a1b9dff4cbbd8e87c557d8e8aa8a",
+      "generated": true
+    },
+    "provenance/pysam-source.json": {
+      "bytes": 774,
+      "sha256": "4310c155966c4e3a7b1f1d9c01e9c480af910f69a05852c112804374fdcaeae9",
+      "generated": false
+    },
+    "provenance/read-integrity-audit.json": {
+      "bytes": 4056,
+      "sha256": "b7cafd4d73d671420b8ae270e0bb91492ddd7d68caa85ce3e9398a47cb8f64c8",
+      "generated": false
+    },
+    "provenance/tumor-original-header.sam": {
+      "bytes": 109680,
+      "sha256": "33dd9f54eb55909849ae2972b0f3c837f7b5e35264445a26a81c21559eb3f0bc",
+      "generated": true
+    }
+  }
+}

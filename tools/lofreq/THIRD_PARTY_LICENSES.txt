@@ -1,0 +1,20 @@
+LoFreq 2.1.5 is distributed under the MIT licence; see LICENSE. Its source
+archive includes the original per-file attributions, samtools-derived code,
+the somatic Python workflow, DCDFLIB routines and uthash.
+
+LICENSE.uthash contains the bundled uthash notice. NOTICE.cdflib preserves
+the complete upstream DCDFLIB documentation and attribution.
+
+HTSlib 1.24: LICENSE.htslib. The HTSlib source archive includes htscodecs;
+its notice is retained separately in LICENSE.htscodecs.
+zlib 1.3.1: LICENSE.zlib.
+Emscripten 3.1.64 runtime: LICENSE.emscripten.
+OpenLibm 0.8.8 extended-range exp/log10 routines: LICENSE.openlibm and the
+original notices in the complete source archive. Only the appropriate
+ld80/ld128 exp/log10 routines and polynomial helper are linked.
+
+The source archives, exact source checksums, portability patch and build
+recipe accompany the distribution. The variant-calling algorithms remain
+upstream LoFreq. The patch changes internal process dispatch and makes
+numerical exception detection portable; the extended-range mathematical
+functions come from upstream OpenLibm.

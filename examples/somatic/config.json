@@ -1,0 +1,195 @@
+{
+  "tools": {
+    "somaticsniper": {
+      "label": "SomaticSniper",
+      "description": "Calls somatic SNVs from tumour and normal BAMs. This archived upstream caller does not call indels.",
+      "commands": {
+        "somatic": {
+          "label": "Call somatic SNVs",
+          "description": "The tumour BAM comes before the normal BAM.",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "tumor.bam",
+            "normal.bam",
+            "sniper.vcf"
+          ],
+          "outputs": [
+            "sniper.vcf"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Version",
+          "description": "Show the upstream version. Run with an empty argument array for the full usage message (which exits with status 1).",
+          "args": [
+            "-v"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    },
+    "lofreq": {
+      "label": "LoFreq",
+      "description": "Runs the upstream variant calculations in WebAssembly. The somatic workflow uses one processing thread; upstream labels it experimental.",
+      "commands": {
+        "somatic": {
+          "label": "Call somatic SNVs",
+          "description": "Compare the tumour with its matched normal. LoFreq describes its somatic workflow as experimental.",
+          "args": [
+            "somatic",
+            "-n",
+            "normal.bam",
+            "-t",
+            "tumor.bam",
+            "-f",
+            "reference.fa",
+            "-l",
+            "regions.bed",
+            "-o",
+            "lofreq_",
+            "--threads",
+            "1"
+          ],
+          "outputs": [
+            "lofreq_somatic_final.snvs.vcf.gz",
+            "lofreq_somatic_final.indels.vcf.gz"
+          ],
+          "outputDirectories": []
+        },
+        "tumor-indelqual": {
+          "label": "Add tumour indel qualities",
+          "description": "Prepare a separate BAM for indel calling; the original BAM is retained.",
+          "args": [
+            "indelqual",
+            "--dindel",
+            "-f",
+            "reference.fa",
+            "-o",
+            "tumor.indel.bam",
+            "tumor.bam"
+          ],
+          "outputs": [
+            "tumor.indel.bam"
+          ],
+          "outputDirectories": []
+        },
+        "normal-indelqual": {
+          "label": "Add normal indel qualities",
+          "description": "Prepare the matched normal for indel calling.",
+          "args": [
+            "indelqual",
+            "--dindel",
+            "-f",
+            "reference.fa",
+            "-o",
+            "normal.indel.bam",
+            "normal.bam"
+          ],
+          "outputs": [
+            "normal.indel.bam"
+          ],
+          "outputDirectories": []
+        },
+        "tumor-index": {
+          "label": "Index the prepared tumour BAM",
+          "description": "Run this after adding tumour indel qualities.",
+          "args": [
+            "index",
+            "tumor.indel.bam"
+          ],
+          "outputs": [
+            "tumor.indel.bam.bai"
+          ],
+          "outputDirectories": []
+        },
+        "normal-index": {
+          "label": "Index the prepared normal BAM",
+          "description": "Run this after adding normal indel qualities.",
+          "args": [
+            "index",
+            "normal.indel.bam"
+          ],
+          "outputs": [
+            "normal.indel.bam.bai"
+          ],
+          "outputDirectories": []
+        },
+        "somatic-indels": {
+          "label": "Call somatic SNVs and indels",
+          "description": "First run both indel-quality commands and both indexing commands above.",
+          "args": [
+            "somatic",
+            "-n",
+            "normal.indel.bam",
+            "-t",
+            "tumor.indel.bam",
+            "-f",
+            "reference.fa",
+            "-l",
+            "regions.bed",
+            "-o",
+            "lofreq_indels_",
+            "--threads",
+            "1",
+            "--call-indels"
+          ],
+          "outputs": [
+            "lofreq_indels_somatic_final.snvs.vcf.gz",
+            "lofreq_indels_somatic_final.indels.vcf.gz"
+          ],
+          "outputDirectories": []
+        },
+        "call": {
+          "label": "Call variants in the tumour",
+          "description": "This single-sample command does not distinguish somatic from germline variants.",
+          "args": [
+            "call",
+            "-f",
+            "reference.fa",
+            "-l",
+            "regions.bed",
+            "-o",
+            "tumor.vcf",
+            "tumor.bam"
+          ],
+          "outputs": [
+            "tumor.vcf"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Somatic command help",
+          "description": "Show the somatic workflow arguments.",
+          "args": [
+            "somatic",
+            "--help"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    }
+  },
+  "datasets": {
+    "hcc1395": {
+      "label": "Human tumour/normal (HCC1395 / HCC1395BL)",
+      "description": "Real matched tumour and normal reads from two small regions. Reference and alignment coordinates are rebased together; original genome coordinates and selection are recorded in the data documentation.",
+      "path": "../../datasets/somatic/hcc1395/",
+      "files": [
+        "reference.fa",
+        "reference.fa.fai",
+        "tumor.bam",
+        "tumor.bam.bai",
+        "normal.bam",
+        "normal.bam.bai",
+        "regions.bed",
+        "truth.vcf",
+        "confidence.bed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "tool": "lofreq",
+  "version": "2.1.5",
+  "revision": "8fe42b04dcd9775fb618d8004649421c0632b35c",
+  "archive": "lofreq-2.1.5.tar.gz",
+  "url": "https://codeload.github.com/CSB5/lofreq/tar.gz/refs/tags/v2.1.5",
+  "sha256": "da85ec4baca21e20a55b5f9ee491cdda2986d0dc672177007a2c70ca1d804fe7",
+  "emscripten": "3.1.64",
+  "dependencies": {
+    "htslib": {
+      "version": "1.24",
+      "revision": "1.24",
+      "archive": "htslib-1.24.tar.bz2",
+      "url": "https://github.com/samtools/htslib/releases/download/1.24/htslib-1.24.tar.bz2",
+      "sha256": "28a8de191381c7a97a35675ceac76fa1ea95e7b678d6a2e9d600a7874e4077de",
+      "includes": "Bundled htscodecs sources and license"
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "revision": "v1.3.1",
+      "archive": "zlib-1.3.1.tar.gz",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    },
+    "openlibm": {
+      "version": "0.8.8",
+      "revision": "v0.8.8",
+      "archive": "openlibm-0.8.8.tar.gz",
+      "url": "https://codeload.github.com/JuliaMath/openlibm/tar.gz/refs/tags/v0.8.8",
+      "sha256": "721bab18ff37160fd9e903eb211ff26fdee38c3d0041d556b07d76089c435d17"
+    }
+  },
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.uthash",
+    "NOTICE.cdflib",
+    "LICENSE.htslib",
+    "LICENSE.htscodecs",
+    "LICENSE.zlib",
+    "LICENSE.emscripten",
+    "THIRD_PARTY_LICENSES.txt",
+    "LICENSE.openlibm"
+  ]
+}

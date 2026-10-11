@@ -11,6 +11,13 @@ directory under `tools/`.
 - FreeBayes: Erik Garrison and contributors; upstream MIT. Its linked
   dependencies have additional terms, including GPL-2.0-or-later code in the
   vcflib Smith-Waterman library. Source: https://github.com/freebayes/freebayes
+- SomaticSniper: David Larson and contributors; MIT.
+  Source: https://github.com/genome/somatic-sniper
+  Its package includes the original SAMtools 0.1.6 sources and notices, and zlib.
+- LoFreq: Andreas Wilm and contributors; MIT. Source: https://github.com/CSB5/lofreq
+  Its package includes HTSlib, zlib and OpenLibm sources and their individual
+  notices. The browser somatic coordinator is derived from the upstream Python
+  workflow; variant calculations remain in the upstream C implementation.
 - seqtk: Heng Li and contributors; MIT. Source: https://github.com/lh3/seqtk
 - AdapterRemoval: Mikkel Schubert and contributors; GPL-3.0-or-later.
   Source: https://github.com/MikkelSchubert/adapterremoval

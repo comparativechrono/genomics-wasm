@@ -5,8 +5,9 @@ DESeq2. It contains 63,677 genes and eight human samples from four paired cell
 lines. Its biological replicates are independent of the read subsets below.
 
 These are small subsets of public sequencing data. They test whether a
-WebAssembly build reproduces the native program's results. They are not
-biological truth datasets and do not establish variant-calling accuracy.
+WebAssembly build reproduces the native program's results. The alignment and
+germline-caller subsets listed below have no truth calls and do not establish
+variant-calling accuracy.
 
 | Dataset | Reference | Paired FASTQ records | Fixed BAM records |
 | --- | --- | ---: | ---: |
@@ -200,3 +201,12 @@ selected to exercise adapter and quality trimming, and 256 real human read
 pairs recovered from a public BAM. The human qualities retain their prior
 processing; they are not presented as raw instrument qualities. Both datasets
 include plain and gzip FASTQ, exact provenance and reproducible preparation.
+
+## Somatic variants
+
+The [somatic fixtures](somatic/README.md) contain real HCC1395 tumour and
+HCC1395BL normal reads from two chromosome 21 regions, with the matching
+reference sequence and published SEQC2 reference calls. Coordinates are shifted
+to short local contigs; the original coordinates and every transformation are
+recorded. Complete mapped read pairs are retained. Native-equivalence tests and
+comparison with the published calls are separate checks.

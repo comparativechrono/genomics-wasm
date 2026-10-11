@@ -1,0 +1,48 @@
+--- a/src/exe/bam-somaticsniper/main.c
++++ b/src/exe/bam-somaticsniper/main.c
+@@ -98,13 +98,17 @@
+         }
+     }
+ 
+-    if (optind == argc) {
++    if (argc - optind < 3) {
+         usage(argv[0], d);
+         sniper_maqcns_destroy(d->c); free(d);
+         return 1;
+     }
+     if (fn_fa) {
+         d->fai = fai_load(fn_fa);
++        if (!d->fai) {
++            fprintf(stderr, "Unable to load reference FASTA: %s\n", fn_fa);
++            return 1;
++        }
+     }
+     else {
+         fprintf(stderr, "You MUST specify a reference sequence. It isn't optional.\n");
+@@ -128,10 +132,26 @@
+     fp1 = (strcmp(argv[optind], "-") == 0)? bam_dopen(fileno(stdin), "r") : bam_open(argv[optind], "r");
+     fprintf(stderr, "Normal bam is %s\n", argv[optind+1]);
+     fprintf(stderr, "Tumor bam is %s\n", argv[optind]);
++    if (!fp1) {
++        fprintf(stderr, "Unable to open tumor BAM: %s\n", argv[optind]);
++        return 1;
++    }
+     d->h1 = bam_header_read(fp1);
++    if (!d->h1) {
++        fprintf(stderr, "Unable to read tumor BAM header: %s\n", argv[optind]);
++        return 1;
++    }
+     sam_header_parse_rg(d->h1);
+     fp2 = bam_open(argv[optind+1], "r");
++    if (!fp2) {
++        fprintf(stderr, "Unable to open normal BAM: %s\n", argv[optind+1]);
++        return 1;
++    }
+     d->h2 = bam_header_read(fp2);
++    if (!d->h2) {
++        fprintf(stderr, "Unable to read normal BAM header: %s\n", argv[optind+1]);
++        return 1;
++    }
+     sam_header_parse_rg(d->h2);
+     FILE* snp_fh = fopen(argv[optind+2], "w");
+     /* this will exit if the format name is invalid */

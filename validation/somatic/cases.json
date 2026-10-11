@@ -1,0 +1,1610 @@
+{
+  "schema": 1,
+  "datasets": [
+    "hcc1395"
+  ],
+  "tools": {
+    "somaticsniper": {
+      "executableAliases": [
+        "somaticsniper",
+        "worker.mjs"
+      ],
+      "cases": [
+        {
+          "id": "default",
+          "kind": "success",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "NORMAL",
+                "TUMOR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "no-priors",
+          "kind": "success",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "-p",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "NORMAL",
+                "TUMOR"
+              ]
+            }
+          ],
+          "effect": "default"
+        },
+        {
+          "id": "joint-priors",
+          "kind": "success",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "-J",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "NORMAL",
+                "TUMOR"
+              ]
+            }
+          ],
+          "effect": "default"
+        },
+        {
+          "id": "no-loh",
+          "kind": "success",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "-L",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "NORMAL",
+                "TUMOR"
+              ]
+            }
+          ],
+          "effect": "default"
+        },
+        {
+          "id": "high-score",
+          "kind": "success",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "-Q",
+            "100",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "NORMAL",
+                "TUMOR"
+              ]
+            }
+          ],
+          "effect": "default"
+        },
+        {
+          "id": "mapping-quality",
+          "kind": "success",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "-q",
+            "60",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "NORMAL",
+                "TUMOR"
+              ]
+            }
+          ],
+          "effect": "default"
+        },
+        {
+          "id": "sample-names",
+          "kind": "success",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "-n",
+            "MATCHED_NORMAL",
+            "-t",
+            "TUMOUR",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "MATCHED_NORMAL",
+                "TUMOUR"
+              ]
+            }
+          ],
+          "equivalentTo": "default"
+        },
+        {
+          "id": "repeat",
+          "kind": "repeat",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minSomatic": 1,
+              "expectedSamples": [
+                "NORMAL",
+                "TUMOR"
+              ]
+            }
+          ],
+          "baseline": "default"
+        },
+        {
+          "id": "missing-tumour",
+          "kind": "failure",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "reference.fa",
+            "missing.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "outputs": [],
+          "diagnosticRegex": "Unable to open tumor BAM: missing.bam",
+          "nativeLimitation": "Unchanged upstream dereferences missing BAMs or loops on missing reference; this case checks only clean port error handling."
+        },
+        {
+          "id": "missing-reference",
+          "kind": "failure",
+          "args": [
+            "-F",
+            "vcf",
+            "-f",
+            "missing.fa",
+            "tumor.bam",
+            "normal.bam",
+            "calls.vcf"
+          ],
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "outputs": [],
+          "diagnosticRegex": "Unable to load reference FASTA: missing.fa",
+          "nativeLimitation": "Unchanged upstream dereferences missing BAMs or loops on missing reference; this case checks only clean port error handling."
+        },
+        {
+          "id": "usage",
+          "kind": "failure",
+          "args": [],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "outputs": [],
+          "diagnosticRegex": "Required Option"
+        }
+      ]
+    },
+    "lofreq": {
+      "executableAliases": [
+        "lofreq",
+        "worker.mjs"
+      ],
+      "cases": [
+        {
+          "id": "indelqual-tumor",
+          "kind": "success",
+          "args": [
+            "indelqual",
+            "--dindel",
+            "-f",
+            "reference.fa",
+            "-o",
+            "tumor.iq.bam",
+            "tumor.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "tumor.iq.bam"
+          ],
+          "bams": [
+            {
+              "path": "tumor.iq.bam",
+              "original": "tumor.bam"
+            }
+          ]
+        },
+        {
+          "id": "index-tumor",
+          "kind": "success",
+          "args": [
+            "index",
+            "tumor.iq.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "tumor.iq.bam.bai"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            }
+          ],
+          "indexes": [
+            {
+              "path": "tumor.iq.bam.bai",
+              "bam": "tumor.iq.bam"
+            }
+          ]
+        },
+        {
+          "id": "indelqual-normal",
+          "kind": "success",
+          "args": [
+            "indelqual",
+            "--dindel",
+            "-f",
+            "reference.fa",
+            "-o",
+            "normal.iq.bam",
+            "normal.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "normal.iq.bam"
+          ],
+          "bams": [
+            {
+              "path": "normal.iq.bam",
+              "original": "normal.bam"
+            }
+          ]
+        },
+        {
+          "id": "index-normal",
+          "kind": "success",
+          "args": [
+            "index",
+            "normal.iq.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "normal.iq.bam.bai"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            }
+          ],
+          "indexes": [
+            {
+              "path": "normal.iq.bam.bai",
+              "bam": "normal.iq.bam"
+            }
+          ]
+        },
+        {
+          "id": "indelqual-uniform",
+          "kind": "success",
+          "args": [
+            "indelqual",
+            "-u",
+            "30",
+            "-o",
+            "tumor.iq.bam",
+            "tumor.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "tumor.iq.bam"
+          ],
+          "bams": [
+            {
+              "path": "tumor.iq.bam",
+              "original": "tumor.bam"
+            }
+          ],
+          "effect": "indelqual-tumor"
+        },
+        {
+          "id": "call-unfiltered",
+          "kind": "success",
+          "args": [
+            "call",
+            "--no-default-filter",
+            "-b",
+            "1",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.vcf",
+            "tumor.iq.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minIndels": 0
+            }
+          ]
+        },
+        {
+          "id": "call-indels",
+          "kind": "success",
+          "args": [
+            "call",
+            "--no-default-filter",
+            "-b",
+            "1",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.vcf",
+            "--call-indels",
+            "tumor.iq.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minIndels": 1
+            }
+          ],
+          "effect": "call-unfiltered"
+        },
+        {
+          "id": "call-region",
+          "kind": "success",
+          "args": [
+            "call",
+            "--no-default-filter",
+            "-b",
+            "1",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.vcf",
+            "--call-indels",
+            "-r",
+            "chr21_10572001_10582000:4000-6000",
+            "tumor.iq.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minIndels": 1
+            }
+          ],
+          "effect": "call-indels"
+        },
+        {
+          "id": "call-quality",
+          "kind": "success",
+          "args": [
+            "call",
+            "--no-default-filter",
+            "-b",
+            "1",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.vcf",
+            "--call-indels",
+            "-q",
+            "35",
+            "-Q",
+            "35",
+            "tumor.iq.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minIndels": 1
+            }
+          ],
+          "effect": "call-indels"
+        },
+        {
+          "id": "somatic-snvs",
+          "kind": "success",
+          "args": [
+            "somatic",
+            "-v",
+            "-n",
+            "normal.iq.bam",
+            "-t",
+            "tumor.iq.bam",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.",
+            "--threads",
+            "1"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.normal_relaxed.vcf.gz",
+            "calls.normal_stringent.snvs.vcf.gz",
+            "calls.normal_stringent.indels.vcf.gz",
+            "calls.tumor_relaxed.vcf.gz",
+            "calls.tumor_stringent.snvs.vcf.gz",
+            "calls.tumor_stringent.indels.vcf.gz",
+            "calls.somatic_raw.snvs.vcf.gz",
+            "calls.somatic_raw.indels.vcf.gz",
+            "calls.somatic_final.snvs.vcf.gz",
+            "calls.somatic_final.indels.vcf.gz",
+            "calls.normal_relaxed.vcf.gz.tbi",
+            "calls.normal_stringent.snvs.vcf.gz.tbi",
+            "calls.normal_stringent.indels.vcf.gz.tbi",
+            "calls.tumor_relaxed.vcf.gz.tbi",
+            "calls.tumor_stringent.snvs.vcf.gz.tbi",
+            "calls.tumor_stringent.indels.vcf.gz.tbi",
+            "calls.somatic_raw.snvs.vcf.gz.tbi",
+            "calls.somatic_raw.indels.vcf.gz.tbi",
+            "calls.somatic_final.snvs.vcf.gz.tbi",
+            "calls.somatic_final.indels.vcf.gz.tbi"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.normal_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.somatic_raw.snvs.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_raw.indels.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_final.snvs.vcf.gz",
+              "minSnvs": 1
+            },
+            {
+              "path": "calls.somatic_final.indels.vcf.gz"
+            }
+          ],
+          "workflow": true,
+          "expectedStages": 10
+        },
+        {
+          "id": "somatic-indels",
+          "kind": "success",
+          "args": [
+            "somatic",
+            "-v",
+            "-n",
+            "normal.iq.bam",
+            "-t",
+            "tumor.iq.bam",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.",
+            "--threads",
+            "1",
+            "--call-indels"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.normal_relaxed.vcf.gz",
+            "calls.normal_stringent.snvs.vcf.gz",
+            "calls.normal_stringent.indels.vcf.gz",
+            "calls.tumor_relaxed.vcf.gz",
+            "calls.tumor_stringent.snvs.vcf.gz",
+            "calls.tumor_stringent.indels.vcf.gz",
+            "calls.somatic_raw.snvs.vcf.gz",
+            "calls.somatic_raw.indels.vcf.gz",
+            "calls.somatic_final.snvs.vcf.gz",
+            "calls.somatic_final.indels.vcf.gz",
+            "calls.normal_relaxed.vcf.gz.tbi",
+            "calls.normal_stringent.snvs.vcf.gz.tbi",
+            "calls.normal_stringent.indels.vcf.gz.tbi",
+            "calls.tumor_relaxed.vcf.gz.tbi",
+            "calls.tumor_stringent.snvs.vcf.gz.tbi",
+            "calls.tumor_stringent.indels.vcf.gz.tbi",
+            "calls.somatic_raw.snvs.vcf.gz.tbi",
+            "calls.somatic_raw.indels.vcf.gz.tbi",
+            "calls.somatic_final.snvs.vcf.gz.tbi",
+            "calls.somatic_final.indels.vcf.gz.tbi"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.normal_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.somatic_raw.snvs.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_raw.indels.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_final.snvs.vcf.gz",
+              "minSnvs": 1
+            },
+            {
+              "path": "calls.somatic_final.indels.vcf.gz",
+              "minIndels": 1
+            }
+          ],
+          "workflow": true,
+          "expectedStages": 10,
+          "effect": "somatic-snvs"
+        },
+        {
+          "id": "somatic-coverage",
+          "kind": "success",
+          "args": [
+            "somatic",
+            "-v",
+            "-n",
+            "normal.iq.bam",
+            "-t",
+            "tumor.iq.bam",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.",
+            "--threads",
+            "1",
+            "--call-indels",
+            "--min-cov",
+            "20"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.normal_relaxed.vcf.gz",
+            "calls.normal_stringent.snvs.vcf.gz",
+            "calls.normal_stringent.indels.vcf.gz",
+            "calls.tumor_relaxed.vcf.gz",
+            "calls.tumor_stringent.snvs.vcf.gz",
+            "calls.tumor_stringent.indels.vcf.gz",
+            "calls.somatic_raw.snvs.vcf.gz",
+            "calls.somatic_raw.indels.vcf.gz",
+            "calls.somatic_final.snvs.vcf.gz",
+            "calls.somatic_final.indels.vcf.gz",
+            "calls.normal_relaxed.vcf.gz.tbi",
+            "calls.normal_stringent.snvs.vcf.gz.tbi",
+            "calls.normal_stringent.indels.vcf.gz.tbi",
+            "calls.tumor_relaxed.vcf.gz.tbi",
+            "calls.tumor_stringent.snvs.vcf.gz.tbi",
+            "calls.tumor_stringent.indels.vcf.gz.tbi",
+            "calls.somatic_raw.snvs.vcf.gz.tbi",
+            "calls.somatic_raw.indels.vcf.gz.tbi",
+            "calls.somatic_final.snvs.vcf.gz.tbi",
+            "calls.somatic_final.indels.vcf.gz.tbi"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.normal_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.somatic_raw.snvs.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_raw.indels.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_final.snvs.vcf.gz",
+              "minSnvs": 1
+            },
+            {
+              "path": "calls.somatic_final.indels.vcf.gz",
+              "minIndels": 1
+            }
+          ],
+          "workflow": true,
+          "expectedStages": 10,
+          "effect": "somatic-indels"
+        },
+        {
+          "id": "somatic-germline",
+          "kind": "success",
+          "args": [
+            "somatic",
+            "-v",
+            "-n",
+            "normal.iq.bam",
+            "-t",
+            "tumor.iq.bam",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.",
+            "--threads",
+            "1",
+            "--call-indels",
+            "--germline",
+            "--normal-alpha",
+            "0.0078125",
+            "--tumor-mtc",
+            "fdr",
+            "--tumor-mtc-alpha",
+            "0.0234375",
+            "--dbsnp",
+            "known.vcf.gz",
+            "--bed",
+            "regions.bed",
+            "--use-orphan",
+            "--baq-off",
+            "--no-src-qual",
+            "--call-rlx-extra-args",
+            "@m 10"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.normal_relaxed.vcf.gz",
+            "calls.normal_stringent.snvs.vcf.gz",
+            "calls.normal_stringent.indels.vcf.gz",
+            "calls.tumor_relaxed.vcf.gz",
+            "calls.tumor_stringent.snvs.vcf.gz",
+            "calls.tumor_stringent.indels.vcf.gz",
+            "calls.somatic_raw.snvs.vcf.gz",
+            "calls.somatic_raw.indels.vcf.gz",
+            "calls.somatic_final.snvs.vcf.gz",
+            "calls.somatic_final.indels.vcf.gz",
+            "calls.germline.snvs.vcf.gz",
+            "calls.germline.indels.vcf.gz",
+            "calls.normal_relaxed.vcf.gz.tbi",
+            "calls.normal_stringent.snvs.vcf.gz.tbi",
+            "calls.normal_stringent.indels.vcf.gz.tbi",
+            "calls.tumor_relaxed.vcf.gz.tbi",
+            "calls.tumor_stringent.snvs.vcf.gz.tbi",
+            "calls.tumor_stringent.indels.vcf.gz.tbi",
+            "calls.somatic_raw.snvs.vcf.gz.tbi",
+            "calls.somatic_raw.indels.vcf.gz.tbi",
+            "calls.somatic_final.snvs.vcf.gz.tbi",
+            "calls.somatic_final.indels.vcf.gz.tbi",
+            "calls.germline.snvs.vcf.gz.tbi",
+            "calls.germline.indels.vcf.gz.tbi",
+            "calls.somatic_final_minus-dbsnp.snvs.vcf.gz",
+            "calls.somatic_final_minus-dbsnp.snvs.vcf.gz.tbi",
+            "calls.somatic_final_minus-dbsnp.indels.vcf.gz",
+            "calls.somatic_final_minus-dbsnp.indels.vcf.gz.tbi"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            },
+            {
+              "case": "somatic-indels",
+              "path": "calls.somatic_final.snvs.vcf.gz",
+              "as": "known.vcf.gz"
+            },
+            {
+              "case": "somatic-indels",
+              "path": "calls.somatic_final.snvs.vcf.gz.tbi",
+              "as": "known.vcf.gz.tbi"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.normal_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.somatic_raw.snvs.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_raw.indels.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_final.snvs.vcf.gz",
+              "minSnvs": 1
+            },
+            {
+              "path": "calls.somatic_final.indels.vcf.gz",
+              "minIndels": 1
+            },
+            {
+              "path": "calls.germline.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.germline.indels.vcf.gz"
+            },
+            {
+              "path": "calls.somatic_final_minus-dbsnp.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.somatic_final_minus-dbsnp.indels.vcf.gz"
+            }
+          ],
+          "workflow": true,
+          "expectedStages": 14,
+          "knownExclusion": {
+            "before": "calls.somatic_final.snvs.vcf.gz",
+            "after": "calls.somatic_final_minus-dbsnp.snvs.vcf.gz",
+            "input": "inputs/known.vcf.gz",
+            "minRemoved": 1
+          }
+        },
+        {
+          "id": "repeat",
+          "kind": "repeat",
+          "args": [
+            "somatic",
+            "-v",
+            "-n",
+            "normal.iq.bam",
+            "-t",
+            "tumor.iq.bam",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.",
+            "--threads",
+            "1",
+            "--call-indels"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ],
+          "outputs": [
+            "calls.normal_relaxed.vcf.gz",
+            "calls.normal_stringent.snvs.vcf.gz",
+            "calls.normal_stringent.indels.vcf.gz",
+            "calls.tumor_relaxed.vcf.gz",
+            "calls.tumor_stringent.snvs.vcf.gz",
+            "calls.tumor_stringent.indels.vcf.gz",
+            "calls.somatic_raw.snvs.vcf.gz",
+            "calls.somatic_raw.indels.vcf.gz",
+            "calls.somatic_final.snvs.vcf.gz",
+            "calls.somatic_final.indels.vcf.gz",
+            "calls.normal_relaxed.vcf.gz.tbi",
+            "calls.normal_stringent.snvs.vcf.gz.tbi",
+            "calls.normal_stringent.indels.vcf.gz.tbi",
+            "calls.tumor_relaxed.vcf.gz.tbi",
+            "calls.tumor_stringent.snvs.vcf.gz.tbi",
+            "calls.tumor_stringent.indels.vcf.gz.tbi",
+            "calls.somatic_raw.snvs.vcf.gz.tbi",
+            "calls.somatic_raw.indels.vcf.gz.tbi",
+            "calls.somatic_final.snvs.vcf.gz.tbi",
+            "calls.somatic_final.indels.vcf.gz.tbi"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.normal_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.normal_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_relaxed.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.snvs.vcf.gz"
+            },
+            {
+              "path": "calls.tumor_stringent.indels.vcf.gz"
+            },
+            {
+              "path": "calls.somatic_raw.snvs.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_raw.indels.vcf.gz",
+              "upstreamUndefinedFlags": [
+                "SOMATIC"
+              ]
+            },
+            {
+              "path": "calls.somatic_final.snvs.vcf.gz",
+              "minSnvs": 1
+            },
+            {
+              "path": "calls.somatic_final.indels.vcf.gz",
+              "minIndels": 1
+            }
+          ],
+          "workflow": true,
+          "expectedStages": 10,
+          "baseline": "somatic-indels"
+        },
+        {
+          "id": "numerics",
+          "kind": "success",
+          "args": [],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "numerics.json"
+          ],
+          "stdoutFile": "numerics.json",
+          "numerics": true
+        },
+        {
+          "id": "missing-input",
+          "kind": "failure",
+          "args": [
+            "call",
+            "--no-default-filter",
+            "-f",
+            "reference.fa",
+            "missing.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "outputs": [],
+          "diagnosticRegex": "(open|file|BAM)"
+        },
+        {
+          "id": "unsupported-parallel",
+          "kind": "restriction",
+          "args": [
+            "somatic",
+            "-v",
+            "-n",
+            "normal.iq.bam",
+            "-t",
+            "tumor.iq.bam",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.",
+            "--threads",
+            "1",
+            "--threads",
+            "2"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [],
+          "outputs": [],
+          "diagnosticRegex": "threads"
+        },
+        {
+          "id": "unsupported-resume",
+          "kind": "restriction",
+          "args": [
+            "somatic",
+            "-v",
+            "-n",
+            "normal.iq.bam",
+            "-t",
+            "tumor.iq.bam",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.",
+            "--threads",
+            "1",
+            "--continue"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [],
+          "outputs": [],
+          "diagnosticRegex": "continue"
+        },
+        {
+          "id": "large-test-count",
+          "kind": "success",
+          "args": [
+            "filter",
+            "-i",
+            "normal-relaxed.vcf.gz",
+            "-o",
+            "calls.vcf",
+            "--snvqual-ntests",
+            "3000000000",
+            "--no-defaults",
+            "--snvqual-mtc",
+            "bonf",
+            "--snvqual-alpha",
+            "0.01",
+            "--only-snvs"
+          ],
+          "inputsFrom": [
+            {
+              "case": "somatic-indels",
+              "path": "calls.normal_relaxed.vcf.gz",
+              "as": "normal-relaxed.vcf.gz"
+            }
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1,
+              "minQual": "114",
+              "subsetOfInput": "inputs/normal-relaxed.vcf.gz",
+              "minRemoved": 1
+            }
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "call-default",
+          "kind": "success",
+          "args": [
+            "call",
+            "-f",
+            "reference.fa",
+            "-o",
+            "calls.vcf",
+            "tumor.iq.bam"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "outputs": [
+            "calls.vcf"
+          ],
+          "inputsFrom": [
+            {
+              "case": "indelqual-tumor",
+              "path": "tumor.iq.bam",
+              "as": "tumor.iq.bam"
+            },
+            {
+              "case": "index-tumor",
+              "path": "tumor.iq.bam.bai",
+              "as": "tumor.iq.bam.bai"
+            },
+            {
+              "case": "indelqual-normal",
+              "path": "normal.iq.bam",
+              "as": "normal.iq.bam"
+            },
+            {
+              "case": "index-normal",
+              "path": "normal.iq.bam.bai",
+              "as": "normal.iq.bam.bai"
+            }
+          ],
+          "vcfs": [
+            {
+              "path": "calls.vcf",
+              "minVariants": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+SomaticSniper 1.0.5.0
+Copyright (c) 2011-2012 David E. Larson. MIT license: LICENSE.
+The complete pinned upstream archive includes the upstream source, build
+helpers, optional tests and Perl filters. This distribution compiles the
+bam-somaticsniper C executable as somaticsniper; it does not compile the
+optional test framework or provide a Perl interpreter for the filters.
+
+SAMtools 0.1.6
+Copyright (c) 2008-2009 Genome Research Ltd. MIT license: LICENSE.samtools.
+This is the exact SAMtools archive bundled by the pinned SomaticSniper release.
+Its BGZF implementation also carries the MIT notice of the Broad Institute /
+Massachusetts Institute of Technology: LICENSE.bgzf.
+Its RAZF implementation is copyright 2008 Jue Ruan and Heng Li, under the
+two-clause BSD license: LICENSE.razf.
+
+zlib 1.3.1
+Copyright (C) 1995-2024 Jean-loup Gailly and Mark Adler.
+License: LICENSE.zlib. Linked statically in all three builds. Upstream
+SomaticSniper accepts an installed zlib; the recipe pins it for reproducibility.
+
+Emscripten 3.1.64 and its generated JavaScript/runtime components
+Notices: LICENSE.emscripten. The upstream MIT/NCSA dual license and component
+notices are reproduced there. The full SDK is a build prerequisite, not a
+source archive redistributed with this tool.
+
+The exact source archives and their SHA-256 checksums are listed in
+sources.lock.json. The distribution carries these under sources/. All source
+notices in those archives are retained. browser.patch and samtools.patch contain
+the limited input-validation changes applied to the patched-native and WebAssembly builds;
+the native baseline uses the upstream program source without those changes.
