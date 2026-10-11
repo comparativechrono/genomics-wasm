@@ -11,7 +11,9 @@
     "validate:deseq2": "node scripts/validate-deseq2.mjs",
     "package:deseq2": "python3 scripts/package-deseq2.py",
     "validate:quant": "node scripts/validate-quant.mjs",
-    "package:quant": "python3 scripts/package-quant.py"
+    "package:quant": "python3 scripts/package-quant.py",
+    "validate:rna-analysis": "node scripts/validate-rna-analysis.mjs",
+    "package:rna-analysis": "python3 scripts/package-rna-analysis.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

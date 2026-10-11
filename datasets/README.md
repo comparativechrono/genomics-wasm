@@ -184,3 +184,11 @@ matches. It leaves the recorded provenance snapshots and licence unchanged.
 Rebuilding compressed BAM files may depend on the linked zlib implementation;
 an unexplained byte difference must be investigated, not accepted by changing
 the expected checksum. The distributed fixtures themselves remain fixed.
+
+## RNA counts, transcripts and coverage
+
+The [RNA analysis fixtures](rna-analysis/README.md) contain alignments of real
+human and yeast RNA-seq reads, matching annotations and reference sequences.
+They support featureCounts, StringTie and mosdepth comparisons. The fixture
+manifest records source checksums, transformations and file hashes. These
+restricted subsets do not establish performance on whole samples.

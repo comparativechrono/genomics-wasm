@@ -1,0 +1,163 @@
+--- a/src/subread.h
++++ b/src/subread.h
+@@ -64,7 +64,7 @@
+ #define RUN_FINAL 		1
+ 
+ #define MAX_THREADS 40
+-#define FC_MAX_THREADS 64
++#define FC_MAX_THREADS 4 /* Bounded browser worker pool; default remains one. */
+ #define MAX_EVENTS_IN_READ 8
+ 
+ //#warning "============== REMOVE '* 15' FROM THE NEXT LINE ================"
+--- a/src/input-files.c
++++ b/src/input-files.c
+@@ -48,7 +48,7 @@
+ #ifdef __MINGW32__
+ 		return fopen64(fname, mode);
+ #else
+-#if defined(__LP64__) || defined(_LP64) || defined(MACOS) 
++#if defined(__LP64__) || defined(_LP64) || defined(MACOS) || defined(__EMSCRIPTEN__) 
+ 		return fopen(fname, mode);
+ #else
+ 		return fopen64(fname, mode);
+--- a/src/readSummary.c
++++ b/src/readSummary.c
+@@ -133,6 +133,7 @@
+ } fc_read_counters;
+ 
+ typedef srInt_64 read_count_type_t;
++_Static_assert(sizeof(read_count_type_t) == 8, "featureCounts requires 64-bit count storage");
+ 
+ typedef struct {
+ 	unsigned short thread_id;
+@@ -815,7 +816,7 @@
+ 	if( global_context -> max_BAM_header_size > 32 * 1024 * 1024 ){
+ 	}
+ 	if(global_context->BAM_chros_to_anno_table)
+-		print_in_box(80,0,0,"%ld chromosome name aliases are loaded.", global_context -> BAM_chros_to_anno_table ->numOfElements);
++		print_in_box(80,0,0,"%lld chromosome name aliases are loaded.", global_context -> BAM_chros_to_anno_table ->numOfElements);
+ 
+ 	free(sam_used);
+ 	return 0;
+@@ -2583,7 +2584,7 @@
+ 	
+ 	char * rg_name_mem = strdup(rg_name);//malloc(strlen(rg_name)+1);
+ 	if(NULL == rg_name_mem){
+-		SUBREADprintf("cannot allocate memory for %s (%d)\n", rg_name, strlen(rg_name));
++		SUBREADprintf("cannot allocate memory for %s (%zu)\n", rg_name, strlen(rg_name));
+ 		return NULL;
+ 	}
+ 	strcpy(rg_name_mem, rg_name);
+@@ -3461,7 +3462,7 @@
+ 		SUBreadSprintf(this_key, key_maxlen, "%s\t%u\t%s\t%u", j_one->chromosome_name_left, j_one -> last_exon_base_left, j_one->chromosome_name_right, j_one -> first_exon_base_right);
+ 		void * count_ptr = HashTableGet(junction_counting_table, this_key);
+ 		srInt_64 count_junc = count_ptr - NULL;
+-		HashTablePut(junction_counting_table, this_key, NULL+count_junc + 1);
++		HashTablePut(junction_counting_table, this_key, fc_checked_junction_count_add(count_ptr, 1));
+ 		size_t left_keysize = strlen(j_one->chromosome_name_left) + 16;
+ 		size_t right_keysize = strlen(j_one->chromosome_name_right) + 16;
+ 		char * left_key = malloc(left_keysize);
+@@ -3473,7 +3474,7 @@
+ 			char * lr_key = x2?right_key:left_key;
+ 			count_ptr = HashTableGet(splicing_point_table, lr_key);
+ 			count_junc = count_ptr - NULL;
+-			HashTablePut(splicing_point_table, lr_key, NULL + count_junc + 1);
++			HashTablePut(splicing_point_table, lr_key, fc_checked_junction_count_add(count_ptr, 1));
+ 		}
+ 	}
+ }
+@@ -4043,7 +4044,7 @@
+ 								void * globval = HashTableGet(rg_junc_tab, junckey);
+ 								char * new_key = memstrcpy(junckey);
+ 
+-								globval += (cursor -> value - NULL);
++								globval = fc_checked_junction_count_add(globval, (uintptr_t)cursor -> value);
+ 								HashTablePut(rg_junc_tab, new_key, globval);
+ 									// new_key will be freed when it is replaced next time or when the global table is destroyed.
+ 
+@@ -4061,7 +4062,7 @@
+ 
+ 								//if(xk1>0)
+ 								//SUBREADprintf("MERGE THREAD-%d : %s    VAL=%u, ADD=%u\n", xk1, junckey, globval - NULL, cursor -> value - NULL);
+-								globval += (cursor -> value - NULL);
++								globval = fc_checked_junction_count_add(globval, (uintptr_t)cursor -> value);
+ 								HashTablePut(rg_split_tab, new_key, globval);
+ 								cursor = cursor->next;
+ 							}
+@@ -4120,7 +4121,7 @@
+ 					void * globval = HashTableGet(junction_global_table, junckey);
+ 					char * new_key = malloc(strlen(junckey)+1);
+ 					strcpy(new_key, junckey);
+-					globval += (cursor -> value - NULL);
++					globval = fc_checked_junction_count_add(globval, (uintptr_t)cursor -> value);
+ 					HashTablePut(junction_global_table, new_key, globval);
+ 						// new_key will be freed when it is replaced next time or when the global table is destroyed.
+ 
+@@ -4140,7 +4141,7 @@
+ 					//if(xk1>0)
+ 					//SUBREADprintf("MERGE THREAD-%d : %s    VAL=%u, ADD=%u\n", xk1, junckey, globval - NULL, cursor -> value - NULL);
+ 
+-					globval += (cursor -> value - NULL);
++					globval = fc_checked_junction_count_add(globval, (uintptr_t)cursor -> value);
+ 					HashTablePut(splicing_global_table, new_key, globval);
+ 					cursor = cursor->next;
+ 				}
+@@ -4171,7 +4172,7 @@
+ 		int show_summary = 1;
+ 		if(global_context -> assign_reads_to_RG){
+ 			if(RGmerged_table -> numOfElements)
+-				print_in_box(80,0,0,"   Total read groups : %ld", RGmerged_table -> numOfElements);
++				print_in_box(80,0,0,"   Total read groups : %lld", RGmerged_table -> numOfElements);
+ 			else{
+ 				print_in_box(80,0,0,"   No read groups are found; no output is generated.");
+ 				show_summary = 0;
+@@ -5648,9 +5649,8 @@
+ 			while (cursor)
+ 			{
+ 				char * ky = (char *)cursor -> key;
+-				unsigned int old_supp = HashTableGet(merged_splicing_table, ky) - NULL;
+-				old_supp += (cursor -> value - NULL);
+-				HashTablePut(merged_splicing_table, ky, NULL+old_supp);
++				void * old_supp = HashTableGet(merged_splicing_table, ky);
++				HashTablePut(merged_splicing_table, ky, fc_checked_junction_count_add(old_supp, (uintptr_t)cursor -> value));
+ 				cursor = cursor -> next;
+ 			}	
+ 		}
+@@ -6275,7 +6275,7 @@
+ 			free(global_context.fasta_contigs);
+ 			global_context.fasta_contigs = NULL;
+ 		}else{
+-			print_in_box(80,0,0,"   %lu contigs were loaded", global_context.fasta_contigs -> contig_table -> numOfElements);
++			print_in_box(80,0,0,"   %lld contigs were loaded", global_context.fasta_contigs -> contig_table -> numOfElements);
+ 			print_in_box(80,0,0,"");
+ 		}
+ 	}else	global_context.fasta_contigs = NULL;
+--- a/src/input-files.c
++++ b/src/input-files.c
+@@ -612,7 +612,7 @@
+ 				else
+ 				{
+ 					#ifdef __MINGW32__
+-					SUBREADprintf ("\nUnknown character in the chromosome data: '%c' (ASCII:%02X), ignored. The file offset is %lu\n", nch, nch, fpos);
++					SUBREADprintf ("\nUnknown character in the chromosome data: '%c' (ASCII:%02X), ignored. The file offset is %lld\n", nch, nch, fpos);
+ 					#else
+ 					SUBREADprintf ("\nUnknown character in the chromosome data: '%c' (ASCII:%02X), ignored. The file offset is %llu\n", nch, nch, fpos);
+ 					#endif
+@@ -3025,7 +3025,7 @@
+ 						memcpy(margin_data, &margin_size, 4);
+ 						memcpy(margin_data+4,  thread_context -> input_buff_BIN + thread_context -> input_buff_BIN_ptr, thread_context -> input_buff_BIN_used - thread_context -> input_buff_BIN_ptr);
+ 						#ifdef __MINGW32__
+-						SUBreadSprintf(margin_key, 40,"E%lu",  (unsigned long)thread_context -> input_buff_SBAM_file_end);
++						SUBreadSprintf(margin_key, 40,"E%llu",  (unsigned long long)thread_context -> input_buff_SBAM_file_end);
+ 						#else
+ 						SUBreadSprintf(margin_key, 40,"E%llu", thread_context -> input_buff_SBAM_file_end);
+ 						#endif
+@@ -4504,7 +4504,7 @@
+ 		memcpy(margin_data, &save_start_pos, 4);
+ 		memcpy(margin_data+4,  thread_context -> input_buff_BIN, save_start_pos);
+ 		#ifdef __MINGW32__
+-		SUBreadSprintf(margin_key, 22,"S%lu", (unsigned long) thread_context -> input_buff_SBAM_file_start);
++		SUBreadSprintf(margin_key, 22,"S%llu", (unsigned long long) thread_context -> input_buff_SBAM_file_start);
+ 		#else
+ 		SUBreadSprintf(margin_key, 22,"S%llu", thread_context -> input_buff_SBAM_file_start);
+ 		#endif

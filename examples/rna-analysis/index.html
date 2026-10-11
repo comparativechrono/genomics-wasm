@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RNA counts, transcripts and coverage in the browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><h1>RNA counts, transcripts and coverage</h1><p>Run featureCounts, StringTie and mosdepth.</p></header>
+  <main>
+    <p>The compiled programs run in this browser tab. Choose a small real dataset or add your own files, then edit and run the command. Files are cleared when you reload the page.</p>
+    <section aria-labelledby="files-heading">
+      <h2 id="files-heading">Files</h2>
+      <div class="row">
+        <label>Example data<select id="dataset"></select></label>
+        <button id="load-data" type="button" disabled>Load example data</button>
+      </div>
+      <p class="hint">These small subsets contain alignments of real human and yeast RNA-seq reads, with reference sequences and annotations. They are for testing commands; results describe only these subsets. <a href="../../datasets/rna-analysis/README.md">Data sources and selection</a></p>
+      <label for="upload">Add alignment, reference or annotation files</label>
+      <input id="upload" type="file" multiple disabled>
+      <ul id="files"><li>No files loaded.</li></ul>
+      <button id="clear" type="button" disabled>Clear files</button>
+    </section>
+    <form id="command-form">
+      <fieldset id="controls" disabled>
+        <legend>Command</legend>
+        <div class="row">
+          <label>Program<select id="tool"></select></label>
+          <label>Command<select id="command"></select></label>
+        </div>
+        <p id="compatibility" class="hint"></p>
+        <button id="enable-threads" type="button" hidden>Enable threaded tools and reload</button>
+        <p id="isolation-hint" class="hint" hidden>This installs a service worker for this example only. Reloading clears the files in this tab.</p>
+        <label for="arguments">Arguments (JSON array, without the program name)</label>
+        <textarea id="arguments" rows="5" spellcheck="false">[]</textarea>
+        <p class="hint">Each array entry is one argument. Use your uploaded filenames exactly. Pipes and shell redirection are not interpreted.</p>
+        <label for="outputs">Files to keep (one path per line)</label>
+        <textarea id="outputs" rows="2" spellcheck="false"></textarea>
+        <label for="output-directories">Directories to keep (one path per line)</label>
+        <textarea id="output-directories" rows="2" spellcheck="false"></textarea>
+        <p class="hint">Returned files remain available to the next command. Directories include all files inside them.</p>
+        <label class="timeout">Time limit (seconds)<input id="timeout" type="number" min="1" max="3600" value="300" required></label>
+        <button id="run" type="submit">Run</button>
+      </fieldset>
+    </form>
+    <button id="cancel" type="button" disabled>Cancel</button>
+    <p id="status" role="status" aria-live="polite">Loading controls…</p>
+    <section aria-labelledby="result-heading">
+      <h2 id="result-heading">Output</h2>
+      <p class="hint">Tables keep the program's original columns and values. Downloads contain the full output, including any lines omitted from the preview.</p>
+      <label>File to view<select id="result-file" disabled><option>No output files yet</option></select></label>
+      <pre id="preview">No output yet.</pre>
+      <div id="downloads"></div>
+      <h3>Standard output from the last command</h3><pre id="stdout">No output yet.</pre>
+      <h3>Standard error from the last command</h3><pre id="stderr">No output yet.</pre>
+      <div id="stream-downloads"></div>
+    </section>
+    <p><a href="README.md">Running and hosting this example</a> · <a href="../../runtime/README.md">JavaScript API</a></p>
+  </main>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>

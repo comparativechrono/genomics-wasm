@@ -1,0 +1,1455 @@
+{
+  "schema": 1,
+  "datasets": [
+    "human",
+    "yeast"
+  ],
+  "comparisonPolicy": "Exact Decimal equality for reported biology; limited path/comment/order/generated-label normalization is described in compare.py. No unmeasured tolerance.",
+  "tools": {
+    "featurecounts": {
+      "waitForExit": true,
+      "baseline": "gene",
+      "cases": [
+        {
+          "id": "gene",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "paired",
+          "args": [
+            "-T",
+            "1",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-p",
+            "--countReadPairs",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "effect": "gene"
+        },
+        {
+          "id": "exon",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-f",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "featureLevel": true,
+          "effect": "gene"
+        },
+        {
+          "id": "forward-strand",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-s",
+            "1",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false,
+          "effect": "gene"
+        },
+        {
+          "id": "reverse-strand",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-s",
+            "2",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false,
+          "effect": "gene"
+        },
+        {
+          "id": "multi-mapping",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-M",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "datasets": [
+            "yeast"
+          ],
+          "effect": "gene"
+        },
+        {
+          "id": "fractional",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-M",
+            "--fraction",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "datasets": [
+            "yeast"
+          ],
+          "effect": "multi-mapping"
+        },
+        {
+          "id": "overlapping",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-O",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "datasets": [
+            "human"
+          ],
+          "effect": "gene"
+        },
+        {
+          "id": "high-mapq",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "-Q",
+            "255",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false,
+          "effect": "gene"
+        },
+        {
+          "id": "sam-input",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.sam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "equivalentTo": "gene"
+        },
+        {
+          "id": "two-inputs",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "half1.bam",
+            "half2.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "threads-2",
+          "args": [
+            "-T",
+            "2",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "equivalentTo": "gene"
+        },
+        {
+          "id": "threads-4",
+          "args": [
+            "-T",
+            "4",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "equivalentTo": "gene"
+        },
+        {
+          "id": "repeat-1",
+          "kind": "repeat",
+          "baseline": "gene",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ]
+        },
+        {
+          "id": "repeat-2",
+          "kind": "repeat",
+          "baseline": "gene",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ]
+        },
+        {
+          "id": "missing-input",
+          "kind": "failure",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "missing.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true
+        },
+        {
+          "id": "missing-annotation",
+          "kind": "failure",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "-a",
+            "missing.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true
+        },
+        {
+          "id": "unsupported-threads",
+          "kind": "restriction",
+          "args": [
+            "-T",
+            "5",
+            "-p",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true,
+          "diagnosticRegex": "-T is out of range: 1 to 4"
+        }
+      ]
+    },
+    "stringtie": {
+      "waitForExit": false,
+      "baseline": "guided",
+      "cases": [
+        {
+          "id": "guided",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "cram",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "--ref",
+            "reference.fa",
+            "input.cram"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "equivalentTo": "guided"
+        },
+        {
+          "id": "estimate",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "-e",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "effect": "guided"
+        },
+        {
+          "id": "unguided",
+          "args": [
+            "-p",
+            "1",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "effect": "guided"
+        },
+        {
+          "id": "forward-strand",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "--fr",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false
+        },
+        {
+          "id": "reverse-strand",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "--rf",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false,
+          "effect": "forward-strand"
+        },
+        {
+          "id": "coverage-filter",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "-c",
+            "10000",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false,
+          "effect": "guided",
+          "requireRecords": false
+        },
+        {
+          "id": "split-1",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "half1.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "split-2",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "half2.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "merge",
+          "args": [
+            "--merge",
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "half1.gtf",
+            "half2.gtf"
+          ],
+          "outputs": [
+            "transcripts.gtf"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false,
+          "inputsFrom": [
+            {
+              "case": "split-1",
+              "path": "transcripts.gtf",
+              "as": "half1.gtf"
+            },
+            {
+              "case": "split-2",
+              "path": "transcripts.gtf",
+              "as": "half2.gtf"
+            }
+          ]
+        },
+        {
+          "id": "repeat-1",
+          "kind": "repeat",
+          "baseline": "guided",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ]
+        },
+        {
+          "id": "repeat-2",
+          "kind": "repeat",
+          "baseline": "guided",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ]
+        },
+        {
+          "id": "missing-input",
+          "kind": "failure",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "missing.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true
+        },
+        {
+          "id": "missing-annotation",
+          "kind": "failure",
+          "args": [
+            "-p",
+            "1",
+            "-G",
+            "missing.gtf",
+            "-o",
+            "transcripts.gtf",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true
+        },
+        {
+          "id": "unsupported-threads",
+          "kind": "restriction",
+          "args": [
+            "-p",
+            "2",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "abundance.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "abundance.tsv"
+          ],
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true,
+          "diagnosticRegex": "serial build requires -p 1"
+        }
+      ]
+    },
+    "mosdepth": {
+      "waitForExit": false,
+      "baseline": "per-base",
+      "cases": [
+        {
+          "id": "per-base",
+          "args": [
+            "-t",
+            "0",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "regions",
+          "args": [
+            "-t",
+            "0",
+            "-b",
+            "regions.bed",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi",
+            "coverage.regions.bed.gz",
+            "coverage.regions.bed.gz.csi",
+            "coverage.mosdepth.region.dist.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "windows",
+          "args": [
+            "-t",
+            "0",
+            "-b",
+            "100",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi",
+            "coverage.regions.bed.gz",
+            "coverage.regions.bed.gz.csi",
+            "coverage.mosdepth.region.dist.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "high-mapq",
+          "args": [
+            "-t",
+            "0",
+            "-Q",
+            "255",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "requireNonzero": false,
+          "effect": "per-base"
+        },
+        {
+          "id": "fast-mode",
+          "args": [
+            "-t",
+            "0",
+            "--fast-mode",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "effect": "per-base"
+        },
+        {
+          "id": "fragment-mode",
+          "args": [
+            "-t",
+            "0",
+            "--fragment-mode",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "effect": "per-base"
+        },
+        {
+          "id": "thresholds",
+          "args": [
+            "-t",
+            "0",
+            "-b",
+            "regions.bed",
+            "--thresholds",
+            "1,5,10",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi",
+            "coverage.regions.bed.gz",
+            "coverage.regions.bed.gz.csi",
+            "coverage.mosdepth.region.dist.txt",
+            "coverage.thresholds.bed.gz",
+            "coverage.thresholds.bed.gz.csi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "quantized",
+          "args": [
+            "-t",
+            "0",
+            "-n",
+            "--quantize",
+            "0:1:5:",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.quantized.bed.gz",
+            "coverage.quantized.bed.gz.csi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "no-per-base",
+          "args": [
+            "-t",
+            "0",
+            "-n",
+            "-b",
+            "regions.bed",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.regions.bed.gz",
+            "coverage.regions.bed.gz.csi",
+            "coverage.mosdepth.region.dist.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ]
+        },
+        {
+          "id": "cram",
+          "args": [
+            "-t",
+            "0",
+            "-f",
+            "reference.fa",
+            "coverage",
+            "input.cram"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "equivalentTo": "per-base"
+        },
+        {
+          "id": "repeat-1",
+          "kind": "repeat",
+          "baseline": "per-base",
+          "args": [
+            "-t",
+            "0",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ]
+        },
+        {
+          "id": "repeat-2",
+          "kind": "repeat",
+          "baseline": "per-base",
+          "args": [
+            "-t",
+            "0",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ]
+        },
+        {
+          "id": "missing-input",
+          "kind": "failure",
+          "args": [
+            "-t",
+            "0",
+            "coverage",
+            "missing.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true,
+          "nativeErrorPolicy": {
+            "allowedSignals": [
+              "SIGSEGV"
+            ],
+            "allowNonzeroExit": true,
+            "reason": "Unmodified mosdepth 0.3.14 dereferences a failed HTS file open in these error paths. The port adds nil-open guards; biological success paths remain unchanged."
+          },
+          "portExitCode": 2,
+          "portDiagnostic": "[mosdepth] could not open alignment file"
+        },
+        {
+          "id": "missing-regions",
+          "kind": "failure",
+          "args": [
+            "-t",
+            "0",
+            "-b",
+            "missing.bed",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true,
+          "nativeErrorPolicy": {
+            "allowedSignals": [
+              "SIGSEGV"
+            ],
+            "allowNonzeroExit": true,
+            "reason": "Unmodified mosdepth 0.3.14 dereferences a failed HTS file open in these error paths. The port adds nil-open guards; biological success paths remain unchanged."
+          },
+          "portExitCode": 2,
+          "portDiagnostic": "[mosdepth] could not open regions file: missing.bed"
+        },
+        {
+          "id": "missing-reference",
+          "kind": "failure",
+          "args": [
+            "-t",
+            "0",
+            "-f",
+            "missing.fa",
+            "coverage",
+            "input.cram"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true
+        },
+        {
+          "id": "unsupported-threads",
+          "kind": "restriction",
+          "args": [
+            "-t",
+            "1",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.per-base.bed.gz",
+            "coverage.per-base.bed.gz.csi"
+          ],
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "oncePerTool": true,
+          "diagnosticRegex": "requires --threads 0"
+        }
+      ]
+    }
+  }
+}

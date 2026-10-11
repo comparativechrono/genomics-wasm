@@ -1,0 +1,33 @@
+{
+  "alignmentRecords": 512,
+  "cigarOperationCounts": {
+    "0": 733,
+    "3": 221,
+    "4": 25
+  },
+  "flagCounts": {
+    "147": 138,
+    "163": 118,
+    "83": 118,
+    "99": 138
+  },
+  "fragments": 256,
+  "mappedRecords": 512,
+  "mapqCounts": {
+    "60": 512
+  },
+  "mateOverlapAlignedBases": 1632,
+  "mateOverlapPairs": 66,
+  "multiMappingRecords": 0,
+  "primaryMappedRecords": 512,
+  "recordsWithTags": {
+    "NH": 512,
+    "XS": 221
+  },
+  "secondaryRecords": 0,
+  "splicedRecords": 221,
+  "splitFragments": [
+    128,
+    128
+  ]
+}

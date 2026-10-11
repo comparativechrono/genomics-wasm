@@ -1,0 +1,594 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-10-11",
+  "purpose": "Real RNA-seq alignment/annotation fixtures for native-versus-WASM featureCounts, StringTie and mosdepth equivalence; not biological accuracy benchmarks.",
+  "sources": {
+    "nfcore-WT_REP1.sorted.bam": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/WT_REP1.sorted.bam",
+      "sha256": "9d17fefdd5e1b4e3af57636941cfe198037d6b26db7756efa285522e8810e25f",
+      "bytes": 6582836,
+      "usedForData": true,
+      "cachePath": "build/rna-analysis-sources/nfcore-WT_REP1.sorted.bam"
+    },
+    "nfcore-SRR6357070_1.fastq.gz": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/SRR6357070_1.fastq.gz",
+      "sha256": "3f50541fa9cf2bedc87e7b682ada0fccfdfcd6d27b9bb81f17be230ff140ebe7",
+      "bytes": 2239317,
+      "usedForData": true,
+      "cachePath": "build/rna-analysis-sources/nfcore-SRR6357070_1.fastq.gz"
+    },
+    "nfcore-SRR6357070_2.fastq.gz": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/testdata/GSE110004/SRR6357070_2.fastq.gz",
+      "sha256": "8590e1e01e568fba256aa7dced40519604cbb111ee44ab106a3dcb869660aaf4",
+      "bytes": 2232117,
+      "usedForData": true,
+      "cachePath": "build/rna-analysis-sources/nfcore-SRR6357070_2.fastq.gz"
+    },
+    "hisat2-source.tar.gz": {
+      "url": "https://codeload.github.com/DaehwanKimLab/hisat2/tar.gz/99583d7536b9ee017ac07de8834017a3bf99a2fe",
+      "sha256": "8b2d4f6683eeea2b856756c2287a9b4c56ce74d4620fc756e0dbb26b0c1b1039",
+      "bytes": 6981429,
+      "usedForData": false,
+      "purpose": "Pinned native preparation aligner source; optional regeneration builds this separately",
+      "cachePath": "build/rna-analysis-sources/hisat2-source.tar.gz"
+    }
+  },
+  "datasets": {
+    "human": {
+      "organism": "Homo sapiens",
+      "run_accession": "ERR127306",
+      "read_pairs": 256,
+      "reference_length": 40000,
+      "contig": "chr14_102480001_102520000",
+      "reference": "human/reference.fa",
+      "fai": "human/reference.fa.fai",
+      "annotation": "human/annotation.gtf",
+      "sam": "human/input.sam",
+      "bam": "human/input.bam",
+      "bai": "human/input.bam.bai",
+      "cram": "human/input.cram",
+      "crai": "human/input.cram.crai",
+      "bed": "human/regions.bed",
+      "exonsBed": "human/exons.bed",
+      "read1": "human/reads_1.fastq",
+      "read2": "human/reads_2.fastq",
+      "splitBams": [
+        "human/half1.bam",
+        "human/half2.bam"
+      ],
+      "splitBais": [
+        "human/half1.bam.bai",
+        "human/half2.bam.bai"
+      ],
+      "observations": {
+        "fragments": 256,
+        "alignmentRecords": 512,
+        "mappedRecords": 512,
+        "primaryMappedRecords": 512,
+        "secondaryRecords": 0,
+        "splicedRecords": 221,
+        "multiMappingRecords": 0,
+        "mateOverlapPairs": 66,
+        "mateOverlapAlignedBases": 1632,
+        "cigarOperationCounts": {
+          "0": 733,
+          "4": 25,
+          "3": 221
+        },
+        "mapqCounts": {
+          "60": 512
+        },
+        "flagCounts": {
+          "163": 118,
+          "99": 138,
+          "83": 118,
+          "147": 138
+        },
+        "recordsWithTags": {
+          "NH": 512,
+          "XS": 221
+        },
+        "splitFragments": [
+          128,
+          128
+        ]
+      },
+      "annotation_provenance": "GENCODE basic v19 genePred and attrs; real exon intersections shifted to 40kb local reference; transcript models are partial at window boundaries.",
+      "read_provenance": {
+        "organism": "Homo sapiens",
+        "sample": "HeLa, HNRNPC knockdown and control experiment",
+        "run_accession": "ERR127306",
+        "experiment_accession": "ERX103445",
+        "study_accession": "ERP001458",
+        "arrayexpress_accession": "E-MTAB-1147",
+        "sample_accession": "ERS140920",
+        "library_strategy": "RNA-Seq",
+        "instrument": "Illumina Genome Analyzer II",
+        "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/ERR127306",
+        "source_package": "RNAseqData.HNRNPC.bam.chr14 0.50.0, Bioconductor 3.23",
+        "source_package_url": "https://bioconductor.org/packages/3.23/data/experiment/html/RNAseqData.HNRNPC.bam.chr14.html",
+        "source_package_license": "LGPL (upstream does not specify a version; package DESCRIPTION preserved)",
+        "source_bam_member": "RNAseqData.HNRNPC.bam.chr14/inst/extdata/ERR127306_chr14.bam",
+        "source_bam": {
+          "sha256": "3fda44ba3d7b898583dad1022b167dd246c674582c76b7be67e7997b6a2d0507",
+          "bytes": 38359360
+        },
+        "reference": {
+          "assembly": "GRCh37/hg19",
+          "chromosome": "chr14",
+          "start_0based": 102480000,
+          "end_0based_exclusive": 102520000,
+          "start_1based": 102480001,
+          "end_1based_inclusive": 102520000,
+          "fixture_contig": "chr14_102480001_102520000",
+          "length": 40000,
+          "case": "uppercase"
+        },
+        "fastq_pairs": 256,
+        "read_length": 72,
+        "source_spliced_records": 216,
+        "junction_count": 42,
+        "junction_source": "Unique N operations and XS strands from selected upstream TopHat2 2.0.8b alignments, shifted to local window coordinates. Observations from these reads, not independent annotations or truth.",
+        "transformation": "Read primary paired alignments in the pinned chr14 BAM. Keep complete pairs whose two alignments fit wholly within hg19 chr14:[102480000,102520000). Sort names lexicographically and take the first 256 pairs. Restore sequence/quality orientation using the SAM reverse flag. Write Phred+33 FASTQ. Extract matching UCSC reference bases, uppercase them and wrap at 60 bp. No read bases or numeric quality scores are modified.",
+        "limitations": [
+          "Reads are recovered from TopHat2 alignments rather than copied from raw sequencer files; prior clipping, quality conversion and processing remain.",
+          "The source TopHat command uses --solexa-quals; the fixture preserves numeric qualities from that BAM and emits Phred+33.",
+          "Reads were selected for mapping to a narrow window. This cannot establish whole-genome mapping specificity or quantitative expression accuracy.",
+          "Human splice hints are derived from the same selected reads. Hint-assisted cases test port equivalence only, not an independent biological prediction."
+        ]
+      },
+      "selection_addition": "None; existing256 biological pairs copied unchanged"
+    },
+    "yeast": {
+      "organism": "Saccharomyces cerevisiae",
+      "run_accession": "SRR6357070",
+      "read_pairs": 320,
+      "reference_length": 230218,
+      "contig": "I",
+      "reference": "yeast/reference.fa",
+      "fai": "yeast/reference.fa.fai",
+      "annotation": "yeast/annotation.gtf",
+      "sam": "yeast/input.sam",
+      "bam": "yeast/input.bam",
+      "bai": "yeast/input.bam.bai",
+      "cram": "yeast/input.cram",
+      "crai": "yeast/input.cram.crai",
+      "bed": "yeast/regions.bed",
+      "exonsBed": "yeast/exons.bed",
+      "read1": "yeast/reads_1.fastq",
+      "read2": "yeast/reads_2.fastq",
+      "splitBams": [
+        "yeast/half1.bam",
+        "yeast/half2.bam"
+      ],
+      "splitBais": [
+        "yeast/half1.bam.bai",
+        "yeast/half2.bam.bai"
+      ],
+      "observations": {
+        "fragments": 320,
+        "alignmentRecords": 749,
+        "mappedRecords": 686,
+        "primaryMappedRecords": 577,
+        "secondaryRecords": 109,
+        "splicedRecords": 190,
+        "multiMappingRecords": 168,
+        "mateOverlapPairs": 207,
+        "mateOverlapAlignedBases": 12077,
+        "cigarOperationCounts": {
+          "0": 884,
+          "4": 100,
+          "3": 190,
+          "2": 8
+        },
+        "mapqCounts": {
+          "0": 95,
+          "60": 518,
+          "1": 136
+        },
+        "flagCounts": {
+          "321": 1,
+          "433": 2,
+          "163": 141,
+          "83": 141,
+          "99": 121,
+          "147": 121,
+          "73": 22,
+          "133": 24,
+          "161": 7,
+          "81": 7,
+          "89": 2,
+          "355": 50,
+          "329": 4,
+          "403": 50,
+          "419": 1,
+          "69": 7,
+          "153": 7,
+          "145": 3,
+          "97": 3,
+          "177": 1,
+          "339": 1,
+          "113": 1,
+          "77": 16,
+          "141": 16
+        },
+        "recordsWithTags": {
+          "NH": 686,
+          "XS": 190
+        },
+        "splitFragments": [
+          160,
+          160
+        ]
+      },
+      "annotation_provenance": "Pinned nf-core Ensembl iGenomes R64-1-1 chromosome I exon annotation, unchanged.",
+      "read_provenance": {
+        "organism": "Saccharomyces cerevisiae",
+        "sample": "Wild-type total RNA-Seq biological replicate 1",
+        "run_accession": "SRR6357070",
+        "experiment_accession": "SRX3453465",
+        "study_accession": "SRP126328",
+        "geo_series": "GSE110004",
+        "geo_sample": "GSM2879618",
+        "sample_accession": "SRS2742168",
+        "library_strategy": "RNA-Seq",
+        "instrument": "Illumina HiSeq 2500",
+        "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/SRR6357070",
+        "source_repository": "https://github.com/nf-core/test-datasets",
+        "source_commit": "cad884e7fbe5617dcd55bdd07d9ddf65b54febe4",
+        "source_publication_doi": "10.1016/j.molcel.2018.10.018",
+        "reference": {
+          "assembly": "S. cerevisiae R64-1-1 (Ensembl iGenomes, as documented by nf-core)",
+          "chromosome": "I",
+          "start_1based": 1,
+          "end_1based_inclusive": 230218,
+          "length": 230218,
+          "note": "Copy upstream reference/genome.fa unchanged. Nuclear chromosome I includes annotated introns."
+        },
+        "upstream_fastq_pairs": 50000,
+        "fastq_pairs": 256,
+        "read_length": 101,
+        "junction_count": 5,
+        "junction_source": "Consecutive exon features grouped by transcript_id and strand, on contig I of the pinned nf-core reference/genes.gtf. These are existing source annotations, not inferred from our aligner results.",
+        "source_selection_bam": "nf-core WT_REP1.sorted.bam produced by STAR 2.7.11b. It also contains SRR6357071; selection explicitly restricts names to SRR6357070.",
+        "transformation": "From source BAM, retain complete primary SRR6357070 pairs on I with NH:i:1 for both mates. Divide by whether an N operation matches an annotated intron. Take first 128 names lexicographically in each group. Copy their original untrimmed FASTQ records unchanged from the two pinned nf-core files, in source order. The BAM is used only to choose read names, not to reconstruct sequences or qualities.",
+        "limitations": [
+          "Upstream nf-core enriched reads for chromosome I using Kraken2, then sampled 50,000 pairs with seqtk seed 100; its full procedure is preserved in provenance/nfcore-rnaseq-README.md.",
+          "Our further selection enriches for annotated splice-junction reads. It cannot measure splice-junction sensitivity or whole-genome specificity.",
+          "Upstream selection BAM contains trimmed reads and some very long apparent introns; our positive splice group requires a junction matching the source exon annotation. Distributed FASTQ reads remain the untrimmed original nf-core records.",
+          "No variant, junction or transcript truth set is supplied."
+        ]
+      },
+      "selection_addition": "Append first64 lexicographically named complete primary SRR6357070 pairs whose upstream STAR NH>1 for at least one mate; copy actual untrimmed FASTQ records unchanged in source order; no names duplicated."
+    }
+  },
+  "regeneration": {
+    "script": "scripts/fetch-rna-analysis-test-data.py",
+    "verify": "python3 scripts/fetch-rna-analysis-test-data.py --verify",
+    "regenerate": "python3 scripts/fetch-rna-analysis-test-data.py --regenerate --hisat2-build /path/to/hisat2-build-s --hisat2-align /path/to/hisat2-align-s",
+    "python": "3.12",
+    "pysam": "0.23.3",
+    "samtools": "1.21 (bundled in pysam 0.23.3)",
+    "hisat2": {
+      "tool": "hisat2",
+      "version": "2.2.2",
+      "revision": "99583d7536b9ee017ac07de8834017a3bf99a2fe",
+      "url": "https://codeload.github.com/DaehwanKimLab/hisat2/tar.gz/99583d7536b9ee017ac07de8834017a3bf99a2fe",
+      "sha256": "8b2d4f6683eeea2b856756c2287a9b4c56ce74d4620fc756e0dbb26b0c1b1039",
+      "emscripten": "3.1.64"
+    },
+    "nativeBuild": "make -j2 CXX=g++ hisat2-build-s hisat2-align-s",
+    "additionalReadDownloadBytes": 11054270,
+    "inputs": "All compact input snapshots and their source provenance are included under provenance; no other dataset directory is required. Original 256-pair selections are documented with full source archive pins in provenance/rna-read-manifest.json. Annotation extraction pins are in provenance/rna-annotation-manifest.json.",
+    "files": [],
+    "externalPrograms": [
+      "native HISAT2 2.2.2 hisat2-build-s and hisat2-align-s"
+    ],
+    "pythonPackages": {
+      "pysam": "0.23.3"
+    },
+    "sourceArchivesRequiredForAdditionalReadSelection": [
+      "nfcore-WT_REP1.sorted.bam",
+      "nfcore-SRR6357070_1.fastq.gz",
+      "nfcore-SRR6357070_2.fastq.gz"
+    ]
+  },
+  "files": {
+    "README.md": {
+      "bytes": 10453,
+      "sha256": "5ff7ef36bfb031aa475980665f9dc58225e4bb6a277bc6a9fc7a932ef2da7f21",
+      "generated": false
+    },
+    "human/annotation.gtf": {
+      "bytes": 9476,
+      "sha256": "7ab0b189b1969c5c8ea7d1089f43c76f9828c19c54ff1c3a9110d494ffafb2d8",
+      "generated": true
+    },
+    "human/exons.bed": {
+      "bytes": 3350,
+      "sha256": "c3107ddf938ff7fd7eb1705f4457d0d8a9fe0b9dd3fd6c273ad506ecb74c6b6b",
+      "generated": true
+    },
+    "human/half1.bam": {
+      "bytes": 16255,
+      "sha256": "00edfe62000b451bd631b689e8b92735bbd0b708ee0ba566e4a1cd61d7789f3b",
+      "generated": true
+    },
+    "human/half1.bam.bai": {
+      "bytes": 112,
+      "sha256": "de3bc6f98596b0dc6569e075605eab74454075e139fb13846e81e71e20010cac",
+      "generated": true
+    },
+    "human/half2.bam": {
+      "bytes": 16576,
+      "sha256": "bdea401178e456461fa23c33009d43133a8c40e7604f81007718edb0e7bdc3f8",
+      "generated": true
+    },
+    "human/half2.bam.bai": {
+      "bytes": 112,
+      "sha256": "a2e348fa0d6c87d1d5e049e350bbfe6962a7c6ea98a26504fdc77c4626cdb625",
+      "generated": true
+    },
+    "human/input.bam": {
+      "bytes": 30233,
+      "sha256": "f97cf339bee6c0a2c861fb4e82099f055298d906ff81df39ecf3e7330fd9d894",
+      "generated": true
+    },
+    "human/input.bam.bai": {
+      "bytes": 112,
+      "sha256": "5bb83853420942470e2a8e004f39ad919cc537162a46a6c576fe9de63c0d6b50",
+      "generated": true
+    },
+    "human/input.cram": {
+      "bytes": 16425,
+      "sha256": "71135bfd17fed12daa80f050e151cd7a8d550ea72bf322ff5dc911992496e67c",
+      "generated": true
+    },
+    "human/input.cram.crai": {
+      "bytes": 49,
+      "sha256": "e50a669e6e3d50be51ef2536402919ac740f4e87a23d0c4348bb84808ec5f4d3",
+      "generated": true
+    },
+    "human/input.sam": {
+      "bytes": 153151,
+      "sha256": "f2e3a0986625dc99eecd668bb133df5072d4cb77f05561f7e60b16b81488ceab",
+      "generated": true
+    },
+    "human/observations.json": {
+      "bytes": 539,
+      "sha256": "99dcf70290fc2ee981b531b372ab724d3d7d9987977dc688501a424278d1b27a",
+      "generated": true
+    },
+    "human/reads_1.fastq": {
+      "bytes": 42981,
+      "sha256": "300bbde9e95c66ea90c003ec0ca3a40f1dc7a012862e38e11e54ae47865ca70e",
+      "generated": true
+    },
+    "human/reads_2.fastq": {
+      "bytes": 42981,
+      "sha256": "f7147fe368ea37ac1f5fbf59274d4088ba719fe0779a9d0b9c89a75d692fe53f",
+      "generated": true
+    },
+    "human/reference.fa": {
+      "bytes": 40694,
+      "sha256": "6759a362504a3c5d3c6c24656ad80f0fcda2931dd0d0feef338c142b479cb8fd",
+      "generated": true
+    },
+    "human/reference.fa.fai": {
+      "bytes": 41,
+      "sha256": "9147fc08a3fc1a432ea5a336f7c5e7a30ff67fabd2dd76cbe49452c0abe95f0b",
+      "generated": true
+    },
+    "human/regions.bed": {
+      "bytes": 111,
+      "sha256": "4a2a9ebe8c693fb847df41934064f6b80de3c3a30817a65e965ce0bd5fa902fd",
+      "generated": true
+    },
+    "human/splice-sites.tsv": {
+      "bytes": 1665,
+      "sha256": "7da4eeb6cb284fdd41c118e9d51c69f614772a9cc3b81619218cfdd408fccbaa",
+      "generated": true
+    },
+    "provenance/ERR127306.xml": {
+      "bytes": 3086,
+      "sha256": "c0e08c36345479e4c246a5056b23088025a3718b00c2a25659c259ab1d296462",
+      "generated": false
+    },
+    "provenance/HISAT2_LICENSE": {
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "generated": false
+    },
+    "provenance/SRR6357070.xml": {
+      "bytes": 2614,
+      "sha256": "a26bf38d74fa6995a5ff396aac5b9eaa57166edb0c3d222ec086465b26b10be0",
+      "generated": false
+    },
+    "provenance/hisat2-sources.lock.json": {
+      "bytes": 318,
+      "sha256": "84030d4e87991bc4882b3bc1eb0fa8e5512ecce36dc933fd85fb4ad79b9be43c",
+      "generated": false
+    },
+    "provenance/human-UPSTREAM_DESCRIPTION.txt": {
+      "bytes": 1249,
+      "sha256": "159d570768310fd36cab1312bbd75cd7066a6cf79314cd36d1719cfbcb6f239b",
+      "generated": false
+    },
+    "provenance/human-selected.attrs.tsv": {
+      "bytes": 762,
+      "sha256": "5f797c1881488f97c57834580c0749f30be9e40d16ffaf792e2abc7c74fef6c7",
+      "generated": false
+    },
+    "provenance/human-selected.genePred.tsv": {
+      "bytes": 2516,
+      "sha256": "4e5f31748523f2e7bd9d3c9fccc6dc2dd9880cf918e900d194a1ad6563728000",
+      "generated": false
+    },
+    "provenance/inputs/human/reads_1.fastq": {
+      "bytes": 42981,
+      "sha256": "300bbde9e95c66ea90c003ec0ca3a40f1dc7a012862e38e11e54ae47865ca70e",
+      "generated": false
+    },
+    "provenance/inputs/human/reads_2.fastq": {
+      "bytes": 42981,
+      "sha256": "f7147fe368ea37ac1f5fbf59274d4088ba719fe0779a9d0b9c89a75d692fe53f",
+      "generated": false
+    },
+    "provenance/inputs/human/reference.fa": {
+      "bytes": 40694,
+      "sha256": "6759a362504a3c5d3c6c24656ad80f0fcda2931dd0d0feef338c142b479cb8fd",
+      "generated": false
+    },
+    "provenance/inputs/human/splice-sites.tsv": {
+      "bytes": 1665,
+      "sha256": "7da4eeb6cb284fdd41c118e9d51c69f614772a9cc3b81619218cfdd408fccbaa",
+      "generated": false
+    },
+    "provenance/inputs/yeast/reads_1.fastq": {
+      "bytes": 65464,
+      "sha256": "98d6e4d70c64a1cd75a388f4fa1fa794b1890a6388bd18e41ff67cb762e7cd45",
+      "generated": false
+    },
+    "provenance/inputs/yeast/reads_2.fastq": {
+      "bytes": 65464,
+      "sha256": "abdc1e3e6167435ae8f77631568d23c95b1d84c5e53c683d3e80418a8112055e",
+      "generated": false
+    },
+    "provenance/inputs/yeast/reference.fa": {
+      "bytes": 234058,
+      "sha256": "df70973809f672aa58a414fef3f01e0e465bf26f10159174a616b0dee2d458e1",
+      "generated": false
+    },
+    "provenance/inputs/yeast/splice-sites.tsv": {
+      "bytes": 88,
+      "sha256": "e737f3c8c6271ea39b04867d713fb6c0b81f3e74504585b6fbd225d10b84c6f8",
+      "generated": false
+    },
+    "provenance/native-smoke.json": {
+      "bytes": 2187,
+      "sha256": "7677be2935b43e42ca33269d4d7dddba1029cb0e2abec8a63ac85d33cff14e42",
+      "generated": false
+    },
+    "provenance/nfcore-rnaseq-README.md": {
+      "bytes": 13240,
+      "sha256": "7c4fbdcc513b935f02735bc829834c891c4165e5c815bd47aa6ece2dbcdc23eb",
+      "generated": false
+    },
+    "provenance/rna-annotation-manifest.json": {
+      "bytes": 33474,
+      "sha256": "c7e1ff2b34fd08235d89bffefada4e11d5c34dd2448caeb2b0fa68b69430af63",
+      "generated": false
+    },
+    "provenance/rna-read-manifest.json": {
+      "bytes": 11683,
+      "sha256": "918f8bc002720e22e9061f1bfc10309c26fc211894056dda473880c8c2acfba6",
+      "generated": false
+    },
+    "provenance/yeast-UPSTREAM_LICENSE.txt": {
+      "bytes": 1064,
+      "sha256": "1fa2a62f20d23902c7aad04f3d728fbfc9d153df472e8f2ef163322a8c5557c8",
+      "generated": false
+    },
+    "provenance/yeast-selected-exons.gtf": {
+      "bytes": 46592,
+      "sha256": "e10d96b086699b6f1f08ab79d45f8590e47ddcc28f11b25b6fcf587220175485",
+      "generated": false
+    },
+    "yeast/additional-multimap-names.txt": {
+      "bytes": 1271,
+      "sha256": "a92fff5c666e8eb285106ce20d0acb9f45acd3c9f1c7d4ccd7a41371f961019b",
+      "generated": true
+    },
+    "yeast/annotation.gtf": {
+      "bytes": 46592,
+      "sha256": "e10d96b086699b6f1f08ab79d45f8590e47ddcc28f11b25b6fcf587220175485",
+      "generated": true
+    },
+    "yeast/exons.bed": {
+      "bytes": 4557,
+      "sha256": "692588432304731ed77259c8993aeb34c6c0894e98ce5025bf9f0fb76c6e3a8e",
+      "generated": true
+    },
+    "yeast/half1.bam": {
+      "bytes": 18943,
+      "sha256": "dc8cca1893e0214c4a14db59dc07bcd4a7062794cf3bb70b8d87d5dfbc9d5c64",
+      "generated": true
+    },
+    "yeast/half1.bam.bai": {
+      "bytes": 304,
+      "sha256": "aab5eff9ef7a6dcac4905011b1dafb6db58404ea22ba409e4f05a70935f99fb0",
+      "generated": true
+    },
+    "yeast/half2.bam": {
+      "bytes": 19951,
+      "sha256": "aabafcb0943be7a2c9e27734ed557da9124e6b5e645f074fb4158282174959fe",
+      "generated": true
+    },
+    "yeast/half2.bam.bai": {
+      "bytes": 296,
+      "sha256": "f27aa657659745830a5228ff77791b431f8ccf8f848e8d9b81d80f456859b3f7",
+      "generated": true
+    },
+    "yeast/input.bam": {
+      "bytes": 36085,
+      "sha256": "9f57e7c307a550f6eef5d49c14224ba53c66e6d0125109beef80d11a1448e3ba",
+      "generated": true
+    },
+    "yeast/input.bam.bai": {
+      "bytes": 344,
+      "sha256": "b04106dd40c465090f28447843a70bf560d1eae63d63f6b70c0f8b0a90b8e3f2",
+      "generated": true
+    },
+    "yeast/input.cram": {
+      "bytes": 18537,
+      "sha256": "a5f0a35597c730af3c64fa5f7b2c7bd60796ec66d539c705511dc2dbdb6e9911",
+      "generated": true
+    },
+    "yeast/input.cram.crai": {
+      "bytes": 65,
+      "sha256": "379ffea07211d593c0aa2563a6ee9df04ebde82b4968e1e6ba7b25f9c2516d11",
+      "generated": true
+    },
+    "yeast/input.sam": {
+      "bytes": 247550,
+      "sha256": "36c37c46557f458e5b20adcfc00a31d43358fa9e3eae44487f5566dbab05ceaa",
+      "generated": true
+    },
+    "yeast/observations.json": {
+      "bytes": 865,
+      "sha256": "804d892329e0bbba176bda7d800293b7ffa2b7ed1aa6bbd51fa32d4411bde7ca",
+      "generated": true
+    },
+    "yeast/reads_1.fastq": {
+      "bytes": 81830,
+      "sha256": "7e5557b673f9add3cb8e2a2c4f78353c78ed86d0c499217637d63f3dcd717774",
+      "generated": true
+    },
+    "yeast/reads_2.fastq": {
+      "bytes": 81830,
+      "sha256": "97e83dc9dcb2a0d1e3f073d0427ae27a4d037e571a2cb16a47b2defb1d051e74",
+      "generated": true
+    },
+    "yeast/reference.fa": {
+      "bytes": 234058,
+      "sha256": "df70973809f672aa58a414fef3f01e0e465bf26f10159174a616b0dee2d458e1",
+      "generated": true
+    },
+    "yeast/reference.fa.fai": {
+      "bytes": 17,
+      "sha256": "f177fac1d46d4e8837d6ac39f1a3da111e0588432566df74e4954e2d5c04715c",
+      "generated": true
+    },
+    "yeast/regions.bed": {
+      "bytes": 2889,
+      "sha256": "f95dc926690ce9f2c616118163962c1159c6437bd0caf609c45131a79d9fbdd3",
+      "generated": true
+    },
+    "yeast/splice-sites.tsv": {
+      "bytes": 88,
+      "sha256": "e737f3c8c6271ea39b04867d713fb6c0b81f3e74504585b6fbd225d10b84c6f8",
+      "generated": true
+    }
+  },
+  "native_smoke": "provenance/native-smoke.json"
+}

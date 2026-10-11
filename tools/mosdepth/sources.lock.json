@@ -1,0 +1,76 @@
+{
+  "tool": "mosdepth",
+  "version": "0.3.14",
+  "revision": "v0.3.14",
+  "archive": "mosdepth-0.3.14.tar.gz",
+  "url": "https://codeload.github.com/brentp/mosdepth/tar.gz/refs/tags/v0.3.14",
+  "sha256": "abac67de4547dc5642efd46846044d6b3536d2ca3443b4ca172446edf82eeb42",
+  "emscripten": "3.1.64",
+  "dependencies": {
+    "nim": {
+      "version": "2.2.12",
+      "revision": "8e8fbf60693418dc95bb0d762fd660231d08a583",
+      "archive": "nim-2.2.12-linux_x64.tar.xz",
+      "url": "https://nim-lang.org/download/nim-2.2.12-linux_x64.tar.xz",
+      "sha256": "7df1611449a6842af69322aa2c1206942982650a5f6bc0d37bc8ec109932f638",
+      "includes": "Linux x86-64 compiler, compiler source, standard-library source and notices"
+    },
+    "hts-nim": {
+      "version": "0.3.32",
+      "revision": "50b64d8843f20326d113c1ef1f29dc773f32915b",
+      "archive": "hts-nim-0.3.32.tar.gz",
+      "url": "https://codeload.github.com/brentp/hts-nim/tar.gz/50b64d8843f20326d113c1ef1f29dc773f32915b",
+      "sha256": "eaed2c7f321cfa9f9f0e12ad42d4cf2add34528a2aa218af37e9b3a6dbde2b00"
+    },
+    "docopt": {
+      "version": "0.7.1",
+      "revision": "efaa112b6df172a9168c4eb581ab8dda1fbcfe2a",
+      "archive": "docopt-0.7.1.tar.gz",
+      "url": "https://codeload.github.com/docopt/docopt.nim/tar.gz/efaa112b6df172a9168c4eb581ab8dda1fbcfe2a",
+      "sha256": "e38e657371a8fd4063c97c9882623c9317438584745294d09b6a2d2fc219c86a"
+    },
+    "regex": {
+      "version": "0.26.3",
+      "revision": "4593305ed1e49731fc75af1dc572dd2559aad19c",
+      "archive": "nim-regex-0.26.3.tar.gz",
+      "url": "https://codeload.github.com/nitely/nim-regex/tar.gz/4593305ed1e49731fc75af1dc572dd2559aad19c",
+      "sha256": "3f8b2ef3892bb2d8cc1c44943c31b942e707b77401d24c992ab1b87d38baea9f"
+    },
+    "unicodedb": {
+      "version": "0.14.1",
+      "revision": "b70aac15a3fdc7647997bd6cd10bccd8b2c00e54",
+      "archive": "nim-unicodedb-0.14.1.tar.gz",
+      "url": "https://codeload.github.com/nitely/nim-unicodedb/tar.gz/b70aac15a3fdc7647997bd6cd10bccd8b2c00e54",
+      "sha256": "ed8fcd9ff1589de59e977caf4110cd4b95817081af09f7daa6f14e8e02b44170"
+    },
+    "htslib": {
+      "version": "1.24",
+      "revision": "1.24",
+      "archive": "htslib-1.24.tar.bz2",
+      "url": "https://github.com/samtools/htslib/releases/download/1.24/htslib-1.24.tar.bz2",
+      "sha256": "28a8de191381c7a97a35675ceac76fa1ea95e7b678d6a2e9d600a7874e4077de",
+      "includes": "Bundled htscodecs sources and license"
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "revision": "v1.3.1",
+      "archive": "zlib-1.3.1.tar.gz",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    }
+  },
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.nim",
+    "LICENSE.hts-nim",
+    "LICENSE.docopt",
+    "LICENSE.regex",
+    "LICENSE.unicodedb",
+    "LICENSE.unicode",
+    "LICENSE.htslib",
+    "LICENSE.htscodecs",
+    "LICENSE.zlib",
+    "LICENSE.emscripten",
+    "THIRD_PARTY_LICENSES.txt"
+  ]
+}

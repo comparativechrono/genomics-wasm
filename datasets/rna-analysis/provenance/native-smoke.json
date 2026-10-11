@@ -1,0 +1,101 @@
+{
+  "note": "Native sanity observations for option effects; not biological truth. FeatureCounts base args -T1 -p -a annotation.gtf -o output input.bam; StringTie base input.bam -p1 -o output. See README for full settings.",
+  "versions": {
+    "featureCounts": "2.1.1",
+    "StringTie": "3.0.3"
+  },
+  "datasets": {
+    "human": {
+      "unstranded": {
+        "sumCounts": 456.0,
+        "nonzeroGenes": 1
+      },
+      "forward": {
+        "sumCounts": 298.0,
+        "nonzeroGenes": 2
+      },
+      "reverse": {
+        "sumCounts": 270.0,
+        "nonzeroGenes": 2
+      },
+      "multimap": {
+        "sumCounts": 456.0,
+        "nonzeroGenes": 1
+      },
+      "overlap": {
+        "sumCounts": 568.0,
+        "nonzeroGenes": 2
+      },
+      "fractional": {
+        "sumCounts": 512.0,
+        "nonzeroGenes": 2
+      },
+      "fragments": {
+        "sumCounts": 246.0,
+        "nonzeroGenes": 1
+      },
+      "reads": {
+        "sumCounts": 456.0,
+        "nonzeroGenes": 1
+      },
+      "stringtie_assemble": {
+        "exit": 0,
+        "transcripts": 2
+      },
+      "stringtie_guided": {
+        "exit": 0,
+        "transcripts": 2
+      },
+      "stringtie_quant": {
+        "exit": 0,
+        "transcripts": 5
+      }
+    },
+    "yeast": {
+      "unstranded": {
+        "sumCounts": 456.0,
+        "nonzeroGenes": 15
+      },
+      "forward": {
+        "sumCounts": 31.0,
+        "nonzeroGenes": 2
+      },
+      "reverse": {
+        "sumCounts": 485.0,
+        "nonzeroGenes": 14
+      },
+      "multimap": {
+        "sumCounts": 461.0,
+        "nonzeroGenes": 17
+      },
+      "overlap": {
+        "sumCounts": 516.0,
+        "nonzeroGenes": 16
+      },
+      "fractional": {
+        "sumCounts": 488.33,
+        "nonzeroGenes": 18
+      },
+      "fragments": {
+        "sumCounts": 244.0,
+        "nonzeroGenes": 15
+      },
+      "reads": {
+        "sumCounts": 456.0,
+        "nonzeroGenes": 15
+      },
+      "stringtie_assemble": {
+        "exit": 0,
+        "transcripts": 3
+      },
+      "stringtie_guided": {
+        "exit": 0,
+        "transcripts": 18
+      },
+      "stringtie_quant": {
+        "exit": 0,
+        "transcripts": 124
+      }
+    }
+  }
+}

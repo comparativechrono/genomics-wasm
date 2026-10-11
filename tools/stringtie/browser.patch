@@ -1,0 +1,62 @@
+--- a/rlink.cpp
++++ b/rlink.cpp
+@@ -1,7 +1,9 @@
+ #include "rlink.h"
+ #include "GBitVec.h"
+ #include <float.h>
++#ifndef NOTHREADS
+ #include "GThreads.h"
++#endif
+ 
+ //#define GMEMTRACE 1  //debugging memory allocation
+ #ifdef GMEMTRACE
+@@ -14,7 +16,9 @@
+ 
+ //extern GffNames* gseqNames;
+ extern FILE *c_out;         // file handle for the input transcripts that are fully covered by reads
++#ifndef NOTHREADS
+ extern GFastMutex printCovMutex;
++#endif
+ 
+ extern bool trim;
+ extern bool eonly;
+@@ -12359,9 +12363,13 @@
+ 				GStr guidecov;
+ 				guidecov.appendfmt("%.2f",guideabundance);
+ 				guides[guidetrf[g].g]->addAttr("coverage",guidecov.chars());
++#ifndef NOTHREADS
+ 				printCovMutex.lock();
++#endif
+ 				guides[guidetrf[g].g]->printTranscriptGff(c_out);
++#ifndef NOTHREADS
+ 				printCovMutex.unlock();
++#endif
+ 			}
+ 		}
+ 	}
+@@ -15531,9 +15539,13 @@
+     							GStr guidecov;
+     							guidecov.appendfmt("%.2f",gcov);
+     							guides[g]->addAttr("coverage",guidecov.chars());
++#ifndef NOTHREADS
+     							printCovMutex.lock();
++#endif
+     							guides[g]->printTranscriptGff(c_out);
++#ifndef NOTHREADS
+     							printCovMutex.unlock();
++#endif
+     						}
+     						GSeg exon(guides[g]->start, guides[g]->end);
+     						p->exons.Add(exon);
+--- a/stringtie.cpp
++++ b/stringtie.cpp
+@@ -1136,6 +1136,9 @@
+ 		   num_cpus=s.asInt();
+ 		   if (num_cpus<=0) num_cpus=1;
+ 	 }
++#ifdef NOTHREADS
++	 if (num_cpus != 1) GError("Error: this serial build requires -p 1.\n");
++#endif
+ 
+ 	 s=args.getOpt('a');
+ 	 if (!s.is_empty()) {

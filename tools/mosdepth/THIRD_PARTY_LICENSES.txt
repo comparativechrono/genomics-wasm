@@ -1,0 +1,19 @@
+mosdepth 0.3.14: MIT; see LICENSE and the complete pinned source archive.
+Nim 2.2.12 compiler/runtime: MIT; see LICENSE.nim. The pinned official
+Linux x86-64 distribution includes compiler and standard-library source.
+hts-nim 0.3.32: MIT; see LICENSE.hts-nim.
+docopt.nim 0.7.1: MIT; see LICENSE.docopt.
+nim-regex 0.26.3: MIT; see LICENSE.regex.
+nim-unicodedb 0.14.1: MIT; see LICENSE.unicodedb. Its Unicode data are
+covered by the Unicode license; see LICENSE.unicode and the notices in
+the complete source archive (including its gen/UCD and gen/DUCET.txt data).
+HTSlib 1.24: see LICENSE.htslib for its full component notices.
+Bundled HTSCodecs: see LICENSE.htscodecs for its complete notices.
+zlib 1.3.1: zlib license; see LICENSE.zlib.
+Emscripten 3.1.64 runtime: MIT and University of Illinois/NCSA licenses;
+see LICENSE.emscripten and the SDK's per-file notices.
+
+Source URLs, exact versions/revisions and SHA256 checksums are recorded
+in sources.lock.json. All eight pinned archives accompany the distribution.
+The build uses no D4 library, libcurl, plugin loader, bzip2, liblzma or
+libdeflate. The original license texts above have not been abbreviated.

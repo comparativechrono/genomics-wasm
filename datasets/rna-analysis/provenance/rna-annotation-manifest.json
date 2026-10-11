@@ -1,0 +1,1228 @@
+{
+  "schema_version": 1,
+  "prepared_utc": "2026-10-11",
+  "purpose": "Small real RNA-seq fixtures for native-versus-WebAssembly transcript quantification comparisons; not expression truth or accuracy benchmarks.",
+  "sources": {
+    "hg19-gencode-basic-v19.txt.gz": {
+      "url": "https://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/wgEncodeGencodeBasicV19.txt.gz",
+      "bytes": 5344182,
+      "sha256": "8bb2adf047c3394aac3b0620aefa821139b283a6d22c1a8f9125828ef013f132"
+    },
+    "hg19-chr14.fa.gz": {
+      "url": "https://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr14.fa.gz",
+      "bytes": 28970334,
+      "sha256": "42c92c7b285bcfbbe1b81803fb2a57529abd756cc25bef573c1c7ffc07cdfaaf"
+    },
+    "nfcore-genes.gtf": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/reference/genes.gtf",
+      "bytes": 204286,
+      "sha256": "8d9e66311d90f14517cdb8683066d4b376547ea7c2153b05b510fb9ba7988835"
+    },
+    "hg19-gencode-attrs-v19.txt.gz": {
+      "url": "https://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/wgEncodeGencodeAttrsV19.txt.gz",
+      "bytes": 4542096,
+      "sha256": "d464efa58f6b72f0fcfea646addfe121c9b79a93cc1c02148562a841e492c941"
+    },
+    "nfcore-genome.fa": {
+      "url": "https://raw.githubusercontent.com/nf-core/test-datasets/cad884e7fbe5617dcd55bdd07d9ddf65b54febe4/reference/genome.fa",
+      "sha256": "df70973809f672aa58a414fef3f01e0e465bf26f10159174a616b0dee2d458e1",
+      "bytes": 234058
+    }
+  },
+  "datasets": {
+    "human": {
+      "organism": "Homo sapiens",
+      "sample": "HeLa, HNRNPC knockdown and control experiment",
+      "run_accession": "ERR127306",
+      "study_accession": "ERP001458",
+      "arrayexpress_accession": "E-MTAB-1147",
+      "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/ERR127306",
+      "fastq_pairs": 256,
+      "read_length": 72,
+      "read_source_fixture": "datasets/rna-human",
+      "reference_assembly": "GRCh37/hg19",
+      "reference_annotation": "GENCODE Basic version 19, UCSC genePred table and GENCODE attributes table",
+      "selection_window": {
+        "chromosome": "chr14",
+        "start_0based": 102480000,
+        "end_0based_exclusive": 102520000
+      },
+      "gene_ids": [
+        "ENSG00000197102.6",
+        "ENSG00000258959.1"
+      ],
+      "transcript_selection": "Find Basic v19 transcripts whose genomic spans overlap the RNA fixture window. Include every Basic v19 transcript on chr14 belonging to those gene IDs, including exons outside the window. Extract annotated exons from the complete hg19 chr14 sequence in transcript orientation.",
+      "limitations": [
+        "The selected genomic window covers only part of DYNC1H1. Full-length transcripts are retained, but reads were selected within the window; resulting abundances must not be interpreted as unbiased expression estimates.",
+        "Basic annotation omits some transcripts present in comprehensive GENCODE. No synthetic isoforms or simulated reads are added.",
+        "Read sequences and numeric qualities are recovered from pre-existing TopHat2 alignments. See the bundled upstream read manifest for selection, clipping and quality-conversion caveats."
+      ],
+      "transcript_count": 5,
+      "total_transcript_bases": 16735,
+      "transcripts": [
+        {
+          "id": "ENST00000360184.4",
+          "gene_id": "ENSG00000197102.6",
+          "gene_name": "DYNC1H1",
+          "length": 14333,
+          "strand": "+",
+          "exon_count": 78
+        },
+        {
+          "id": "ENST00000553701.1",
+          "gene_id": "ENSG00000258959.1",
+          "gene_name": "RP11-1017G21.4",
+          "length": 447,
+          "strand": "-",
+          "exon_count": 3
+        },
+        {
+          "id": "ENST00000556791.1",
+          "gene_id": "ENSG00000197102.6",
+          "gene_name": "DYNC1H1",
+          "length": 938,
+          "strand": "+",
+          "exon_count": 6
+        },
+        {
+          "id": "ENST00000557242.1",
+          "gene_id": "ENSG00000258959.1",
+          "gene_name": "RP11-1017G21.4",
+          "length": 451,
+          "strand": "-",
+          "exon_count": 2
+        },
+        {
+          "id": "ENST00000557551.1",
+          "gene_id": "ENSG00000258959.1",
+          "gene_name": "RP11-1017G21.4",
+          "length": 566,
+          "strand": "-",
+          "exon_count": 2
+        }
+      ]
+    },
+    "yeast": {
+      "organism": "Saccharomyces cerevisiae",
+      "sample": "Wild-type total RNA-Seq biological replicate 1",
+      "run_accession": "SRR6357070",
+      "study_accession": "SRP126328",
+      "geo_series": "GSE110004",
+      "geo_sample": "GSM2879618",
+      "source_metadata_url": "https://www.ebi.ac.uk/ena/browser/api/xml/SRR6357070",
+      "fastq_pairs": 256,
+      "read_length": 101,
+      "read_source_fixture": "datasets/rna-yeast",
+      "reference_assembly": "S. cerevisiae R64-1-1, Ensembl iGenomes as documented by nf-core",
+      "source_commit": "cad884e7fbe5617dcd55bdd07d9ddf65b54febe4",
+      "transcript_selection": "Use every exon feature on contig I in the pinned nf-core genes.gtf. Group by transcript_id; concatenate exons in genomic order and reverse-complement negative-strand transcripts. Ignore artificial annotation features on not_in_genome.",
+      "limitations": [
+        "Chromosome I reference and reads omit the remainder of the yeast transcriptome. Multimapping to omitted transcripts is not assessed.",
+        "The read selection is enriched for annotated splice junctions (128 pairs with a matching junction, 128 other pairs). Reads and qualities remain unchanged from original nf-core FASTQ records.",
+        "This annotation generally has one transcript per gene; the human fixture supplies alternative transcript isoforms."
+      ],
+      "transcript_count": 124,
+      "total_transcript_bases": 150264,
+      "transcripts": [
+        {
+          "id": "HRA1",
+          "gene_id": "HRA1",
+          "gene_name": "HRA1",
+          "length": 564,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL001C",
+          "gene_id": "YAL001C",
+          "gene_name": "TFC3",
+          "length": 3483,
+          "strand": "-",
+          "exon_count": 2
+        },
+        {
+          "id": "YAL002W",
+          "gene_id": "YAL002W",
+          "gene_name": "VPS8",
+          "length": 3825,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL003W",
+          "gene_id": "YAL003W",
+          "gene_name": "EFB1",
+          "length": 621,
+          "strand": "+",
+          "exon_count": 2
+        },
+        {
+          "id": "YAL004W",
+          "gene_id": "YAL004W",
+          "gene_name": "YAL004W",
+          "length": 648,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL005C",
+          "gene_id": "YAL005C",
+          "gene_name": "SSA1",
+          "length": 1929,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL007C",
+          "gene_id": "YAL007C",
+          "gene_name": "ERP2",
+          "length": 648,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL008W",
+          "gene_id": "YAL008W",
+          "gene_name": "FUN14",
+          "length": 597,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL009W",
+          "gene_id": "YAL009W",
+          "gene_name": "SPO7",
+          "length": 780,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL010C",
+          "gene_id": "YAL010C",
+          "gene_name": "MDM10",
+          "length": 1482,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL011W",
+          "gene_id": "YAL011W",
+          "gene_name": "SWC3",
+          "length": 1878,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL012W",
+          "gene_id": "YAL012W",
+          "gene_name": "CYS3",
+          "length": 1185,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL013W",
+          "gene_id": "YAL013W",
+          "gene_name": "DEP1",
+          "length": 1218,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL014C",
+          "gene_id": "YAL014C",
+          "gene_name": "SYN8",
+          "length": 768,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL015C",
+          "gene_id": "YAL015C",
+          "gene_name": "NTG1",
+          "length": 1200,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL016C-A",
+          "gene_id": "YAL016C-A",
+          "gene_name": "YAL016C-A",
+          "length": 315,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL016C-B",
+          "gene_id": "YAL016C-B",
+          "gene_name": "YAL016C-B",
+          "length": 186,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL016W",
+          "gene_id": "YAL016W",
+          "gene_name": "TPD3",
+          "length": 1908,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL017W",
+          "gene_id": "YAL017W",
+          "gene_name": "PSK1",
+          "length": 4071,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL018C",
+          "gene_id": "YAL018C",
+          "gene_name": "LDS1",
+          "length": 978,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL019W",
+          "gene_id": "YAL019W",
+          "gene_name": "FUN30",
+          "length": 3396,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL019W-A",
+          "gene_id": "YAL019W-A",
+          "gene_name": "YAL019W-A",
+          "length": 570,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL020C",
+          "gene_id": "YAL020C",
+          "gene_name": "ATS1",
+          "length": 1002,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL021C",
+          "gene_id": "YAL021C",
+          "gene_name": "CCR4",
+          "length": 2514,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL022C",
+          "gene_id": "YAL022C",
+          "gene_name": "FUN26",
+          "length": 1554,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL023C",
+          "gene_id": "YAL023C",
+          "gene_name": "PMT2",
+          "length": 2280,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL024C",
+          "gene_id": "YAL024C",
+          "gene_name": "LTE1",
+          "length": 4308,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL025C",
+          "gene_id": "YAL025C",
+          "gene_name": "MAK16",
+          "length": 921,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL026C",
+          "gene_id": "YAL026C",
+          "gene_name": "DRS2",
+          "length": 4068,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL026C-A",
+          "gene_id": "YAL026C-A",
+          "gene_name": "YAL026C-A",
+          "length": 438,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL027W",
+          "gene_id": "YAL027W",
+          "gene_name": "SAW1",
+          "length": 786,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL028W",
+          "gene_id": "YAL028W",
+          "gene_name": "FRT2",
+          "length": 1587,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL029C",
+          "gene_id": "YAL029C",
+          "gene_name": "MYO4",
+          "length": 4416,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL030W",
+          "gene_id": "YAL030W",
+          "gene_name": "SNC1",
+          "length": 354,
+          "strand": "+",
+          "exon_count": 2
+        },
+        {
+          "id": "YAL031C",
+          "gene_id": "YAL031C",
+          "gene_name": "GIP4",
+          "length": 2283,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL031W-A",
+          "gene_id": "YAL031W-A",
+          "gene_name": "YAL031W-A",
+          "length": 309,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL032C",
+          "gene_id": "YAL032C",
+          "gene_name": "PRP45",
+          "length": 1140,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL033W",
+          "gene_id": "YAL033W",
+          "gene_name": "POP5",
+          "length": 522,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL034C",
+          "gene_id": "YAL034C",
+          "gene_name": "FUN19",
+          "length": 1242,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL034C-B",
+          "gene_id": "YAL034C-B",
+          "gene_name": "YAL034C-B",
+          "length": 354,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL034W-A",
+          "gene_id": "YAL034W-A",
+          "gene_name": "MTW1",
+          "length": 870,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL035W",
+          "gene_id": "YAL035W",
+          "gene_name": "FUN12",
+          "length": 3009,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL036C",
+          "gene_id": "YAL036C",
+          "gene_name": "RBG1",
+          "length": 1110,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL037C-A",
+          "gene_id": "YAL037C-A",
+          "gene_name": "YAL037C-A",
+          "length": 93,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL037C-B",
+          "gene_id": "YAL037C-B",
+          "gene_name": "YAL037C-B",
+          "length": 975,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL037W",
+          "gene_id": "YAL037W",
+          "gene_name": "YAL037W",
+          "length": 804,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL038W",
+          "gene_id": "YAL038W",
+          "gene_name": "CDC19",
+          "length": 1503,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL039C",
+          "gene_id": "YAL039C",
+          "gene_name": "CYC3",
+          "length": 810,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL040C",
+          "gene_id": "YAL040C",
+          "gene_name": "CLN3",
+          "length": 1743,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL041W",
+          "gene_id": "YAL041W",
+          "gene_name": "CDC24",
+          "length": 2565,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL042C-A",
+          "gene_id": "YAL042C-A",
+          "gene_name": "YAL042C-A",
+          "length": 378,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL042W",
+          "gene_id": "YAL042W",
+          "gene_name": "ERV46",
+          "length": 1248,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL043C",
+          "gene_id": "YAL043C",
+          "gene_name": "PTA1",
+          "length": 2358,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL044C",
+          "gene_id": "YAL044C",
+          "gene_name": "GCV3",
+          "length": 513,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL044W-A",
+          "gene_id": "YAL044W-A",
+          "gene_name": "YAL044W-A",
+          "length": 333,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL045C",
+          "gene_id": "YAL045C",
+          "gene_name": "YAL045C",
+          "length": 309,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL046C",
+          "gene_id": "YAL046C",
+          "gene_name": "AIM1",
+          "length": 357,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL047C",
+          "gene_id": "YAL047C",
+          "gene_name": "SPC72",
+          "length": 1869,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL047W-A",
+          "gene_id": "YAL047W-A",
+          "gene_name": "YAL047W-A",
+          "length": 330,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL048C",
+          "gene_id": "YAL048C",
+          "gene_name": "GEM1",
+          "length": 1989,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL049C",
+          "gene_id": "YAL049C",
+          "gene_name": "AIM2",
+          "length": 741,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL051W",
+          "gene_id": "YAL051W",
+          "gene_name": "OAF1",
+          "length": 3144,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL053W",
+          "gene_id": "YAL053W",
+          "gene_name": "FLC2",
+          "length": 2352,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL054C",
+          "gene_id": "YAL054C",
+          "gene_name": "ACS1",
+          "length": 2142,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL055W",
+          "gene_id": "YAL055W",
+          "gene_name": "PEX22",
+          "length": 543,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL056C-A",
+          "gene_id": "YAL056C-A",
+          "gene_name": "YAL056C-A",
+          "length": 351,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL056W",
+          "gene_id": "YAL056W",
+          "gene_name": "GPB2",
+          "length": 2643,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL058W",
+          "gene_id": "YAL058W",
+          "gene_name": "CNE1",
+          "length": 1509,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL059C-A",
+          "gene_id": "YAL059C-A",
+          "gene_name": "YAL059C-A",
+          "length": 423,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL059W",
+          "gene_id": "YAL059W",
+          "gene_name": "ECM1",
+          "length": 639,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL060W",
+          "gene_id": "YAL060W",
+          "gene_name": "BDH1",
+          "length": 1149,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL061W",
+          "gene_id": "YAL061W",
+          "gene_name": "BDH2",
+          "length": 1254,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL062W",
+          "gene_id": "YAL062W",
+          "gene_name": "GDH3",
+          "length": 1374,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL063C",
+          "gene_id": "YAL063C",
+          "gene_name": "FLO9",
+          "length": 3969,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL063C-A",
+          "gene_id": "YAL063C-A",
+          "gene_name": "YAL063C-A",
+          "length": 291,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL064C-A",
+          "gene_id": "YAL064C-A",
+          "gene_name": "TDA8",
+          "length": 381,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL064W",
+          "gene_id": "YAL064W",
+          "gene_name": "YAL064W",
+          "length": 285,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL064W-B",
+          "gene_id": "YAL064W-B",
+          "gene_name": "YAL064W-B",
+          "length": 381,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL065C",
+          "gene_id": "YAL065C",
+          "gene_name": "YAL065C",
+          "length": 387,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL066W",
+          "gene_id": "YAL066W",
+          "gene_name": "YAL066W",
+          "length": 309,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL067C",
+          "gene_id": "YAL067C",
+          "gene_name": "SEO1",
+          "length": 1782,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL067W-A",
+          "gene_id": "YAL067W-A",
+          "gene_name": "YAL067W-A",
+          "length": 228,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL068C",
+          "gene_id": "YAL068C",
+          "gene_name": "PAU8",
+          "length": 363,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL068W-A",
+          "gene_id": "YAL068W-A",
+          "gene_name": "YAL068W-A",
+          "length": 255,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAL069W",
+          "gene_id": "YAL069W",
+          "gene_name": "YAL069W",
+          "length": 315,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR002C-A",
+          "gene_id": "YAR002C-A",
+          "gene_name": "ERP1",
+          "length": 660,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR002W",
+          "gene_id": "YAR002W",
+          "gene_name": "NUP60",
+          "length": 1620,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR003W",
+          "gene_id": "YAR003W",
+          "gene_name": "SWD1",
+          "length": 1281,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR007C",
+          "gene_id": "YAR007C",
+          "gene_name": "RFA1",
+          "length": 1866,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR008W",
+          "gene_id": "YAR008W",
+          "gene_name": "SEN34",
+          "length": 828,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR009C",
+          "gene_id": "YAR009C",
+          "gene_name": "YAR009C",
+          "length": 3591,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR010C",
+          "gene_id": "YAR010C",
+          "gene_name": "YAR010C",
+          "length": 1323,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR014C",
+          "gene_id": "YAR014C",
+          "gene_name": "BUD14",
+          "length": 2130,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR015W",
+          "gene_id": "YAR015W",
+          "gene_name": "ADE1",
+          "length": 921,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR018C",
+          "gene_id": "YAR018C",
+          "gene_name": "KIN3",
+          "length": 1308,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR019C",
+          "gene_id": "YAR019C",
+          "gene_name": "CDC15",
+          "length": 2925,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR019W-A",
+          "gene_id": "YAR019W-A",
+          "gene_name": "YAR019W-A",
+          "length": 333,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR020C",
+          "gene_id": "YAR020C",
+          "gene_name": "PAU7",
+          "length": 168,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR023C",
+          "gene_id": "YAR023C",
+          "gene_name": "YAR023C",
+          "length": 540,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR027W",
+          "gene_id": "YAR027W",
+          "gene_name": "UIP3",
+          "length": 708,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR028W",
+          "gene_id": "YAR028W",
+          "gene_name": "YAR028W",
+          "length": 705,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR029W",
+          "gene_id": "YAR029W",
+          "gene_name": "YAR029W",
+          "length": 225,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR030C",
+          "gene_id": "YAR030C",
+          "gene_name": "YAR030C",
+          "length": 342,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR031W",
+          "gene_id": "YAR031W",
+          "gene_name": "PRM9",
+          "length": 897,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR033W",
+          "gene_id": "YAR033W",
+          "gene_name": "MST28",
+          "length": 705,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR035C-A",
+          "gene_id": "YAR035C-A",
+          "gene_name": "YAR035C-A",
+          "length": 81,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR035W",
+          "gene_id": "YAR035W",
+          "gene_name": "YAT1",
+          "length": 2064,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR042W",
+          "gene_id": "YAR042W",
+          "gene_name": "SWH1",
+          "length": 3567,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR047C",
+          "gene_id": "YAR047C",
+          "gene_name": "YAR047C",
+          "length": 321,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR050W",
+          "gene_id": "YAR050W",
+          "gene_name": "FLO1",
+          "length": 4614,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR053W",
+          "gene_id": "YAR053W",
+          "gene_name": "YAR053W",
+          "length": 297,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR060C",
+          "gene_id": "YAR060C",
+          "gene_name": "YAR060C",
+          "length": 336,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR061W",
+          "gene_id": "YAR061W",
+          "gene_name": "YAR061W",
+          "length": 204,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR062W",
+          "gene_id": "YAR062W",
+          "gene_name": "YAR062W",
+          "length": 597,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR064W",
+          "gene_id": "YAR064W",
+          "gene_name": "YAR064W",
+          "length": 300,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR066W",
+          "gene_id": "YAR066W",
+          "gene_name": "YAR066W",
+          "length": 612,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR068W",
+          "gene_id": "YAR068W",
+          "gene_name": "YAR068W",
+          "length": 486,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR069C",
+          "gene_id": "YAR069C",
+          "gene_name": "YAR069C",
+          "length": 294,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "YAR070C",
+          "gene_id": "YAR070C",
+          "gene_name": "YAR070C",
+          "length": 300,
+          "strand": "-",
+          "exon_count": 1
+        },
+        {
+          "id": "snR18",
+          "gene_id": "snR18",
+          "gene_name": "snR18",
+          "length": 102,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "tA(UGC)A",
+          "gene_id": "tA(UGC)A",
+          "gene_name": "TGA1",
+          "length": 73,
+          "strand": "+",
+          "exon_count": 1
+        },
+        {
+          "id": "tL(CAA)A",
+          "gene_id": "tL(CAA)A",
+          "gene_name": "SUP56",
+          "length": 82,
+          "strand": "+",
+          "exon_count": 2
+        },
+        {
+          "id": "tP(UGG)A",
+          "gene_id": "tP(UGG)A",
+          "gene_name": "TRN1",
+          "length": 72,
+          "strand": "+",
+          "exon_count": 2
+        },
+        {
+          "id": "tS(AGA)A",
+          "gene_id": "tS(AGA)A",
+          "gene_name": "tS(AGA)A",
+          "length": 82,
+          "strand": "-",
+          "exon_count": 1
+        }
+      ]
+    }
+  },
+  "transformation": "Extract annotated genomic exon bases, uppercase, orient by strand and wrap FASTA at 60 columns. Copy the existing RNA fixture FASTQ files byte for byte. No read or reference bases are synthesized or duplicated.",
+  "regeneration": {
+    "script": "scripts/fetch-quant-test-data.py",
+    "python": "3.12 (standard library only)",
+    "command": "python3 scripts/fetch-quant-test-data.py --regenerate",
+    "reference_download_bytes": 39294956,
+    "read_regeneration_command": "python3 scripts/fetch-rna-test-data.py --regenerate",
+    "read_regeneration_note": "Needs pysam==0.23.3 and about 389 MB of original source downloads; then the quantification regeneration command copies and verifies those identical reads."
+  },
+  "files": {
+    "human/reads_1.fastq": {
+      "bytes": 42981,
+      "sha256": "300bbde9e95c66ea90c003ec0ca3a40f1dc7a012862e38e11e54ae47865ca70e",
+      "generated": true
+    },
+    "human/reads_2.fastq": {
+      "bytes": 42981,
+      "sha256": "f7147fe368ea37ac1f5fbf59274d4088ba719fe0779a9d0b9c89a75d692fe53f",
+      "generated": true
+    },
+    "human/transcripts.fa": {
+      "bytes": 17111,
+      "sha256": "4978f5eb8670e88dd39d2beae1e2784874fbc1c6d91d286f163dd88e109a4377",
+      "generated": true
+    },
+    "human/transcripts.tsv": {
+      "bytes": 341,
+      "sha256": "ab612d6d5ca8b597e38d8286468fdebaf1da7085f395922bb851d05463bc63c1",
+      "generated": true
+    },
+    "human/tx2gene.tsv": {
+      "bytes": 202,
+      "sha256": "2101eac8c75483cc551304e5d3ae0a1b5d02addb67408062689eb9d7cb76d295",
+      "generated": true
+    },
+    "provenance/ERR127306.xml": {
+      "bytes": 3086,
+      "sha256": "c0e08c36345479e4c246a5056b23088025a3718b00c2a25659c259ab1d296462",
+      "generated": false
+    },
+    "provenance/SRR6357070.xml": {
+      "bytes": 2614,
+      "sha256": "a26bf38d74fa6995a5ff396aac5b9eaa57166edb0c3d222ec086465b26b10be0",
+      "generated": false
+    },
+    "provenance/human-UPSTREAM_DESCRIPTION.txt": {
+      "bytes": 1249,
+      "sha256": "159d570768310fd36cab1312bbd75cd7066a6cf79314cd36d1719cfbcb6f239b",
+      "generated": false
+    },
+    "provenance/human-selected.attrs.tsv": {
+      "bytes": 762,
+      "sha256": "5f797c1881488f97c57834580c0749f30be9e40d16ffaf792e2abc7c74fef6c7",
+      "generated": true
+    },
+    "provenance/human-selected.genePred.tsv": {
+      "bytes": 2516,
+      "sha256": "4e5f31748523f2e7bd9d3c9fccc6dc2dd9880cf918e900d194a1ad6563728000",
+      "generated": true
+    },
+    "provenance/nfcore-rnaseq-README.md": {
+      "bytes": 13240,
+      "sha256": "7c4fbdcc513b935f02735bc829834c891c4165e5c815bd47aa6ece2dbcdc23eb",
+      "generated": false
+    },
+    "provenance/rna-read-manifest.json": {
+      "bytes": 11683,
+      "sha256": "918f8bc002720e22e9061f1bfc10309c26fc211894056dda473880c8c2acfba6",
+      "generated": false
+    },
+    "provenance/yeast-UPSTREAM_LICENSE.txt": {
+      "bytes": 1064,
+      "sha256": "1fa2a62f20d23902c7aad04f3d728fbfc9d153df472e8f2ef163322a8c5557c8",
+      "generated": false
+    },
+    "provenance/yeast-selected-exons.gtf": {
+      "bytes": 46592,
+      "sha256": "e10d96b086699b6f1f08ab79d45f8590e47ddcc28f11b25b6fcf587220175485",
+      "generated": true
+    },
+    "yeast/reads_1.fastq": {
+      "bytes": 65464,
+      "sha256": "98d6e4d70c64a1cd75a388f4fa1fa794b1890a6388bd18e41ff67cb762e7cd45",
+      "generated": true
+    },
+    "yeast/reads_2.fastq": {
+      "bytes": 65464,
+      "sha256": "abdc1e3e6167435ae8f77631568d23c95b1d84c5e53c683d3e80418a8112055e",
+      "generated": true
+    },
+    "yeast/transcripts.fa": {
+      "bytes": 153985,
+      "sha256": "14be65c57fcaeefa97113ca0fdef503eec098a43d78a32424440d00d5ce4ff6e",
+      "generated": true
+    },
+    "yeast/transcripts.tsv": {
+      "bytes": 3973,
+      "sha256": "a87c5dd025fcd42fd8778b0c1a67f9afb73a6948a087bf9a65b4f50951f4a322",
+      "generated": true
+    },
+    "yeast/tx2gene.tsv": {
+      "bytes": 2092,
+      "sha256": "5a6168d1e9de15b8c8d3c7a05302906e346302b94ba827d87d151492e273c627",
+      "generated": true
+    }
+  }
+}

@@ -1,7 +1,7 @@
 # Genomics WebAssembly tools
 
-Sequence trimming, DNA and RNA alignment, transcript quantification, variant
-calling and differential expression tools for web browsers and Node.js. Each tool has an independent
+Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
+quantification, coverage, variant calling and differential expression tools for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
 using webR.
@@ -24,6 +24,9 @@ DESeq2 session retains its R objects until the session is closed.
 | [minimap2](tools/minimap2/README.md) | 2.31 | Indexing and alignment, including spliced RNA modes, one thread |
 | [kallisto](tools/kallisto/README.md) | 0.52.0 | Transcript indexing and bulk RNA-seq quantification, one thread |
 | [Salmon](tools/salmon/README.md) | 2.8.0 | Transcript indexing and bulk RNA-seq quantification, real worker threads and shared memory |
+| [featureCounts](tools/featurecounts/README.md) | 2.1.1 | Gene and exon counts from SAM/BAM, real worker threads |
+| [StringTie](tools/stringtie/README.md) | 3.0.3 | Transcript assembly and abundance from aligned RNA reads, one thread |
+| [mosdepth](tools/mosdepth/README.md) | 0.3.14 | BAM/CRAM coverage and depth summaries, one thread |
 | [DESeq2](tools/deseq2/README.md) | 1.52.0 | Count-matrix analysis using R 4.6.0 and webR 0.6.0, one R process |
 
 See the individual tool documentation for supported features, build changes,
@@ -39,6 +42,12 @@ and validation workflow. Both use real human and yeast RNA-seq reads with matchi
 transcript references. Salmon needs cross-origin isolation for its worker threads;
 the example includes a static server and a service worker for hosts without custom
 response headers. Read the hosting instructions before deploying it.
+
+featureCounts, StringTie and mosdepth have a separate [browser example](examples/rna-analysis/README.md)
+and validation workflow. The example accepts editable command arguments, retains
+output files between commands and includes real human and yeast RNA-seq alignments
+with annotations. featureCounts uses shared memory and needs cross-origin isolation;
+StringTie and mosdepth can use ordinary static hosting.
 
 ## Build
 
@@ -150,6 +159,21 @@ Delete that file or set `enabled` to `false` when changing build inputs. Missing
 or expired artifacts trigger a fresh build; mismatched provenance stops the job.
 Forks ignore another repository's pinned build and compile their own programs.
 
+The **Build and validate RNA analysis tools** workflow checks featureCounts,
+StringTie and mosdepth. To build and validate one tool locally:
+
+```sh
+bash scripts/build-featurecounts.sh all
+# Or scripts/build-stringtie.sh / scripts/build-mosdepth.sh
+python3 scripts/fetch-rna-analysis-test-data.py --verify
+node scripts/validate-rna-analysis.mjs --tool featurecounts --engine node
+```
+
+Use `--engine chromium`, `firefox` or `webkit` for browser comparisons. Each
+program is checked against its unchanged native build and a native build with
+the portability patches. See [comparison rules](validation/rna-analysis/README.md)
+and the tool READMEs for the tested options and restrictions.
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -166,6 +190,12 @@ validation reports from all four engines. Their final workflow artifact is
 example, real test data, corresponding sources, licences and validation summaries.
 Salmon's native and browser indexes have different word sizes; build the index in
 the environment that will use it.
+
+RNA analysis packages are created by `scripts/package-rna-analysis.py` after all
+four engines pass. Each ZIP contains one compiled program, its runner, a browser
+example configured for that program, the real input data, source archives, patches,
+licences and comparison reports. The workflow's final artifact is
+`rna-analysis-packages`; compiled build artifacts alone have not passed the release gate.
 
 ## Licence
 

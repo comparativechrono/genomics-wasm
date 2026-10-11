@@ -1,0 +1,56 @@
+--- a/mosdepth.nim
++++ b/mosdepth.nim
+@@ -363,6 +363,9 @@
+   var bed_regions = newTable[string, seq[region_t]]()
+   var kstr = kstring_t(l: 0, m: 0, s: nil)
+   var hf = hts_open(cstring(bed), "r")
++  if hf == nil:
++    stderr.write_line("[mosdepth] could not open regions file: " & bed)
++    quit(2)
+   while hts_getline(hf, cint(10), addr kstr) > 0:
+     if kstr.s[0] == 't' and ($kstr.s).startswith("track "):
+       continue
+@@ -916,6 +919,12 @@
+   -h --help                         show help
+   """
+ 
++  # The standalone port does not include the optional D4 backend.
++  for arg in commandLineParams():
++    if arg == "--d4" or arg.startsWith("--d4="):
++      stderr.write_line("[mosdepth] WebAssembly port does not support --d4")
++      quit(2)
++
+   var args: Table[string, Value]
+   try:
+     args = docopt(doc, version = version, quit = false)
+@@ -954,9 +963,12 @@
+       stderr.write_line("[mosdepth] error --thresholds can only be used when --by is specified.")
+       quit(2)
+   GC_disableMarkAndSweep()
++  # Keep the owning string alive while HTSlib consumes its C-string view.
++  var fasta_path: string
+   var fasta: cstring = nil
+   if $args["--fasta"] != "nil":
+-    fasta = cstring($args["--fasta"])
++    fasta_path = $args["--fasta"]
++    fasta = cstring(fasta_path)
+ 
+   var
+     eflag: uint16 = uint16(S.parse_int($args["--flag"]))
+@@ -964,8 +976,14 @@
+     threads = S.parse_int($args["--threads"])
+     chrom = region_line_to_region($args["--chrom"])
+     bam: Bam
+-  check_cram_has_ref($args["<BAM-or-CRAM>"], $args["--fasta"])
+-  open(bam, $args["<BAM-or-CRAM>"], threads = threads, index = true, fai = fasta)
++  if threads != 0:
++    stderr.write_line("[mosdepth] WebAssembly port requires --threads 0 (BAM decompression threads are unavailable)")
++    quit(2)
++  let bam_path = $args["<BAM-or-CRAM>"]
++  check_cram_has_ref(bam_path, $args["--fasta"])
++  if not open(bam, bam_path.cstring, threads = threads, index = true, fai = fasta):
++    stderr.write_line("[mosdepth] could not open alignment file")
++    quit(2)
+   if bam.idx == nil:
+     stderr.write_line("[mosdepth] error alignment file must be indexed")
+     quit(2)

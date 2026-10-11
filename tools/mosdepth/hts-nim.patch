@@ -1,0 +1,43 @@
+--- a/src/hts/private/hts_concat.nim
++++ b/src/hts/private/hts_concat.nim
+@@ -310,9 +310,9 @@
+ proc hts_idx_push*(idx: ptr hts_idx_t; tid: cint; beg: int64; `end`: int64;
+                   offset: uint64; is_mapped: cint): cint {.cdecl,
+     importc: "hts_idx_push", dynlib: libname.}
+-proc hts_idx_finish*(idx: ptr hts_idx_t; final_offset: uint64) {.cdecl,
++proc hts_idx_finish*(idx: ptr hts_idx_t; final_offset: uint64): cint {.discardable, cdecl,
+     importc: "hts_idx_finish", dynlib: libname.}
+-proc hts_idx_save*(idx: ptr hts_idx_t; fn: cstring; fmt: cint) {.cdecl,
++proc hts_idx_save*(idx: ptr hts_idx_t; fn: cstring; fmt: cint): cint {.discardable, cdecl,
+     importc: "hts_idx_save", dynlib: libname.}
+ proc hts_idx_load*(fn: cstring; fmt: cint): ptr hts_idx_t {.cdecl,
+     importc: "hts_idx_load", dynlib: libname.}
+@@ -478,7 +478,7 @@
+     importc: "bam_cigar2qlen", dynlib: libname.}
+ proc bam_cigar2rlen*(n_cigar: cint; cigar: ptr uint32): cint {.cdecl,
+     importc: "bam_cigar2rlen", dynlib: libname.}
+-proc bam_endpos*(b: ptr bam1_t): int32 {.cdecl, importc: "bam_endpos", dynlib: libname.}
++proc bam_endpos*(b: ptr bam1_t): int64 {.cdecl, importc: "bam_endpos", dynlib: libname.}
+ proc bam_str2flag*(str: cstring): cint {.cdecl, importc: "bam_str2flag",
+                                      dynlib: libname.}
+ ## * returns negative value on error
+@@ -501,7 +501,7 @@
+     cdecl, importc: "sam_index_build3", dynlib: libname.}
+ proc sam_itr_querys*(a1: ptr hts_idx_t; h: ptr bam_hdr_t; region: cstring): ptr hts_itr_t {.
+     cdecl, importc: "sam_itr_querys", dynlib: libname.}
+-proc sam_itr_queryi*(idx: ptr hts_idx_t; tid: cint; beg: cint; `end`: cint): ptr hts_itr_t {.
++proc sam_itr_queryi*(idx: ptr hts_idx_t; tid: cint; beg: int64; `end`: int64): ptr hts_itr_t {.
+     cdecl, importc: "sam_itr_queryi", dynlib: libname.}
+ proc hts_detect_format*(fp: ptr hFILE; fmt: ptr htsFormat): cint {.cdecl,
+     importc: "hts_detect_format", dynlib: libname.}
+--- a/src/hts/bam.nim
++++ b/src/hts/bam.nim
+@@ -325,7 +325,7 @@
+ proc finalize_record(rec: Record) =
+   bam_destroy1(rec.b)
+ 
+-proc copy*(r: Record): Record {.noInit.} =
++proc copy*(r: Record): Record =
+   ## `copy` makes a copy of the record.
+   new(result, finalize_record)
+   result.b = bam_dup1(r.b)

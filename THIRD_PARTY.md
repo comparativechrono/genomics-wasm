@@ -26,6 +26,16 @@ directory under `tools/`.
   Source: https://github.com/COMBINE-lab/salmon
   The Rust dependencies, Rust standard library and bundled C/C++ components
   retain their own licences; see the source and notices included in its package.
+- featureCounts: Wei Shi, Yang Liao and Subread contributors; GPL-3.0.
+  Source: https://subread.sourceforge.net/
+  Its package includes Subread sources, zlib and the Emscripten mailbox shim notices.
+- StringTie: Mihaela Pertea, Geo Pertea and contributors; MIT.
+  Source: https://github.com/gpertea/stringtie
+  Its offline source distribution includes HTSlib, gclib and compression libraries;
+  these retain their respective licences and notices.
+- mosdepth: Brent Pedersen and contributors; MIT.
+  Source: https://github.com/brentp/mosdepth
+  Its package includes the pinned Nim and HTSlib dependencies and their notices.
 - DESeq2: Michael Love, Simon Anders, Wolfgang Huber and contributors;
   LGPL-3.0-or-later. Source: https://github.com/thelovelab/DESeq2
   Its separate package uses webR and R, together with the Bioconductor and CRAN

@@ -1,0 +1,56 @@
+{
+  "alignmentRecords": 749,
+  "cigarOperationCounts": {
+    "0": 884,
+    "2": 8,
+    "3": 190,
+    "4": 100
+  },
+  "flagCounts": {
+    "113": 1,
+    "133": 24,
+    "141": 16,
+    "145": 3,
+    "147": 121,
+    "153": 7,
+    "161": 7,
+    "163": 141,
+    "177": 1,
+    "321": 1,
+    "329": 4,
+    "339": 1,
+    "355": 50,
+    "403": 50,
+    "419": 1,
+    "433": 2,
+    "69": 7,
+    "73": 22,
+    "77": 16,
+    "81": 7,
+    "83": 141,
+    "89": 2,
+    "97": 3,
+    "99": 121
+  },
+  "fragments": 320,
+  "mappedRecords": 686,
+  "mapqCounts": {
+    "0": 95,
+    "1": 136,
+    "60": 518
+  },
+  "mateOverlapAlignedBases": 12077,
+  "mateOverlapPairs": 207,
+  "multiMappingRecords": 168,
+  "primaryMappedRecords": 577,
+  "recordsWithTags": {
+    "NH": 686,
+    "XS": 190
+  },
+  "secondaryRecords": 109,
+  "splicedRecords": 190,
+  "splitFragments": [
+    160,
+    160
+  ]
+}

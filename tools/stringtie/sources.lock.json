@@ -1,0 +1,58 @@
+{
+  "tool": "stringtie",
+  "version": "3.0.3",
+  "revision": "3436ad6dfd0ffc806a94086cf747ac6ff2b0dc19",
+  "tag": "v3.0.3",
+  "url": "https://github.com/gpertea/stringtie/releases/download/v3.0.3/stringtie-3.0.3.offline.tar.gz",
+  "sha256": "884bc6523c4af0d7b05518db5bbcf38e39d1804be9b3f8ee01d7078712b1262a",
+  "emscripten": "3.1.64",
+  "dependencies": {
+    "gclib": {
+      "version": "0.12.8",
+      "bundledPath": "gclib",
+      "sourceTreeSha256": "e41a0ec4095ba943e61236c607016f22893b49523ff24f27ca1d782e9886d924"
+    },
+    "htslib": {
+      "version": "1.21 (StringTie bundled)",
+      "bundledPath": "htslib",
+      "sourceTreeSha256": "aab75d0fde8608fcd07e1586831559601a184033608195d7e318760799348cd0"
+    },
+    "htscodecs": {
+      "version": "1.4.0",
+      "bundledPath": "htslib/htscodecs",
+      "sourceTreeSha256": "2ff053aa6a0b51a0743f613335936e95da152b72985f425920801a4a47d0e8db"
+    },
+    "libdeflate": {
+      "version": "1.23",
+      "bundledPath": "htslib/libdeflate",
+      "sourceTreeSha256": "a645ad9c04b84d02791dc72339ee5f779e772d39f2ca4a854ab32d521e84e7a7"
+    },
+    "bzip2": {
+      "version": "1.0.8",
+      "bundledPath": "htslib/bzip2",
+      "sourceTreeSha256": "bc823be50992ddec2a4a405d77c34e98488a017cd849751c8f1739415553c4de"
+    },
+    "xz": {
+      "version": "5.4.7",
+      "bundledPath": "htslib/lzma",
+      "sourceTreeSha256": "00158748ed28088f849c6d4a068c581055c25b21899aad2f4ab682082a2a08ba"
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    }
+  },
+  "treeHashFormat": "For sorted relative file paths: SHA256(path + NUL + SHA256(bytes) + LF), UTF-8 concatenation.",
+  "archive": "stringtie-3.0.3.offline.tar.gz",
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.htslib",
+    "LICENSE.htscodecs",
+    "LICENSE.libdeflate",
+    "LICENSE.bzip2",
+    "LICENSE.xz",
+    "LICENSE.zlib",
+    "THIRD_PARTY_LICENSES.txt"
+  ]
+}

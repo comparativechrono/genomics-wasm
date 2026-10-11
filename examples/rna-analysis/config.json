@@ -1,0 +1,169 @@
+{
+  "tools": {
+    "featurecounts": {
+      "label": "featureCounts",
+      "requiresIsolation": true,
+      "waitForExit": true,
+      "commands": {
+        "count": {
+          "label": "Count paired fragments",
+          "args": [
+            "-T",
+            "1",
+            "-p",
+            "--countReadPairs",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "outputDirectories": []
+        },
+        "exons": {
+          "label": "Count reads per exon",
+          "args": [
+            "-p",
+            "-T",
+            "1",
+            "-f",
+            "-a",
+            "annotation.gtf",
+            "-o",
+            "counts.tsv",
+            "input.bam"
+          ],
+          "outputs": [
+            "counts.tsv",
+            "counts.tsv.summary"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Version",
+          "args": [
+            "-v"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    },
+    "stringtie": {
+      "label": "StringTie",
+      "requiresIsolation": false,
+      "waitForExit": false,
+      "commands": {
+        "assemble": {
+          "label": "Assemble transcripts",
+          "args": [
+            "input.bam",
+            "-p",
+            "1",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf"
+          ],
+          "outputs": [
+            "transcripts.gtf"
+          ],
+          "outputDirectories": []
+        },
+        "estimate": {
+          "label": "Estimate annotated transcripts",
+          "args": [
+            "input.bam",
+            "-p",
+            "1",
+            "-e",
+            "-G",
+            "annotation.gtf",
+            "-o",
+            "transcripts.gtf",
+            "-A",
+            "gene-abundance.tsv"
+          ],
+          "outputs": [
+            "transcripts.gtf",
+            "gene-abundance.tsv"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Version",
+          "args": [
+            "--version"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    },
+    "mosdepth": {
+      "label": "mosdepth",
+      "requiresIsolation": false,
+      "waitForExit": false,
+      "commands": {
+        "coverage": {
+          "label": "Coverage by region",
+          "args": [
+            "--threads",
+            "0",
+            "--by",
+            "regions.bed",
+            "--no-per-base",
+            "coverage",
+            "input.bam"
+          ],
+          "outputs": [
+            "coverage.mosdepth.summary.txt",
+            "coverage.mosdepth.global.dist.txt",
+            "coverage.mosdepth.region.dist.txt",
+            "coverage.regions.bed.gz",
+            "coverage.regions.bed.gz.csi"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Version",
+          "args": [
+            "--version"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    }
+  },
+  "datasets": {
+    "human": {
+      "label": "Human RNA-seq (ERR127306)",
+      "path": "../../datasets/rna-analysis/human/",
+      "files": [
+        "input.bam",
+        "input.bam.bai",
+        "reference.fa",
+        "reference.fa.fai",
+        "annotation.gtf",
+        "regions.bed"
+      ]
+    },
+    "yeast": {
+      "label": "Yeast RNA-seq (SRR6357070)",
+      "path": "../../datasets/rna-analysis/yeast/",
+      "files": [
+        "input.bam",
+        "input.bam.bai",
+        "reference.fa",
+        "reference.fa.fai",
+        "annotation.gtf",
+        "regions.bed"
+      ]
+    }
+  }
+}
