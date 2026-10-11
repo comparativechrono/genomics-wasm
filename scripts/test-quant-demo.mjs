@@ -130,25 +130,36 @@ try {
     summary.cases.push({ id: `${tool}-demo-quant-download`, status: 'passed', transcriptRows: rows.length, outputSha256: createHash('sha256').update(downloaded.bytes).digest('hex') });
 
     phase(`${tool}: cancel during worker loading and restart`);
-    await page.locator('#command').selectOption('help');
+    const cancelStep = async (name, action) => {
+      phase(`${tool}: cancellation ${name} starting`);
+      const result = await deadline(action(), 30000, `${tool}: cancellation ${name} exceeded 30 seconds`);
+      phase(`${tool}: cancellation ${name} completed`);
+      return result;
+    };
+    await cancelStep('select command', () => page.locator('#command').selectOption('help'));
     let releaseRequest, moduleRequested;
     const pendingRequest = new Promise(resolve => { releaseRequest = resolve; });
     const requestEntered = new Promise(resolve => { moduleRequested = resolve; });
     const moduleRoute = `**/dist/${tool}/${tool}.mjs`;
-    await page.route(moduleRoute, async route => { moduleRequested(); await pendingRequest; await route.continue().catch(() => {}); });
-    let loadingDeadline;
     try {
-      await page.locator('#run').click();
-      await Promise.race([requestEntered, new Promise((_, reject) => { loadingDeadline = setTimeout(() => reject(new Error('The tool worker did not request its module')), 30000); })]);
-      await page.locator('#cancel').click();
-      await page.waitForFunction(() => document.getElementById('status').textContent === 'Command cancelled.');
+      await cancelStep('install request hold', () => page.route(moduleRoute, async route => {
+        moduleRequested();
+        await pendingRequest;
+        await route.continue().catch(() => {});
+      }));
+      await cancelStep('start command', () => page.locator('#run').click());
+      await cancelStep('wait for held module request', () => requestEntered);
+      await cancelStep('click cancel', () => page.locator('#cancel').click());
+      await cancelStep('check cancelled status', () => page.waitForFunction(() => document.getElementById('status').textContent === 'Command cancelled.'));
     } finally {
-      clearTimeout(loadingDeadline);
       releaseRequest();
-      await page.unroute(moduleRoute);
+      await cancelStep('remove request hold', () => page.unroute(moduleRoute));
     }
+    phase(`${tool}: cancellation restart starting`);
     await run(page);
-    assert.match(`${await page.locator('#stdout').innerText()}${await page.locator('#stderr').innerText()}`, new RegExp(tool, 'i'));
+    phase(`${tool}: cancellation restart completed`);
+    const restartOutput = await cancelStep('read restarted command output', () => Promise.all([page.locator('#stdout').innerText(), page.locator('#stderr').innerText()]));
+    assert.match(restartOutput.join(''), new RegExp(tool, 'i'));
     summary.cases.push({ id: `${tool}-demo-cancel-loading-restart`, status: 'passed' });
   }
 
@@ -230,11 +241,11 @@ try {
   summary.error = error.stack;
   if (activePage) {
     summary.failurePage = activePage.url();
-    await activePage.screenshot({ path: join(reportDir, 'failure.png'), fullPage: true }).catch(() => {});
+    await deadline(activePage.screenshot({ path: join(reportDir, 'failure.png'), fullPage: true }), 5000, 'Failure screenshot exceeded 5 seconds').catch(() => {});
     for (const id of ['status', 'arguments', 'outputs', 'output-directories', 'stdout', 'stderr']) {
-      await writeFile(join(reportDir, `${id}.txt`), await activePage.locator(`#${id}`).evaluate(element => element.value ?? element.textContent, undefined, { timeout: 2000 }).catch(() => '(unavailable)'));
+      await writeFile(join(reportDir, `${id}.txt`), await deadline(activePage.locator(`#${id}`).evaluate(element => element.value ?? element.textContent, undefined, { timeout: 2000 }), 3000, `Failure diagnostic ${id} exceeded 3 seconds`).catch(() => '(unavailable)'));
     }
-    console.error(JSON.stringify({ page: summary.failurePage, status: await activePage.locator('#status').textContent({ timeout: 2000 }).catch(() => null), console: summary.browserConsole.slice(-15), failedRequests: summary.failedRequests.slice(-15) }, null, 2));
+    console.error(JSON.stringify({ page: summary.failurePage, status: await deadline(activePage.locator('#status').textContent({ timeout: 2000 }), 3000, 'Failure status exceeded 3 seconds').catch(() => null), console: summary.browserConsole.slice(-15), failedRequests: summary.failedRequests.slice(-15) }, null, 2));
   }
   process.exitCode = 1;
   console.error(error);
@@ -269,9 +280,9 @@ async function ready(page) {
 }
 
 async function run(page) {
-  await page.locator('#run').click();
-  await page.waitForFunction(() => /^(Exited with status|Error:|RuntimeError:|TimeoutError:|TypeError:|RangeError:)/.test(document.getElementById('status').textContent), null, { timeout: 360000 });
-  const status = await page.locator('#status').innerText();
+  await deadline(page.locator('#run').click(), 30000, 'Starting command exceeded 30 seconds');
+  await deadline(page.waitForFunction(() => /^(Exited with status|Error:|RuntimeError:|TimeoutError:|TypeError:|RangeError:)/.test(document.getElementById('status').textContent), null, { timeout: 360000 }), 365000, 'Waiting for command status exceeded 365 seconds');
+  const status = await deadline(page.locator('#status').innerText(), 30000, 'Reading command status exceeded 30 seconds');
   assert.match(status, /^Exited with status 0 /, status);
   assert.doesNotMatch(status, /Missing requested files:/);
 }

@@ -10,8 +10,9 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const options = { engine: 'webkit', case: 'index', dataset: 'human', timeout: '60000' };
-const usage = 'diagnose-salmon-browser.mjs [--engine chromium|firefox|webkit] [--case index|version] [--dataset human|yeast] [--timeout milliseconds]';
+const modes = ['direct', 'passthrough', 'heartbeat', 'listener', 'stdio', 'workers', 'full'];
+const options = { engine: 'webkit', case: 'index', dataset: 'human', timeout: '60000', mode: 'full' };
+const usage = `diagnose-salmon-browser.mjs [--engine chromium|firefox|webkit] [--case index|version] [--dataset human|yeast] [--timeout milliseconds] [--mode ${modes.join('|')}]`;
 if (process.argv.includes('--help')) { console.log(usage); process.exit(0); }
 for (let i = 2; i < process.argv.length; i += 2) {
   const key = process.argv[i].replace(/^--/, '');
@@ -19,12 +20,12 @@ for (let i = 2; i < process.argv.length; i += 2) {
   options[key] = process.argv[i + 1];
 }
 if (!['chromium', 'firefox', 'webkit'].includes(options.engine) || !['index', 'version'].includes(options.case)
-    || !['human', 'yeast'].includes(options.dataset) || !/^\d+$/.test(options.timeout)
+    || !['human', 'yeast'].includes(options.dataset) || !modes.includes(options.mode) || !/^\d+$/.test(options.timeout)
     || Number(options.timeout) < 1000 || Number(options.timeout) > 120000) throw new Error(usage);
 const timeoutMs = Number(options.timeout);
 const reportDirectory = join(root, 'reports', 'quant', options.engine);
-const reportPath = join(reportDirectory, `diagnostic-salmon-${options.case}-${options.dataset}.json`);
-const report = { schema: 1, diagnosticOnly: true, startedAt: new Date().toISOString(), options,
+const reportPath = join(reportDirectory, `diagnostic-salmon-${options.case}-${options.dataset}-${options.mode}.json`);
+const report = { schema: 2, diagnosticOnly: true, startedAt: new Date().toISOString(), options,
   node: process.version, status: 'running', events: [] };
 let browser, server;
 const digest = data => createHash('sha256').update(data).digest('hex');
@@ -45,7 +46,7 @@ async function bounded(promise, milliseconds, label) {
 
 // Served only by this diagnostic server. The ordinary runtime worker imports
 // this module using ToolRunner.moduleUrl, and it imports the untouched build.
-const wrapperSource = String.raw`
+const fullWrapperSource = String.raw`
 const prefix = '[salmon-diag] ';
 let phase = 'wrapper-loaded', sequence = 0;
 const workers = new Map();
@@ -174,6 +175,68 @@ export default async function diagnosticFactory(options) {
 }
 `;
 
+// Ablations intentionally do not share the full wrapper's logging or global
+// listeners. In particular, passthrough adds only the dynamic import and async
+// factory boundary; heartbeat adds only a timer and its exit/error cleanup.
+const passthroughSource = String.raw`
+export default async function diagnosticFactory(options) {
+  const { default: createSalmon } = await import('/dist/salmon/salmon.mjs');
+  return await createSalmon(options);
+}
+`;
+const heartbeatSource = String.raw`
+export default async function diagnosticFactory(options) {
+  const heartbeat = setInterval(() => {}, 5000);
+  try {
+    const { default: createSalmon } = await import('/dist/salmon/salmon.mjs');
+    return await createSalmon({
+      ...options,
+      onExit: (...args) => { clearInterval(heartbeat); return options.onExit?.(...args); },
+      onAbort: (...args) => { clearInterval(heartbeat); return options.onAbort?.(...args); },
+    });
+  } catch (error) { clearInterval(heartbeat); throw error; }
+}
+`;
+// The production worker's one-shot listener is removed before execute awaits
+// the proxied application. Test a pending message handler independently of a
+// timer; the outer ToolRunner still terminates this worker after one command.
+const listenerSource = `self.addEventListener('message', () => {});\n` + passthroughSource;
+const tracePrelude = String.raw`
+const prefix = '[salmon-diag] ';
+let sequence = 0;
+const workers = new Map();
+function emit(event, detail = {}) {
+  console.log(prefix + JSON.stringify({ event, elapsedMs: Math.round(performance.now()), ...detail }));
+}
+function errorDetail(error) {
+  return { name: error?.name, message: error?.message || String(error), stack: error?.stack };
+}
+`;
+// Reuse the exact full diagnostic instrumentation, without its surrounding
+// startup logs, error listeners, timer, or factory/callMain hooks.
+const workersSource = tracePrelude + fullWrapperSource.slice(
+  fullWrapperSource.indexOf('const OriginalWorker ='),
+  fullWrapperSource.indexOf('// The normal runtime installs byte callbacks'),
+) + passthroughSource;
+const stdioSource = tracePrelude + fullWrapperSource.slice(
+  fullWrapperSource.indexOf('function traceStdio(instance)'),
+  fullWrapperSource.indexOf('export default async function diagnosticFactory'),
+) + String.raw`
+export default async function diagnosticFactory(options) {
+  const { default: createSalmon } = await import('/dist/salmon/salmon.mjs');
+  const hooks = typeof options.preRun === 'function' ? [options.preRun] : (options.preRun || []);
+  return await createSalmon({
+    ...options,
+    preRun: hooks.map(hook => module => { traceStdio(module); return hook(module); }),
+  });
+}
+`;
+const wrapperSource = { passthrough: passthroughSource, heartbeat: heartbeatSource, listener: listenerSource,
+  stdio: stdioSource, workers: workersSource, full: fullWrapperSource }[options.mode];
+const modulePath = options.mode === 'direct' ? '/dist/salmon/salmon.mjs' : '/diagnostic-factory.mjs';
+report.modulePath = modulePath;
+report.wrapperSha256 = wrapperSource === undefined ? null : digest(wrapperSource);
+
 try {
   await mkdir(reportDirectory, { recursive: true });
   report.sha256 = Object.fromEntries(await Promise.all([
@@ -197,7 +260,11 @@ try {
         response.end('<!doctype html><meta charset="utf-8"><title>Salmon diagnostic</title>'); return;
       }
       response.setHeader('Content-Type', url.pathname.endsWith('.wasm') ? 'application/wasm' : 'text/javascript');
-      if (url.pathname === '/diagnostic-factory.mjs') { response.end(wrapperSource); return; }
+      if (url.pathname === '/diagnostic-factory.mjs') {
+        if (wrapperSource === undefined) response.writeHead(404).end();
+        else response.end(wrapperSource);
+        return;
+      }
       const path = resolve(root, '.' + decodeURIComponent(url.pathname));
       if (!path.startsWith(root + sep) || !['runtime/', 'dist/salmon/'].some(prefix => relative(root, path).startsWith(prefix))) {
         response.writeHead(404).end(); return;
@@ -222,15 +289,15 @@ try {
     userAgent: navigator.userAgent, hardwareConcurrency: navigator.hardwareConcurrency }));
   if (!report.environment.crossOriginIsolated) throw new Error('Diagnostic server did not enable cross-origin isolation');
   record('command-starting', { args: report.args, timeoutMs, environment: report.environment });
-  report.result = await bounded(page.evaluate(async ({ args, files, timeoutMs, index }) => {
+  report.result = await bounded(page.evaluate(async ({ args, files, timeoutMs, index, modulePath }) => {
     const { ToolRunner } = await import('/runtime/index.mjs');
-    const runner = new ToolRunner({ moduleUrl: new URL('/diagnostic-factory.mjs', location.href), waitForExit: true });
+    const runner = new ToolRunner({ moduleUrl: new URL(modulePath, location.href), waitForExit: true });
     const result = await runner.run(args, { timeoutMs, outputDirectories: index ? ['index'] : [],
       files: files.map(file => ({ path: file.path, data: Uint8Array.from(atob(file.data), character => character.charCodeAt(0)) })) });
     return { exitCode: result.exitCode, missingOutputs: result.missingOutputs,
       stdout: new TextDecoder().decode(result.stdout), stderr: new TextDecoder().decode(result.stderr),
       files: result.files.map(file => ({ path: file.path, bytes: file.data.length })) };
-  }, { args: report.args, timeoutMs, index: options.case === 'index',
+  }, { args: report.args, timeoutMs, index: options.case === 'index', modulePath,
     files: files.map(file => ({ path: file.path, data: file.data.toString('base64') })) }),
   timeoutMs + 15000, 'Browser evaluation');
   if (report.result.exitCode !== 0 || report.result.missingOutputs.length) throw new Error(`Command returned exit ${report.result.exitCode}`);
