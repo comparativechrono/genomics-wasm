@@ -47,6 +47,18 @@ async function startBrowser() {
   const origin = `http://127.0.0.1:${server.address().port}`;
   const page = await browser.newPage();
   page.setDefaultTimeout(300000);
+  summary.browserConsole = [];
+  summary.browserErrors = [];
+  page.on('console', message => {
+    const text = message.text();
+    summary.browserConsole.push({ at: new Date().toISOString(), type: message.type(), text });
+    if (text.startsWith('[DESeq2 phase] ')) summary.browserPhase = text.slice('[DESeq2 phase] '.length);
+    console.log(`[${options.engine} ${message.type()}] ${text}`);
+  });
+  page.on('pageerror', error => {
+    summary.browserErrors.push(error.stack || error.message);
+    console.error(`[${options.engine} pageerror] ${error.stack || error.message}`);
+  });
   summary.externalRequests = [];
   await page.route('**/*', route => {
     if (new URL(route.request().url()).origin === origin) return route.continue();
@@ -136,28 +148,67 @@ try {
     }
   } else {
     const page = await startBrowser();
-    result = await page.evaluate(async ({ script, encoded }) => {
+    let deadline;
+    const evaluation = page.evaluate(async ({ script, encoded }) => {
+      const phase = name => console.log(`[DESeq2 phase] ${name}`);
+      // Avoid sending millions of individual array elements through the browser
+      // automation protocol. Chunking also avoids the JavaScript argument limit.
+      function encodeFiles(files) {
+        return Object.fromEntries(Object.entries(files || {}).filter(([name]) => name.startsWith('output/'))
+          .map(([name, bytes]) => {
+            const chunks = [];
+            for (let offset = 0; offset < bytes.length; offset += 16384) {
+              chunks.push(String.fromCharCode(...bytes.subarray(offset, offset + 16384)));
+            }
+            return [name, btoa(chunks.join(''))];
+          }));
+      }
+      phase('Loading R and packages');
       const { createDESeq2 } = await import('/runtime/deseq2.mjs');
-      const session = await createDESeq2();
+      const session = await createDESeq2({ onProgress: message => console.log(`[DESeq2 loading] ${message}`) });
       const files = Object.fromEntries(Object.entries(encoded).map(([name, value]) =>
         [name, Uint8Array.from(atob(value), character => character.charCodeAt(0))]));
       try {
+        phase('Running the R analysis');
         const result = await session.run(script, { files });
+        phase('Checking persistent R objects');
         const repeated = await session.run('stopifnot(exists("dds")); cat("session retained")');
         if (!repeated.stdout.includes('session retained')) throw new Error('R session lost analysis objects');
+        phase('Checking R error recovery');
         let rejected = false;
         try { await session.run('stop("intentional validation error")'); }
         catch (error) { rejected = error.message.includes('intentional validation error'); }
         if (!rejected) throw new Error('R errors were not reported to JavaScript');
         await session.run('stopifnot(exists("dds"))');
-        return { ok: true, ...result, files: Object.fromEntries(Object.entries(result.files)
-          .filter(([name]) => name.startsWith('output/')).map(([name, value]) => [name, Array.from(value)])) };
+        phase('Encoding output files');
+        const encodedFiles = encodeFiles(result.files);
+        phase('Transferring output files');
+        return { ok: true, ...result, files: encodedFiles };
       } catch (error) {
+        phase('Transferring R failure details');
         return { ok: false, message: error.stack, stdout: error.stdout, stderr: error.stderr,
-          files: Object.fromEntries(Object.entries(error.files || {}).filter(([name]) => name.startsWith('output/'))
-            .map(([name, value]) => [name, Array.from(value)])) };
+          files: encodeFiles(error.files) };
       } finally { session.close(); }
     }, { script, encoded: Object.fromEntries(Object.entries(files).map(([name, value]) => [name, value.toString('base64')])) });
+    // Allow five minutes for startup and five for analysis/transfer. Unlike
+    // locator operations, Playwright page.evaluate has no default deadline.
+    summary.browserDeadlineMs = 600000;
+    try {
+      result = await Promise.race([evaluation, new Promise((_, reject) => {
+        deadline = setTimeout(() => reject(new Error(`Browser validation exceeded 10 minutes; last phase: ${summary.browserPhase || 'starting browser evaluation'}`)), summary.browserDeadlineMs);
+      })]);
+    } finally { clearTimeout(deadline); }
+    result.files = Object.fromEntries(Object.entries(result.files || {}).map(([name, encoded]) => {
+      if (typeof encoded !== 'string') {
+        throw new Error(`Invalid base64 output from browser: ${name}`);
+      }
+      const bytes = Buffer.from(encoded, 'base64');
+      if (bytes.toString('base64') !== encoded) throw new Error(`Noncanonical base64 output from browser: ${name}`);
+      return [name, bytes];
+    }));
+    summary.browserPhase = 'Output files received';
+    console.log(`[${options.engine}] Output files received`);
+    if (summary.browserErrors.length) throw new Error(`The browser reported ${summary.browserErrors.length} uncaught error(s); see summary.json`);
     if (summary.externalRequests.length) throw new Error('The browser attempted to download an external dependency');
   }
   await storeResult(result, join(reportDir, 'wasm'));

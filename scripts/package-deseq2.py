@@ -213,12 +213,15 @@ def collect():
         add(checked_asset({**asset, "filename": filename, "size": asset["bytes"]},
                           ROOT / "build/deseq2-data"), source=True)
 
+    playwright_version = json.loads(required(ROOT / "package.json").read_text())["devDependencies"]["playwright"]
+    if not re.fullmatch(r"\d+\.\d+\.\d+", playwright_version):
+        raise RuntimeError("Browser validation requires an exact Playwright version")
     entries["README.md"] = package_readme(lock).encode()
     entries["package.json"] = json_bytes({
         "name": "deseq2-webr-standalone", "private": True, "type": "module",
         "scripts": {"validate": "node scripts/validate-deseq2.mjs",
                     "test": "python3 -m unittest discover -s tests -p 'test_*.py'"},
-        "devDependencies": {"playwright": "1.56.1"}, "engines": {"node": ">=20"},
+        "devDependencies": {"playwright": playwright_version}, "engines": {"node": ">=20"},
     })
     entries["source-manifest.json"] = json_bytes({
         "schemaVersion": 1, "upstreamLockSha256": digest(LOCK),

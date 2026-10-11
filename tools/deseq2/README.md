@@ -135,6 +135,14 @@ Memory and speed depend on the browser and dataset. Passing the small native
 comparison suite does not establish performance for large experiments or
 single-cell matrices.
 
+WebKit 26.0 has intermittently produced WebAssembly memory errors and an R
+bytecode error with this bundle, despite some successful runs. It is not a
+supported target. The [browser diagnostic run](https://github.com/comparativechrono/genomics-wasm/actions/runs/38096664971)
+records those failures and successful comparisons in WebKit 27.2. CI uses
+newer browser builds, records their exact versions and requires three fresh
+WebKit interface runs to pass. Use browser versions covered by a passing
+workflow run; the underlying cause of the older engine's errors is not known.
+
 DESeq2 is LGPL-3.0-or-later. The webR binary distribution is GPL-3.0 and
 dependencies retain their individual licences. The archive includes upstream
 licence notices, corresponding sources and build information. Original

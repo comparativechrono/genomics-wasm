@@ -12,7 +12,7 @@
     "package:deseq2": "python3 scripts/package-deseq2.py"
   },
   "devDependencies": {
-    "playwright": "1.56.1"
+    "playwright": "1.64.0"
   },
   "engines": { "node": ">=20" }
 }

@@ -2,7 +2,7 @@
 // Native numerical equivalence is checked by the separate DESeq2 validator.
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { readFile, stat } from 'node:fs/promises';
+import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium, firefox, webkit } from 'playwright';
@@ -11,6 +11,30 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const browserName = process.env.BROWSER || 'chromium';
 const browserType = { chromium, firefox, webkit }[browserName];
 if (!browserType) throw new Error('BROWSER must be chromium, firefox or webkit');
+const diagnostics = process.env.DESEQ2_DIAGNOSTICS === '1';
+const reportDir = resolve(root, process.env.DESEQ2_REPORT_DIR || `reports/deseq2/${browserName}/demo`);
+await mkdir(reportDir, { recursive: true });
+const summary = { browser: browserName, diagnostics, startedAt: new Date().toISOString(), status: 'running', phases: [], console: [], pageErrors: [] };
+function phase(name) {
+  summary.phase = name;
+  summary.phases.push({ at: new Date().toISOString(), name });
+  console.log(`[DESeq2 UI ${browserName}] ${name}`);
+}
+
+function diagnosticScript(script) {
+  if (!diagnostics) return script;
+  // A calling handler prints the live R stack before unwinding. It does not
+  // catch, retry or replace the original error, and the analysis is unchanged.
+  return `withCallingHandlers({\n${script}\n}, error = function(e) {
+  cat("\\nDESeq2 diagnostic error: ", conditionMessage(e), "\\n", sep = "", file = stderr())
+  calls <- sys.calls()
+  cat("R call stack:\\n", file = stderr())
+  for (i in seq_along(calls)) {
+    cat(i, ": ", paste(deparse(calls[[i]], width.cutoff = 500L), collapse = " "), "\\n",
+        sep = "", file = stderr())
+  }
+})\n`;
+}
 await stat(resolve(root, 'dist/deseq2/manifest.json')).catch(() => {
   throw new Error('Prepare dist/deseq2 before testing the browser example');
 });
@@ -35,12 +59,20 @@ await new Promise((resolve, reject) => {
   server.listen(0, '127.0.0.1', resolve);
 });
 
-let browser;
+let browser, page;
 try {
+  phase('Launching browser');
   browser = await browserType.launch({ headless: true });
-  const page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
-  const pageErrors = [];
+  summary.browserVersion = browser.version();
+  console.log(`[DESeq2 UI ${browserName}] Browser version ${summary.browserVersion}`);
+  page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+  const pageErrors = summary.pageErrors;
   page.on('pageerror', error => pageErrors.push(error.message));
+  page.on('console', message => {
+    summary.console.push({ at: new Date().toISOString(), type: message.type(), text: message.text() });
+    if (diagnostics) console.log(`[Browser ${message.type()}] ${message.text()}`);
+  });
+  phase('Loading the real airway tables');
   await page.goto(`http://127.0.0.1:${server.address().port}/examples/deseq2/`);
   await page.locator('#load-airway').click();
   await page.waitForFunction(() => document.getElementById('status').textContent.startsWith('Airway data loaded.'));
@@ -54,8 +86,10 @@ selection <- c(head(which(rowSums(counts) >= 10), 2000),
 counts <- counts[selection, , drop = FALSE]
 samples <- read.delim`);
   assert.notEqual(selectedScript, fullScript, 'Smoke test inserted the documented subset');
-  await page.locator('#script').fill(selectedScript);
-  await runAnalysis(page);
+  const analysisScript = diagnosticScript(selectedScript);
+  await page.locator('#script').fill(analysisScript);
+  await runAnalysis(page, 'Airway DESeq2 analysis');
+  phase('Checking analysis downloads');
   assert.match(await page.locator('#stdout').innerText(), /DESeq2/);
   const results = await downloadBytes(page, 'Download results.tsv');
   const rows = results.bytes.toString('utf8').trimEnd().split('\n');
@@ -68,9 +102,10 @@ samples <- read.delim`);
   const pdf = await downloadBytes(page, 'Download diagnostics.pdf');
   assert.ok(pdf.bytes.length > 1000, 'R produced a nonempty PDF');
   assert.equal(pdf.bytes.subarray(0, 5).toString('ascii'), '%PDF-');
-  assert.equal((await downloadBytes(page, 'Download analysis.R')).bytes.toString('utf8'), selectedScript);
+  assert.equal((await downloadBytes(page, 'Download analysis.R')).bytes.toString('utf8'), analysisScript);
 
   // Uploads can use different local names; the R-facing names stay consistent.
+  phase('Uploading count and sample tables');
   for (const kind of ['counts', 'samples']) {
     await page.locator(`#${kind}`).setInputFiles({
       name: `my-${kind}.txt`, mimeType: 'text/plain',
@@ -85,10 +120,11 @@ stopifnot(nrow(counts) == 63677, ncol(counts) == 8,
           identical(colnames(counts), rownames(samples)))
 writeLines("Uploaded tables read by R", "upload-check.txt")
 `);
-  await runAnalysis(page);
+  await runAnalysis(page, 'Reading uploaded tables');
   assert.equal((await downloadBytes(page, 'Download upload-check.txt')).bytes.toString('utf8'), 'Uploaded tables read by R\n');
   assert.equal(await page.getByRole('link', { name: 'Download diagnostics.pdf', exact: true }).count(), 0, 'Earlier outputs were cleared');
 
+  phase('Checking cancellation');
   await page.locator('#script').fill('Sys.sleep(60)');
   await page.locator('#run').click();
   await page.waitForFunction(() => document.getElementById('status').textContent === 'Running the R analysis…');
@@ -96,18 +132,37 @@ writeLines("Uploaded tables read by R", "upload-check.txt")
   await page.waitForFunction(() => !document.getElementById('run').disabled);
   assert.match(await page.locator('#status').innerText(), /^Analysis cancelled\./);
   await page.locator('#script').fill('cat("R session restarted\\n")');
-  await runAnalysis(page);
+  await runAnalysis(page, 'Restarting R after cancellation');
   assert.match(await page.locator('#stdout').innerText(), /R session restarted/);
   assert.deepEqual(pageErrors, [], 'The browser reported no uncaught errors');
+  summary.status = 'passed';
+  phase('All UI checks passed');
   console.log(`DESeq2 browser example passed in ${browserName}: real airway analysis, TSV and R PDF downloads, uploads, cancellation and restart.`);
+} catch (error) {
+  summary.status = 'failed';
+  summary.error = error.stack || error.message;
+  throw error;
 } finally {
+  summary.finishedAt = new Date().toISOString();
+  if (page && !page.isClosed()) {
+    for (const [id, filename] of [['stdout', 'stdout.txt'], ['stderr', 'stderr.txt'], ['status', 'status.txt']]) {
+      try {
+        await writeFile(resolve(reportDir, filename), await page.locator(`#${id}`).innerText({ timeout: 2000 }));
+      } catch (error) { summary.captureError = error.message; }
+    }
+    try { await writeFile(resolve(reportDir, 'analysis.R'), await page.locator('#script').inputValue({ timeout: 2000 })); }
+    catch (error) { summary.captureError = error.message; }
+  }
+  await writeFile(resolve(reportDir, 'summary.json'), JSON.stringify(summary, null, 2) + '\n');
   await browser?.close();
   await new Promise(resolve => server.close(resolve));
 }
 
-async function runAnalysis(page) {
+async function runAnalysis(page, label) {
+  phase(label);
   await page.locator('#run').click();
-  await page.waitForFunction(() => /^(Analysis complete|Error:)/.test(document.getElementById('status').textContent), null, { timeout: 300000 });
+  // Firefox exceeded five minutes in CI; keep a bounded ten-minute allowance.
+  await page.waitForFunction(() => /^(Analysis complete|Error:)/.test(document.getElementById('status').textContent), null, { timeout: 600000 });
   const status = await page.locator('#status').innerText();
   assert.match(status, /^Analysis complete/, `${status}\n${await page.locator('#stderr').innerText()}`);
   await page.waitForFunction(() => !document.getElementById('run').disabled);

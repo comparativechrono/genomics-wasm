@@ -129,6 +129,18 @@ jobs:
         env:
           BROWSER: ${{ matrix.browser }}
         run: node scripts/test-deseq2-demo.mjs
+      - name: Test the WebKit interface in a second fresh session
+        if: matrix.browser == 'webkit'
+        env:
+          BROWSER: webkit
+          DESEQ2_REPORT_DIR: reports/deseq2/webkit/demo-2
+        run: node scripts/test-deseq2-demo.mjs
+      - name: Test the WebKit interface in a third fresh session
+        if: matrix.browser == 'webkit'
+        env:
+          BROWSER: webkit
+          DESEQ2_REPORT_DIR: reports/deseq2/webkit/demo-3
+        run: node scripts/test-deseq2-demo.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
