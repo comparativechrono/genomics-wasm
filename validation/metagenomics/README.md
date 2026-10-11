@@ -1,0 +1,20 @@
+# Kraken2 and Bracken validation
+
+Run `node scripts/validate-metagenomics.mjs --engine node --tool all` from the repository root. Browser engines are `chromium`, `firefox` and `webkit`. The native Bracken oracle requires CPython 3.14.2; select it with `BRACKEN_PYTHON` if it is not available as `python3.14`. The original upstream Python scripts run with bytecode writing disabled.
+
+The shared case plan is `cases.json`. Every success case compares unchanged native, patched native and WebAssembly output. Repeated invocations use a fresh worker and compare with the unchanged native baseline. Missing or failed cases fail the summary. Reports are written to `reports/metagenomics/<engine>/summary-<tool>-all.json`.
+
+The fixture contains genuine Zymo mock-community reads and a small reference database. It is a test of implementation behaviour on this reference subset, not a benchmark of community recovery or whole-database performance. The harness hashes all fixture files but mounts only the source files listed in `fixtureInputs`. Bundled prebuilt databases and distributions cannot satisfy a build case: each target constructs its own database, classifies the reads and genomes, then builds Bracken distributions from those results.
+
+Kraken2 checks include paired and single reads, gzip input, confidence and minimum-hit settings, minimizer reports, inspection, errors, and both directions of database compatibility. Bracken checks include both distribution-building stages, 151- and 100-base models, species and genus estimates, threshold effects, redistributed reports, error handling and repeat invocations. Option effects must change the corresponding unchanged-native biological output; differences in file names or execution metadata do not count as an effect.
+
+Comparisons retain read order, identifiers, lengths, taxon assignments, every minimizer hit, report hierarchy and counts, abundance estimates, ranks, fractions and redistribution counts. Decimal comparison is exact and does not use binary floating point or a rounding context. Independent checks validate the source read pairing, taxonomy, required records and count relationships. Gzip decoding checks member integrity and CRCs. No classification or abundance algorithm is recreated in the comparator.
+
+There are two narrow source-derived representation rules:
+
+- Kraken2 writes its 64-byte `IndexOptions` structure directly. The unchanged native program leaves padding bytes 33–39 and 60–63 uninitialised. Only these bytes are excluded; all nine defined fields are compared exactly. Hash-table and taxonomy files must be byte-identical. The compatibility cases consume the actual original files, including their padding.
+- Bracken 3.1's unchanged `kmer2read_distr` can process a phantom record beyond the end of a newline-terminated classification file. Only explicitly marked intermediate artifacts from the unchanged native target may contain one terminal `NUL<TAB>signed-integer<TAB><TAB>LF` fragment after valid records. The report preserves its offset, length, full-file hash, fragment hash and base64 bytes. Every genuine record and the final distribution must still agree exactly. The patched-native and WebAssembly targets must produce strict valid output and receive no exception. Separate helper cases check a valid file without a terminal newline and an empty file.
+
+Reports bind the complete build assets, unchanged and patched execution packages, source recipe inputs, native Python identity, runtime files, validator files, dataset manifest and input hashes. Dependent cases record the producing target and exact bytes used. Bracken workflow evidence checks each stage's input hashes against the preceding files and checks that returned files match their producing stage. A no-final-newline regression removes exactly one terminal LF from an observed classification output and records both hashes and lengths; it does not alter a classification record.
+
+These checks cover the cases declared in the plan. They do not establish compatibility with every Kraken database, every taxonomy convention, every Bracken option or large-memory browser workloads.
