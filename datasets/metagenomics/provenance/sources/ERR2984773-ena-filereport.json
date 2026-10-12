@@ -1,0 +1,3 @@
+[
+{"run_accession":"ERR2984773","study_accession":"PRJEB29504","sample_accession":"SAMEA5157164","experiment_accession":"ERX2987345","scientific_name":"metagenome","instrument_model":"Illumina MiSeq","library_layout":"PAIRED","library_strategy":"WGS","read_count":"8785731","base_count":"2653290762","fastq_ftp":"ftp.sra.ebi.ac.uk/vol1/fastq/ERR298/003/ERR2984773/ERR2984773_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/ERR298/003/ERR2984773/ERR2984773_2.fastq.gz","fastq_md5":"f5794d7ab28de74d803e9dad609a150a;78bf00772b0cd8168ce37c16df345f7d","fastq_bytes":"927693096;1028981403"}
+]

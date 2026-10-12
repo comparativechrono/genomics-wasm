@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+  <head>
+    <title>Home | Loman Lab Mock Community Experiments</title>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="/mockcommunity/assets/css/style.css?v=da7b4ef1282d5220796878bc560df81cab453d43">
+
+    <style>
+    td {
+        padding: 0 10px 0 10px;
+        border: 0;
+        vertical-align: middle !important;
+    }
+    img {
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-default" style="margin-bottom:0">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">mockcommunity</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <ul class="nav navbar-nav">
+        
+        <li class="active">
+        	<a href="/mockcommunity/">Home</a>
+        </li>
+        
+        <li >
+        	<a href="/mockcommunity/lmc_news.html">News</a>
+        </li>
+        
+        <li >
+        	<a href="/mockcommunity/mc_assemblies.html">Assemblies</a>
+        </li>
+        
+        <li >
+        	<a href="/mockcommunity/mc_databases.html">Databases</a>
+        </li>
+        
+        <li >
+        	<a href="/mockcommunity/r10.html">R10</a>
+        </li>
+        
+        <li >
+        	<a href="/mockcommunity/assets/css/style.css"></a>
+        </li>
+        
+      </ul>
+
+  </div><!-- /.container-fluid -->
+</nav>
+
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          
+            <a id="forkme_banner" href="https://github.com/LomanLab/mockcommunity">View on GitHub</a>
+          
+          <h3 style="color:#ddd;">Loman Lab Mock Community Experiments</h3>
+          <h1 style="color:white;">Home</h1>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner" style="max-width:75%">
+        <h3>Background</h3>
+        Long sequencing reads are information-rich: aiding <i>de novo</i> assembly and reference mapping, and consequently have great potential for the study of microbial communities. However, the best approaches for analysis of long-read metagenomic data are unknown. Additionally, rigorous evaluation of bioinformatics tools is hindered by a lack of long-read data from validated samples with known composition.
+
+        <h3>Methods</h3>
+        We sequenced two commercially-available mock communities containing ten microbial species (ZymoBIOMICS Microbial Community Standards) with Oxford Nanopore GridION and PromethION. Both communities and the ten individual species isolates were also sequenced with Illumina technology.
+
+        <h3>Data</h3>
+        We generated 14 and 16 Gbp from two GridION flowcells and 150 and 153 Gbp from two PromethION flowcells for the evenly-distributed and log-distributed communities respectively. Read length N50 ranged between 5.3 Kbp and 5.4 Kbp over the four sequencing runs. Basecalls and corresponding signal data are made available (4.2 TB in total).
+
+        <h3>Results</h3>
+        Alignment to Illumina-sequenced isolates demonstrated the expected microbial species at anticipated abundances, with the limit of detection for the lowest abundance species below 50 cells (GridION). \textit{De novo} assembly of metagenomes recovered long contiguous sequences without the need for pre-processing techniques such as binning.
+
+        <br/>
+        <b>We present ultra-deep, long-read nanopore datasets from a well-defined mock community. These datasets will be useful for those developing bioinformatics methods for long-read metagenomics and for the validation and comparison of current laboratory and software pipelines.</b>
+
+        </hr>
+
+        <h2>Illumina and PacBio draft assemblies</h2>
+        <div class="table-responsive">
+<table class="table table-active table-hover">
+<thead>
+  <tr>
+    <th />
+    <th colspan=2><a href="https://www.biorxiv.org/content/10.1101/487033v2">Nicholls et al.</a></th>
+    <th colspan=3><a href="https://www.nature.com/articles/s41467-019-08289-9">McIntyre et al.</a></th>
+  </tr>
+  <tr>
+    <th>Organism</th>
+    <th>Illumina FASTQ</th>
+    <th>SPAdes Assembly</th>
+    <th>PacBio RSII Reads</th>
+    <th>PacBio Sequel Reads</th>
+    <th>PacBio Assembly</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td><i>Bacillus subtilis</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935851">ERR2935851</a></td>
+    <td rowspan=10><a href="http://nanopore.s3.climb.ac.uk/mockcommunity/v2/Zymo-Isolates-SPAdes-Illumina.fasta">Zymo-Isolates-SPAdes-Illumina.fasta</a> (69 MB, <code>e7b60972c37869e0e91513a06bdf9d33</code>)</td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7498042">SRR7498042</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415629">SRR7415629</a></td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/bsubtilis_pb.fasta">bsubtilis_pb.fasta (GitHub)</a></td>
+  </tr>
+  <tr>
+    <td><i>Cryptococcus neoformans x Cryptococcus deneoformans</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935856">ERR2935856</a></td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+
+  </tr>
+  <tr>
+    <td><i>Enterococcus faecalis</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935850">ERR2935850</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415622">SRR7415622</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415630">SRR7415630</a></td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/efaecalis_pb.fasta">efaecalis_pb.fasta (GitHub)</a></td>
+
+  </tr>
+  <tr>
+    <td><i>Escherichia coli</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935852">ERR2935852</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7498041">SRR7498041</a></td>
+    <td>-</td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/ecoli_pb.fasta">ecoli_pb.fasta (GitHub)</a></td>
+
+  </tr>
+  <tr>
+    <td><i>Lactobacillus fermentum</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935857">ERR2935857</a></td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+
+  </tr>
+  <tr>
+    <td><i>Listeria monocytogenes</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935854">ERR2935854</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415624">SRR7415624</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415635">SRR7415635</a></td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/lmonocytogenes_pb.fasta">lmonocytogenes_pb.fasta (GitHub)</a></td>
+
+  </tr>
+  <tr>
+    <td><i>Pseudomonas aeruginosa</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935853">ERR2935853</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7498043">SRR7498043</a></td>
+    <td>-</td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/paeruginosa_pb.fasta">paeruginosa_pb.fasta (GitHub)</a></td>
+
+  </tr>
+  <tr>
+    <td><i>Saccharomyces cerevisiae</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935855">ERR2935855</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7498048">SRR7498048</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415638">SRR7415638</a></td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/scerevisiae_pb.fasta">scerevisiae_pb.fasta (GitHub)</a></td>
+
+  </tr>
+  <tr>
+    <td><i>Salmonella enterica</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935848">ERR2935848</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415626">SRR7415626</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415636">SRR7415636</a></td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/senterica_pb.fasta">senterica_pb.fasta (GitHub)</a></td>
+
+  </tr>
+  <tr>
+    <td><i>Staphylococcus aureus</i></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2935849">ERR2935849</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415627">SRR7415627</a></td>
+    <td><a href="https://www.ncbi.nlm.nih.gov/sra/?term=SRR7415637">SRR7415637</a></td>
+    <td><a href="https://github.com/al-mcintyre/mCaller_analysis_scripts/blob/master/assemblies/saureus_pb.fasta">saureus_pb.fasta (GitHub)</a></td>
+
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+        <h2>Nanopore sequencing data sets</h2>
+        <div class="table-responsive">
+<table class="table table-active table-hover">
+<thead>
+<tr>
+  <th>FAST5 Signal Accession</th>
+  <th>FASTQ Accession</th>
+  <th>Sequencer</th>
+  <th>Community Standard (Lot)</th>
+  <th>Time (h)</th>
+  <th>Reads (M)</th>
+  <th>N50 (Kbp)</th>
+  <th>Quality (Median Q)</th>
+</tr>
+</thead>
+<tbody>
+  <tr>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2887847">ERR2887847</a></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR3152364">ERR3152364</a></td>
+    <td>GridION</td>
+    <td>Zymo CS Even (ZRC190633)</td>
+    <td>48</td>
+    <td>3.49</td>
+    <td>5.3</td>
+    <td>10.3</td>
+  </tr>
+  <tr>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2887850">ERR2887850</a></td>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR3152366">ERR3152366</a></td>
+    <td>GridION</td>
+    <td>Zymo CSII Log (ZRC190842)</td>
+    <td>48</td>
+    <td>3.67</td>
+    <td>5.4</td>
+    <td>9.8</td>
+  </tr>
+  <tr>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2887848">ERR2887848</a></td>
+    <td rowspan=2><a href="https://www.ebi.ac.uk/ena/data/view/ERR3152365">ERR3152365</a></td>
+    <td rowspan=2>PromethION</td>
+    <td rowspan=2>Zymo CS Even (ZRC190633)</td>
+    <td>64</td>
+    <td rowspan=2>35.7</td>
+    <td rowspan=2>5.4</td>
+    <td rowspan=2>10.5</td>
+  </tr>
+  <tr>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2887849">ERR2887849</a></td>
+    <td>Restarts</td>
+  </tr>
+  <tr>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2887851">ERR2887851</a></td>
+    <td rowspan=2><a href="https://www.ebi.ac.uk/ena/data/view/ERR3152367">ERR3152367</a></td>
+    <td rowspan=2>PromethION</td>
+    <td rowspan=2>Zymo CSII Log (ZRC190842)</td>
+    <td>64</td>
+    <td rowspan=2>34.5</td>
+    <td rowspan=2>5.4</td>
+    <td rowspan=2>10.7</td>
+  </tr>
+  <tr>
+    <td><a href="https://www.ebi.ac.uk/ena/data/view/ERR2887852">ERR2887852</a></td>
+    <td>Restarts</td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+        </hr>
+        <h3>Further information</h3>
+        Please refer to <a href="https://www.slideshare.net/scalene/assessing-ultradeep-longread-metagenomics-on-oxford-nanopore-promethion">Josh Quick's talk at Genome Science 2018</a>.
+
+        <h3>License</h3>
+        Data are available under a Creative Commons Attribution 4.0 International (CC BY 4.0) <a href="https://creativecommons.org/licenses/by/4.0/">license</a>, i.e. you are free to use the data with attribution.
+
+        <h3>Acknowlegements</h3>
+        We are grateful to Radoslaw Poplawski (University of Birmingham) for assistance with CLIMB virtual machines and file systems to support this research. We thank Divya Mirrington (Oxford Nanopore Technologies) for advice on PromethION library preparation and sequencing. We thank Hannah McDonnell at Cambridge Biosciences for providing the ZymoBIOMICS Microbial Community Standards. We thank Jared Simpson (Ontario Institute for Cancer Research), Matt Loose (University of Nottingham) and John Tyson (University of British Columbia) for useful discussions and advice. We thank Christopher Mason and Alexa McIntyre (Cornell University) for making PacBio data available ahead of publication.
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        
+        <p class="copyright">mockcommunity maintained by <a href="https://github.com/LomanLab">LomanLab</a></p>
+        
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+  </body>
+</html>
