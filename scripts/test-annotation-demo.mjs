@@ -21,7 +21,7 @@ for (const tool of selectedTools) assert.ok(config.tools[tool] && config.dataset
 const reportBase = resolve(process.env.ANNOTATION_DEMO_REPORT || join(root, 'reports/annotation', engine));
 const reportDir = join(reportBase, `demo-${selectedTools.length === 2 ? 'all' : selectedTools[0]}`);
 await mkdir(reportDir, { recursive: true });
-const summary = { schema: 1, engine, tools: selectedTools, status: 'running', startedAt: new Date().toISOString(), phases: [], cases: [], assets: {}, sources: {}, browserErrors: [], browserConsole: [], requests: [], failedRequests: [], externalRequests: [], workerCalls: [] };
+const summary = { schema: 1, engine, tools: selectedTools, status: 'running', startedAt: new Date().toISOString(), phases: [], cases: [], assets: {}, sources: {}, browserErrors: [], browserConsole: [], requests: [], failedRequests: [], externalRequests: [], workerCalls: [], downloads: [] };
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const phase = message => { summary.phases.push({ at: new Date().toISOString(), message }); console.log(`[annotation demo] ${message}`); };
 const passed = (id, details = {}) => summary.cases.push({ id, status: 'passed', ...details });
@@ -127,10 +127,19 @@ async function edit(page, args, outputs = [], directories = []) {
   await page.locator('#arguments').fill(JSON.stringify(args));
   await page.locator('#outputs').fill(outputs.join('\n')); await page.locator('#output-directories').fill(directories.join('\n'));
 }
+let lastDownloadClick = 0;
 async function downloadBytes(page, name) {
+  // Real download clicks need a human-scale pace: rapid bursts can hit the
+  // browser's download flood limiter even after preceding downloads complete.
+  const delay = 250 - (performance.now() - lastDownloadClick);
+  if (delay > 0) await new Promise(resolve => setTimeout(resolve, delay));
+  lastDownloadClick = performance.now();
+  const record = { name, startedAt: new Date().toISOString() }; summary.downloads.push(record);
   const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('link', { name: `Download ${name}`, exact: true }).click()]);
   assert.equal(download.suggestedFilename(), name.split('/').at(-1));
-  const path = await download.path(); assert.ok(path); return readFile(path);
+  const path = await download.path(); assert.ok(path);
+  const bytes = await readFile(path); record.completedAt = new Date().toISOString(); record.bytes = bytes.length;
+  return bytes;
 }
 async function workerCalls(page) { return page.evaluate(() => window.__annotationWorkerCalls); }
 
@@ -315,7 +324,10 @@ try {
     const dnaRows = tableRows(await downloadBytes(page, 'dna.tbl')); assert.ok(dnaRows.length >= 4, 'Known MADE1 repeats are detected in real human DNA');
     assert.ok(dnaRows.every(row => row.length >= 15 && row[2] === 'MADE1'));
     passed('hmmer-dna-profile-and-search', { matches: dnaRows.length });
-    await failureAndCancellation(page, host, 'hmmer', 'scan', 'scan.tbl', scan, 'hmmscan');
+    // The successful rerun above regenerated the table's timestamp. Snapshot
+    // its current bytes so failed/cancelled commands must preserve them exactly.
+    const retainedScan = await downloadBytes(page, 'scan.tbl');
+    await failureAndCancellation(page, host, 'hmmer', 'scan', 'scan.tbl', retainedScan, 'hmmscan');
     await page.screenshot({ path: join(reportDir, 'hmmer.png'), fullPage: true });
   }
 
