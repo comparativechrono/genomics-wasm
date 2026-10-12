@@ -1,0 +1,15 @@
+Prodigal 2.6.3, copyright (C) 2007-2016 University of Tennessee / UT-Battelle,
+code author Doug Hyatt, is distributed under the GNU General Public License,
+version 3 or (at your option) any later version. LICENSE is the original GPL
+notice; the pinned upstream source archive preserves the source-file notices
+and all 50 built-in metagenomic training models.
+
+The genomics-wasm portability patch changes overlapping sprintf calls into
+ordinary non-overlapping string appends. These are output formatting changes;
+the original gene prediction and training algorithms remain intact. This
+modification is recorded in browser.patch, dated 12 October 2026. The unchanged
+source archive, patch, build script and build instructions accompany the port.
+
+The compiled Emscripten runtime and standard libraries are covered by the
+original Emscripten licence notice in LICENSE.emscripten. No external gene
+prediction implementation or replacement training model is included.
