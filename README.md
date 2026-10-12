@@ -1,7 +1,7 @@
 # Genomics WebAssembly tools
 
 Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
-quantification, coverage, variant calling, metagenomics and differential expression tools for web browsers and Node.js. Each tool has an independent
+quantification, single-cell preprocessing, coverage, variant calling, metagenomics and differential expression tools for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
 using webR.
@@ -25,6 +25,7 @@ DESeq2 session retains its R objects until the session is closed.
 | [Bracken](tools/bracken/README.md) | 3.1 | Abundance estimation and read-length distributions, one thread |
 | [Prodigal](tools/prodigal/README.md) | 2.6.3 | Prokaryotic gene prediction, protein translation and saved training, one thread |
 | [HMMER](tools/hmmer/README.md) | 3.4 | Thirteen offline profile-HMM, protein and nucleotide programs, one thread |
+| [bustools](tools/bustools/README.md) | 0.45.1 | BUS processing, barcode correction, UMI handling and count matrices, one thread |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
@@ -91,6 +92,13 @@ carried between commands, including proteins predicted by Prodigal. Both ports
 run original upstream algorithms and use ordinary static hosting. See the
 [Prodigal API](runtime/PRODIGAL.md) and [HMMER API](runtime/HMMER.md).
 
+bustools has a [single-cell browser example](examples/bustools/README.md) and
+[JavaScript API](runtime/BUSTOOLS.md). It processes BUS files from kallisto and
+matching barcode, equivalence-class and transcript/gene reference files. The
+example carries results through sorting, barcode correction and count-matrix
+generation. It uses ordinary static hosting and preserves binary files between
+commands. Browser execution is serial, with a 64 MiB default sort buffer.
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
@@ -114,6 +122,7 @@ bash scripts/build-kraken2.sh all
 BRACKEN_PYTHON="$(command -v python3.14)" bash scripts/build-bracken.sh all
 bash scripts/build-prodigal.sh all
 bash scripts/build-hmmer.sh all
+bash scripts/build-bustools.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
@@ -300,6 +309,22 @@ checked. The [fixture provenance](datasets/annotation/README.md) records origina
 sources and deterministic transformations. Native agreement establishes port
 fidelity on these inputs, not annotation accuracy or large-database capacity.
 
+The **Build and validate bustools** workflow builds unchanged native,
+patched native and WebAssembly programs and compares their BUS records, count
+matrices and supporting labels in Node, Chromium, Firefox and WebKit:
+
+```sh
+python3 scripts/fetch-bustools-test-data.py --verify
+node scripts/validate-bustools.mjs --engine node
+```
+
+The [fixture provenance](datasets/bustools/README.md) identifies the experimental
+sources and deterministic selection rules. The [comparison rules](validation/bustools/README.md)
+define command coverage, output ordering and any metadata handling. Validation
+includes command pipelines, effectful options, binary interchange, repeated
+execution and error handling. These fixtures establish port fidelity on the
+tested inputs, without establishing performance on full single-cell studies.
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -357,6 +382,13 @@ original sources, notices, build recipes and matching validation reports.
 Before upload, the release gate extracts each archive independently, verifies
 its file checksums, runs package tests and exercises its example in all three
 browsers. The `annotation-package-validation` artifact records those checks.
+
+bustools is packaged by `scripts/package-bustools.py` after the four engines and
+browser workflow pass. Its `bustools-package` artifact includes the compiled
+program, API, browser example, real BUS data, original sources, licences and
+validation evidence. The release gate independently extracts the ZIP, verifies
+all checksums, runs its included tests and exercises the example in all three
+browsers. Those checks are retained in `bustools-package-validation`.
 
 ## Licence
 

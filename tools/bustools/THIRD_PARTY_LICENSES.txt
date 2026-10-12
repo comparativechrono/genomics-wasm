@@ -1,0 +1,21 @@
+bustools 0.45.1 WebAssembly distribution
+
+Original bustools: BSD-2-Clause (LICENSE).
+Bundled CRoaring 0.2.65: Apache-2.0 (LICENSE.CRoaring). The amalgamated
+src/roaring.h identifies this version. License copied verbatim from
+https://raw.githubusercontent.com/RoaringBitmap/CRoaring/v0.2.65/LICENSE.
+Bundled kseq: MIT (LICENSE.kseq; original header retained in source archive).
+Bundled Eigen 3.3.7: primarily MPL-2.0 with BSD components
+(LICENSE.eigen, LICENSE.eigen.BSD, LICENSE.eigen.README). Compilation defines
+EIGEN_MPL2_ONLY, rejecting inclusion of Eigen LGPL-only components.
+Bundled CppNumericalSolvers-v1: MIT (LICENSE.CppNumericalSolvers).
+Bundled LBFGSpp snapshot 2020-03-06: MIT (LICENSE.LBFGSpp).
+Separately pinned zlib 1.3.1: zlib license (LICENSE.zlib); identical original
+source is compiled into the unchanged native, patched native and WASM tools.
+Emscripten runtime and libc/libc++: see LICENSE.emscripten.
+
+Complete upstream source archives are distributed in sources/. All upstream
+file-level copyright and attribution notices remain in those archives.
+The browser.patch file marks this distribution's portability modifications;
+no upstream barcode correction, counting, UMI, compression or prediction
+algorithm is replaced by JavaScript.

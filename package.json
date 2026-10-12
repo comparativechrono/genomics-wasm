@@ -23,7 +23,9 @@
     "validate:metagenomics": "node scripts/validate-metagenomics.mjs",
     "package:metagenomics": "python3 scripts/package-metagenomics.py",
     "validate:annotation": "node scripts/validate-annotation.mjs",
-    "package:annotation": "python3 scripts/package-annotation.py"
+    "package:annotation": "python3 scripts/package-annotation.py",
+    "validate:bustools": "node scripts/validate-bustools.mjs",
+    "package:bustools": "python3 scripts/package-bustools.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

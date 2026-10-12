@@ -93,7 +93,8 @@ memory and its filesystem are discarded at the end of each command.
 
 This port runs serially. The sort buffer defaults to 64 MiB, the upstream
 minimum, instead of the native default of 4 GiB. Use an explicit suitable
-`-m` value when needed and request one sort thread. Temporary sort runs use
+`-m` value up to 1 GiB when needed and request one sort thread. Larger buffers
+and requests for multiple sort threads are rejected. Temporary sort runs use
 the in-memory filesystem; a smaller sort buffer does not make arbitrarily
 large input files fit in a browser. The compiled heap can grow to 2 GiB, and
 JavaScript input/output copies consume additional memory.
