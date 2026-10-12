@@ -313,7 +313,12 @@ after all four engines and browser examples pass. The `metagenomics-packages`
 artifact contains two independent ZIPs with examples, real data, corresponding
 sources, licences and comparison reports. Bracken includes the tested Kraken2
 dependency needed to prepare read-length distributions. Both packages can be
-served from an ordinary static web server.
+served from an ordinary static web server. Before publishing that artifact, the
+workflow extracts each ZIP into a separate temporary directory, verifies its
+archive and file checksums, runs its included tests, and exercises its browser
+example in Chromium, Firefox and WebKit. The separate
+`metagenomics-package-validation` artifact preserves those standalone browser
+reports and screenshots.
 
 ## Licence
 

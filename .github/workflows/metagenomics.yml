@@ -33,7 +33,7 @@ jobs:
       - name: Verify and regenerate the real input data
         run: |
           python3 scripts/fetch-metagenomics-test-data.py --verify
-          python3 scripts/fetch-metagenomics-test-data.py --fetch-sources
+          python3 scripts/fetch-metagenomics-test-data.py --fetch
           python3 scripts/fetch-metagenomics-test-data.py --regenerate
       - name: Install pinned WebAssembly compiler
         run: bash scripts/setup-emsdk.sh
@@ -105,7 +105,7 @@ jobs:
     needs: [build, browsers]
     if: always()
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 60
     steps:
       - name: Require the build and every browser comparison
         env:
@@ -113,6 +113,10 @@ jobs:
           BROWSER_RESULT: ${{ needs.browsers.result }}
         run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
       - uses: actions/setup-python@v5
         with:
           python-version: '3.14.2'
@@ -143,7 +147,7 @@ jobs:
           PY
       - name: Fetch pinned sources and assemble the tested packages
         run: |
-          python3 scripts/fetch-metagenomics-test-data.py --fetch-sources
+          python3 scripts/fetch-metagenomics-test-data.py --fetch
           python3 scripts/fetch-metagenomics-test-data.py --verify
           reports=()
           for engine in node chromium firefox webkit; do
@@ -152,6 +156,39 @@ jobs:
             done
           done
           python3 scripts/package-metagenomics.py --tool all --output releases "${reports[@]}"
+      - name: Install browsers for the extracted standalone packages
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Verify and exercise both standalone ZIPs in isolation
+        run: |
+          set -euo pipefail
+          task_root="$PWD"
+          for archive in releases/kraken2-*-wasm.zip releases/bracken-*-wasm.zip; do
+            filename="$(basename "$archive")"
+            stem="${filename%.zip}"
+            tool="${stem%%-*}"
+            (cd releases && sha256sum -c "$filename.sha256")
+            package_root="$(mktemp -d)"
+            python3 -m zipfile -e "$archive" "$package_root"
+            (
+              cd "$package_root/$stem"
+              sha256sum -c SHA256SUMS
+              npm ci
+              npm test
+              for engine in chromium firefox webkit; do
+                METAGENOMICS_TOOL="$tool" BROWSER="$engine" \
+                  METAGENOMICS_DEMO_REPORT="$task_root/reports/metagenomics/packages/$tool/$engine" \
+                  node scripts/test-metagenomics-demo.mjs
+              done
+            )
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: metagenomics-package-validation
+          path: reports/metagenomics/packages/
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
           name: metagenomics-packages
