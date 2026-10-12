@@ -1,0 +1,1693 @@
+{
+  "schema": 1,
+  "datasets": [
+    "zymo"
+  ],
+  "fixtureInputs": [
+    "reads_1.fastq",
+    "reads_2.fastq",
+    "reads_1.fastq.gz",
+    "reads_2.fastq.gz",
+    "db/library/reference.fna",
+    "db/taxonomy/nodes.dmp",
+    "db/taxonomy/names.dmp",
+    "db/seqid2taxid.map"
+  ],
+  "tools": {
+    "kraken2": {
+      "runtime": [
+        "runtime/index.mjs",
+        "runtime/execute.mjs",
+        "runtime/worker.mjs",
+        "runtime/kraken2.mjs"
+      ],
+      "cases": [
+        {
+          "id": "database-build",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "build",
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--no-masking"
+          ],
+          "outputs": [
+            "db/hash.k2d",
+            "db/taxo.k2d",
+            "db/opts.k2d"
+          ],
+          "artifacts": [
+            {
+              "path": "db/hash.k2d",
+              "kind": "exact",
+              "requireNonempty": true
+            },
+            {
+              "path": "db/taxo.k2d",
+              "kind": "exact",
+              "requireNonempty": true
+            },
+            {
+              "path": "db/opts.k2d",
+              "kind": "kraken-options"
+            }
+          ]
+        },
+        {
+          "id": "paired",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ]
+        },
+        {
+          "id": "confidence",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--confidence",
+            "0.5",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ],
+          "effect": "paired"
+        },
+        {
+          "id": "minimum-hit-groups",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--minimum-hit-groups",
+            "10",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ],
+          "effect": "paired"
+        },
+        {
+          "id": "single",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "reads_1.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ]
+        },
+        {
+          "id": "gzip",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--gzip-compressed",
+            "--paired",
+            "reads_1.fastq.gz",
+            "reads_2.fastq.gz"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ],
+          "equivalentTo": "paired"
+        },
+        {
+          "id": "report-minimizers",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--report-minimizer-data",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4,
+              "minimizerData": true
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ],
+          "equivalentTo": "paired"
+        },
+        {
+          "id": "native-database",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d",
+              "target": "native"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d",
+              "target": "native"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d",
+              "target": "native"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ],
+          "equivalentTo": "paired"
+        },
+        {
+          "id": "wasm-database",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d",
+              "target": "wasm"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d",
+              "target": "wasm"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d",
+              "target": "wasm"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ],
+          "equivalentTo": "paired"
+        },
+        {
+          "id": "inspect",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "dump_table",
+            "-H",
+            "db/hash.k2d",
+            "-t",
+            "db/taxo.k2d",
+            "-o",
+            "db/opts.k2d",
+            "-p",
+            "1",
+            "-O",
+            "inspect.report"
+          ],
+          "outputs": [
+            "inspect.report",
+            "inspect-summary.txt"
+          ],
+          "artifacts": [
+            {
+              "path": "inspect.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            },
+            {
+              "path": "inspect-summary.txt",
+              "kind": "exact",
+              "requireNonempty": true
+            }
+          ],
+          "stdoutFile": "inspect-summary.txt",
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "program": "dump_table"
+        },
+        {
+          "id": "repeat",
+          "kind": "repeat",
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ],
+          "baseline": "paired"
+        },
+        {
+          "id": "missing-database",
+          "runner": "kraken2",
+          "program": "classify",
+          "kind": "failure",
+          "args": [
+            "classify",
+            "-H",
+            "missing.k2d",
+            "-t",
+            "db/taxo.k2d",
+            "-o",
+            "db/opts.k2d",
+            "-p",
+            "1",
+            "reads_1.fastq"
+          ],
+          "outputs": [],
+          "artifacts": [],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "diagnosticRegex": "Unable to determine width of compact hash cell",
+          "expectedExitCode": 1
+        },
+        {
+          "id": "unsupported-parallel",
+          "runner": "kraken2",
+          "program": "classify",
+          "kind": "restriction",
+          "args": [
+            "classify",
+            "-H",
+            "db/hash.k2d",
+            "-t",
+            "db/taxo.k2d",
+            "-o",
+            "db/opts.k2d",
+            "-p",
+            "2",
+            "reads_1.fastq"
+          ],
+          "outputs": [],
+          "artifacts": [],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "diagnosticRegex": "(thread|serial)"
+        }
+      ]
+    },
+    "bracken": {
+      "runtime": [
+        "runtime/index.mjs",
+        "runtime/execute.mjs",
+        "runtime/worker.mjs",
+        "runtime/kraken2.mjs",
+        "runtime/bracken.mjs",
+        "runtime/bracken-worker.mjs",
+        "runtime/bracken-execute.mjs"
+      ],
+      "cases": [
+        {
+          "id": "database-build",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "build",
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--no-masking"
+          ],
+          "outputs": [
+            "db/hash.k2d",
+            "db/taxo.k2d",
+            "db/opts.k2d"
+          ],
+          "artifacts": [
+            {
+              "path": "db/hash.k2d",
+              "kind": "exact",
+              "requireNonempty": true
+            },
+            {
+              "path": "db/taxo.k2d",
+              "kind": "exact",
+              "requireNonempty": true
+            },
+            {
+              "path": "db/opts.k2d",
+              "kind": "kraken-options"
+            }
+          ]
+        },
+        {
+          "id": "paired-report",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "kraken2",
+          "args": [
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--output",
+            "sample.kraken",
+            "--report",
+            "sample.report",
+            "--paired",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.kraken",
+              "kind": "classifications",
+              "minimumRecords": 4096,
+              "minimumClassified": 1,
+              "minimumUnclassified": 1
+            },
+            {
+              "path": "sample.report",
+              "kind": "kraken-report",
+              "minimumRecords": 4
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "readInputs": [
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "biologicalArtifacts": [
+            "sample.kraken"
+          ]
+        },
+        {
+          "id": "distribution-151",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "bracken-build",
+            "-d",
+            "db",
+            "-k",
+            "35",
+            "-l",
+            "151",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "db/database.kraken",
+            "db/database151mers.kraken",
+            "db/database151mers.kmer_distrib"
+          ],
+          "artifacts": [
+            {
+              "path": "db/database.kraken",
+              "kind": "classifications",
+              "minimumRecords": 3
+            },
+            {
+              "path": "db/database151mers.kraken",
+              "kind": "bracken-read-distribution",
+              "minimumRecords": 3,
+              "nativeEofArtifact": true
+            },
+            {
+              "path": "db/database151mers.kmer_distrib",
+              "kind": "bracken-distribution",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            }
+          ],
+          "workflowStages": [
+            "kraken2",
+            "kmer2read_distr",
+            "generate_kmer_distribution.py"
+          ]
+        },
+        {
+          "id": "distribution-100",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "bracken-build",
+            "-d",
+            "db",
+            "-k",
+            "35",
+            "-l",
+            "100",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "db/database.kraken",
+            "db/database100mers.kraken",
+            "db/database100mers.kmer_distrib"
+          ],
+          "artifacts": [
+            {
+              "path": "db/database.kraken",
+              "kind": "classifications",
+              "minimumRecords": 3
+            },
+            {
+              "path": "db/database100mers.kraken",
+              "kind": "bracken-read-distribution",
+              "minimumRecords": 3,
+              "nativeEofArtifact": true
+            },
+            {
+              "path": "db/database100mers.kmer_distrib",
+              "kind": "bracken-distribution",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "database-build",
+              "path": "db/hash.k2d",
+              "as": "db/hash.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/taxo.k2d",
+              "as": "db/taxo.k2d"
+            },
+            {
+              "case": "database-build",
+              "path": "db/opts.k2d",
+              "as": "db/opts.k2d"
+            },
+            {
+              "case": "distribution-151",
+              "path": "db/database.kraken",
+              "as": "db/database.kraken"
+            }
+          ],
+          "workflowStages": [
+            "kmer2read_distr",
+            "generate_kmer_distribution.py"
+          ]
+        },
+        {
+          "id": "helper-no-final-newline",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "kmer2read_distr",
+            "--seqid2taxid",
+            "db/seqid2taxid.map",
+            "--taxonomy",
+            "db/taxonomy/",
+            "--kraken",
+            "genomes-no-final-newline.kraken",
+            "--output",
+            "helper.kraken",
+            "-k",
+            "35",
+            "-l",
+            "151",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "helper.kraken"
+          ],
+          "artifacts": [
+            {
+              "path": "helper.kraken",
+              "kind": "bracken-read-distribution",
+              "requireNonempty": true,
+              "minimumRecords": 3
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "distribution-151",
+              "path": "db/database.kraken",
+              "as": "genomes-no-final-newline.kraken",
+              "transform": "remove-final-newline"
+            }
+          ]
+        },
+        {
+          "id": "helper-empty",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "kmer2read_distr",
+            "--seqid2taxid",
+            "db/seqid2taxid.map",
+            "--taxonomy",
+            "db/taxonomy/",
+            "--kraken",
+            "empty.kraken",
+            "--output",
+            "helper.kraken",
+            "-k",
+            "35",
+            "-l",
+            "151",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "helper.kraken"
+          ],
+          "artifacts": [
+            {
+              "path": "helper.kraken",
+              "kind": "bracken-read-distribution",
+              "requireNonempty": false,
+              "minimumRecords": 0
+            }
+          ],
+          "extraFiles": {
+            "empty.kraken": ""
+          }
+        },
+        {
+          "id": "helper-malformed",
+          "kind": "restriction",
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "runner": "bracken",
+          "args": [
+            "kmer2read_distr",
+            "--seqid2taxid",
+            "db/seqid2taxid.map",
+            "--taxonomy",
+            "db/taxonomy/",
+            "--kraken",
+            "malformed.kraken",
+            "--output",
+            "helper.kraken",
+            "-k",
+            "35",
+            "-l",
+            "151",
+            "-t",
+            "1"
+          ],
+          "outputs": [],
+          "artifacts": [],
+          "extraFiles": {
+            "malformed.kraken": "not-a-classification\n"
+          },
+          "expectedExitCode": 1,
+          "diagnosticRegex": "(malformed|invalid|corrupt|columns|classification)"
+        },
+        {
+          "id": "species",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "bracken",
+            "-d",
+            "db",
+            "-i",
+            "sample.report",
+            "-o",
+            "sample.bracken",
+            "-w",
+            "sample.bracken.report",
+            "-r",
+            "151",
+            "-l",
+            "S",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "sample.bracken",
+            "sample.bracken.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.bracken",
+              "kind": "bracken-abundance",
+              "minimumRecords": 1,
+              "rank": "S",
+              "minimumAddedReads": 1
+            },
+            {
+              "path": "sample.bracken.report",
+              "kind": "kraken-report",
+              "redistributed": true,
+              "minimumRecords": 3
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "paired-report",
+              "path": "sample.report",
+              "as": "sample.report"
+            },
+            {
+              "case": "distribution-151",
+              "path": "db/database151mers.kmer_distrib",
+              "as": "db/database151mers.kmer_distrib"
+            }
+          ],
+          "biologicalArtifacts": [
+            "sample.bracken"
+          ],
+          "workflowStages": [
+            "est_abundance.py"
+          ]
+        },
+        {
+          "id": "genus",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "bracken",
+            "-d",
+            "db",
+            "-i",
+            "sample.report",
+            "-o",
+            "sample.bracken",
+            "-w",
+            "sample.bracken.report",
+            "-r",
+            "151",
+            "-l",
+            "G",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "sample.bracken",
+            "sample.bracken.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.bracken",
+              "kind": "bracken-abundance",
+              "minimumRecords": 1,
+              "rank": "G",
+              "minimumAddedReads": 0
+            },
+            {
+              "path": "sample.bracken.report",
+              "kind": "kraken-report",
+              "redistributed": true,
+              "minimumRecords": 3
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "paired-report",
+              "path": "sample.report",
+              "as": "sample.report"
+            },
+            {
+              "case": "distribution-151",
+              "path": "db/database151mers.kmer_distrib",
+              "as": "db/database151mers.kmer_distrib"
+            }
+          ],
+          "biologicalArtifacts": [
+            "sample.bracken"
+          ],
+          "workflowStages": [
+            "est_abundance.py"
+          ],
+          "effect": "species"
+        },
+        {
+          "id": "threshold",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "bracken",
+            "-d",
+            "db",
+            "-i",
+            "sample.report",
+            "-o",
+            "sample.bracken",
+            "-w",
+            "sample.bracken.report",
+            "-r",
+            "151",
+            "-l",
+            "S",
+            "-t",
+            "50"
+          ],
+          "outputs": [
+            "sample.bracken",
+            "sample.bracken.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.bracken",
+              "kind": "bracken-abundance",
+              "minimumRecords": 1,
+              "rank": "S",
+              "minimumAddedReads": 0
+            },
+            {
+              "path": "sample.bracken.report",
+              "kind": "kraken-report",
+              "redistributed": true,
+              "minimumRecords": 3
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "paired-report",
+              "path": "sample.report",
+              "as": "sample.report"
+            },
+            {
+              "case": "distribution-151",
+              "path": "db/database151mers.kmer_distrib",
+              "as": "db/database151mers.kmer_distrib"
+            }
+          ],
+          "biologicalArtifacts": [
+            "sample.bracken"
+          ],
+          "workflowStages": [
+            "est_abundance.py"
+          ],
+          "effect": "species"
+        },
+        {
+          "id": "read-length",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "bracken",
+            "-d",
+            "db",
+            "-i",
+            "sample.report",
+            "-o",
+            "sample.bracken",
+            "-w",
+            "sample.bracken.report",
+            "-r",
+            "100",
+            "-l",
+            "S",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "sample.bracken",
+            "sample.bracken.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.bracken",
+              "kind": "bracken-abundance",
+              "minimumRecords": 1,
+              "rank": "S",
+              "minimumAddedReads": 0
+            },
+            {
+              "path": "sample.bracken.report",
+              "kind": "kraken-report",
+              "redistributed": true,
+              "minimumRecords": 3
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "paired-report",
+              "path": "sample.report",
+              "as": "sample.report"
+            },
+            {
+              "case": "distribution-100",
+              "path": "db/database100mers.kmer_distrib",
+              "as": "db/database100mers.kmer_distrib"
+            }
+          ],
+          "biologicalArtifacts": [
+            "sample.bracken"
+          ],
+          "workflowStages": [
+            "est_abundance.py"
+          ],
+          "effect": "species"
+        },
+        {
+          "id": "repeat",
+          "kind": "repeat",
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ],
+          "runner": "bracken",
+          "args": [
+            "bracken",
+            "-d",
+            "db",
+            "-i",
+            "sample.report",
+            "-o",
+            "sample.bracken",
+            "-w",
+            "sample.bracken.report",
+            "-r",
+            "151",
+            "-l",
+            "S",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "sample.bracken",
+            "sample.bracken.report"
+          ],
+          "artifacts": [
+            {
+              "path": "sample.bracken",
+              "kind": "bracken-abundance",
+              "minimumRecords": 1,
+              "rank": "S",
+              "minimumAddedReads": 0
+            },
+            {
+              "path": "sample.bracken.report",
+              "kind": "kraken-report",
+              "redistributed": true,
+              "minimumRecords": 3
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "paired-report",
+              "path": "sample.report",
+              "as": "sample.report"
+            },
+            {
+              "case": "distribution-151",
+              "path": "db/database151mers.kmer_distrib",
+              "as": "db/database151mers.kmer_distrib"
+            }
+          ],
+          "biologicalArtifacts": [
+            "sample.bracken"
+          ],
+          "workflowStages": [
+            "est_abundance.py"
+          ],
+          "baseline": "species"
+        },
+        {
+          "id": "missing-input",
+          "runner": "bracken",
+          "kind": "failure",
+          "args": [
+            "est_abundance.py",
+            "-i",
+            "missing.report",
+            "-o",
+            "sample.bracken",
+            "-k",
+            "db/database151mers.kmer_distrib",
+            "-l",
+            "S",
+            "-t",
+            "1"
+          ],
+          "outputs": [],
+          "artifacts": [],
+          "inputsFrom": [
+            {
+              "case": "paired-report",
+              "path": "sample.report",
+              "as": "sample.report"
+            },
+            {
+              "case": "distribution-151",
+              "path": "db/database151mers.kmer_distrib",
+              "as": "db/database151mers.kmer_distrib"
+            }
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "diagnosticRegex": "(No such|not.*exist|not.*found|cannot|missing|ERROR)"
+        },
+        {
+          "id": "missing-distribution",
+          "runner": "bracken",
+          "kind": "failure",
+          "args": [
+            "est_abundance.py",
+            "-i",
+            "sample.report",
+            "-o",
+            "sample.bracken",
+            "-k",
+            "missing.kmer_distrib",
+            "-l",
+            "S",
+            "-t",
+            "1"
+          ],
+          "outputs": [],
+          "artifacts": [],
+          "inputsFrom": [
+            {
+              "case": "paired-report",
+              "path": "sample.report",
+              "as": "sample.report"
+            },
+            {
+              "case": "distribution-151",
+              "path": "db/database151mers.kmer_distrib",
+              "as": "db/database151mers.kmer_distrib"
+            }
+          ],
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "diagnosticRegex": "(No such|not.*exist|not.*found|cannot|missing|ERROR)"
+        }
+      ]
+    }
+  }
+}

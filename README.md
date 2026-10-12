@@ -1,7 +1,7 @@
 # Genomics WebAssembly tools
 
 Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
-quantification, coverage, variant calling and differential expression tools for web browsers and Node.js. Each tool has an independent
+quantification, coverage, variant calling, metagenomics and differential expression tools for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
 using webR.
@@ -21,6 +21,8 @@ DESeq2 session retains its R objects until the session is closed.
 | [SomaticSniper](tools/somaticsniper/README.md) | 1.0.5.0 | Somatic SNVs from matched tumour/normal BAMs, one thread |
 | [LoFreq](tools/lofreq/README.md) | 2.1.5 | Variant calling, indel preparation and the serial somatic workflow |
 | [Strelka2](tools/strelka2/README.md) | 2.9.10 | Serial somatic workflow, depth estimation, scoring and indexed SNV/indel VCFs |
+| [Kraken2](tools/kraken2/README.md) | 2.17.2 | Taxonomic classification, database building and inspection, one thread |
+| [Bracken](tools/bracken/README.md) | 3.1 | Abundance estimation and read-length distributions, one thread |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
@@ -71,13 +73,21 @@ the upstream depth estimation, caller, scoring models and output utilities.
 The real HCC1395 fixture has matching BAM and reference sequence dictionaries.
 It uses ordinary static hosting.
 
+Kraken2 and Bracken share a [browser example](examples/metagenomics/README.md)
+with real paired reads from a sequenced mock community and a small reference
+collection. Kraken2 classifies reads; Bracken estimates abundances from its
+reports and database-specific read-length distributions. Both use ordinary
+static hosting. Large production databases generally exceed the memory
+available to this browser build. See the [Kraken2 API](runtime/KRAKEN2.md) and
+[Bracken API](runtime/BRACKEN.md) for the supported commands.
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
 Node.js 20 or newer. BWA-MEM2 and HISAT2 use Clang for their native baselines. The reproducible
 WebAssembly compiler target for the C/C++ tools is Emscripten 3.1.64.
-Cutadapt uses Python 3.14.2 and a separate pinned Pyodide/Emscripten toolchain;
-see its tool README before building it.
+Cutadapt and Bracken use Python 3.14.2 and a pinned Pyodide runtime;
+see their tool READMEs before building them.
 
 ```sh
 npm ci
@@ -90,6 +100,8 @@ bash scripts/build-somaticsniper.sh all
 bash scripts/build-lofreq.sh all
 python3 scripts/setup-strelka2-python.py
 bash scripts/build-strelka2.sh all
+bash scripts/build-kraken2.sh all
+BRACKEN_PYTHON="$(command -v python3.14)" bash scripts/build-bracken.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
@@ -244,6 +256,20 @@ Repeat with `--engine chromium`, `firefox` and `webkit`. The
 workflow steps are checked. The original native scripts use the isolated
 interpreter built by `scripts/setup-strelka2-python.py`.
 
+The **Build and validate metagenomics tools** workflow checks Kraken2 and
+Bracken against their unchanged native programs:
+
+```sh
+python3 scripts/fetch-metagenomics-test-data.py --verify
+BRACKEN_PYTHON=python3.14 node scripts/validate-metagenomics.mjs --engine node --tool all
+```
+
+Repeat with `--engine chromium`, `firefox` and `webkit`. The tests build fresh
+databases, exchange databases between native and browser programs, compare
+every read classification and check Bracken's distributions and abundance
+estimates. See the [comparison rules](validation/metagenomics/README.md) for
+the exact checks and the two documented upstream binary-format issues.
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -281,6 +307,18 @@ Strelka2's `strelka2-package` artifact is assembled by
 `scripts/package-strelka2.py` after all four engines and browser examples pass.
 It includes the caller, helper programs, scoring models, JavaScript workflow,
 real data, sources, notices and comparison reports.
+
+Kraken2 and Bracken packages are created by `scripts/package-metagenomics.py`
+after all four engines and browser examples pass. The `metagenomics-packages`
+artifact contains two independent ZIPs with examples, real data, corresponding
+sources, licences and comparison reports. Bracken includes the tested Kraken2
+dependency needed to prepare read-length distributions. Both packages can be
+served from an ordinary static web server. Before publishing that artifact, the
+workflow extracts each ZIP into a separate temporary directory, verifies its
+archive and file checksums, runs its included tests, and exercises its browser
+example in Chromium, Firefox and WebKit. The separate
+`metagenomics-package-validation` artifact preserves those standalone browser
+reports and screenshots.
 
 ## Licence
 

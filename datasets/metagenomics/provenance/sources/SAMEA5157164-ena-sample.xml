@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SAMPLE_SET>
+<SAMPLE accession="SAMEA5157164" alias="in732_0_even_community_shotgun" center_name="UB">
+     <IDENTIFIERS>
+          <PRIMARY_ID>SAMEA5157164</PRIMARY_ID>
+          <SECONDARY_ID>ERS2964897</SECONDARY_ID>
+          <EXTERNAL_ID namespace="BioSample">SAMEA5157164</EXTERNAL_ID>
+          <SUBMITTER_ID namespace="UB">in732_0_even_community_shotgun</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>in732_0_even_community_shotgun</TITLE>
+     <SAMPLE_NAME>
+          <TAXON_ID>256318</TAXON_ID>
+          <SCIENTIFIC_NAME>metagenome</SCIENTIFIC_NAME>
+     </SAMPLE_NAME>
+     <DESCRIPTION>Illumina Sequencing data for D6305 (CS/Even DNA standard)</DESCRIPTION>
+     <SAMPLE_LINKS>
+    <SAMPLE_LINK>
+        <XREF_LINK>
+            <DB>ENA-FASTQ-FILES</DB>
+            <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERS2964897&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+        </XREF_LINK>
+    </SAMPLE_LINK>
+    <SAMPLE_LINK>
+        <XREF_LINK>
+            <DB>ENA-SUBMITTED-FILES</DB>
+            <ID><![CDATA[https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERS2964897&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+        </XREF_LINK>
+    </SAMPLE_LINK>
+</SAMPLE_LINKS>
+<SAMPLE_ATTRIBUTES>
+          <SAMPLE_ATTRIBUTE>
+               <TAG>ENA-CHECKLIST</TAG>
+               <VALUE>ERC000011</VALUE>
+          </SAMPLE_ATTRIBUTE>
+          <SAMPLE_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2018-12-07T17:03:37Z</VALUE>
+          </SAMPLE_ATTRIBUTE>
+          <SAMPLE_ATTRIBUTE>
+               <TAG>organism</TAG>
+               <VALUE>metagenome</VALUE>
+          </SAMPLE_ATTRIBUTE>
+          <SAMPLE_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2018-12-07T11:52:01Z</VALUE>
+          </SAMPLE_ATTRIBUTE>
+          <SAMPLE_ATTRIBUTE>
+               <TAG>scientific_name</TAG>
+               <VALUE>metagenome</VALUE>
+          </SAMPLE_ATTRIBUTE>
+          <SAMPLE_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2018-12-07</VALUE>
+          </SAMPLE_ATTRIBUTE>
+          <SAMPLE_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2018-12-07</VALUE>
+          </SAMPLE_ATTRIBUTE>
+     </SAMPLE_ATTRIBUTES>
+</SAMPLE>
+</SAMPLE_SET>

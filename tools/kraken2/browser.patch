@@ -1,0 +1,91 @@
+--- a/src/classify.cc
++++ b/src/classify.cc
+@@ -1117,6 +1117,7 @@
+         opts.quick_mode = true;
+         break;
+       case 'p' :
++        kraken2_browser_single_thread(optarg);
+         opts.num_threads = atoi(optarg);
+         if (opts.num_threads < 1)
+           errx(EX_USAGE, "number of threads can't be less than 1");
+@@ -1162,6 +1163,7 @@
+         opts.use_memory_mapping = true;
+         break;
+       case 'D':
++        errx(EX_USAGE, "Kraken2 browser package does not support daemon mode");
+         opts.daemon_mode = true;
+         break;
+       case 'c':
+--- a/src/build_db.cc
++++ b/src/build_db.cc
+@@ -91,7 +91,7 @@
+     errx(EX_DATAERR, "Unsupported CHT cell size");
+   }
+ 
+-  IndexOptions index_opts;
++  IndexOptions index_opts = {};
+   index_opts.k = opts.k;
+   index_opts.l = opts.l;
+   index_opts.spaced_seed_mask = opts.spaced_seed_mask;
+@@ -205,6 +205,7 @@
+         opts.requested_bits_for_taxid = sig;
+         break;
+       case 'p' :
++        kraken2_browser_single_thread(optarg);
+         opts.num_threads = atoll(optarg);
+         if (opts.num_threads < 1)
+           errx(EX_USAGE, "can't have negative number of threads");
+--- a/src/estimate_capacity.cc
++++ b/src/estimate_capacity.cc
+@@ -109,6 +109,7 @@
+         usage(0);
+         break;
+       case 'p' :
++        kraken2_browser_single_thread(optarg);
+         sig = atoll(optarg);
+         if (sig < 1)
+           errx(EX_USAGE, "must have at least 1 thread");
+--- a/src/dump_table.cc
++++ b/src/dump_table.cc
+@@ -142,6 +142,7 @@
+         opts.skip_counts = true;
+         break;
+       case 'p' :
++        kraken2_browser_single_thread(optarg);
+         opts.num_threads = atoi(optarg);
+         break;
+       case 'M':
+--- a/src/omp_hack.h
++++ b/src/omp_hack.h
+@@ -6,6 +6,19 @@
+ 
+ #ifndef KRAKEN2_OMP_HACK_H_
+ #define KRAKEN2_OMP_HACK_H_
++
++#include <cstdlib>
++#include <cerrno>
++#include <err.h>
++#include <sysexits.h>
++
++inline void kraken2_browser_single_thread(const char *value) {
++  char *end = nullptr;
++  errno = 0;
++  long requested = strtol(value, &end, 10);
++  if (errno == ERANGE || end == value || *end || requested != 1)
++    errx(EX_USAGE, "Kraken2 browser package requires exactly one thread");
++}
+ 
+ #ifdef _OPENMP
+ #include <omp.h>
+--- a/src/compact_hash.h
++++ b/src/compact_hash.h
+@@ -233,7 +233,8 @@
+ // exceed core count.
+ static inline int db_read_threads() {
+   const char *e = getenv("K2_DB_READ_THREADS");
+-  int n = e ? atoi(e) : 8;
++  if (e) kraken2_browser_single_thread(e);
++  int n = 1;
+   return n > 0 ? n : 1;
+ }
+ 

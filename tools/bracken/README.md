@@ -1,0 +1,11 @@
+# Bracken 3.1
+
+This port runs upstream `est_abundance.py` and `generate_kmer_distribution.py` unchanged in Pyodide 314.0.7 / CPython 3.14.2. It compiles upstream `kmer2read_distr` with Emscripten 3.1.64. Bracken is GPL-3.0-or-later. Exact source archives and runtime library notices accompany each bundle.
+
+Build with `BRACKEN_PYTHON=/path/to/python3.14 scripts/build-bracken.sh all`. The interpreter must be CPython 3.14.2. Modes `native`, `patched-native` and `wasm` are also available. Native executables and original shell/Python programs are under `build/{native,patched-native}/bracken-package`; convenience launchers are beside the package. Put the pinned interpreter under the name `python` on PATH when running upstream shell launchers. Native and patched-native inputs are recorded in `build-manifest.json`.
+
+The C++ patch replaces OpenMP scheduling with one worker and corrects mismatched diagnostic printf types. A checked EOF boundary fixes upstream reading one nonexistent record after a trailing newline (which can emit a NUL sequence ID and an undefined taxid); all genuine input records and distribution calculations are retained. Malformed records and unknown sequence IDs fail explicitly instead of dereferencing invalid memory. The helper still computes upstream distributions. Requests for more than one thread fail. Native baseline retains upstream OpenMP and runs with `-t 1`. No shared memory or special HTTP isolation headers are required. In-memory datasets must fit within the helper's 2 GiB WebAssembly address-space limit and available browser memory.
+
+The JavaScript frontend replaces Bash process scheduling; it does not implement abundance estimation. Full local distribution builds require the separately bundled Kraken2 dependency. Existing distributions support estimation without loading Kraken2. Source taxonomy, sequence-to-taxid mappings and library FASTA must be supplied for local builds. Network database downloads and legacy Kraken/KrakenUniq database formats are outside this port.
+
+The v3.1 upstream shell still prints version 3.0.1; that text is preserved. Native shell validation has some bare `exit` statements that report success on invalid inputs; the JavaScript frontend returns a nonzero status for these failures. Python/native helper exit statuses are preserved. See `runtime/BRACKEN.md` for the API.

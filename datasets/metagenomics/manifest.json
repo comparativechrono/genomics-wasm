@@ -1,0 +1,328 @@
+{
+  "datasets": {
+    "zymo": {
+      "observations": {
+        "brackenAddedReads": 30,
+        "brackenSpecies": 3,
+        "classifiedReadPairs": 231,
+        "directAssignmentsByTaxid": {
+          "0": 3865,
+          "28901": 100,
+          "543": 31,
+          "562": 91,
+          "623": 9
+        },
+        "readPairs": 4096,
+        "unclassifiedReadPairs": 3865
+      },
+      "reads": {
+        "basesPerRead": 151,
+        "firstReadId": "ERR2984773.1",
+        "lastReadId": "ERR2984773.4096",
+        "pairs": 4096
+      },
+      "references": [
+        {
+          "accession": "NC_000913.3",
+          "chromosomeBases": 4641652,
+          "coordinateSystem": "1-based inclusive",
+          "end": 1000000,
+          "name": "Escherichia coli",
+          "sequenceId": "NC_000913.3_1_1000000",
+          "source": "GCF_000005845.2_ASM584v2_genomic.fna.gz",
+          "start": 1,
+          "taxid": 562,
+          "windowSequenceSha256": "d51bbf6b29a23f043b0d7d7e7d7a816d8971a63d351f70e4e091aecacd32cfb8"
+        },
+        {
+          "accession": "NC_003197.2",
+          "chromosomeBases": 4857450,
+          "coordinateSystem": "1-based inclusive",
+          "end": 1000000,
+          "name": "Salmonella enterica",
+          "sequenceId": "NC_003197.2_1_1000000",
+          "source": "GCF_000006945.2_ASM694v2_genomic.fna.gz",
+          "start": 1,
+          "taxid": 28901,
+          "windowSequenceSha256": "d0b7ac4e21cff8ff4a69fb04f339a3fcc72e45fb7b1d8ac9041f5859cfbe92c6"
+        },
+        {
+          "accession": "NC_004337.2",
+          "chromosomeBases": 4607202,
+          "coordinateSystem": "1-based inclusive",
+          "end": 1000000,
+          "name": "Shigella flexneri",
+          "sequenceId": "NC_004337.2_1_1000000",
+          "source": "GCF_000006925.2_ASM692v2_genomic.fna.gz",
+          "start": 1,
+          "taxid": 623,
+          "windowSequenceSha256": "c0b6014b61cfacb8f32d3add8013cad94e7445b71c7e0a7041cec9223b2ec249"
+        }
+      ],
+      "taxonomyNodes": 14
+    }
+  },
+  "files": {
+    "README.md": {
+      "bytes": 4252,
+      "generated": false,
+      "sha256": "fb1ca225f7e0338d1fa5c78412f1790e06058e93f29281492275d2226102f1d9"
+    },
+    "provenance/sources.lock.json": {
+      "bytes": 5627,
+      "generated": false,
+      "sha256": "701318c3153249ef97d6677a24267f5e13bd6c4070b518340b64f2ec5899b330"
+    },
+    "provenance/sources/ERR2984773-ena-filereport.json": {
+      "bytes": 580,
+      "generated": false,
+      "sha256": "cf01e9eb24b9b8d29e4692a7b0ef9fd195f0f4e5007034cb42ad81d28e709f64"
+    },
+    "provenance/sources/ERR2984773-ena-run.xml": {
+      "bytes": 3333,
+      "generated": false,
+      "sha256": "3a6936d57746d5ef332e23334277bbf420044e9e8d937fee0b2acffec1883c43"
+    },
+    "provenance/sources/PRJEB29504-ena-study.xml": {
+      "bytes": 2044,
+      "generated": false,
+      "sha256": "198b0703fe354af879da660356704256054952a2169775e1edafb38248b4f03e"
+    },
+    "provenance/sources/SAMEA5157164-ena-sample.xml": {
+      "bytes": 2427,
+      "generated": false,
+      "sha256": "d2c5bed05da44c5584e3b6310a633b34343d22fc4147dbef1878267b4819df4a"
+    },
+    "provenance/sources/loman-mockcommunity.html": {
+      "bytes": 12884,
+      "generated": false,
+      "sha256": "c5e9a8eb0f0f1d50baa3f27485a9bb50f17aed5e8c2b10e89aec9680df3bb972"
+    },
+    "provenance/sources/taxonomy-562-28901-623.xml": {
+      "bytes": 32908,
+      "generated": false,
+      "sha256": "0719fd6c605e9e2a821e7817b24c0a640398c6abcfa9cd980c964f87a6a99b5a"
+    },
+    "provenance/sources/taxonomy-root-1.xml": {
+      "bytes": 769,
+      "generated": false,
+      "sha256": "cb8f93b3bd810681b5201ed4b2ecfedd6ec2d0e8acc1794139caecbb0f0392eb"
+    },
+    "zymo/db/database.kraken": {
+      "bytes": 418980,
+      "generated": true,
+      "sha256": "9349b2ac394d508b270b736bb59253656c4b87270aa024b0730b78f5f71ec810"
+    },
+    "zymo/db/database151mers.kmer_distrib": {
+      "bytes": 191,
+      "generated": true,
+      "sha256": "0ce16c9375122c8af988f47f6ab533069c245873de86b1265a972ca07aa84844"
+    },
+    "zymo/db/hash.k2d": {
+      "bytes": 4404692,
+      "generated": true,
+      "sha256": "b94cf7073346fee9519ca027f24a22a2837c2c54b7aefa335363071fab3f5fe6"
+    },
+    "zymo/db/library/reference.fna": {
+      "bytes": 3037738,
+      "generated": true,
+      "sha256": "5323c2a271995f7ca8ca9cbb05bae85e8788a9e2f82aa4dfae2a5436c63d8d72"
+    },
+    "zymo/db/opts.k2d": {
+      "bytes": 64,
+      "generated": true,
+      "sha256": "d51697baeed11477f0886c0609465805a57531bc2f774fdaf51fd68be057c267"
+    },
+    "zymo/db/seqid2taxid.map": {
+      "bytes": 80,
+      "generated": true,
+      "sha256": "06790b61d8c0806a66d6a63b5d562423238448b0c2cef0f712833ef9c4d3b431"
+    },
+    "zymo/db/taxo.k2d": {
+      "bytes": 1155,
+      "generated": true,
+      "sha256": "9f1d30d2cc8a68bf20ddb681dd63ca07e4ca0aa5eecf6273e4ed598c83358e83"
+    },
+    "zymo/db/taxonomy/names.dmp": {
+      "bytes": 621,
+      "generated": true,
+      "sha256": "2fd52975d4df54d66eef08995be66621e1872ed632a2cf3c12cf566bf33e1ab1"
+    },
+    "zymo/db/taxonomy/nodes.dmp": {
+      "bytes": 847,
+      "generated": true,
+      "sha256": "6ed2c0a3aca73bacd03fb4d5ada7fd4b1bb3f0dce11839e09228ba3c43327423"
+    },
+    "zymo/reads_1.fastq": {
+      "bytes": 1514412,
+      "generated": true,
+      "sha256": "b7963df797db0b2d84530960ec38de8a7b8ee8841408c4e70012aec8f1c5d25f"
+    },
+    "zymo/reads_1.fastq.gz": {
+      "bytes": 483472,
+      "generated": true,
+      "sha256": "06cb5e33dcfe3aec1b29900060ec50e9f0e221ead94e4bafefae050872f72df1"
+    },
+    "zymo/reads_2.fastq": {
+      "bytes": 1514412,
+      "generated": true,
+      "sha256": "71f0dd4862756c45da0113cebadf61badd413f78a4aad73ff491dc9bdfe8c285"
+    },
+    "zymo/reads_2.fastq.gz": {
+      "bytes": 536175,
+      "generated": true,
+      "sha256": "dc46d4e2c428cab9d8065d03603603a14a2c1ecd4aa8849899ddc836b508f898"
+    },
+    "zymo/sample.bracken": {
+      "bytes": 225,
+      "generated": true,
+      "sha256": "11cda9194343312d28363b303f8f2a461cd2b8219043cb618c3a0b9f9639b4b9"
+    },
+    "zymo/sample.kraken": {
+      "bytes": 192970,
+      "generated": true,
+      "sha256": "c00c28521d04dffba29188cc870fb57272a9a1be65b01dd6b7917e2f230072e9"
+    },
+    "zymo/sample.report": {
+      "bytes": 672,
+      "generated": true,
+      "sha256": "85f7aa6951dbe23ea2eaf39d53b2f05a63da571a7c50e0f5a0ed71a694a922cd"
+    },
+    "zymo/sample_bracken_species.report": {
+      "bytes": 635,
+      "generated": true,
+      "sha256": "ac340d285abae3982d1865f4a85a247cd553b382c8679608a85bb8f1224ce89e"
+    }
+  },
+  "regeneration": {
+    "files": {
+      "scripts/fetch-metagenomics-test-data.py": {
+        "bytes": 16265,
+        "sha256": "8483f65fb48072de469ef7fa5bc32af0435a20980e885dc416937240f4f5659b"
+      }
+    },
+    "optionsPadding": "Zero native IndexOptions padding bytes 33..39 and 60..63; preserve every declared field.",
+    "requirements": [
+      "Python 3.12+",
+      "C++ compiler with OpenMP",
+      "make",
+      "Perl",
+      "Bash"
+    ],
+    "script": "scripts/fetch-metagenomics-test-data.py",
+    "sourcePrograms": {
+      "bracken": "3.1",
+      "kraken2": "2.17.2"
+    }
+  },
+  "schema_version": 1,
+  "sources": {
+    "ERR2984773-ena-filereport.json": {
+      "bytes": 580,
+      "cachePath": "build/metagenomics-sources/ERR2984773-ena-filereport.json",
+      "sha256": "cf01e9eb24b9b8d29e4692a7b0ef9fd195f0f4e5007034cb42ad81d28e709f64",
+      "snapshot": "provenance/sources/ERR2984773-ena-filereport.json",
+      "url": "https://www.ebi.ac.uk/ena/portal/api/filereport?accession=ERR2984773&result=read_run&fields=run_accession,study_accession,sample_accession,experiment_accession,scientific_name,instrument_model,library_layout,library_strategy,read_count,base_count,fastq_ftp,fastq_md5,fastq_bytes&format=json"
+    },
+    "ERR2984773-ena-run.xml": {
+      "bytes": 3333,
+      "cachePath": "build/metagenomics-sources/ERR2984773-ena-run.xml",
+      "sha256": "3a6936d57746d5ef332e23334277bbf420044e9e8d937fee0b2acffec1883c43",
+      "snapshot": "provenance/sources/ERR2984773-ena-run.xml",
+      "url": "https://www.ebi.ac.uk/ena/browser/api/xml/ERR2984773"
+    },
+    "ERR2984773_1.prefix-0-2097151.fastq.gz": {
+      "bytes": 2097152,
+      "cachePath": "build/metagenomics-sources/ERR2984773_1.prefix-0-2097151.fastq.gz",
+      "contentRange": "bytes 0-2097151/927693096",
+      "range": [
+        0,
+        2097151
+      ],
+      "sha256": "d9fa8ffc30b3302961170879e1e271392d25e52ddd5182f8ad15a1ecde3b662d",
+      "url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR298/003/ERR2984773/ERR2984773_1.fastq.gz"
+    },
+    "ERR2984773_2.prefix-0-2097151.fastq.gz": {
+      "bytes": 2097152,
+      "cachePath": "build/metagenomics-sources/ERR2984773_2.prefix-0-2097151.fastq.gz",
+      "contentRange": "bytes 0-2097151/1028981403",
+      "range": [
+        0,
+        2097151
+      ],
+      "sha256": "ab3853b0c8d3581365051a87f44b54b7166a939aa7457ce5287548d4f5388673",
+      "url": "https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR298/003/ERR2984773/ERR2984773_2.fastq.gz"
+    },
+    "GCF_000005845.2_ASM584v2_genomic.fna.gz": {
+      "bytes": 1379902,
+      "cachePath": "build/metagenomics-sources/GCF_000005845.2_ASM584v2_genomic.fna.gz",
+      "sha256": "a96d3cfa58c88d477013c768f90a11d2386d42a70d566abfb6d9013dcbd24255",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz"
+    },
+    "GCF_000006925.2_ASM692v2_genomic.fna.gz": {
+      "bytes": 1423732,
+      "cachePath": "build/metagenomics-sources/GCF_000006925.2_ASM692v2_genomic.fna.gz",
+      "sha256": "51f45ad24a8109705410a4795a751a81b11604a96b8d69014f5125e687d0f12f",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/006/925/GCF_000006925.2_ASM692v2/GCF_000006925.2_ASM692v2_genomic.fna.gz"
+    },
+    "GCF_000006945.2_ASM694v2_genomic.fna.gz": {
+      "bytes": 1471540,
+      "cachePath": "build/metagenomics-sources/GCF_000006945.2_ASM694v2_genomic.fna.gz",
+      "sha256": "2996f647c223d4c5b3e0f1a0940025614b39cad5c0c1a00b73f264e3b718d59a",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/006/945/GCF_000006945.2_ASM694v2/GCF_000006945.2_ASM694v2_genomic.fna.gz"
+    },
+    "PRJEB29504-ena-study.xml": {
+      "bytes": 2044,
+      "cachePath": "build/metagenomics-sources/PRJEB29504-ena-study.xml",
+      "sha256": "198b0703fe354af879da660356704256054952a2169775e1edafb38248b4f03e",
+      "snapshot": "provenance/sources/PRJEB29504-ena-study.xml",
+      "url": "https://www.ebi.ac.uk/ena/browser/api/xml/PRJEB29504"
+    },
+    "SAMEA5157164-ena-sample.xml": {
+      "bytes": 2427,
+      "cachePath": "build/metagenomics-sources/SAMEA5157164-ena-sample.xml",
+      "sha256": "d2c5bed05da44c5584e3b6310a633b34343d22fc4147dbef1878267b4819df4a",
+      "snapshot": "provenance/sources/SAMEA5157164-ena-sample.xml",
+      "url": "https://www.ebi.ac.uk/ena/browser/api/xml/SAMEA5157164"
+    },
+    "bracken-3.1.tar.gz": {
+      "bytes": 141466,
+      "cachePath": "build/metagenomics-sources/bracken-3.1.tar.gz",
+      "purpose": "Original native database/model regeneration source, no browser runtime needed.",
+      "revision": "cfeac04b6445c44c3825866683a6fdd18746cb58",
+      "sha256": "c0a35331a8aac1e0dbb14c2a92c4de6f89f0aac540101c05c2eec54032107560",
+      "url": "https://codeload.github.com/jenniferlu717/Bracken/tar.gz/refs/tags/v3.1",
+      "version": "3.1"
+    },
+    "kraken2-2.17.2.tar.gz": {
+      "bytes": 291358,
+      "cachePath": "build/metagenomics-sources/kraken2-2.17.2.tar.gz",
+      "purpose": "Original native database/model regeneration source, no browser runtime needed.",
+      "revision": "8c190b1b668825935dbf6dee5f969227dc8269bb",
+      "sha256": "84ff95cd6d8a4c9e93ab6bf1d9b3892099baaefb0277bcf2edc3eb4948566035",
+      "url": "https://codeload.github.com/DerrickWood/kraken2/tar.gz/refs/tags/2.17.2",
+      "version": "2.17.2"
+    },
+    "loman-mockcommunity.html": {
+      "bytes": 12884,
+      "cachePath": "build/metagenomics-sources/loman-mockcommunity.html",
+      "sha256": "c5e9a8eb0f0f1d50baa3f27485a9bb50f17aed5e8c2b10e89aec9680df3bb972",
+      "snapshot": "provenance/sources/loman-mockcommunity.html",
+      "url": "https://lomanlab.github.io/mockcommunity/"
+    },
+    "taxonomy-562-28901-623.xml": {
+      "bytes": 32908,
+      "cachePath": "build/metagenomics-sources/taxonomy-562-28901-623.xml",
+      "sha256": "0719fd6c605e9e2a821e7817b24c0a640398c6abcfa9cd980c964f87a6a99b5a",
+      "snapshot": "provenance/sources/taxonomy-562-28901-623.xml",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=taxonomy&id=562,28901,623&retmode=xml"
+    },
+    "taxonomy-root-1.xml": {
+      "bytes": 769,
+      "cachePath": "build/metagenomics-sources/taxonomy-root-1.xml",
+      "sha256": "cb8f93b3bd810681b5201ed4b2ecfedd6ec2d0e8acc1794139caecbb0f0392eb",
+      "snapshot": "provenance/sources/taxonomy-root-1.xml",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=taxonomy&id=1&retmode=xml"
+    }
+  }
+}

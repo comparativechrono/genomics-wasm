@@ -1,0 +1,74 @@
+--- a/src/kmer2read_headers.h
++++ b/src/kmer2read_headers.h
+@@ -22,7 +22,12 @@
+ #ifndef KMER2READ_HEADERS
+ #define KMER2READ_HEADERS
+ 
++#ifdef BRACKEN_SERIAL
++inline void omp_set_num_threads(int) {}
++inline int omp_get_num_procs() { return 1; }
++#else
+ #include <omp.h>
++#endif
+ #include <map>
+ #include <deque>
+ #include <string>
+--- a/src/kmer2read_distr.cpp
++++ b/src/kmer2read_distr.cpp
+@@ -71,7 +71,7 @@
+     timeval_subtract(&tresult, &tb, &ta);
+     int minutes = int (tresult.tv_sec / 60);
+     tresult.tv_sec = tresult.tv_sec % 60;  
+-    printf("\tTime Elaped: %i minutes, %i seconds, %0.5f microseconds\n", minutes, tresult.tv_sec, tresult.tv_usec);
++    printf("\tTime Elaped: %i minutes, %i seconds, %0.5f microseconds\n", minutes, int(tresult.tv_sec), double(tresult.tv_usec));
+     printf("\t=============================\n");
+ }
+ 
+--- a/src/kraken_processing.cpp
++++ b/src/kraken_processing.cpp
+@@ -230,7 +230,8 @@
+     struct stat sb;
+     fstat(fd,&sb);
+     size_t dataSize = sb.st_size;
+-    char * data = static_cast<char*>(mmap(NULL, dataSize, PROT_READ,MAP_PRIVATE,fd,0));
++    // Emscripten MEMFS cannot mmap a zero-length file. No records need mapping.
++    char * data = dataSize ? static_cast<char*>(mmap(NULL, dataSize, PROT_READ,MAP_PRIVATE,fd,0)) : NULL;
+     size_t globalLineCounter = 0;
+ 
+     int seqs_read = 0;
+@@ -259,9 +260,14 @@
+             for (i = lastReadPos; i < dataSize; i++){
+                 newLineCnt += (data[i]=='\n');
+                 if(newLineCnt == currLineToProcess){
+-                    char * lineStart = &data[i + (data[i]=='\n' ? 1 : 0)];
++                    const size_t lineOffset = i + (data[i]=='\n' ? 1 : 0);
++                    if (lineOffset >= dataSize) {
++                        processMore = false;
++                        break;
++                    }
++                    char * lineStart = &data[lineOffset];
+                     size_t pos=0;
+-                    while(lineStart[pos] != '\n' && (i + pos) < dataSize){
++                    while((lineOffset + pos) < dataSize && lineStart[pos] != '\n'){
+                         pos++;
+                     }
+                     char *lineEnd = &lineStart[pos];
+@@ -314,9 +320,17 @@
+     pos3 = line.find("\t", pos2+1);
+     pos4 = line.find("\t", pos3+1);
+     pos5 = line.find("\n", pos4+1);
++    if (pos1 < 0 || pos2 <= pos1 + 1 || pos3 <= pos2 || pos4 <= pos3 ||
++        size_t(pos4 + 1) >= line.size()) {
++        errx(1, "Malformed Kraken classification record");
++    }
+     //Extract seqid and taxid
+     seqid = line.substr(pos1 + 1, pos2 - pos1 - 1);
+-    taxid = seqid2taxid->find(seqid)->second;
++    const auto sequenceTaxid = seqid2taxid->find(seqid);
++    if (sequenceTaxid == seqid2taxid->end()) {
++        errx(1, "Unknown sequence ID in Kraken classification: %s", seqid.c_str());
++    }
++    taxid = sequenceTaxid->second;
+     char *curr_ks = &line[pos4 + 1];
+ 
+     /*Initialize variables for getting read mappings instead of kmer mappings */

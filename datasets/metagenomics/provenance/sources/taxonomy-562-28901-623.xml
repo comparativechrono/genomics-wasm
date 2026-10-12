@@ -1,0 +1,850 @@
+<?xml version="1.0" ?>
+<!DOCTYPE TaxaSet PUBLIC "-//NLM//DTD Taxon, 14th January 2002//EN" "https://www.ncbi.nlm.nih.gov/entrez/query/DTD/taxon.dtd">
+<TaxaSet><Taxon>
+    <TaxId>562</TaxId>
+    <ScientificName>Escherichia coli</ScientificName>
+    <OtherNames>
+        <Synonym>Bacillus coli</Synonym>
+        <Synonym>Bacterium coli</Synonym>
+        <Synonym>Bacterium coli commune</Synonym>
+        <Synonym>Enterococcus coli</Synonym>
+        <CommonName>E. coli</CommonName>
+        <Includes>Achromobacter sp. ATCC 35328</Includes>
+        <Includes>Escherichia sp. 3_2_53FAA</Includes>
+        <Includes>Escherichia sp. MAR</Includes>
+        <Includes>bacterium 10a</Includes>
+        <Includes>bacterium E3</Includes>
+        <EquivalentName>Escherichia/Shigella coli</EquivalentName>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>&quot;Bacillus coli&quot; Migula 1895</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>&quot;Bacterium coli commune&quot; Escherich 1885</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>&quot;Bacterium coli&quot; (Migula 1895) Lehmann and Neumann 1896</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>Escherichia coli (Migula 1895) Castellani and Chalmers 1919 (Approved Lists 1980)</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC 11775</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC:11775</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>BCCM/LMG:2092</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CCUG 24</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CCUG 29300</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CCUG:24</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CCUG:29300</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP 54.8</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP:54.8</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM 30083</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM:30083</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>IAM 12119</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>IAM:12119</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>JCM 1649</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>JCM:1649</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>LMG 2092</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>LMG:2092</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NBRC 102203</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NBRC:102203</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCCB 54008</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCCB:54008</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC 9001</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC:9001</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>personal::U5/41</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>strain U5/41</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>misspelling</ClassCDE>
+            <DispName>Escherchia coli</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>misspelling</ClassCDE>
+            <DispName>Eschericia coli</DispName>
+        </Name>
+    </OtherNames>
+    <ParentTaxId>561</ParentTaxId>
+    <Rank>species</Rank>
+    <Division>Bacteria</Division>
+    <GeneticCode>
+        <GCId>11</GCId>
+        <GCName>Bacterial, Archaeal and Plant Plastid</GCName>
+    </GeneticCode>
+    <MitoGeneticCode>
+        <MGCId>0</MGCId>
+        <MGCName>Unspecified</MGCName>
+    </MitoGeneticCode>
+    <Lineage>cellular organisms; Bacteria; Pseudomonadati; Pseudomonadota; Gammaproteobacteria; Enterobacterales; Enterobacteriaceae; Escherichia</Lineage>
+    <LineageEx>
+        <Taxon>
+            <TaxId>131567</TaxId>
+            <ScientificName>cellular organisms</ScientificName>
+            <Rank>cellular root</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>2</TaxId>
+            <ScientificName>Bacteria</ScientificName>
+            <Rank>domain</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>3379134</TaxId>
+            <ScientificName>Pseudomonadati</ScientificName>
+            <Rank>kingdom</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>1224</TaxId>
+            <ScientificName>Pseudomonadota</ScientificName>
+            <Rank>phylum</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>1236</TaxId>
+            <ScientificName>Gammaproteobacteria</ScientificName>
+            <Rank>class</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>91347</TaxId>
+            <ScientificName>Enterobacterales</ScientificName>
+            <Rank>order</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>543</TaxId>
+            <ScientificName>Enterobacteriaceae</ScientificName>
+            <Rank>family</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>561</TaxId>
+            <ScientificName>Escherichia</ScientificName>
+            <Rank>genus</Rank>
+        </Taxon>
+    </LineageEx>
+    <CreateDate>1995/02/27 09:24:00</CreateDate>
+    <UpdateDate>2024/03/22 16:30:02</UpdateDate>
+    <PubDate>1993/06/11 01:00:00</PubDate>
+</Taxon>
+<Taxon>
+    <TaxId>28901</TaxId>
+    <ScientificName>Salmonella enterica</ScientificName>
+    <OtherNames>
+        <Synonym>Bacillus cholerae-suis</Synonym>
+        <Synonym>Salmonella cholerae-suis</Synonym>
+        <Synonym>Salmonella choleraesuis</Synonym>
+        <Synonym>Salmonella enterica ser. choleraesuis</Synonym>
+        <Includes>Salmonella sp. 22OH10_CL01-S1</Includes>
+        <Includes>Salmonella sp. 22OH12_PC07-S1</Includes>
+        <Includes>Salmonella sp. 23OH01_CG01-S1</Includes>
+        <Includes>Salmonella sp. 23OH01_GT01-S1</Includes>
+        <Includes>Salmonella sp. 23OH01_GT02-S1</Includes>
+        <Includes>Salmonella sp. 23OH02_GT02-S1</Includes>
+        <Includes>Salmonella sp. 23OH04_CG01-S1</Includes>
+        <Includes>Salmonella sp. 23OH05_CB01-S1</Includes>
+        <Includes>Salmonella sp. 23OH06_CG01-S1</Includes>
+        <Includes>Salmonella sp. 23OH06_CH01-S1</Includes>
+        <Includes>Salmonella sp. 23OH06_GT01-S1</Includes>
+        <Includes>Salmonella sp. 23OH07_CB02-S1</Includes>
+        <Includes>Salmonella sp. 23OH07_GT04-S1</Includes>
+        <Includes>Salmonella sp. 23OH08_CG01-S1</Includes>
+        <Includes>Salmonella sp. 23OH10_CB03-S1</Includes>
+        <Includes>Salmonella sp. 23OH10_CG01-S1</Includes>
+        <Includes>Salmonella sp. AMC 200</Includes>
+        <Includes>Salmonella sp. AMC 238</Includes>
+        <Includes>Salmonella sp. AMC 239</Includes>
+        <Includes>Salmonella sp. AMC 240</Includes>
+        <Includes>Salmonella sp. AMC 253</Includes>
+        <Includes>Salmonella sp. AMC 257</Includes>
+        <Includes>Salmonella sp. AMC 265</Includes>
+        <Includes>Salmonella sp. AMC 266</Includes>
+        <Includes>Salmonella sp. AMC 267</Includes>
+        <Includes>Salmonella sp. AMC 268</Includes>
+        <Includes>Salmonella sp. AMC 270</Includes>
+        <Includes>Salmonella sp. AMC 28</Includes>
+        <Includes>Salmonella sp. AMC 289</Includes>
+        <Includes>Salmonella sp. AMC 291</Includes>
+        <Includes>Salmonella sp. AMC 294</Includes>
+        <Includes>Salmonella sp. AMC 299</Includes>
+        <Includes>Salmonella sp. AMC 301</Includes>
+        <Includes>Salmonella sp. AMC 327</Includes>
+        <Includes>Salmonella sp. AMC 90</Includes>
+        <Includes>Salmonella sp. FDA00013420</Includes>
+        <Includes>Salmonella sp. FDA00013433</Includes>
+        <Includes>Salmonella sp. FDA00013434</Includes>
+        <Includes>Salmonella sp. FDA00013435</Includes>
+        <Includes>Salmonella sp. FDA00013436</Includes>
+        <Includes>Salmonella sp. FDA00013437</Includes>
+        <Includes>Salmonella sp. FDA00013438</Includes>
+        <Includes>Salmonella sp. FDA00013439</Includes>
+        <Includes>Salmonella sp. FDA00013440</Includes>
+        <Includes>Salmonella sp. FDA00013468</Includes>
+        <Includes>Salmonella sp. FDA00013469</Includes>
+        <Includes>Salmonella sp. FDA00013470</Includes>
+        <Includes>Salmonella sp. FDA00013495</Includes>
+        <Includes>Salmonella sp. FDA00013496</Includes>
+        <Includes>Salmonella sp. FDA00013499</Includes>
+        <Includes>Salmonella sp. FDA00013500</Includes>
+        <Includes>Salmonella sp. FDA00013513</Includes>
+        <Includes>Salmonella sp. FDA00013514</Includes>
+        <Includes>Salmonella sp. FDA00013515</Includes>
+        <Includes>Salmonella sp. FDA00013516</Includes>
+        <Includes>Salmonella sp. FDA00013517</Includes>
+        <Includes>Salmonella sp. FDA00013518</Includes>
+        <Includes>Salmonella sp. FDA00013519</Includes>
+        <Includes>Salmonella sp. FDA00013520</Includes>
+        <Includes>Salmonella sp. FDA00013521</Includes>
+        <Includes>Salmonella sp. FDA00013522</Includes>
+        <Includes>Salmonella sp. FDA00013523</Includes>
+        <Includes>Salmonella sp. FDA00013524</Includes>
+        <Includes>Salmonella sp. FDA00013525</Includes>
+        <Includes>Salmonella sp. FDA00013526</Includes>
+        <Includes>Salmonella sp. FDA00013597</Includes>
+        <Includes>Salmonella sp. HC-257</Includes>
+        <Includes>Salmonella sp. IA1-174</Includes>
+        <Includes>Salmonella sp. MH3-A1</Includes>
+        <Includes>Salmonella sp. MH3-A2</Includes>
+        <Includes>Salmonella sp. MH3-A3</Includes>
+        <Includes>Salmonella sp. MH3-C</Includes>
+        <Includes>Salmonella sp. MH3-D1</Includes>
+        <Includes>Salmonella sp. MH3-D2</Includes>
+        <Includes>Salmonella sp. MH3-D3</Includes>
+        <Includes>Salmonella sp. MH3-D4</Includes>
+        <Includes>Salmonella sp. MH3-Z1</Includes>
+        <Includes>Salmonella sp. MH3-Z2</Includes>
+        <Includes>Salmonella sp. MH4-A2</Includes>
+        <Includes>Salmonella sp. MH4-A3</Includes>
+        <Includes>Salmonella sp. MH4-A4</Includes>
+        <Includes>Salmonella sp. MH4-Z2</Includes>
+        <Includes>Salmonella sp. NYVetLIRN-85</Includes>
+        <Includes>Salmonella sp. NYVetLIRN-86</Includes>
+        <Includes>Salmonella sp. NYVetLIRN-87</Includes>
+        <Includes>Salmonella sp. NYVetLIRN-88</Includes>
+        <Includes>Salmonella sp. OH-18-15149</Includes>
+        <Includes>Salmonella sp. OH-18-15334</Includes>
+        <Includes>Salmonella sp. OH-18-15363</Includes>
+        <Includes>Salmonella sp. OH-18-16886</Includes>
+        <Includes>Salmonella sp. OH-18-16934</Includes>
+        <Includes>Salmonella sp. OH-18-18132-1</Includes>
+        <Includes>Salmonella sp. OH-18-18132-10</Includes>
+        <Includes>Salmonella sp. OH-18-18132-11</Includes>
+        <Includes>Salmonella sp. OH-18-18132-12</Includes>
+        <Includes>Salmonella sp. OH-18-18132-13</Includes>
+        <Includes>Salmonella sp. OH-18-18132-14</Includes>
+        <Includes>Salmonella sp. OH-18-18132-15</Includes>
+        <Includes>Salmonella sp. OH-18-18132-2</Includes>
+        <Includes>Salmonella sp. OH-18-18132-3</Includes>
+        <Includes>Salmonella sp. OH-18-18132-4</Includes>
+        <Includes>Salmonella sp. OH-18-18132-5</Includes>
+        <Includes>Salmonella sp. OH-18-18132-6</Includes>
+        <Includes>Salmonella sp. OH-18-18132-7</Includes>
+        <Includes>Salmonella sp. OH-18-18132-8</Includes>
+        <Includes>Salmonella sp. OH-18-18132-9</Includes>
+        <Includes>Salmonella sp. OH-18-18281-1</Includes>
+        <Includes>Salmonella sp. OH-18-18281-2</Includes>
+        <Includes>Salmonella sp. OH-18-18411</Includes>
+        <Includes>Salmonella sp. OH-18-18446</Includes>
+        <Includes>Salmonella sp. OH-18-18447</Includes>
+        <Includes>Salmonella sp. OH-18-18941</Includes>
+        <Includes>Salmonella sp. OH-18-19201</Includes>
+        <Includes>Salmonella sp. OH-18-19951-1</Includes>
+        <Includes>Salmonella sp. OH-18-20073-2T</Includes>
+        <Includes>Salmonella sp. OH-18-20117-1</Includes>
+        <Includes>Salmonella sp. OH-18-20132-7</Includes>
+        <Includes>Salmonella sp. OH-18-20225-1-S</Includes>
+        <Includes>Salmonella sp. OH-18-20225-2-S</Includes>
+        <Includes>Salmonella sp. OH-18-20299-1</Includes>
+        <Includes>Salmonella sp. OH-18-20299-2</Includes>
+        <Includes>Salmonella sp. OH-18-20299-3</Includes>
+        <Includes>Salmonella sp. OH-18-20299-4</Includes>
+        <Includes>Salmonella sp. OH-18-20299-5</Includes>
+        <Includes>Salmonella sp. OH-18-20299-6</Includes>
+        <Includes>Salmonella sp. OH-18-20299-7</Includes>
+        <Includes>Salmonella sp. OH-18-20299-8</Includes>
+        <Includes>Salmonella sp. OH-18-20386</Includes>
+        <Includes>Salmonella sp. OH-18-20895</Includes>
+        <Includes>Salmonella sp. OH-18-20897</Includes>
+        <Includes>Salmonella sp. OH-18-21102</Includes>
+        <Includes>Salmonella sp. OH-18-21112</Includes>
+        <Includes>Salmonella sp. OH-18-21175</Includes>
+        <Includes>Salmonella sp. OH-18-21493-S</Includes>
+        <Includes>Salmonella sp. OH-18-21628</Includes>
+        <Includes>Salmonella sp. OH-18-21629</Includes>
+        <Includes>Salmonella sp. OH-18-21765</Includes>
+        <Includes>Salmonella sp. OH-18-21865-2</Includes>
+        <Includes>Salmonella sp. OH-18-22026</Includes>
+        <Includes>Salmonella sp. OH-18-22045</Includes>
+        <Includes>Salmonella sp. OH-18-22168</Includes>
+        <Includes>Salmonella sp. OH-18-22269-1</Includes>
+        <Includes>Salmonella sp. OH-18-22479</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-LA-TX-0007</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-LA-TX-0008</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-LA-TX-0009</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-MS-0001</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-MS-0002</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-MS-0003</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-NJ-0001</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-UP-NBC-0001</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-UP-NBC-0004</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-UP-NBC-0005</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-UP-NBC-0006</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-NY-UP-NBC-0007</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-IN-0001</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-IN-0002</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-IN-0003</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-IN-0005</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-IN-0007</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-WA-0012</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-WA-0013</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-WA-0014</Includes>
+        <Includes>Salmonella sp. SAL-18-VL-OH-WA-0017</Includes>
+        <Includes>Salmonella sp. TTU_251</Includes>
+        <Includes>Salmonella sp. TTU_258</Includes>
+        <Includes>Salmonella sp. TTU_262</Includes>
+        <Includes>Salmonella sp. TTU_264</Includes>
+        <Includes>Salmonella sp. TTU_265</Includes>
+        <Includes>Salmonella sp. TTU_266</Includes>
+        <Includes>Salmonella sp. TTU_267</Includes>
+        <Includes>Salmonella sp. TTU_269</Includes>
+        <Includes>Salmonella sp. TTU_274</Includes>
+        <Includes>Salmonella sp. TTU_279</Includes>
+        <Includes>Salmonella sp. TTU_282</Includes>
+        <Includes>Salmonella sp. TTU_284</Includes>
+        <Includes>Salmonella sp. TTU_287</Includes>
+        <Includes>Salmonella sp. TTU_289</Includes>
+        <Includes>Salmonella sp. TTU_297</Includes>
+        <Includes>Salmonella sp. TTU_298</Includes>
+        <Includes>Salmonella sp. TTU_299</Includes>
+        <Includes>Salmonella sp. TTU_303</Includes>
+        <Includes>Salmonella sp. TTU_304</Includes>
+        <Includes>Salmonella sp. TTU_305</Includes>
+        <Includes>Salmonella sp. TTU_306</Includes>
+        <Includes>Salmonella sp. TTU_307</Includes>
+        <Includes>Salmonella sp. TTU_308</Includes>
+        <Includes>Salmonella sp. TTU_309</Includes>
+        <Includes>Salmonella sp. TTU_310</Includes>
+        <Includes>Salmonella sp. TTU_311</Includes>
+        <Includes>Salmonella sp. TTU_312</Includes>
+        <Includes>Salmonella sp. TTU_313</Includes>
+        <Includes>Salmonella sp. TTU_314</Includes>
+        <Includes>Salmonella sp. TTU_315</Includes>
+        <Includes>Salmonella sp. TTU_316</Includes>
+        <Includes>Salmonella sp. TTU_317</Includes>
+        <Includes>Salmonella sp. TTU_318</Includes>
+        <Includes>Salmonella sp. TTU_319</Includes>
+        <Includes>Salmonella sp. TTU_320</Includes>
+        <Includes>Salmonella sp. TTU_321</Includes>
+        <Includes>Salmonella sp. TTU_322</Includes>
+        <Includes>Salmonella sp. TTU_323</Includes>
+        <Includes>Salmonella sp. TTU_324</Includes>
+        <Includes>Salmonella sp. TTU_325</Includes>
+        <Includes>Salmonella sp. TTU_326</Includes>
+        <Includes>Salmonella sp. TTU_327</Includes>
+        <Includes>Salmonella sp. TTU_328</Includes>
+        <Includes>Salmonella sp. TTU_329</Includes>
+        <Includes>Salmonella sp. TTU_330</Includes>
+        <Includes>Salmonella sp. TTU_331</Includes>
+        <Includes>Salmonella sp. TTU_332</Includes>
+        <Includes>Salmonella sp. TTU_333</Includes>
+        <Includes>Salmonella sp. TTU_334</Includes>
+        <Includes>Salmonella sp. TTU_335</Includes>
+        <Includes>Salmonella sp. TTU_338</Includes>
+        <Includes>Salmonella sp. TTU_345</Includes>
+        <Includes>Salmonella sp. TTU_352</Includes>
+        <Includes>Salmonella sp. TTU_353</Includes>
+        <Includes>Salmonella sp. TTU_357</Includes>
+        <Includes>Salmonella sp. TTU_358</Includes>
+        <Includes>Salmonella sp. TTU_359</Includes>
+        <Includes>Salmonella sp. TXACF1801691</Includes>
+        <Includes>Salmonella sp. Z-172</Includes>
+        <Includes>Salmonella sp. ZH-248</Includes>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>&quot;Bacillus cholerae-suis&quot; Smith 1894</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>&quot;Salmonella enterica&quot; Kauffmann and Edwards 1952</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>Salmonella choleraesuis corrig. (Smith 1894) Weldin 1927 (Approved Lists 1980)</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>Salmonella enterica (ex Kauffmann and Edwards 1952) Le Minor and Popoff 1987</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC 13076</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC 13312</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC 43971</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC 700720</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC-13076</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC13076</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC:13076</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC:13076</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC:13312</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC:43971</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC:700720</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CCUG 42060</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CCUG:42060</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CECT 915</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CECT:915</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP 55-133</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP 55.133</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP 58.57</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP 60.62</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP:55-133</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP:55.133</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP:58.57</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP:60.62</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM 14846</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM 17058</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM:14846</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM:17058</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>JCM 1651</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>JCM:1651</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NBRC 105684</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NBRC 13245</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NBRC:105684</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NBRC:13245</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCIMB 11450</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCIMB:11450</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC 12416</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC 12694</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC 5735</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC-12694</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC12694</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC:12416</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC:12694</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC:12694</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>NCTC:5735</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>SGSC 1412</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>SGSC:1412</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>personal::LT2</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>strain LT2</DispName>
+        </Name>
+    </OtherNames>
+    <ParentTaxId>590</ParentTaxId>
+    <Rank>species</Rank>
+    <Division>Bacteria</Division>
+    <GeneticCode>
+        <GCId>11</GCId>
+        <GCName>Bacterial, Archaeal and Plant Plastid</GCName>
+    </GeneticCode>
+    <MitoGeneticCode>
+        <MGCId>0</MGCId>
+        <MGCName>Unspecified</MGCName>
+    </MitoGeneticCode>
+    <Lineage>cellular organisms; Bacteria; Pseudomonadati; Pseudomonadota; Gammaproteobacteria; Enterobacterales; Enterobacteriaceae; Salmonella</Lineage>
+    <LineageEx>
+        <Taxon>
+            <TaxId>131567</TaxId>
+            <ScientificName>cellular organisms</ScientificName>
+            <Rank>cellular root</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>2</TaxId>
+            <ScientificName>Bacteria</ScientificName>
+            <Rank>domain</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>3379134</TaxId>
+            <ScientificName>Pseudomonadati</ScientificName>
+            <Rank>kingdom</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>1224</TaxId>
+            <ScientificName>Pseudomonadota</ScientificName>
+            <Rank>phylum</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>1236</TaxId>
+            <ScientificName>Gammaproteobacteria</ScientificName>
+            <Rank>class</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>91347</TaxId>
+            <ScientificName>Enterobacterales</ScientificName>
+            <Rank>order</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>543</TaxId>
+            <ScientificName>Enterobacteriaceae</ScientificName>
+            <Rank>family</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>590</TaxId>
+            <ScientificName>Salmonella</ScientificName>
+            <Rank>genus</Rank>
+        </Taxon>
+    </LineageEx>
+    <CreateDate>1995/02/27 09:24:00</CreateDate>
+    <UpdateDate>2024/03/08 14:07:06</UpdateDate>
+    <PubDate>1993/04/21 01:00:00</PubDate>
+</Taxon>
+<Taxon>
+    <TaxId>623</TaxId>
+    <ScientificName>Shigella flexneri</ScientificName>
+    <OtherNames>
+        <Synonym>Shigella paradysenteriae</Synonym>
+        <Includes>Shigella sp. PNUSAE232175</Includes>
+        <Includes>Shigella sp. PNUSAE232176</Includes>
+        <Includes>Shigella sp. PNUSAE232177</Includes>
+        <EquivalentName>Escherichia flexneri</EquivalentName>
+        <EquivalentName>Escherichia/Shigella flexneri</EquivalentName>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>&quot;Shigella paradysenteriae&quot; Weldin 1927</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>authority</ClassCDE>
+            <DispName>Shigella flexneri Castellani and Chalmers 1919</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC 29903</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>ATCC:29903</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP 82.48</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>CIP:82.48</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM 4782</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>DSM:4782</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>KCTC 22192</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>KCTC-22192</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>KCTC22192</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>KCTC:22192</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>KCTC:22192</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>WDCM 00125</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>WDCM-00125</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>WDCM00125</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>WDCM:00125</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>WDCM:00125</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>personal::24570</DispName>
+        </Name>
+        <Name>
+            <ClassCDE>type material</ClassCDE>
+            <DispName>strain 24570</DispName>
+        </Name>
+    </OtherNames>
+    <ParentTaxId>620</ParentTaxId>
+    <Rank>species</Rank>
+    <Division>Bacteria</Division>
+    <GeneticCode>
+        <GCId>11</GCId>
+        <GCName>Bacterial, Archaeal and Plant Plastid</GCName>
+    </GeneticCode>
+    <MitoGeneticCode>
+        <MGCId>0</MGCId>
+        <MGCName>Unspecified</MGCName>
+    </MitoGeneticCode>
+    <Lineage>cellular organisms; Bacteria; Pseudomonadati; Pseudomonadota; Gammaproteobacteria; Enterobacterales; Enterobacteriaceae; Shigella</Lineage>
+    <LineageEx>
+        <Taxon>
+            <TaxId>131567</TaxId>
+            <ScientificName>cellular organisms</ScientificName>
+            <Rank>cellular root</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>2</TaxId>
+            <ScientificName>Bacteria</ScientificName>
+            <Rank>domain</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>3379134</TaxId>
+            <ScientificName>Pseudomonadati</ScientificName>
+            <Rank>kingdom</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>1224</TaxId>
+            <ScientificName>Pseudomonadota</ScientificName>
+            <Rank>phylum</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>1236</TaxId>
+            <ScientificName>Gammaproteobacteria</ScientificName>
+            <Rank>class</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>91347</TaxId>
+            <ScientificName>Enterobacterales</ScientificName>
+            <Rank>order</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>543</TaxId>
+            <ScientificName>Enterobacteriaceae</ScientificName>
+            <Rank>family</Rank>
+        </Taxon>
+        <Taxon>
+            <TaxId>620</TaxId>
+            <ScientificName>Shigella</ScientificName>
+            <Rank>genus</Rank>
+        </Taxon>
+    </LineageEx>
+    <CreateDate>1995/02/27 09:24:00</CreateDate>
+    <UpdateDate>2026/09/17 15:07:52</UpdateDate>
+    <PubDate>1993/04/26 01:00:00</PubDate>
+</Taxon>
+
+</TaxaSet>

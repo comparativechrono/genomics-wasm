@@ -1,0 +1,219 @@
+{
+  "tools": {
+    "kraken2": {
+      "label": "Kraken2",
+      "description": "Classifies reads against a local database. This build runs one thread and accepts ordinary Kraken2 databases that fit in browser memory.",
+      "commands": {
+        "classify": {
+          "label": "Classify paired reads",
+          "description": "Write a classification for each read pair and a taxonomic report.",
+          "args": [
+            "--db",
+            "db",
+            "--paired",
+            "--report",
+            "sample.report",
+            "--output",
+            "sample.kraken",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "sample.kraken",
+            "sample.report"
+          ],
+          "outputDirectories": []
+        },
+        "confidence": {
+          "label": "Classify with a confidence threshold",
+          "description": "Require a confidence of 0.5. Compare this report with the default result.",
+          "args": [
+            "--db",
+            "db",
+            "--paired",
+            "--confidence",
+            "0.5",
+            "--report",
+            "confidence.report",
+            "--output",
+            "confidence.kraken",
+            "reads_1.fastq",
+            "reads_2.fastq"
+          ],
+          "outputs": [
+            "confidence.kraken",
+            "confidence.report"
+          ],
+          "outputDirectories": []
+        },
+        "gzip": {
+          "label": "Classify compressed reads",
+          "description": "Run the same paired reads directly from their gzip files.",
+          "args": [
+            "--db",
+            "db",
+            "--paired",
+            "--report",
+            "gzip.report",
+            "--output",
+            "gzip.kraken",
+            "reads_1.fastq.gz",
+            "reads_2.fastq.gz"
+          ],
+          "outputs": [
+            "gzip.kraken",
+            "gzip.report"
+          ],
+          "outputDirectories": []
+        },
+        "build": {
+          "label": "Build the example database",
+          "description": "Rebuild the database from the supplied reference sequences, taxonomy and sequence map. No masking is applied.",
+          "args": [
+            "build",
+            "--db",
+            "db",
+            "--threads",
+            "1",
+            "--no-masking"
+          ],
+          "outputs": [
+            "db/hash.k2d",
+            "db/opts.k2d",
+            "db/taxo.k2d"
+          ],
+          "outputDirectories": []
+        },
+        "inspect": {
+          "label": "Inspect the database",
+          "description": "Show the reference database\u2019s taxonomic content.",
+          "args": [
+            "inspect",
+            "--db",
+            "db"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Command help",
+          "description": "Show the supported command-line options.",
+          "args": [
+            "--help"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    },
+    "bracken": {
+      "label": "Bracken",
+      "description": "Estimates taxon abundances from a Kraken report and a distribution built for the database and read length. Run Kraken2 first.",
+      "commands": {
+        "species": {
+          "label": "Estimate species abundances",
+          "description": "Use the Kraken2 sample.report and the 151-base distribution.",
+          "args": [
+            "bracken",
+            "-d",
+            "db",
+            "-i",
+            "sample.report",
+            "-o",
+            "species.bracken",
+            "-w",
+            "species.report",
+            "-r",
+            "151",
+            "-l",
+            "S",
+            "-t",
+            "10"
+          ],
+          "outputs": [
+            "species.bracken",
+            "species.report"
+          ],
+          "outputDirectories": []
+        },
+        "genus": {
+          "label": "Estimate genus abundances",
+          "description": "Estimate at genus level using the same classification report.",
+          "args": [
+            "bracken",
+            "-d",
+            "db",
+            "-i",
+            "sample.report",
+            "-o",
+            "genus.bracken",
+            "-w",
+            "genus.report",
+            "-r",
+            "151",
+            "-l",
+            "G",
+            "-t",
+            "10"
+          ],
+          "outputs": [
+            "genus.bracken",
+            "genus.report"
+          ],
+          "outputDirectories": []
+        },
+        "build": {
+          "label": "Build the read-length distribution",
+          "description": "Classify the supplied reference library and calculate the distribution for 151-base reads.",
+          "args": [
+            "bracken-build",
+            "-d",
+            "db",
+            "-k",
+            "35",
+            "-l",
+            "151",
+            "-t",
+            "1"
+          ],
+          "outputs": [
+            "db/database.kraken",
+            "db/database151mers.kraken",
+            "db/database151mers.kmer_distrib"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Command help",
+          "description": "Show abundance-estimation options.",
+          "args": [
+            "--help"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      }
+    }
+  },
+  "datasets": {
+    "zymo": {
+      "label": "Real Zymo mock-community reads",
+      "description": "4,096 unchanged paired reads, each 151 bases long. The small database contains genuine reference windows from E. coli, Salmonella and the related Shigella. Most community reads are outside this deliberately limited reference collection.",
+      "path": "../../datasets/metagenomics/zymo/",
+      "files": [
+        "reads_1.fastq",
+        "reads_2.fastq",
+        "reads_1.fastq.gz",
+        "reads_2.fastq.gz",
+        "db/library/reference.fna",
+        "db/seqid2taxid.map",
+        "db/taxonomy/nodes.dmp",
+        "db/taxonomy/names.dmp",
+        "db/hash.k2d",
+        "db/opts.k2d",
+        "db/taxo.k2d",
+        "db/database151mers.kmer_distrib"
+      ]
+    }
+  }
+}
