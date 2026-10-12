@@ -101,7 +101,7 @@ bash scripts/build-lofreq.sh all
 python3 scripts/setup-strelka2-python.py
 bash scripts/build-strelka2.sh all
 bash scripts/build-kraken2.sh all
-BRACKEN_PYTHON=python3.14 bash scripts/build-bracken.sh all
+BRACKEN_PYTHON="$(command -v python3.14)" bash scripts/build-bracken.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
