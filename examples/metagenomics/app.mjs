@@ -147,7 +147,10 @@ $('command-form').addEventListener('submit', async event => {
       ? new (await import('../../runtime/kraken2.mjs')).Kraken2Runner(options)
       : new (await import('../../runtime/bracken.mjs')).BrackenRunner(options);
     const result = await runner.run(args, {
-      files: [...workspace].filter(([path]) => !isOutput(path)).map(([path, data]) => ({ path, data })),
+      // Explicit outputs are regenerated (including the database build preset).
+      // A collected directory can also contain required inputs such as the
+      // reference library and taxonomy, so keep those files mounted.
+      files: [...workspace].filter(([path]) => !outputs.includes(path)).map(([path, data]) => ({ path, data })),
       outputs, outputDirectories, signal: controller.signal, timeoutMs,
     });
     $('stdout').textContent = preview(result.stdout);

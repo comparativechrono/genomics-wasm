@@ -206,8 +206,13 @@ try {
 
   phase('Build and inspect the reference database in browser workers');
   let before = (await workerCalls(page)).length;
-  await page.locator('#command').selectOption('build'); await run(page);
+  await page.locator('#command').selectOption('build');
+  // Collecting the whole database directory must not hide its source inputs.
+  await page.locator('#output-directories').fill('db'); await run(page);
   assert.deepEqual(await stageModules(page, before), ['/dist/kraken2/estimate_capacity.mjs', '/dist/kraken2/build_db.mjs']);
+  for (const name of ['library/reference.fna', 'seqid2taxid.map', 'taxonomy/nodes.dmp', 'taxonomy/names.dmp']) {
+    assert.deepEqual(await downloadBytes(page, `db/${name}`), await readFile(join(fixture, 'db', name)), `Directory collection retains ${name}`);
+  }
   for (const name of ['hash.k2d', 'taxo.k2d', 'opts.k2d']) {
     const built = await downloadBytes(page, `db/${name}`), reference = await readFile(join(fixture, 'db', name));
     assert.deepEqual(name === 'opts.k2d' ? canonicalOptions(built) : built, reference, `Rebuilt ${name} matches the native fixture`);
