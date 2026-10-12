@@ -1,0 +1,139 @@
+{
+  "coordinateSystem": "1-based inclusive",
+  "files": {
+    "hmmer/dna-target.fa": {
+      "member": "hmmer-3.4/tutorial/dna_target.fa",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 335516,
+      "sourceMemberSha256": "2355eca4efcea77fdc82b61066e375cf17655885d346f68f6ef32d524d488113",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/fn3.hmm": {
+      "member": "hmmer-3.4/tutorial/fn3.hmm",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 41101,
+      "sourceMemberSha256": "bc1513993c2dd5d98a242574196805d3adf65c4b72cd61dc94053799fa9f050b",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/fn3.sto": {
+      "member": "hmmer-3.4/tutorial/fn3.sto",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 24538,
+      "sourceMemberSha256": "239fda955c5b6836b62288ec5c20bd6d16bea48739bd0ff8ef1574ec1da5d043",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/globins.hmm": {
+      "member": "hmmer-3.4/tutorial/globins4.hmm",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 70298,
+      "sourceMemberSha256": "a64cd91d934b7b43f962dbd6da1e18afa76e6623970a41116c11cf008d5d2c49",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/globins.sto": {
+      "member": "hmmer-3.4/tutorial/globins4.sto",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 863,
+      "sourceMemberSha256": "8ebe534e622a992224c48f7c166accdf68a0aabfaed26c915932d56434656a85",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/globins45.faa": {
+      "member": "hmmer-3.4/tutorial/globins45.fa",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 7210,
+      "sourceMemberSha256": "f22ab65168f200b80fc7c2d6e567c9ffe88f3ebd499fa93c31631e69ae7ed64c",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/hbb-human.faa": {
+      "member": "hmmer-3.4/tutorial/HBB_HUMAN",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 183,
+      "sourceMemberSha256": "65af20b13490488d406ff7e477c8255e1e3d6b37ac398274b007f8b9f10128fc",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/made1.hmm": {
+      "member": "hmmer-3.4/tutorial/MADE1.hmm",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 14842,
+      "sourceMemberSha256": "6b2b61b2cfa7d2d5df66908525476c659a32e5a1cd50b8fad3600c28db38df95",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/made1.sto": {
+      "member": "hmmer-3.4/tutorial/MADE1.sto",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 35454,
+      "sourceMemberSha256": "0eb2afb1a092c669c99eba3c9e24aa11b26f1aff850d164ec9e2e35cb0652c82",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/pkinase.hmm": {
+      "member": "hmmer-3.4/tutorial/Pkinase.hmm",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 122014,
+      "sourceMemberSha256": "17754c407138f16a68dc208418fe9cacc00b9d3833dbf756e1cf0610db76bb0a",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/pkinase.sto": {
+      "member": "hmmer-3.4/tutorial/Pkinase.sto",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 67852,
+      "sourceMemberSha256": "0c47730946f72ba51d4e0fb82c167e4b77c70b3eab45d08bd8e068ea04000726",
+      "transformation": "Unchanged upstream tutorial file; filename only renamed."
+    },
+    "hmmer/proteins.faa": {
+      "inputs": [
+        "hmmer/globins45.faa",
+        "hmmer/hbb-human.faa",
+        "hmmer/sevenless-drome.faa"
+      ],
+      "transformation": "Concatenate unchanged protein sequences, retaining original identifiers and order; 80-column wrapping."
+    },
+    "hmmer/sevenless-drome.faa": {
+      "accession": "P13368",
+      "aminoAcids": 2554,
+      "entryVersion": 172,
+      "member": "hmmer-3.4/tutorial/7LESS_DROME",
+      "sequenceVersion": 2,
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 19087,
+      "sourceMemberSha256": "1daa8f4357d71b60f2fe464d748241c3661f295543068e0cd255030de89f5e39",
+      "transformation": "Extract unchanged SQ amino-acid sequence from Swiss-Prot; descriptive FASTA header and 80-column wrapping."
+    },
+    "prodigal/combined.fna": {
+      "inputs": [
+        "prodigal/ecoli.fna",
+        "prodigal/salmonella.fna"
+      ],
+      "transformation": "Concatenate the two complete FASTA inputs in the listed order."
+    },
+    "prodigal/ecoli.fna": {
+      "accession": "NC_000913.3",
+      "chromosomeBases": 4641652,
+      "end": 60000,
+      "name": "Escherichia coli K-12 MG1655",
+      "sequenceId": "NC_000913.3_1_60000",
+      "source": "GCF_000005845.2_ASM584v2_genomic.fna.gz",
+      "start": 1,
+      "taxid": 562,
+      "transformation": "First 60000 chromosome bases unchanged; descriptive FASTA header and 80-column wrapping.",
+      "windowSequenceSha256": "c8d5ec4b04f4ddf3b7cbc4c10581fe34771d168b56c4d12770b86280bee1694b"
+    },
+    "prodigal/salmonella.fna": {
+      "accession": "NC_003197.2",
+      "chromosomeBases": 4857450,
+      "end": 60000,
+      "name": "Salmonella enterica Typhimurium LT2",
+      "sequenceId": "NC_003197.2_1_60000",
+      "source": "GCF_000006945.2_ASM694v2_genomic.fna.gz",
+      "start": 1,
+      "taxid": 28901,
+      "transformation": "First 60000 chromosome bases unchanged; descriptive FASTA header and 80-column wrapping.",
+      "windowSequenceSha256": "846e6c7e9cd7f4f75aa51fd9edfe9f2b0fddbe7c9196890e15bba21ef70ef516"
+    },
+    "provenance/HMMER-LICENSE": {
+      "member": "hmmer-3.4/LICENSE",
+      "source": "hmmer-3.4.tar.gz",
+      "sourceMemberBytes": 3556,
+      "sourceMemberSha256": "d7652641990f11c1167e2888f3cc8ce1d336ae2df0a8d1d802993e131d367453",
+      "transformation": "Unchanged upstream license."
+    }
+  }
+}
