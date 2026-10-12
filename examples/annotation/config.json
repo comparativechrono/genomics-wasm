@@ -1,0 +1,116 @@
+{
+  "tools": {
+    "prodigal": {
+      "label": "Prodigal",
+      "description": "Predict protein-coding genes in bacterial and archaeal DNA, and export gene coordinates, DNA and translated proteins.",
+      "argumentsHelp": "Start with a Prodigal option, such as -i. Do not include the prodigal program name.",
+      "commands": {
+        "single": {
+          "label": "Predict genes in a genome",
+          "description": "Use the E. coli reference window to learn a gene model and predict coding regions. The proteins remain available for later commands.",
+          "args": ["-i", "ecoli.fna", "-p", "single", "-f", "gff", "-o", "genes.gff", "-a", "proteins.faa", "-d", "genes.fna", "-q"],
+          "outputs": ["genes.gff", "proteins.faa", "genes.fna"],
+          "outputDirectories": []
+        },
+        "meta": {
+          "label": "Predict genes in mixed contigs",
+          "description": "Use metagenomic mode on reference windows from E. coli and Salmonella. This writes a separate set of predictions.",
+          "args": ["-i", "combined.fna", "-p", "meta", "-f", "gff", "-o", "mixed.gff", "-a", "mixed.faa", "-d", "mixed.fna", "-q"],
+          "outputs": ["mixed.gff", "mixed.faa", "mixed.fna"],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Command help",
+          "description": "Show Prodigal's available command-line options.",
+          "args": ["-h"], "outputs": [], "outputDirectories": []
+        }
+      }
+    },
+    "hmmer": {
+      "label": "HMMER",
+      "description": "Build profile hidden Markov models from alignments and search for related protein or DNA sequences. Start with the supplied globin alignment, then build, prepare and search its profile.",
+      "argumentsHelp": "The first entry selects a HMMER program, such as hmmbuild or hmmscan. Follow it with that program's arguments.",
+      "commands": {
+        "build": {
+          "label": "1. Build a globin profile",
+          "description": "Build a protein profile from the real globin alignment. Run this before preparing or searching the profile.",
+          "args": ["hmmbuild", "--amino", "--seed", "42", "-n", "Globin", "globins.hmm", "globins.sto"],
+          "outputs": ["globins.hmm"], "outputDirectories": []
+        },
+        "press": {
+          "label": "2. Prepare the profile for scanning",
+          "description": "Create the four indexes needed by hmmscan. The globins.hmm file must already be loaded or built.",
+          "args": ["hmmpress", "globins.hmm"],
+          "outputs": ["globins.hmm.h3f", "globins.hmm.h3i", "globins.hmm.h3m", "globins.hmm.h3p"], "outputDirectories": []
+        },
+        "scan": {
+          "label": "3. Scan proteins against the profile",
+          "description": "Find globin-family matches in the supplied proteins, including human haemoglobin beta. Build and prepare the profile first.",
+          "args": ["hmmscan", "--tblout", "scan.tbl", "--domtblout", "scan.domtbl", "-o", "scan.txt", "globins.hmm", "proteins.faa"],
+          "outputs": ["scan.tbl", "scan.domtbl", "scan.txt"], "outputDirectories": []
+        },
+        "search": {
+          "label": "Search proteins with the profile",
+          "description": "Search the protein collection with the generated globin profile. This uses the uncompressed profile directly.",
+          "args": ["hmmsearch", "--tblout", "search.tbl", "--domtblout", "search.domtbl", "-o", "search.txt", "globins.hmm", "proteins.faa"],
+          "outputs": ["search.tbl", "search.domtbl", "search.txt"], "outputDirectories": []
+        },
+        "align": {
+          "label": "Align a protein to the profile",
+          "description": "Align human haemoglobin beta to the generated globin profile and save the Stockholm alignment.",
+          "args": ["hmmalign", "-o", "aligned.sto", "globins.hmm", "hbb-human.faa"],
+          "outputs": ["aligned.sto"], "outputDirectories": []
+        },
+        "compare": {
+          "label": "Search using a protein sequence",
+          "description": "Use human haemoglobin beta as a phmmer query against the supplied proteins. No profile-building step is needed.",
+          "args": ["phmmer", "--tblout", "homologs.tbl", "-o", "homologs.txt", "hbb-human.faa", "proteins.faa"],
+          "outputs": ["homologs.tbl", "homologs.txt"], "outputDirectories": []
+        },
+        "predicted": {
+          "label": "Compare Prodigal's predicted proteins",
+          "description": "After running Prodigal, use phmmer to compare its proteins with one another. Each protein includes a self-match; other matches indicate sequence similarity, not a functional assignment. Keep the Prodigal files loaded.",
+          "requiresTools": ["prodigal"],
+          "args": ["phmmer", "--tblout", "predicted.tbl", "-o", "predicted.txt", "proteins.faa", "proteins.faa"],
+          "outputs": ["predicted.tbl", "predicted.txt"], "outputDirectories": []
+        },
+        "dna-build": {
+          "label": "Build a DNA repeat profile",
+          "description": "Build a DNA profile from the supplied MADE1 repeat alignment before searching the human chromosome window.",
+          "args": ["hmmbuild", "--dna", "--seed", "42", "-n", "MADE1", "made1.hmm", "made1.sto"],
+          "outputs": ["made1.hmm"], "outputDirectories": []
+        },
+        "dna-search": {
+          "label": "Search DNA with the repeat profile",
+          "description": "Find MADE1 repeat elements in a real human chromosome 1 window using nhmmer.",
+          "args": ["nhmmer", "--tblout", "dna.tbl", "-o", "dna.txt", "made1.hmm", "dna-target.fa"],
+          "outputs": ["dna.tbl", "dna.txt"], "outputDirectories": []
+        },
+        "stats": {
+          "label": "Inspect the globin profile",
+          "description": "Display the number of source sequences, profile length and information content of the generated profile.",
+          "args": ["hmmstat", "globins.hmm"], "outputs": [], "outputDirectories": []
+        },
+        "help": {
+          "label": "Command help",
+          "description": "Show hmmsearch options. Change the first argument to see another HMMER program's help.",
+          "args": ["hmmsearch", "-h"], "outputs": [], "outputDirectories": []
+        }
+      }
+    }
+  },
+  "datasets": {
+    "prodigal": {
+      "label": "Microbial reference sequences",
+      "description": "Unchanged 60,000-base chromosome windows from E. coli and Salmonella, individually and together. These are real reference sequences for exercising gene prediction, not complete genomes.",
+      "path": "../../datasets/annotation/prodigal/",
+      "files": ["ecoli.fna", "salmonella.fna", "combined.fna"]
+    },
+    "hmmer": {
+      "label": "Protein families and a DNA repeat",
+      "description": "Real globin, protein kinase, fibronectin and MADE1 alignments from HMMER's tutorial, protein sequences including human haemoglobin beta and Drosophila Sevenless, and a human chromosome window containing MADE1 repeats.",
+      "path": "../../datasets/annotation/hmmer/",
+      "files": ["globins.sto", "pkinase.sto", "fn3.sto", "made1.sto", "proteins.faa", "hbb-human.faa", "sevenless-drome.faa", "dna-target.fa"]
+    }
+  }
+}

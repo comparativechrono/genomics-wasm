@@ -224,3 +224,12 @@ The separate [Strelka2 fixture](strelka2/README.md) contains those same read
 records with a BAM sequence dictionary matching the two-contig reference.
 Unused reference entries are removed and numeric reference IDs are remapped;
 read bases, qualities, alignment coordinates and tags are unchanged.
+
+## Annotation fixtures
+
+The [Prodigal and HMMER fixture](annotation/README.md) contains unchanged real
+bacterial sequence windows, protein-family alignments, protein targets and a
+human nucleotide target. Original source hashes, selection rules and a frozen
+regeneration manifest are included. These inputs test native/browser agreement
+for gene prediction and profile-HMM analysis.
+

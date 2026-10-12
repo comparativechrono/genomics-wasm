@@ -1,0 +1,21 @@
+HMMER 3.4 WebAssembly distribution
+
+HMMER: upstream BSD 3-clause license, copyright and SIMD sublicense in LICENSE.
+Easel 0.49: upstream BSD 2-clause license and credits in LICENSE.easel.
+libdivsufsort-lite 2.0.0: upstream MIT license in LICENSE.libdivsufsort.
+Emscripten 3.1.64 runtime: MIT / University of Illinois-NCSA terms in
+LICENSE.emscripten. The complete corresponding upstream source distribution is
+included as sources/hmmer-3.4.tar.gz.
+
+LICENSE.embedded preserves the complete, unmodified upstream source files
+containing additional incorporated-code notices: Easel core, random and rand64,
+SSE vector math, stopwatch, regexp and statistical functions. These include
+FreeBSD, David A. Wheeler, Makoto Matsumoto and Takuji Nishimura, Kevin Lawler,
+Julien Pommier, Stephen Moshier, David Robert Nadeau (CC BY 3.0), Henry Spencer /
+University of Toronto and Sun Microsystems. Source-file notices and upstream
+attribution comments are preserved verbatim, including the upstream notes about
+the origins of the SSE math routines. The archive also preserves build-tool and
+other architecture notices.
+
+Local changes are identified in browser.patch and described in README.md.
+The original authors do not endorse this WebAssembly port.
