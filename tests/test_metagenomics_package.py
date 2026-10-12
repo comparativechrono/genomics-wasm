@@ -61,7 +61,8 @@ class PackageTests(unittest.TestCase):
                 {**baseline, 'id': 'missing', 'kind': 'failure', 'args': ['missing'], 'comparisons': [],
                  'diagnosticRegex': 'diagnostic', 'expectedExitCode': 1}]}
         self.write_json('validation/metagenomics/cases.json', self.plan)
-        self.write_json('examples/metagenomics/config.json', {'tools': {tool: {} for tool in packager.TOOLS}, 'datasets': {'zymo': {}}})
+        self.write_json('examples/metagenomics/config.json', {'tools': {tool: {} for tool in packager.TOOLS},
+            'datasets': {'zymo': {'path': '../../datasets/metagenomics/zymo/', 'files': ['reads_1.fastq', 'reads_2.fastq']}}})
         self.kraken_build()
         self.bracken_build()
         source = b'Original public paired-read archive fixture'
@@ -344,6 +345,31 @@ class PackageTests(unittest.TestCase):
         self.write('build/metagenomics-sources/reads.tar.gz', b'Wrong bytes')
         with self.assertRaisesRegex(RuntimeError, 'Checksum mismatch'):
             packager.collect('kraken2', self.all_reports())
+
+    def test_unrecorded_fixture_or_validation_input_rejected(self):
+        self.write('datasets/metagenomics/zymo/extra.fastq', b'Unrecorded sequence fixture')
+        with self.assertRaisesRegex(RuntimeError, 'every bundled Zymo'):
+            packager.checked_dataset_manifest()
+        (self.root / 'datasets/metagenomics/zymo/extra.fastq').unlink()
+        self.plan['fixtureInputs'] = ['missing.fastq']
+        self.write_json('validation/metagenomics/cases.json', self.plan)
+        with self.assertRaisesRegex(RuntimeError, 'Validation input is absent'):
+            packager.checked_dataset_manifest()
+
+    def test_example_uses_only_manifested_local_data(self):
+        config = packager.read_json('examples/metagenomics/config.json')
+        for dataset in (
+            {'path': 'https://example.invalid/data/', 'files': ['reads_1.fastq']},
+            {'path': '../../datasets/metagenomics/zymo/', 'files': ['missing.fastq']},
+            {'path': '../../datasets/metagenomics/zymo/', 'files': ['../outside.fastq']},
+            {'path': '../../datasets/metagenomics/zymo/', 'files': ['reads_1.fastq', 'reads_1.fastq']},
+            {'path': '../../datasets/metagenomics/zymo/', 'files': []},
+        ):
+            with self.subTest(dataset=dataset):
+                config['datasets']['zymo'] = dataset
+                self.write_json('examples/metagenomics/config.json', config)
+                with self.assertRaises(RuntimeError):
+                    packager.checked_example_config(self.manifest)
 
     def test_traversing_paths_and_symlinks_rejected(self):
         for name in ('../escape', '/absolute', 'a/../escape', 'a//b', 'C:/drive', 'a\\b', '.git/config'):

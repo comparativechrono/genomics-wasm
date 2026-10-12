@@ -281,7 +281,32 @@ def checked_dataset_manifest() -> tuple[dict, str]:
         data = verify(local_path(f'{DATA}/{relative_name(name)}'), info['sha256'])
         if type(info.get('bytes')) is not int or info['bytes'] != len(data):
             raise RuntimeError(f'Dataset byte count differs from its manifest: {name}')
+    actual = {f'zymo/{name}': sha for name, sha in tree_hashes(f'{DATA}/zymo').items()}
+    recorded = {name: info['sha256'] for name, info in manifest['files'].items() if name.startswith('zymo/')}
+    if actual != recorded:
+        raise RuntimeError('The manifest must identify every bundled Zymo fixture file')
+    plan = read_json('validation/metagenomics/cases.json')
+    for name in plan.get('fixtureInputs', []):
+        if f'zymo/{relative_name(name)}' not in recorded:
+            raise RuntimeError(f'Validation input is absent from the dataset manifest: {name}')
+    required(local_path(f'{DATA}/README.md'))
     return manifest, digest(raw)
+
+
+def checked_example_config(manifest: dict) -> dict:
+    config = read_json(f'{EXAMPLE}/config.json')
+    if set(config.get('datasets', {})) != {'zymo'}:
+        raise RuntimeError('Standalone browser configuration omits the real Zymo dataset')
+    dataset = config['datasets']['zymo']
+    if dataset.get('path') != '../../datasets/metagenomics/zymo/':
+        raise RuntimeError('Browser example must use its bundled local Zymo fixture')
+    files = dataset.get('files')
+    if not isinstance(files, list) or not files or len(files) != len(set(files)):
+        raise RuntimeError('Browser example fixture files must be nonempty and unique')
+    for name in files:
+        if f'zymo/{relative_name(name)}' not in manifest['files']:
+            raise RuntimeError(f'Browser example input is absent from the dataset manifest: {name}')
+    return config
 
 
 def planned_cases(tool: str) -> dict:
@@ -678,10 +703,8 @@ def collect(tool: str, reports: list[Path]) -> tuple[dict[str, tuple[bytes, int]
         put(cache, data)
     for name, info in (manifest.get('regeneration', {}).get('files') or {}).items():
         add(name, expected=info['sha256'] if isinstance(info, dict) else info)
-    config = read_json(f'{EXAMPLE}/config.json')
+    config = checked_example_config(manifest)
     config['tools'] = {name: config['tools'][name] for name in BUNDLES[tool]}
-    if set(config.get('datasets', {})) != {'zymo'}:
-        raise RuntimeError('Standalone browser configuration omits the real Zymo dataset')
     for name, settings in config['tools'].items():
         if settings.get('requiresIsolation') or settings.get('waitForExit'):
             raise RuntimeError(f'{name}: browser threading settings differ from the serial port')
