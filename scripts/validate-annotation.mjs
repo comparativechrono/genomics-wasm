@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** Compare unchanged native Prodigal/HMMER programs with their browser ports. */
-import {readFile,writeFile,mkdir,readdir,rm,open} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,readdir,rm,open,rename} from 'node:fs/promises';
 import {createHash,randomUUID} from 'node:crypto';
 import {spawnSync,execFileSync} from 'node:child_process';
 import {createServer} from 'node:http';
@@ -10,14 +10,15 @@ import {workspacePath} from '../runtime/index.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const options={engine:'node',tool:'all',dataset:'all'};
-const usage='validate-annotation.mjs [--engine node|chromium|firefox|webkit] [--tool prodigal|hmmer|all] [--dataset microbial|all]';
+const usage='validate-annotation.mjs [--engine node|chromium|firefox|webkit] [--tool prodigal|hmmer|all] [--dataset prodigal|hmmer|all]';
 for(let i=2;i<process.argv.length;i+=2){const key=process.argv[i].replace(/^--/,'');if(!(key in options)||!process.argv[i+1])throw new Error(usage);options[key]=process.argv[i+1];}
 if(!['node','chromium','firefox','webkit'].includes(options.engine)||!['all','prodigal','hmmer'].includes(options.tool))throw new Error(usage);
 const plan=JSON.parse(await readFile(join(root,'validation/annotation/cases.json'),'utf8'));
 if(options.dataset!=='all'&&!plan.datasets.includes(options.dataset))throw new Error(usage);
 const tools=options.tool==='all'?Object.keys(plan.tools).filter(tool=>options.dataset==='all'||plan.tools[tool].datasets.includes(options.dataset)):[options.tool];
 const requestedDatasets=options.dataset==='all'?plan.datasets:[options.dataset];
-const reportDir=join(root,'reports/annotation',options.engine),runId=randomUUID(),timeoutMs=600000;
+const runId=randomUUID(),timeoutMs=600000;
+const publishedDir=join(root,'reports/annotation',options.engine),reportDir=join(publishedDir,runId);
 await mkdir(reportDir,{recursive:true});
 const hash=data=>createHash('sha256').update(data).digest('hex');
 const normal=file=>({...file,path:workspacePath(file.path).slice(6)});
@@ -108,7 +109,16 @@ async function compare(tool,dataset,test,expected,actual,id,kind){
   const path=join(reportDir,id,`compare-${kind}.json`);
   try{execFileSync('python3',['-B',join(root,'validation/annotation/compare.py'),expected.directory,actual.directory,'--tool',tool,'--dataset',dataset,'--case',test.id,'--actual-target',kind==='native-contract'?'native':kind,'--manifest',join(root,'datasets/annotation/manifest.json'),'--report',path],{env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'},maxBuffer:16*1024*1024});}
   catch(error){throw new Error(`${id} ${kind}: comparison failed\n${String(error.stdout??'').slice(0,5000)}`);}
-  return JSON.parse(await readFile(path,'utf8'));
+  const comparison=JSON.parse(await readFile(path,'utf8'));
+  // The comparator must have read precisely the bytes captured from execution.
+  // Complete semantic equality alone cannot prove that if another process has
+  // overwritten a report file, so bind both raw hashes and byte counts here.
+  for(const [side,value] of [['expected',expected],['actual',actual]]){
+    const hashes=Object.fromEntries(test.artifacts.map(artifact=>[artifact.path,value.execution.files[artifact.path]]));
+    const sizes=Object.fromEntries(test.artifacts.map(artifact=>[artifact.path,value.execution.fileBytes[artifact.path]]));
+    if(!same(comparison[`${side}Files`],hashes)||!same(comparison[`${side}FileBytes`],sizes))throw new Error(`${id} ${kind}: comparator ${side} inputs differ from captured execution bytes`);
+  }
+  return comparison;
 }
 async function executeCase(summary,tool,dataset,test,baseFiles,cache){
   const id=caseId(tool,dataset,test),record={id,tool,dataset,case:test.id,kind:test.kind,runner:test.runner,args:test.args,status:'running',executions:{},comparisons:{}};
@@ -174,7 +184,7 @@ async function fileIdentity(paths){return Object.fromEntries(await Promise.all(p
 async function validateTool(tool){
   const datasets=requestedDatasets.filter(dataset=>plan.tools[tool].datasets.includes(dataset));
   if(!datasets.length)throw new Error(`${tool}: dataset not applicable`);
-  const summary={schema:1,tool,runId,engine:options.engine,node:process.version,python:execFileSync('python3',['--version'],{encoding:'utf8'}).trim(),startedAt:new Date().toISOString(),status:'running',builds:{},datasets:{},cases:[],expectedCases:datasets.flatMap(dataset=>plan.tools[tool].cases.filter(test=>applies(test,dataset)).map(test=>caseId(tool,dataset,test)))};
+  const summary={schema:1,tool,runId,reportDirectory:runId,engine:options.engine,node:process.version,python:execFileSync('python3',['--version'],{encoding:'utf8'}).trim(),startedAt:new Date().toISOString(),status:'running',builds:{},datasets:{},cases:[],expectedCases:datasets.flatMap(dataset=>plan.tools[tool].cases.filter(test=>applies(test,dataset)).map(test=>caseId(tool,dataset,test)))};
   if(browser){summary.browserVersion=browser.version();summary.crossOriginIsolated=false;}summaries.push(summary);
   try{
     const raw=await readFile(join(root,'datasets/annotation/manifest.json'));manifest=JSON.parse(raw);summary.manifestSha256=hash(raw);
@@ -202,7 +212,14 @@ async function validateTool(tool){
     if(new Set(ids).size!==ids.length||JSON.stringify([...ids].sort())!==JSON.stringify([...summary.expectedCases].sort())||summary.cases.some(record=>record.status!=='passed'))throw new Error('Completed results do not cover the full passing case plan');
     summary.status='passed';
   }catch(error){summary.status='failed';summary.error=error.stack;console.error(error.stack);process.exitCode=1;}
-  finally{summary.finishedAt=new Date().toISOString();await writeFile(join(reportDir,`summary-${tool}-${options.dataset}.json`),JSON.stringify(summary,null,2)+'\n');}
+  finally{summary.finishedAt=new Date().toISOString();await publishSummary(summary);}
+}
+async function publishSummary(summary){
+  // Raw evidence belongs to an immutable run-specific directory. Publish only
+  // complete summaries at the stable paths consumed by CI and the packager.
+  const temporary=join(publishedDir,`.summary-${summary.tool}-${runId}.tmp`);
+  await writeFile(temporary,JSON.stringify(summary,null,2)+'\n');
+  await rename(temporary,join(publishedDir,`summary-${summary.tool}-${options.dataset}.json`));
 }
 try{if(options.engine!=='node')await startBrowser();for(const tool of tools)await validateTool(tool);}
 finally{
@@ -210,5 +227,5 @@ finally{
   try{if(browser)await Promise.race([browser.close(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Browser cleanup exceeded 30 seconds')),30000);})]);}
   catch(error){cleanupError=error.message;process.exitCode=1;}finally{clearTimeout(timer);}
   if(server){server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
-  if(cleanupError){for(const summary of summaries){summary.status='failed';summary.cleanupError=cleanupError;await writeFile(join(reportDir,`summary-${summary.tool}-${options.dataset}.json`),JSON.stringify(summary,null,2)+'\n');}process.exit(1);}
+  if(cleanupError){for(const summary of summaries){summary.status='failed';summary.cleanupError=cleanupError;await publishSummary(summary);}process.exit(1);}
 }

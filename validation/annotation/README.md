@@ -55,9 +55,12 @@ Mutation tests verify that changes to biological fields, statistics, order,
 metadata outside the allowlist, truncated files, invalid numeric values and
 path traversal are rejected.
 
-Reports in `reports/annotation/<engine>` retain every output, stdout/stderr,
+Raw reports in `reports/annotation/<engine>/<runId>` retain every output, stdout/stderr,
 exit status, hashes and byte sizes, dependency provenance, and complete
-comparison evidence. Summary identities bind the exact frozen fixture manifest,
+comparison evidence. Run-specific directories prevent simultaneous invocations
+from overwriting one another. Every comparator hash and byte count must match
+the captured execution bytes. Complete summaries are atomically published at
+`reports/annotation/<engine>/summary-<tool>-all.json`. Summary identities bind the exact frozen fixture manifest,
 all fixture bytes, case plan, comparator, harness, runtime modules, build inputs,
 WebAssembly assets and both native executables. Dependencies identify the
 actual producer target and bytes consumed. Identities are checked again at the
