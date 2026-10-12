@@ -1,0 +1,70 @@
+name: Recover frozen metagenomics fixture
+on:
+  push:
+    branches: [feature/kraken2-bracken-wasm]
+    paths: [.github/workflows/recover-metagenomics.yml]
+permissions:
+  contents: read
+jobs:
+  recover:
+    if: github.repository == 'comparativechrono/genomics-wasm' && github.ref == 'refs/heads/feature/kraken2-bracken-wasm'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
+      - name: Require an unchanged recovery branch without a fixture
+        run: |
+          set -euo pipefail
+          test ! -e datasets/metagenomics/manifest.json
+          test "$(git ls-remote origin refs/heads/feature/kraken2-bracken-wasm | cut -f1)" = "$GITHUB_SHA"
+      - name: Install native build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential make perl
+      - name: Reconstruct pinned real data, then independently regenerate it
+        run: |
+          python3 scripts/fetch-metagenomics-test-data.py --fetch
+          python3 scripts/fetch-metagenomics-test-data.py --regenerate --update-manifest
+          python3 scripts/fetch-metagenomics-test-data.py --verify
+          python3 scripts/fetch-metagenomics-test-data.py --regenerate
+      - name: Require the previously verified real-data observations
+        run: |
+          python3 - <<'PY'
+          import json
+          m = json.load(open('datasets/metagenomics/manifest.json'))
+          d = m['datasets']['zymo']
+          assert len(m['files']) == 26
+          assert d['reads']['pairs'] == 4096 and d['reads']['basesPerRead'] == 151
+          assert d['taxonomyNodes'] == 14
+          assert d['observations'] == {
+              'readPairs': 4096, 'classifiedReadPairs': 231, 'unclassifiedReadPairs': 3865,
+              'directAssignmentsByTaxid': {'0': 3865, '543': 31, '562': 91, '623': 9, '28901': 100},
+              'brackenSpecies': 3, 'brackenAddedReads': 30}
+          PY
+      - name: Commit only the verified fixture to its existing feature branch
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/feature/kraken2-bracken-wasm | cut -f1)" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add datasets/metagenomics
+          git diff --cached --name-only | while IFS= read -r path; do
+            case "$path" in datasets/metagenomics/*) ;; *) exit 1 ;; esac
+          done
+          git commit -m "Restore verified real metagenomics fixture"
+          git push origin HEAD:refs/heads/feature/kraken2-bracken-wasm
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recovered-metagenomics-fixture
+          path: datasets/metagenomics/
+          if-no-files-found: error
