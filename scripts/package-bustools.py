@@ -179,6 +179,9 @@ def checked_dataset_manifest() -> tuple[dict, str]:
         data = verify(local_path(f'{DATA}/{relative_name(name)}'), info['sha256'])
         if type(info.get('bytes')) is not int or info['bytes'] != len(data):
             raise RuntimeError(f'Dataset byte count differs from its manifest: {name}')
+    complete = tree_hashes(DATA, exclude=('manifest.json',), source_tree=True)
+    if complete != {name: info['sha256'] for name, info in manifest['files'].items()}:
+        raise RuntimeError('The manifest must identify every bundled fixture and provenance file')
     for dataset in datasets:
         relative_name(dataset)
         actual = {f'{dataset}/{name}': sha for name, sha in tree_hashes(f'{DATA}/{dataset}').items()}
@@ -212,12 +215,35 @@ def checked_example_config(manifest: dict) -> dict:
     return config
 
 
+def normalised_artifacts(spec: dict) -> set[str]:
+    permitted = set()
+    artifacts = {item['path']: item for item in spec.get('artifacts', [])}
+    for artifact in artifacts.values():
+        flags = {key for key in artifact if key.startswith('normalize')}
+        if not flags:
+            continue
+        if (spec.get('id') == 'project-transcripts' and artifact['path'] == 'projected.bus'
+                and artifact['kind'] == 'bus' and flags == {'normalizeWithinBarcodeUmi'}
+                and artifact['normalizeWithinBarcodeUmi'] is True):
+            permitted.add(artifact['path'])
+        elif (spec.get('id') == 'count-transcripts' and artifact['path'] == 'counts.ec.txt'
+                and artifact['kind'] == 'ec' and flags == {'normalizeUnusedOrderWith'}
+                and artifact['normalizeUnusedOrderWith'] == 'counts.mtx'
+                and artifacts.get('counts.mtx', {}).get('kind') == 'matrix'
+                and artifacts['counts.mtx'].get('columnLabels') == 'counts.ec.txt'):
+            permitted.add(artifact['path'])
+        else:
+            raise RuntimeError(f"{spec.get('id')}: undeclared artifact order normalization: {artifact['path']}")
+    return permitted
+
+
 def planned_cases(tool: str) -> dict:
     plan = read_json('validation/bustools/cases.json')
     if plan.get('schema') != 1 or not plan.get('datasets'):
         raise RuntimeError('Unknown bustools case-plan schema or datasets')
     result = {}
     for spec in plan['tools'][tool]['cases']:
+        normalised_artifacts(spec)
         if spec.get('runner') != tool:
             raise RuntimeError(f'{tool}: standalone case uses an unbundled runner')
         if spec.get('kind') not in ('success', 'repeat', 'failure', 'restriction') or 'nativeErrorPolicy' in spec:
@@ -227,9 +253,12 @@ def planned_cases(tool: str) -> dict:
             raise RuntimeError(f'{tool}: successful cases must compare all three implementations')
         if spec['kind'] in ('failure', 'restriction') and spec.get('comparisons') != []:
             raise RuntimeError(f'{tool}: failure cases must record exits and diagnostics without semantic comparisons')
-        if spec['kind'] == 'repeat' and (spec.get('executions') != ['wasm']
-                or spec.get('comparisons') != ['wasm'] or not spec.get('baseline')):
-            raise RuntimeError(f'{tool}: repeats must identify their unchanged native baseline')
+        if spec['kind'] == 'repeat':
+            only_wasm = spec.get('executions') == ['wasm'] and spec.get('comparisons') == ['wasm']
+            all_targets = (set(spec.get('executions', [])) == {'native', 'patched-native', 'wasm'}
+                           and set(spec.get('comparisons', [])) == {'native-contract', 'patched-native', 'wasm'})
+            if not spec.get('baseline') or not (only_wasm or all_targets):
+                raise RuntimeError(f'{tool}: repeats must identify their unchanged native baseline')
         datasets = [None] if spec.get('oncePerTool') else spec.get('datasets', plan['tools'][tool].get('datasets', [tool]))
         for dataset in datasets:
             if dataset is not None and dataset not in plan['datasets']:
@@ -306,14 +335,23 @@ def check_invariants(case_id: str, spec: dict, comparison: dict) -> None:
 
 def check_comparison_files(case_id: str, spec: dict, comparison: dict, native: dict, actual: dict) -> None:
     paths = [item['path'] for item in spec['artifacts']]
-    if (comparison.get('expectedFiles') != comparison.get('actualFiles')
-            or comparison.get('expectedFileBytes') != comparison.get('actualFileBytes')):
+    normalized = normalised_artifacts(spec)
+    expected_canonical = comparison.get('expectedCanonicalFiles')
+    canonical = comparison.get('canonicalFiles')
+    if (not isinstance(expected_canonical, dict) or not isinstance(canonical, dict)
+            or set(expected_canonical) != set(paths) or expected_canonical != canonical
+            or any(not isinstance(sha, str) or not SHA256.fullmatch(sha) for sha in canonical.values())):
+        raise RuntimeError(f'{case_id}: missing or differing canonical artifact checksums')
+    if comparison.get('expectedFileBytes') != comparison.get('actualFileBytes'):
         raise RuntimeError(f'{case_id}: exact comparison output bytes differ')
     for prefix, execution in (('expected', native), ('actual', actual)):
         if (any(path not in execution['files'] for path in paths)
                 or comparison.get(prefix + 'Files') != {path: execution['files'][path] for path in paths}
                 or comparison.get(prefix + 'FileBytes') != {path: execution['fileBytes'][path] for path in paths}):
             raise RuntimeError(f'{case_id}: comparison is not bound to recorded execution output bytes')
+        for path in set(paths) - normalized:
+            if canonical[path] != execution['files'][path]:
+                raise RuntimeError(f'{case_id}: exact comparison output bytes differ')
 
 
 def check_execution_inputs(case_id: str, tool: str, target: str, spec: dict, execution: dict, manifest: dict) -> None:
@@ -468,7 +506,8 @@ def check_reports(tool: str, reports: list[Path], builds: dict) -> dict:
                     raise RuntimeError(f'{case_id}: semantic comparison did not pass')
                 if (not native_contract or comparison['expectedSemanticDigest'] != native_contract['semanticDigest']
                         or comparison['biologicalDigest'] != native_contract['biologicalDigest']
-                        or comparison.get('expectedBiologicalDigest') != native_contract['biologicalDigest']):
+                        or comparison.get('expectedBiologicalDigest') != native_contract['biologicalDigest']
+                        or comparison.get('expectedCanonicalFiles') != native_contract.get('canonicalFiles')):
                     raise RuntimeError(f'{case_id}: comparison is not bound to its unchanged native baseline')
                 check_invariants(case_id, spec, comparison)
                 check_comparison_files(case_id, spec, comparison, by_id[baseline_id]['executions']['native'],
@@ -540,7 +579,7 @@ npx playwright install chromium firefox webkit
 ```
 
 Repeat validation with `--engine chromium`, `--engine firefox` and
-`--engine webkit`. Run `BUSTOOLS_TOOL={tool} BROWSER=chromium node scripts/test-bustools-demo.mjs`, changing the browser for the other engines.
+`--engine webkit`. Run `BROWSER=chromium node scripts/test-bustools-demo.mjs`, changing the browser for the other engines.
 The data README documents regeneration from the included original inputs.
 
 Reports bind exact compiled assets, source recipes, native binaries, runtime,

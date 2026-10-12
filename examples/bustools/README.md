@@ -7,7 +7,7 @@ Load **Mouse single-cell RNA-seq BUS records**, then run the numbered commands i
 1. **Sort BUS records** creates `sorted.bus` from the supplied `input.bus`.
 2. **Correct cell barcodes** uses the supplied barcode on-list to write `corrected.bus`.
 3. **Sort corrected records** prepares `corrected-sorted.bus` for counting.
-4. **Count molecules by gene** uses the equivalence-class map, transcript names and transcript-to-gene map to produce `counts/genes.mtx`, `counts/genes.barcodes.txt` and `counts/genes.genes.txt`. Matrix rows correspond to barcodes and columns to genes.
+4. **Count molecules by gene** uses the equivalence-class map, transcript names and transcript-to-gene map to produce `counts/output.mtx`, `counts/output.barcodes.txt` and `counts/output.genes.txt`. Matrix rows correspond to barcodes and columns to genes.
 
 The dataset contains authentic mouse single-cell RNA-seq BUS records from SRR8599150, derived from the pinned upstream kb_python test fixture. It is a small processing example, not a complete single-cell analysis. See the [data documentation](../../datasets/bustools/README.md) for the source, preparation, size and checksums.
 

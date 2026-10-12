@@ -187,13 +187,13 @@ try {
   const correctedInfo = busRecords(correctedSorted);
   assert.ok(correctedInfo.readCount <= sortedInfo.readCount, 'Correction does not create reads');
   await choose(page, 'count'); await run(page);
-  const counts = await downloadBytes(page, 'counts/genes.mtx');
-  const barcodes = labels(await downloadBytes(page, 'counts/genes.barcodes.txt'));
-  const genes = labels(await downloadBytes(page, 'counts/genes.genes.txt'));
+  const counts = await downloadBytes(page, 'counts/output.mtx');
+  const barcodes = labels(await downloadBytes(page, 'counts/output.barcodes.txt'));
+  const genes = labels(await downloadBytes(page, 'counts/output.genes.txt'));
   const dimensions = matrix(counts, barcodes, genes);
   assert.ok(dimensions.molecules <= correctedInfo.readCount, 'Molecule counts do not exceed retained reads');
   assert.ok(barcodes.every(barcode => /^[ACGT]+$/.test(barcode)));
-  await page.locator('#result-file').selectOption('/work/counts/genes.mtx');
+  await page.locator('#result-file').selectOption('/work/counts/output.mtx');
   const countText = counts.toString('utf8');
   assert.equal(await page.locator('#preview').textContent(), countText.length <= 100000 ? countText : countText.slice(0, 100000) + '\n\n[Preview truncated. Download the full file.]');
   passed('sort-correct-sort-count-preview-download', { ...dimensions, sorted: sortedInfo, corrected: correctedInfo, matrixSha256: hash(counts) });
@@ -268,7 +268,7 @@ try {
   assert.deepEqual(await downloadBytes(page, 'sorted.bus'), retained);
   await run(page); assert.deepEqual(await downloadBytes(page, 'sorted.bus'), sorted);
   passed('cancel-and-rerun');
-  await page.locator('#result-file').selectOption('/work/counts/genes.mtx');
+  await page.locator('#result-file').selectOption('/work/counts/output.mtx');
   await page.screenshot({ path: join(reportDir, 'bustools.png'), fullPage: true });
 
   phase('Reload clears files and all command help remains usable');

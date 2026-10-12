@@ -26,8 +26,8 @@
         "count": {
           "label": "4. Count molecules by gene",
           "description": "Use transcript names, equivalence classes and the transcript-to-gene map to create a sparse cell-by-gene matrix and its barcode and gene labels.",
-          "args": ["count", "--genecounts", "-g", "transcripts-to-genes.txt", "-e", "matrix.ec", "-t", "transcripts.txt", "-o", "counts/genes", "corrected-sorted.bus"],
-          "outputs": ["counts/genes.mtx", "counts/genes.barcodes.txt", "counts/genes.genes.txt"], "outputDirectories": ["counts"]
+          "args": ["count", "--genecounts", "-g", "transcripts-to-genes.txt", "-e", "matrix.ec", "-t", "transcripts.txt", "-o", "counts/", "corrected-sorted.bus"],
+          "outputs": ["counts/output.mtx", "counts/output.barcodes.txt", "counts/output.genes.txt"], "outputDirectories": ["counts"]
         },
         "inspect": {
           "label": "Inspect corrected BUS records",

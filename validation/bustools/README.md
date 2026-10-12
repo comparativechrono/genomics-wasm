@@ -16,14 +16,41 @@ outputs manufactured by a JavaScript or Python replacement for bustools.
 artifacts, effects, structural invariants, and cross-target dependencies.
 Biological calculations are performed only by the original C++ program.
 
-The comparator retains every declared output byte. It does not sort records,
-drop fields, round numbers, remove comments, or apply a floating-point
-tolerance. BUS comparison includes the complete header, all 32-byte records,
-barcode/UMI/EC identities, counts, flags, padding, and record order. Matrix
-Market comparison includes the format header, dimensions, every coordinate
-and printed count, and complete ordered barcode and gene/EC identity files.
-The matrix dimensions must also match their identity files. These structural
-checks prevent two equally empty or malformed outputs from passing.
+The comparator retains every declared output byte except two explicitly named
+unordered-map iteration differences observed between native libstdc++ and
+WASM libc++. There is no numerical tolerance. BUS comparison includes the
+complete header and all six fields of each 32-byte record. Matrix comparison
+includes the header, dimensions, every coordinate and printed count, and the
+complete barcode and gene/EC identities. Matrix dimensions must match their
+identity files. These structural checks prevent two equally empty or malformed
+outputs from passing.
+
+Only `project-transcripts/projected.bus` permits record permutations within a
+consecutive barcode/UMI group. Its complete header, group boundaries and order,
+all six record fields, and every duplicate remain exact. Only
+`count-transcripts/counts.ec.txt` permits different assignment of unused EC
+column identities: every matrix-referenced EC ID and transcript list remains
+exact, and the full multiset of unused transcript lists, including duplicates,
+must agree. Its complete matrix and ordered barcode list remain byte-exact.
+The observed experimental case differed only in two records within one BUS
+group and 7,150 unused EC assignments. All gene-count modes, predictions,
+other outputs and numeric precision compared byte for byte. Per-artifact
+canonical hashes accompany the original raw hashes and sizes.
+
+Upstream BUSZ does not encode the unused BUS padding field. The experimental
+input contains nonzero padding, so decompression is checked byte for byte
+against actual unchanged-native decompression, rather than falsely claiming
+that upstream restores those padding bytes. Native/WASM interchange cases
+then count the decompressed records and require the complete gene/UMI matrix,
+barcodes and genes to match the original uncompressed calculation exactly.
+
+The experimental `merge` command expects interval-encoded BUS records with
+start/end positions in the padding field. The supplied real standard BUS
+input does not carry such intervals. `merge-no-intervals` checks the original
+program's empty-output boundary behavior and full EC mapping; it does not
+claim scientific validation of interval merging. `mash` exercises the same
+real read-indexed input twice as an explicit repeated-input operation, without
+inventing additional read alignments.
 
 Cases declaring `effect` must change the selected complete native biological
 outputs from their baseline; `equivalentTo` cases must preserve them. Repeat

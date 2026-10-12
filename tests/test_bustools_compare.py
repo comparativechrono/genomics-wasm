@@ -164,6 +164,84 @@ class BustoolsComparisonTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'duplicate'):
             self.compare([artifact, artifact])
 
+    def normalized_bus_case(self):
+        rows = ((1, 2, 0, 3, 0, 8), (1, 2, 1, 2, 5, 9), (2, 3, 1, 2, 0, 0))
+        self.files({'data.bus': bus(rows)})
+        return [{'path': 'data.bus', 'kind': 'bus', 'normalizeWithinBarcodeUmi': True}], rows
+
+    def test_declared_within_group_reorder_preserves_full_records(self):
+        artifacts, rows = self.normalized_bus_case()
+        (self.b/'data.bus').write_bytes(bus((rows[1], rows[0], rows[2])))
+        result = self.compare(artifacts)
+        self.assertTrue(result['equal'])
+        self.assertEqual(result['canonicalFiles'], result['expectedCanonicalFiles'])
+        self.assertNotEqual(result['actualFiles'], result['expectedFiles'])
+
+    def test_declared_within_group_reorder_rejects_changed_count(self):
+        artifacts, rows = self.normalized_bus_case()
+        (self.b/'data.bus').write_bytes(bus((rows[1], (1, 2, 0, 4, 0, 8), rows[2])))
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_within_group_reorder_rejects_changed_flag(self):
+        artifacts, rows = self.normalized_bus_case()
+        (self.b/'data.bus').write_bytes(bus((rows[1], (1, 2, 0, 3, 1, 8), rows[2])))
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_within_group_reorder_rejects_changed_pad(self):
+        artifacts, rows = self.normalized_bus_case()
+        (self.b/'data.bus').write_bytes(bus((rows[1], (1, 2, 0, 3, 0, 0), rows[2])))
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_within_group_reorder_rejects_duplicate_loss(self):
+        artifacts, rows = self.normalized_bus_case()
+        (self.a/'data.bus').write_bytes(bus(rows+(rows[2],)))
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_within_group_reorder_rejects_group_reorder(self):
+        artifacts, rows = self.normalized_bus_case()
+        (self.b/'data.bus').write_bytes(bus((rows[2], rows[1], rows[0])))
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def normalized_ec_case(self):
+        self.files({'matrix.mtx': '%%MatrixMarket matrix coordinate real general\n%\n1 4 1\n1 1 7\n',
+                    'ec.txt': '0\t3,4\n1\t5\n2\t6\n3\t6\n'})
+        return [{'path': 'matrix.mtx', 'kind': 'matrix', 'columnLabels': 'ec.txt'},
+                {'path': 'ec.txt', 'kind': 'ec', 'normalizeUnusedOrderWith': 'matrix.mtx'}]
+
+    def test_declared_unused_ec_permutation_passes(self):
+        artifacts = self.normalized_ec_case()
+        (self.b/'ec.txt').write_text('0\t3,4\n1\t6\n2\t5\n3\t6\n')
+        result = self.compare(artifacts)
+        self.assertTrue(result['equal'])
+        self.assertEqual(result['canonicalFiles'], result['expectedCanonicalFiles'])
+        self.assertNotEqual(result['actualFiles']['ec.txt'], result['expectedFiles']['ec.txt'])
+
+    def test_declared_unused_ec_permutation_rejects_used_identity_change(self):
+        artifacts = self.normalized_ec_case()
+        (self.b/'ec.txt').write_text('0\t5\n1\t3,4\n2\t6\n3\t6\n')
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_unused_ec_permutation_rejects_unused_identity_change(self):
+        artifacts = self.normalized_ec_case()
+        (self.b/'ec.txt').write_text('0\t3,4\n1\t5\n2\t6\n3\t7\n')
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_unused_ec_permutation_rejects_duplicate_change(self):
+        artifacts = self.normalized_ec_case()
+        (self.b/'ec.txt').write_text('0\t3,4\n1\t5\n2\t5\n3\t6\n')
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_unused_ec_permutation_rejects_matrix_count_change(self):
+        artifacts = self.normalized_ec_case(); p = self.b/'matrix.mtx'
+        p.write_bytes(p.read_bytes().replace(b'1 1 7', b'1 1 8'))
+        self.assertFalse(self.compare(artifacts)['equal'])
+
+    def test_declared_unused_ec_permutation_rejects_missing_or_reordered_ec_id(self):
+        artifacts = self.normalized_ec_case()
+        (self.b/'ec.txt').write_text('0\t3,4\n2\t6\n1\t5\n3\t6\n')
+        with self.assertRaisesRegex(ValueError, 'EC ID'):
+            self.compare(artifacts)
+
 
 if __name__ == '__main__':
     unittest.main()

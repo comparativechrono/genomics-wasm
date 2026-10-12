@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Compare complete bustools outputs and validate their structural invariants.
 
-Every output byte, BUS header field, record order, matrix coordinate/count and
-row/column identifier is retained. There is no numerical tolerance. Parsing
-adds independent malformed/empty-output checks; it never replaces comparison
-with an aggregate or a newly implemented biological algorithm.
+Every scientific field and printed number is exact. Two explicitly declared
+artifacts permit native-library unordered-map iteration differences: BUS record
+order within one barcode/UMI group, and unused EC-column identity order. Their
+headers, all fields, multiplicities, referenced identities and surrounding order
+are retained. Other artifacts are byte-exact. No numerical tolerance is used.
 """
 import argparse
 import gzip
@@ -15,7 +16,11 @@ from pathlib import Path, PurePosixPath
 import re
 import struct
 
-NORMALISATION = ['None: all declared artifacts are compared byte for byte.']
+NORMALISATION = [
+    'All artifacts are byte-exact except the two explicitly declared unordered-map output cases below; no numeric tolerance.',
+    'project-transcripts/projected.bus: sort complete six-field records only within each consecutive barcode/UMI group; retain the complete header, group order and every duplicate.',
+    'count-transcripts/counts.ec.txt: retain every matrix-referenced EC ID and its exact transcript list; compare the complete multiset of unreferenced EC transcript lists. The complete matrix and ordered barcode IDs remain byte-exact.'
+]
 
 
 def digest(value):
@@ -56,6 +61,39 @@ def bus_invariants(raw, artifact):
             'totalCount': sum(row[3] for row in rows), 'duplicateMultiplicity': sum(row[3] > 1 for row in rows),
             'barcodeLength': bc, 'umiLength': umi, 'headerTextBytes': length,
             'nonzeroFlags': sum(row[4] != 0 for row in rows)}
+
+
+def normalise_bus_groups(raw):
+    start = 20 + struct.unpack_from('<I', raw, 16)[0]
+    groups = []
+    for offset in range(start, len(raw), 32):
+        record = raw[offset:offset+32]
+        key = struct.unpack_from('<QQ', record)
+        if not groups or groups[-1][0] != key:
+            groups.append((key, []))
+        groups[-1][1].append(record)
+    # Sorting bytes retains all six fields and every duplicate. Group boundaries
+    # and order are deliberately not canonicalised.
+    return (raw[:start] + b''.join(b''.join(sorted(records)) for _, records in groups)).hex()
+
+
+def normalise_unused_ec(raw, matrix_raw):
+    lines = text(raw).splitlines()
+    values = []
+    for index, line in enumerate(lines):
+        if not re.fullmatch(str(index) + r'\t(?:0|[1-9]\d*)(?:,(?:0|[1-9]\d*))*', line):
+            raise ValueError('noncanonical, missing or out-of-order EC ID')
+        values.append(line.split('\t')[1])
+    if raw != ('\n'.join(lines) + '\n').encode():
+        raise ValueError('noncanonical EC line formatting')
+    info = matrix_invariants(matrix_raw)
+    if info['columns'] != len(values):
+        raise ValueError('EC columns differ from matrix dimension')
+    rows = [line.split() for line in text(matrix_raw).splitlines()[1:] if line and not line.startswith('%')]
+    used = {int(row[1])-1 for row in rows[1:]}
+    # List, not set: duplicates in unused EC identities remain significant.
+    return {'used': [(i, values[i]) for i in sorted(used)],
+            'unused': sorted(value for i, value in enumerate(values) if i not in used)}
 
 
 def text(raw):
@@ -149,7 +187,10 @@ def parse_artifact(path, artifact):
     for key, value in artifact.get('expected', {}).items():
         if inv.get(key) != value:
             raise ValueError('unexpected invariant: ' + key)
-    return raw.hex(), inv
+    if artifact.get('normalizeWithinBarcodeUmi') and kind != 'bus':
+        raise ValueError('barcode/UMI normalization requires a BUS artifact')
+    value = normalise_bus_groups(raw) if artifact.get('normalizeWithinBarcodeUmi') else raw.hex()
+    return value, inv
 
 
 def compare(expected_dir, actual_dir, spec):
@@ -170,16 +211,25 @@ def compare(expected_dir, actual_dir, spec):
             raw = path.read_bytes()
             hashes[side][name], sizes[side][name] = hashlib.sha256(raw).hexdigest(), len(raw)
         for artifact in artifacts:
+            if artifact.get('normalizeUnusedOrderWith'):
+                matrix = artifact['normalizeUnusedOrderWith']
+                if artifact['kind'] != 'ec' or not any(a['path'] == matrix and a['kind'] == 'matrix' for a in artifacts):
+                    raise ValueError('unused EC normalization requires a declared matrix artifact')
+                values[side][artifact['path']] = normalise_unused_ec(safe_file(directory, artifact['path']).read_bytes(), safe_file(directory, matrix).read_bytes())
             if artifact['kind'] == 'matrix':
                 for field, axis in [('rowLabels', 'rows'), ('columnLabels', 'columns')]:
                     if field in artifact and (artifact[field] not in invariants[side] or invariants[side][artifact[field]]['records'] != invariants[side][artifact['path']][axis]):
                         raise ValueError('matrix identity file does not match dimension: ' + field)
     expected, actual = values['expected'], values['actual']
+    def canonical_hash(value):
+        return hashlib.sha256(bytes.fromhex(value)).hexdigest() if isinstance(value, str) else digest(value)
     return {'equal': expected == actual, 'semanticDigest': digest(actual), 'expectedSemanticDigest': digest(expected),
             'biologicalDigest': digest([actual[p] for p in biological]), 'expectedBiologicalDigest': digest([expected[p] for p in biological]),
             'nativeInvariants': invariants['expected'], 'invariants': invariants['actual'],
             'expectedFiles': hashes['expected'], 'actualFiles': hashes['actual'],
             'expectedFileBytes': sizes['expected'], 'actualFileBytes': sizes['actual'],
+            'expectedCanonicalFiles': {p: canonical_hash(expected[p]) for p in paths},
+            'canonicalFiles': {p: canonical_hash(actual[p]) for p in paths},
             'normalisation': NORMALISATION, 'numericTolerance': 0,
             'differences': [p for p in paths if expected[p] != actual[p]]}
 

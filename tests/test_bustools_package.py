@@ -65,6 +65,8 @@ class PackageTests(unittest.TestCase):
             data = f'Biological data fixture: {tool}'.encode()
             self.write(f'datasets/bustools/{tool}/input.fa', data)
             self.manifest['files'][f'{tool}/input.fa'] = {'sha256': packager.digest(data), 'bytes': len(data)}
+        readme = (self.root / 'datasets/bustools/README.md').read_bytes()
+        self.manifest['files']['README.md'] = {'sha256': packager.digest(readme), 'bytes': len(readme)}
         self.write_json('datasets/bustools/manifest.json', self.manifest)
         self.builds = {tool: packager.check_build_identity(tool)[2] for tool in packager.TOOLS}
         self.reports = {tool: self.make_reports(tool) for tool in packager.TOOLS}
@@ -132,6 +134,7 @@ class PackageTests(unittest.TestCase):
             comparisons = {kind: {'equal': True, 'expectedSemanticDigest': biological, 'semanticDigest': biological, 'biologicalDigest': biological,
                 'invariants': copy.deepcopy(invariants), 'nativeInvariants': copy.deepcopy(invariants),
                 'expectedFiles': {'out.tsv': output_sha}, 'actualFiles': {'out.tsv': output_sha},
+                'expectedCanonicalFiles': {'out.tsv': output_sha}, 'canonicalFiles': {'out.tsv': output_sha},
                 'expectedFileBytes': {'out.tsv': len(output)}, 'actualFileBytes': {'out.tsv': len(output)},
                 'expectedBiologicalDigest': biological, 'numericTolerance': 0, 'differences': []} for kind in spec['comparisons']}
             record = {'id': case_id, 'tool': tool, 'dataset': spec['_dataset'], 'case': spec['id'], 'kind': spec['kind'],
@@ -212,6 +215,20 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'independent validation run identity'):
             packager.check_reports('bustools', self.reports['bustools'], self.builds)
 
+    def test_repeat_may_compare_all_targets_to_original_native_baseline(self):
+        repeat = self.plan['tools']['bustools']['cases'][3]
+        repeat.update(executions=['native', 'patched-native', 'wasm'], comparisons=['native-contract', 'patched-native', 'wasm'])
+        self.write_json('validation/bustools/cases.json', self.plan)
+        self.reports['bustools'] = self.make_reports('bustools')
+        packager.check_reports('bustools', self.reports['bustools'], self.builds)
+        self.change_report(lambda r: r['cases'][3]['comparisons']['native-contract'].update(biologicalDigest=packager.digest(b'other')))
+        with self.assertRaisesRegex(RuntimeError, 'unchanged native baseline'):
+            packager.check_reports('bustools', self.reports['bustools'], self.builds)
+        repeat.update(executions=['native', 'wasm'])
+        self.write_json('validation/bustools/cases.json', self.plan)
+        with self.assertRaisesRegex(RuntimeError, 'unchanged native baseline'):
+            packager.planned_cases('bustools')
+
     def test_entire_case_plan_required_and_unique(self):
         for change in [lambda r: r['cases'].pop(), lambda r: r['cases'].append(r['cases'][0]),
                        lambda r: r['expectedCases'].pop(), lambda r: r['cases'][0].update(status='failed')]:
@@ -259,6 +276,45 @@ class PackageTests(unittest.TestCase):
             report['cases'][0]['executions']['wasm']['files']['out.tsv'] = forged
             report['cases'][0]['comparisons']['wasm']['actualFiles']['out.tsv'] = forged
         self.assert_bad_report(mutation, 'exact comparison output bytes differ')
+
+    def test_canonical_checksums_cannot_be_omitted_or_substituted(self):
+        self.assert_bad_report(lambda r: r['cases'][0]['comparisons']['wasm'].update(canonicalFiles={}), 'canonical')
+        self.assert_bad_report(lambda r: r['cases'][0]['comparisons']['wasm'].update(expectedCanonicalFiles={}), 'native baseline')
+        self.assert_bad_report(lambda r: r['cases'][0]['comparisons']['wasm']['canonicalFiles'].update({'out.tsv': packager.digest(b'other')}),
+                               'canonical')
+
+    def test_only_observed_two_artifacts_may_normalize_order(self):
+        specs = [
+            {'id': 'project-transcripts', 'artifacts': [
+                {'path': 'projected.bus', 'kind': 'bus', 'normalizeWithinBarcodeUmi': True}]},
+            {'id': 'count-transcripts', 'artifacts': [
+                {'path': 'counts.ec.txt', 'kind': 'ec', 'normalizeUnusedOrderWith': 'counts.mtx'},
+                {'path': 'counts.mtx', 'kind': 'matrix', 'columnLabels': 'counts.ec.txt'}]},
+        ]
+        for spec in specs:
+            normalized = packager.normalised_artifacts(spec)
+            self.assertEqual(len(normalized), 1)
+            for mutation in [lambda s: s.update(id='other-case'),
+                             lambda s: s['artifacts'][0].update(path='other-output'),
+                             lambda s: s['artifacts'][0].update(normalizeEverything=True)]:
+                changed = copy.deepcopy(spec)
+                mutation(changed)
+                with self.assertRaisesRegex(RuntimeError, 'undeclared artifact order'):
+                    packager.normalised_artifacts(changed)
+            paths = [a['path'] for a in spec['artifacts']]
+            before = {path: packager.digest(b'Original labelled bytes') for path in paths}
+            after = {path: packager.digest(b'Reordered labelled bytes') if path in normalized else before[path] for path in paths}
+            canonical = {path: packager.digest(b'Complete canonical records') if path in normalized else before[path] for path in paths}
+            sizes = {path: 100 for path in paths}
+            comparison = {'expectedFiles': before, 'actualFiles': after, 'expectedFileBytes': sizes, 'actualFileBytes': sizes,
+                          'expectedCanonicalFiles': canonical, 'canonicalFiles': canonical}
+            native = {'files': before, 'fileBytes': sizes}
+            actual = {'files': after, 'fileBytes': sizes}
+            packager.check_comparison_files('fixture', spec, comparison, native, actual)
+            changed = copy.deepcopy(comparison)
+            changed['actualFileBytes'][next(iter(normalized))] += 1
+            with self.assertRaisesRegex(RuntimeError, 'output bytes'):
+                packager.check_comparison_files('fixture', spec, changed, native, actual)
 
     def test_repeat_cannot_reuse_fabricated_baseline_or_omit_native_comparison(self):
         self.assert_bad_report(lambda r: r['cases'][3]['comparisons']['wasm'].update(biologicalDigest=packager.digest(b'other')),
@@ -365,6 +421,10 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'every bundled'):
             packager.checked_dataset_manifest()
         (self.root / 'datasets/bustools/bustools/unmanifested.fa').unlink()
+        self.write('datasets/bustools/provenance/unmanifested.txt', b'Unrecorded provenance')
+        with self.assertRaisesRegex(RuntimeError, 'every bundled'):
+            packager.checked_dataset_manifest()
+        (self.root / 'datasets/bustools/provenance/unmanifested.txt').unlink()
         self.plan['fixtureInputs'].append('bustools/missing.fa')
         self.write_json('validation/bustools/cases.json', self.plan)
         with self.assertRaisesRegex(RuntimeError, 'Validation input'):
