@@ -1,0 +1,95 @@
+--- a/gene.c
++++ b/gene.c
+@@ -283,34 +283,27 @@
+     rbs2 = tinf->rbs_wt[nod[ndx].rbs[1]]*tinf->st_wt;
+     if(tinf->uses_sd == 1) {
+       if(rbs1 > rbs2)
+-        sprintf(genes[i].gene_data, "%srbs_motif=%s;rbs_spacer=%s", 
+-                genes[i].gene_data, sd_string[nod[ndx].rbs[0]], 
++        sprintf(genes[i].gene_data + strlen(genes[i].gene_data), "rbs_motif=%s;rbs_spacer=%s", sd_string[nod[ndx].rbs[0]], 
+                 sd_spacer[nod[ndx].rbs[0]]);
+       else
+-        sprintf(genes[i].gene_data, "%srbs_motif=%s;rbs_spacer=%s", 
+-                genes[i].gene_data, sd_string[nod[ndx].rbs[1]], 
++        sprintf(genes[i].gene_data + strlen(genes[i].gene_data), "rbs_motif=%s;rbs_spacer=%s", sd_string[nod[ndx].rbs[1]], 
+                 sd_spacer[nod[ndx].rbs[1]]);
+     }
+     else {
+       mer_text(qt, nod[ndx].mot.len, nod[ndx].mot.ndx);
+       if(tinf->no_mot > -0.5 && rbs1 > rbs2 && rbs1 > nod[ndx].mot.score *
+          tinf->st_wt)
+-        sprintf(genes[i].gene_data, "%srbs_motif=%s;rbs_spacer=%s", 
+-                genes[i].gene_data, sd_string[nod[ndx].rbs[0]], 
++        sprintf(genes[i].gene_data + strlen(genes[i].gene_data), "rbs_motif=%s;rbs_spacer=%s", sd_string[nod[ndx].rbs[0]], 
+                 sd_spacer[nod[ndx].rbs[0]]);
+       else if(tinf->no_mot > -0.5 && rbs2 >= rbs1 && rbs2 > nod[ndx].mot.score *
+               tinf->st_wt)
+-        sprintf(genes[i].gene_data, "%srbs_motif=%s;rbs_spacer=%s", 
+-                genes[i].gene_data, sd_string[nod[ndx].rbs[1]], 
++        sprintf(genes[i].gene_data + strlen(genes[i].gene_data), "rbs_motif=%s;rbs_spacer=%s", sd_string[nod[ndx].rbs[1]], 
+                 sd_spacer[nod[ndx].rbs[1]]);
+       else if(nod[ndx].mot.len == 0) 
+-        sprintf(genes[i].gene_data, "%srbs_motif=None;rbs_spacer=None", 
+-                genes[i].gene_data);
+-      else sprintf(genes[i].gene_data, "%srbs_motif=%s;rbs_spacer=%dbp", 
+-                   genes[i].gene_data, qt, nod[ndx].mot.spacer);
+-    }
+-    sprintf(genes[i].gene_data, "%s;gc_cont=%.3f", genes[i].gene_data, 
+-            nod[ndx].gc_cont);
++        sprintf(genes[i].gene_data + strlen(genes[i].gene_data), "rbs_motif=None;rbs_spacer=None");
++      else sprintf(genes[i].gene_data + strlen(genes[i].gene_data), "rbs_motif=%s;rbs_spacer=%dbp", qt, nod[ndx].mot.spacer);
++    }
++    sprintf(genes[i].gene_data + strlen(genes[i].gene_data), ";gc_cont=%.3f", nod[ndx].gc_cont);
+ 
+     /* Record score data */
+     confidence = calculate_confidence(nod[ndx].cscore + nod[ndx].sscore, 
+@@ -319,8 +312,7 @@
+      "conf=%.2f;score=%.2f;cscore=%.2f;sscore=%.2f;rscore=%.2f;uscore=%.2f;",
+      confidence, nod[ndx].cscore+nod[ndx].sscore,nod[ndx].cscore, 
+      nod[ndx].sscore, nod[ndx].rscore, nod[ndx].uscore);
+-    sprintf(genes[i].score_data, "%stscore=%.2f;", genes[i].score_data, 
+-            nod[ndx].tscore);
++    sprintf(genes[i].score_data + strlen(genes[i].score_data), "tscore=%.2f;", nod[ndx].tscore);
+   }
+ 
+ }
+@@ -340,14 +332,13 @@
+   /* Initialize run data string */
+   if(is_meta == 0) {
+     sprintf(run_data, "version=Prodigal.v%s;run_type=Single;", version);
+-    sprintf(run_data, "%smodel=\"Ab initio\";", run_data);
++    sprintf(run_data + strlen(run_data), "model=\"Ab initio\";");
+   }
+   else {
+     sprintf(run_data, "version=Prodigal.v%s;run_type=Metagenomic;", version);
+-    sprintf(run_data, "%smodel=\"%s\";", run_data, mdesc);
+-  }
+-  sprintf(run_data, "%sgc_cont=%.2f;transl_table=%d;uses_sd=%d", run_data, 
+-          tinf->gc*100.0, tinf->trans_table, tinf->uses_sd);
++    sprintf(run_data + strlen(run_data), "model=\"%s\";", mdesc);
++  }
++  sprintf(run_data + strlen(run_data), "gc_cont=%.2f;transl_table=%d;uses_sd=%d", tinf->gc*100.0, tinf->trans_table, tinf->uses_sd);
+ 
+   strcpy(left, "");
+   strcpy(right, "");
+--- a/node.c
++++ b/node.c
+@@ -1419,14 +1419,13 @@
+   /* Initialize run data string */
+   if(is_meta == 0) {
+     sprintf(run_data, "version=Prodigal.v%s;run_type=Single;", version);
+-    sprintf(run_data, "%smodel=\"Ab initio\";", run_data);
++    sprintf(run_data + strlen(run_data), "model=\"Ab initio\";");
+   }
+   else {
+     sprintf(run_data, "version=Prodigal.v%s;run_type=Metagenomic;", version);
+-    sprintf(run_data, "%smodel=\"%s\";", run_data, mdesc);
+-  }
+-  sprintf(run_data, "%sgc_cont=%.2f;transl_table=%d;uses_sd=%d", run_data,
+-          tinf->gc*100.0, tinf->trans_table, tinf->uses_sd);
++    sprintf(run_data + strlen(run_data), "model=\"%s\";", mdesc);
++  }
++  sprintf(run_data + strlen(run_data), "gc_cont=%.2f;transl_table=%d;uses_sd=%d", tinf->gc*100.0, tinf->trans_table, tinf->uses_sd);
+  
+   strcpy(sd_string[0], "None");
+   strcpy(sd_spacer[0], "None");

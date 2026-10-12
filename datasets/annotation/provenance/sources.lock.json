@@ -1,0 +1,23 @@
+{
+  "GCF_000005845.2_ASM584v2_genomic.fna.gz": {
+    "bytes": 1379902,
+    "cachePath": "build/annotation-sources/GCF_000005845.2_ASM584v2_genomic.fna.gz",
+    "sha256": "a96d3cfa58c88d477013c768f90a11d2386d42a70d566abfb6d9013dcbd24255",
+    "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz"
+  },
+  "GCF_000006945.2_ASM694v2_genomic.fna.gz": {
+    "bytes": 1471540,
+    "cachePath": "build/annotation-sources/GCF_000006945.2_ASM694v2_genomic.fna.gz",
+    "sha256": "2996f647c223d4c5b3e0f1a0940025614b39cad5c0c1a00b73f264e3b718d59a",
+    "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/006/945/GCF_000006945.2_ASM694v2/GCF_000006945.2_ASM694v2_genomic.fna.gz"
+  },
+  "hmmer-3.4.tar.gz": {
+    "bytes": 19669667,
+    "cachePath": "build/annotation-sources/hmmer-3.4.tar.gz",
+    "purpose": "Original tutorial biological input files and upstream license; no source modifications.",
+    "revision": "9acd8b6758a0ca5d21db6d167e0277484341929b",
+    "sha256": "ca70d94fd0cf271bd7063423aabb116d42de533117343a9b27a65c17ff06fbf3",
+    "url": "https://eddylab.org/software/hmmer/hmmer-3.4.tar.gz",
+    "version": "3.4"
+  }
+}

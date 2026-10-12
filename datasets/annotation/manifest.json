@@ -1,0 +1,290 @@
+{
+  "datasets": {
+    "hmmer": {
+      "alignments": {
+        "fn3.sto": {
+          "alignmentColumns": 117,
+          "sequences": 98
+        },
+        "globins.sto": {
+          "alignmentColumns": 171,
+          "sequences": 4
+        },
+        "made1.sto": {
+          "alignmentColumns": 304,
+          "sequences": 100
+        },
+        "pkinase.sto": {
+          "alignmentColumns": 419,
+          "sequences": 38
+        }
+      },
+      "observations": {
+        "aminoAcids": 9219,
+        "globinTargets": 46,
+        "nucleotideBases": 330000,
+        "nucleotideTargets": 1,
+        "proteinTargets": 47,
+        "sevenlessAminoAcids": 2554,
+        "targetIds": [
+          "MYG_ESCGI",
+          "MYG_HORSE",
+          "MYG_PROGU",
+          "MYG_SAISC",
+          "MYG_LYCPI",
+          "MYG_MOUSE",
+          "MYG_MUSAN",
+          "HBA_AILME",
+          "HBA_PROLO",
+          "HBA_PAGLA",
+          "HBA_MACFA",
+          "HBA_MACSI",
+          "HBA_PONPY",
+          "HBA2_GALCR",
+          "HBA_MESAU",
+          "HBA2_BOSMU",
+          "HBA_ERIEU",
+          "HBA_FRAPO",
+          "HBA_PHACO",
+          "HBA_TRIOC",
+          "HBA_ANSSE",
+          "HBA_COLLI",
+          "HBAD_CHLME",
+          "HBAD_PASMO",
+          "HBAZ_HORSE",
+          "HBA4_SALIR",
+          "HBB_ORNAN",
+          "HBB_TACAC",
+          "HBE_PONPY",
+          "HBB_SPECI",
+          "HBB_SPETO",
+          "HBB_EQUHE",
+          "HBB_SUNMU",
+          "HBB_CALAR",
+          "HBB_MANSP",
+          "HBB_URSMA",
+          "HBB_RABIT",
+          "HBB_TUPGL",
+          "HBB_TRIIN",
+          "HBB_COLLI",
+          "HBB_LARRI",
+          "HBB1_VAREX",
+          "HBB2_XENTR",
+          "HBBL_RANCA",
+          "HBB2_TRICR",
+          "HBB_HUMAN",
+          "7LESS_DROME"
+        ]
+      },
+      "profiles": {
+        "fn3.hmm": {
+          "ACC": "PF00041.13",
+          "ALPH": "amino",
+          "LENG": "86",
+          "NAME": "fn3"
+        },
+        "globins.hmm": {
+          "ALPH": "amino",
+          "LENG": "149",
+          "NAME": "globins4"
+        },
+        "made1.hmm": {
+          "ACC": "DF0000629.2",
+          "ALPH": "DNA",
+          "LENG": "80",
+          "NAME": "MADE1"
+        },
+        "pkinase.hmm": {
+          "ACC": "PF00069.17",
+          "ALPH": "amino",
+          "LENG": "260",
+          "NAME": "Pkinase"
+        }
+      },
+      "requiredEffects": [
+        "Globin searches recover diverse authentic globins and reject the Sevenless receptor negative control.",
+        "Sevenless has protein-kinase and repeated fibronectin-type-III domains; globins are negative controls for these profiles.",
+        "Search thresholds change reported hits; native and WebAssembly scores and domain coordinates agree within documented tolerances.",
+        "MADE1 nucleotide searches recover repeat hits on both strands of the real human chromosome-1 fragment."
+      ]
+    },
+    "prodigal": {
+      "observations": {
+        "basesPerChromosome": 60000,
+        "chromosomes": 2,
+        "combinedBases": 120000
+      },
+      "references": [
+        {
+          "accession": "NC_000913.3",
+          "chromosomeBases": 4641652,
+          "end": 60000,
+          "name": "Escherichia coli K-12 MG1655",
+          "sequenceId": "NC_000913.3_1_60000",
+          "source": "GCF_000005845.2_ASM584v2_genomic.fna.gz",
+          "start": 1,
+          "taxid": 562,
+          "windowSequenceSha256": "c8d5ec4b04f4ddf3b7cbc4c10581fe34771d168b56c4d12770b86280bee1694b"
+        },
+        {
+          "accession": "NC_003197.2",
+          "chromosomeBases": 4857450,
+          "end": 60000,
+          "name": "Salmonella enterica Typhimurium LT2",
+          "sequenceId": "NC_003197.2_1_60000",
+          "source": "GCF_000006945.2_ASM694v2_genomic.fna.gz",
+          "start": 1,
+          "taxid": 28901,
+          "windowSequenceSha256": "846e6c7e9cd7f4f75aa51fd9edfe9f2b0fddbe7c9196890e15bba21ef70ef516"
+        }
+      ],
+      "requiredEffects": [
+        "Nonempty gene, protein, nucleotide and score outputs from each real bacterial window.",
+        "Native and WebAssembly single-genome and metagenomic gene coordinates, strands and translations agree.",
+        "Output formats and closed-end / translation-table options exercise distinct supported behavior."
+      ]
+    }
+  },
+  "files": {
+    "README.md": {
+      "bytes": 6015,
+      "generated": false,
+      "sha256": "2b4e0cd548f191520757f3a05dd179e27fedd232710ab6507c622de08dfe06b0"
+    },
+    "hmmer/dna-target.fa": {
+      "bytes": 335516,
+      "generated": true,
+      "sha256": "2355eca4efcea77fdc82b61066e375cf17655885d346f68f6ef32d524d488113"
+    },
+    "hmmer/fn3.hmm": {
+      "bytes": 41101,
+      "generated": true,
+      "sha256": "bc1513993c2dd5d98a242574196805d3adf65c4b72cd61dc94053799fa9f050b"
+    },
+    "hmmer/fn3.sto": {
+      "bytes": 24538,
+      "generated": true,
+      "sha256": "239fda955c5b6836b62288ec5c20bd6d16bea48739bd0ff8ef1574ec1da5d043"
+    },
+    "hmmer/globins.hmm": {
+      "bytes": 70298,
+      "generated": true,
+      "sha256": "a64cd91d934b7b43f962dbd6da1e18afa76e6623970a41116c11cf008d5d2c49"
+    },
+    "hmmer/globins.sto": {
+      "bytes": 863,
+      "generated": true,
+      "sha256": "8ebe534e622a992224c48f7c166accdf68a0aabfaed26c915932d56434656a85"
+    },
+    "hmmer/globins45.faa": {
+      "bytes": 7210,
+      "generated": true,
+      "sha256": "f22ab65168f200b80fc7c2d6e567c9ffe88f3ebd499fa93c31631e69ae7ed64c"
+    },
+    "hmmer/hbb-human.faa": {
+      "bytes": 183,
+      "generated": true,
+      "sha256": "65af20b13490488d406ff7e477c8255e1e3d6b37ac398274b007f8b9f10128fc"
+    },
+    "hmmer/made1.hmm": {
+      "bytes": 14842,
+      "generated": true,
+      "sha256": "6b2b61b2cfa7d2d5df66908525476c659a32e5a1cd50b8fad3600c28db38df95"
+    },
+    "hmmer/made1.sto": {
+      "bytes": 35454,
+      "generated": true,
+      "sha256": "0eb2afb1a092c669c99eba3c9e24aa11b26f1aff850d164ec9e2e35cb0652c82"
+    },
+    "hmmer/pkinase.hmm": {
+      "bytes": 122014,
+      "generated": true,
+      "sha256": "17754c407138f16a68dc208418fe9cacc00b9d3833dbf756e1cf0610db76bb0a"
+    },
+    "hmmer/pkinase.sto": {
+      "bytes": 67852,
+      "generated": true,
+      "sha256": "0c47730946f72ba51d4e0fb82c167e4b77c70b3eab45d08bd8e068ea04000726"
+    },
+    "hmmer/proteins.faa": {
+      "bytes": 10028,
+      "generated": true,
+      "sha256": "2f495715d08c830a5f5c3daf3f8a6a5addf9ea6c6fc04326d613f65142021885"
+    },
+    "hmmer/sevenless-drome.faa": {
+      "bytes": 2687,
+      "generated": true,
+      "sha256": "f7e90b9069579529e21b1e36c9fe8fa5b0a832e2d71268938a014db3cea588ed"
+    },
+    "prodigal/combined.fna": {
+      "bytes": 121681,
+      "generated": true,
+      "sha256": "e465c106dfea6bb73257aa456d34936467a0d2efe76a06455494938807e2f880"
+    },
+    "prodigal/ecoli.fna": {
+      "bytes": 60837,
+      "generated": true,
+      "sha256": "32171ad2e0b62b131282fea8a4c49b909030542b319995dd4cbfd401d6aa69dc"
+    },
+    "prodigal/salmonella.fna": {
+      "bytes": 60844,
+      "generated": true,
+      "sha256": "661f24999eb635b8a25a2b7c04d9135006bd00864824e55428fd8f40c968304d"
+    },
+    "provenance/HMMER-LICENSE": {
+      "bytes": 3556,
+      "generated": true,
+      "sha256": "d7652641990f11c1167e2888f3cc8ce1d336ae2df0a8d1d802993e131d367453"
+    },
+    "provenance/fixture-sources.json": {
+      "bytes": 6071,
+      "generated": true,
+      "sha256": "2be6ea1b8c647660b13c24c67f0e7f6101b203ce2b6306c0fb62f2a8c0a13fee"
+    },
+    "provenance/sources.lock.json": {
+      "bytes": 1204,
+      "generated": false,
+      "sha256": "5e1a9e0385ec72b0d22e136cb63ea76fd9a0d153f16375ef5384c25807c12918"
+    }
+  },
+  "regeneration": {
+    "files": {
+      "scripts/fetch-annotation-test-data.py": {
+        "bytes": 15630,
+        "sha256": "e75f7ebff0c689f0d0e39ef0a8c0a94573fdf2cd586f9105f2dff4e37e161b44"
+      }
+    },
+    "method": "Archive extraction and lossless sequence selection; no tool-result files are generated or frozen.",
+    "requirements": [
+      "Python 3.11+"
+    ],
+    "script": "scripts/fetch-annotation-test-data.py",
+    "sourcePrograms": {
+      "hmmer": "3.4"
+    }
+  },
+  "schema_version": 1,
+  "sources": {
+    "GCF_000005845.2_ASM584v2_genomic.fna.gz": {
+      "bytes": 1379902,
+      "cachePath": "build/annotation-sources/GCF_000005845.2_ASM584v2_genomic.fna.gz",
+      "sha256": "a96d3cfa58c88d477013c768f90a11d2386d42a70d566abfb6d9013dcbd24255",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz"
+    },
+    "GCF_000006945.2_ASM694v2_genomic.fna.gz": {
+      "bytes": 1471540,
+      "cachePath": "build/annotation-sources/GCF_000006945.2_ASM694v2_genomic.fna.gz",
+      "sha256": "2996f647c223d4c5b3e0f1a0940025614b39cad5c0c1a00b73f264e3b718d59a",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/006/945/GCF_000006945.2_ASM694v2/GCF_000006945.2_ASM694v2_genomic.fna.gz"
+    },
+    "hmmer-3.4.tar.gz": {
+      "bytes": 19669667,
+      "cachePath": "build/annotation-sources/hmmer-3.4.tar.gz",
+      "purpose": "Original tutorial biological input files and upstream license; no source modifications.",
+      "revision": "9acd8b6758a0ca5d21db6d167e0277484341929b",
+      "sha256": "ca70d94fd0cf271bd7063423aabb116d42de533117343a9b27a65c17ff06fbf3",
+      "url": "https://eddylab.org/software/hmmer/hmmer-3.4.tar.gz",
+      "version": "3.4"
+    }
+  }
+}

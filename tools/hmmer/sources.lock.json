@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "tool": "hmmer",
+  "version": "3.4",
+  "revision": "9acd8b6758a0ca5d21db6d167e0277484341929b",
+  "archive": "hmmer-3.4.tar.gz",
+  "url": "https://eddylab.org/software/hmmer/hmmer-3.4.tar.gz",
+  "sha256": "ca70d94fd0cf271bd7063423aabb116d42de533117343a9b27a65c17ff06fbf3",
+  "emscripten": "3.1.64",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "easel": {
+      "version": "0.49",
+      "source": "bundled in pinned HMMER release archive",
+      "license": "BSD-2-Clause"
+    },
+    "libdivsufsort": {
+      "version": "2.0.0",
+      "source": "bundled in pinned HMMER release archive",
+      "license": "MIT"
+    }
+  },
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.easel",
+    "LICENSE.libdivsufsort",
+    "LICENSE.embedded",
+    "LICENSE.emscripten",
+    "THIRD_PARTY_LICENSES.txt"
+  ],
+  "programs": [
+    "hmmbuild",
+    "hmmsearch",
+    "hmmscan",
+    "hmmpress",
+    "hmmfetch",
+    "hmmalign",
+    "hmmconvert",
+    "hmmemit",
+    "hmmstat",
+    "phmmer",
+    "jackhmmer",
+    "nhmmer",
+    "nhmmscan"
+  ]
+}

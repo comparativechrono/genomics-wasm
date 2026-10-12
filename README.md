@@ -23,6 +23,8 @@ DESeq2 session retains its R objects until the session is closed.
 | [Strelka2](tools/strelka2/README.md) | 2.9.10 | Serial somatic workflow, depth estimation, scoring and indexed SNV/indel VCFs |
 | [Kraken2](tools/kraken2/README.md) | 2.17.2 | Taxonomic classification, database building and inspection, one thread |
 | [Bracken](tools/bracken/README.md) | 3.1 | Abundance estimation and read-length distributions, one thread |
+| [Prodigal](tools/prodigal/README.md) | 2.6.3 | Prokaryotic gene prediction, protein translation and saved training, one thread |
+| [HMMER](tools/hmmer/README.md) | 3.4 | Thirteen offline profile-HMM, protein and nucleotide programs, one thread |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
@@ -81,6 +83,14 @@ static hosting. Large production databases generally exceed the memory
 available to this browser build. See the [Kraken2 API](runtime/KRAKEN2.md) and
 [Bracken API](runtime/BRACKEN.md) for the supported commands.
 
+Prodigal and HMMER share an [annotation example](examples/annotation/README.md)
+with real bacterial sequence regions, protein-family alignments and sequence
+targets. Prodigal predicts genes and translated proteins; HMMER builds profile
+models, searches sequences and scans pressed profile collections. Files can be
+carried between commands, including proteins predicted by Prodigal. Both ports
+run original upstream algorithms and use ordinary static hosting. See the
+[Prodigal API](runtime/PRODIGAL.md) and [HMMER API](runtime/HMMER.md).
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
@@ -102,6 +112,8 @@ python3 scripts/setup-strelka2-python.py
 bash scripts/build-strelka2.sh all
 bash scripts/build-kraken2.sh all
 BRACKEN_PYTHON="$(command -v python3.14)" bash scripts/build-bracken.sh all
+bash scripts/build-prodigal.sh all
+bash scripts/build-hmmer.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
@@ -270,6 +282,24 @@ every read classification and check Bracken's distributions and abundance
 estimates. See the [comparison rules](validation/metagenomics/README.md) for
 the exact checks and the two documented upstream binary-format issues.
 
+The **Build and validate annotation tools** workflow builds unchanged native,
+patched native and WebAssembly Prodigal/HMMER, then compares real biological
+outputs in Node, Chromium, Firefox and WebKit:
+
+```sh
+python3 scripts/fetch-annotation-test-data.py --verify
+node scripts/validate-annotation.mjs --tool all --engine node
+```
+
+Repeat with each browser engine. The case plan exercises gene coordinates,
+translations, model construction, protein/domain and nucleotide searches,
+effectful options, failures, repeated execution and native/browser exchange of
+training files and profile databases. The [comparison rules](validation/annotation/README.md)
+document exactly which metadata is normalized and how numerical results are
+checked. The [fixture provenance](datasets/annotation/README.md) records original
+sources and deterministic transformations. Native agreement establishes port
+fidelity on these inputs, not annotation accuracy or large-database capacity.
+
 ## Packages
 
 After building and validating, run `python3 scripts/package.py`. It creates
@@ -319,6 +349,14 @@ archive and file checksums, runs its included tests, and exercises its browser
 example in Chromium, Firefox and WebKit. The separate
 `metagenomics-package-validation` artifact preserves those standalone browser
 reports and screenshots.
+
+Prodigal and HMMER are packaged separately by `scripts/package-annotation.py`
+after all four engines pass. The `annotation-packages` workflow artifact contains
+independent ZIPs with compiled programs, APIs, browser examples, real data,
+original sources, notices, build recipes and matching validation reports.
+Before upload, the release gate extracts each archive independently, verifies
+its file checksums, runs package tests and exercises its example in all three
+browsers. The `annotation-package-validation` artifact records those checks.
 
 ## Licence
 

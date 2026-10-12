@@ -21,7 +21,9 @@
     "validate:strelka2": "node scripts/validate-strelka2.mjs",
     "package:strelka2": "python3 scripts/package-strelka2.py",
     "validate:metagenomics": "node scripts/validate-metagenomics.mjs",
-    "package:metagenomics": "python3 scripts/package-metagenomics.py"
+    "package:metagenomics": "python3 scripts/package-metagenomics.py",
+    "validate:annotation": "node scripts/validate-annotation.mjs",
+    "package:annotation": "python3 scripts/package-annotation.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

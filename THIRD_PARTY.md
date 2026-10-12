@@ -34,6 +34,15 @@ directory under `tools/`.
   The original Python abundance and distribution programs run in bundled
   Pyodide. The package includes CPython, Pyodide and runtime dependency sources
   and notices, plus the Kraken2 dependency used for database preparation.
+- Prodigal: Doug Hyatt and contributors; GPL-3.0-or-later.
+  Source: https://github.com/hyattpd/Prodigal
+  The package includes the original source, training models, portability patch
+  and licence. Gene prediction and training use the original C implementation.
+- HMMER and Easel: Sean Eddy, the Eddy/Rivas laboratory and contributors;
+  BSD-3-Clause and the third-party notices retained in their source archives.
+  Source: https://hmmer.org/ and https://github.com/EddyRivasLab/hmmer
+  The package retains the upstream SIMD algorithms, serial command programs,
+  original sources and dependency notices.
 - seqtk: Heng Li and contributors; MIT. Source: https://github.com/lh3/seqtk
 - AdapterRemoval: Mikkel Schubert and contributors; GPL-3.0-or-later.
   Source: https://github.com/MikkelSchubert/adapterremoval

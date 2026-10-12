@@ -1,0 +1,24 @@
+{
+  "tool": "prodigal",
+  "version": "2.6.3",
+  "revision": "004218fbeb2cf54fe12d88ec2eede6a27d70ebf7",
+  "url": "https://codeload.github.com/hyattpd/Prodigal/tar.gz/refs/tags/v2.6.3",
+  "archive": "prodigal-2.6.3.tar.gz",
+  "sha256": "89094ad4bff5a8a8732d899f31cec350f5a4c27bcbdd12663f87c9d1f0ec599f",
+  "emscripten": "3.1.64",
+  "runtime": {
+    "pthread": false,
+    "crossOriginIsolated": false,
+    "pointerWidth": 32,
+    "exportName": "createProdigal",
+    "entryModule": "prodigal.mjs",
+    "wasmBinary": "prodigal.wasm",
+    "maximumMemory": 2147483648,
+    "waitForExit": false
+  },
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.emscripten",
+    "THIRD_PARTY_LICENSES.txt"
+  ]
+}

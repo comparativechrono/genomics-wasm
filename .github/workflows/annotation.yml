@@ -1,0 +1,198 @@
+name: Build and validate annotation tools
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+permissions:
+  contents: read
+concurrency:
+  group: annotation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang make git curl gzip xz-utils patch
+      - run: npm ci
+      - name: Test runtimes, comparators and package checks
+        run: npm test
+      - name: Verify and regenerate real biological inputs
+        run: |
+          python3 scripts/fetch-annotation-test-data.py --verify
+          python3 scripts/fetch-annotation-test-data.py --fetch
+          python3 scripts/fetch-annotation-test-data.py --regenerate
+      - name: Install pinned WebAssembly compiler
+        run: bash scripts/setup-emsdk.sh
+      - name: Build unchanged native, patched native and WebAssembly programs
+        run: |
+          source toolchain/emsdk/emsdk_env.sh
+          bash scripts/build-prodigal.sh all
+          bash scripts/build-hmmer.sh all
+      - name: Compare Node results with unchanged native programs
+        run: node scripts/validate-annotation.mjs --engine node --tool all
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: annotation-validation-node
+          path: reports/annotation/node/
+          if-no-files-found: ignore
+      - name: Preserve executable permissions in compiled artifacts
+        run: |
+          tar -czf build/annotation-compiled.tar.gz \
+            dist/prodigal dist/hmmer \
+            build/native/prodigal build/native/hmmer \
+            build/patched-native/prodigal build/patched-native/hmmer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: annotation-compiled
+          path: build/annotation-compiled.tar.gz
+          if-no-files-found: error
+          retention-days: 14
+  browsers:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: annotation-compiled
+          path: build
+      - run: tar -xzf build/annotation-compiled.tar.gz
+      - name: Compare browser results with unchanged native programs
+        run: node scripts/validate-annotation.mjs --engine ${{ matrix.browser }} --tool all
+      - name: Exercise real workflows, uploads, downloads and cancellation
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: node scripts/test-annotation-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: annotation-validation-${{ matrix.browser }}
+          path: reports/annotation/${{ matrix.browser }}/
+          if-no-files-found: ignore
+  release-gate:
+    needs: [build, browsers]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Require every native and browser comparison
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          BROWSER_RESULT: ${{ needs.browsers.result }}
+        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: annotation-compiled
+          path: build
+      - run: tar -xzf build/annotation-compiled.tar.gz
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: annotation-validation-*
+          path: build/annotation-validation-artifacts
+      - name: Collect exact comparison reports
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          base = Path('build/annotation-validation-artifacts')
+          for engine in ('node', 'chromium', 'firefox', 'webkit'):
+              for tool in ('prodigal', 'hmmer'):
+                  filename = f'summary-{tool}-all.json'
+                  matches = list((base / f'annotation-validation-{engine}').rglob(filename))
+                  if len(matches) != 1:
+                      raise RuntimeError(f'Expected one {engine}/{tool} report, found {len(matches)}')
+                  target = Path('reports/annotation') / engine / filename
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copyfile(matches[0], target)
+          PY
+      - name: Assemble packages from pinned sources and verified evidence
+        run: |
+          python3 scripts/fetch-annotation-test-data.py --fetch
+          python3 scripts/fetch-annotation-test-data.py --verify
+          reports=()
+          for engine in node chromium firefox webkit; do
+            for tool in prodigal hmmer; do
+              reports+=(--validation-report "reports/annotation/$engine/summary-$tool-all.json")
+            done
+          done
+          python3 scripts/package-annotation.py --tool all --output releases "${reports[@]}"
+      - name: Install browsers for independent package tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Verify and exercise each standalone ZIP independently
+        run: |
+          set -euo pipefail
+          task_root="$PWD"
+          for archive in releases/prodigal-*-wasm.zip releases/hmmer-*-wasm.zip; do
+            filename="$(basename "$archive")"
+            stem="${filename%.zip}"
+            tool="${stem%%-*}"
+            (cd releases && sha256sum -c "$filename.sha256")
+            package_root="$(mktemp -d)"
+            python3 -m zipfile -e "$archive" "$package_root"
+            (
+              cd "$package_root/$stem"
+              sha256sum -c SHA256SUMS
+              npm ci
+              npm test
+              for engine in chromium firefox webkit; do
+                ANNOTATION_TOOL="$tool" BROWSER="$engine" \
+                  ANNOTATION_DEMO_REPORT="$task_root/reports/annotation/packages/$tool/$engine" \
+                  node scripts/test-annotation-demo.mjs
+              done
+            )
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: annotation-package-validation
+          path: reports/annotation/packages/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: annotation-packages
+          path: |
+            releases/prodigal-*-wasm.zip
+            releases/prodigal-*-wasm.zip.sha256
+            releases/hmmer-*-wasm.zip
+            releases/hmmer-*-wasm.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

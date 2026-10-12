@@ -1,0 +1,2573 @@
+{
+  "schema": 1,
+  "datasets": [
+    "prodigal",
+    "hmmer"
+  ],
+  "comparisonPolicy": "Compare complete biological outputs exactly. Normalize only declared timestamps, executable paths, working directory and performance measurements; no numeric tolerance. Native output checks enforce nonempty and varied biological coverage.",
+  "fixtureInputs": [
+    "prodigal/ecoli.fna",
+    "prodigal/salmonella.fna",
+    "prodigal/combined.fna",
+    "hmmer/globins.sto",
+    "hmmer/pkinase.sto",
+    "hmmer/fn3.sto",
+    "hmmer/made1.sto",
+    "hmmer/globins.hmm",
+    "hmmer/pkinase.hmm",
+    "hmmer/fn3.hmm",
+    "hmmer/made1.hmm",
+    "hmmer/proteins.faa",
+    "hmmer/hbb-human.faa",
+    "hmmer/sevenless-drome.faa",
+    "hmmer/dna-target.fa"
+  ],
+  "tools": {
+    "prodigal": {
+      "datasets": [
+        "prodigal"
+      ],
+      "runtime": [
+        "runtime/index.mjs",
+        "runtime/execute.mjs",
+        "runtime/worker.mjs",
+        "runtime/prodigal.mjs"
+      ],
+      "fixtureInputs": [
+        "ecoli.fna",
+        "salmonella.fna",
+        "combined.fna"
+      ],
+      "cases": [
+        {
+          "id": "single",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "meta",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-p",
+            "meta"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "effect": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "closed-ends",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-c"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "effect": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "translation-table4",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-g",
+            "4"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "effect": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "combined-meta",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "combined.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-p",
+            "meta"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "salmonella-single",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "salmonella.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "sco",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.sco",
+            "-f",
+            "sco",
+            "-a",
+            "proteins.faa",
+            "-s",
+            "starts.txt"
+          ],
+          "outputs": [
+            "genes.sco",
+            "proteins.faa",
+            "starts.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.sco",
+              "kind": "text",
+              "minimumRecords": 30
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "starts.txt",
+              "kind": "text",
+              "minimumRecords": 30
+            }
+          ]
+        },
+        {
+          "id": "train",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-t",
+            "training.bin"
+          ],
+          "outputs": [
+            "training.bin"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "training.bin",
+              "kind": "exact",
+              "minimumRecords": 1
+            }
+          ],
+          "biologicalArtifacts": [
+            "training.bin"
+          ]
+        },
+        {
+          "id": "restore-training",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-t",
+            "training.bin"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "train",
+              "path": "training.bin",
+              "as": "training.bin"
+            }
+          ],
+          "equivalentTo": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "training-from-native",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-t",
+            "training.bin"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "train",
+              "path": "training.bin",
+              "as": "training.bin",
+              "target": "native"
+            }
+          ],
+          "equivalentTo": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "training-from-wasm",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-t",
+            "training.bin"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "train",
+              "path": "training.bin",
+              "as": "training.bin",
+              "target": "wasm"
+            }
+          ],
+          "equivalentTo": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "stdin",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "stdinFile": "ecoli.fna",
+          "equivalentTo": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "repeat",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna"
+          ],
+          "outputs": [
+            "genes.gff",
+            "proteins.faa",
+            "genes.fna"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "genes.gff",
+              "kind": "gff",
+              "minimumRecords": 30,
+              "minimum": {
+                "forward": 1,
+                "reverse": 1
+              }
+            },
+            {
+              "path": "proteins.faa",
+              "kind": "fasta",
+              "minimumRecords": 30
+            },
+            {
+              "path": "genes.fna",
+              "kind": "fasta",
+              "minimumRecords": 30
+            }
+          ],
+          "baseline": "single",
+          "biologicalArtifacts": [
+            "proteins.faa",
+            "genes.fna"
+          ]
+        },
+        {
+          "id": "missing-input",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "missing.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "(cannot|could not|unable|failed|error).*open|can.t open",
+          "expectedExitCode": 5
+        },
+        {
+          "id": "invalid-table",
+          "runner": "prodigal",
+          "args": [
+            "-q",
+            "-i",
+            "ecoli.fna",
+            "-o",
+            "genes.gff",
+            "-f",
+            "gff",
+            "-a",
+            "proteins.faa",
+            "-d",
+            "genes.fna",
+            "-g",
+            "99"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "translation table|genetic code",
+          "expectedExitCode": 15
+        }
+      ]
+    },
+    "hmmer": {
+      "datasets": [
+        "hmmer"
+      ],
+      "runtime": [
+        "runtime/index.mjs",
+        "runtime/execute.mjs",
+        "runtime/worker.mjs",
+        "runtime/hmmer.mjs"
+      ],
+      "fixtureInputs": [
+        "globins.sto",
+        "pkinase.sto",
+        "fn3.sto",
+        "made1.sto",
+        "globins.hmm",
+        "pkinase.hmm",
+        "fn3.hmm",
+        "made1.hmm",
+        "proteins.faa",
+        "hbb-human.faa",
+        "sevenless-drome.faa",
+        "dna-target.fa"
+      ],
+      "cases": [
+        {
+          "id": "build-globins",
+          "runner": "hmmer",
+          "args": [
+            "hmmbuild",
+            "--seed",
+            "42",
+            "-n",
+            "globins",
+            "-o",
+            "build.txt",
+            "-O",
+            "annotated.sto",
+            "model.hmm",
+            "globins.sto"
+          ],
+          "outputs": [
+            "model.hmm",
+            "annotated.sto",
+            "build.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "model.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            },
+            {
+              "path": "annotated.sto",
+              "kind": "stockholm",
+              "minimumRecords": 2
+            },
+            {
+              "path": "build.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            }
+          ],
+          "biologicalArtifacts": [
+            "model.hmm"
+          ]
+        },
+        {
+          "id": "build-pkinase",
+          "runner": "hmmer",
+          "args": [
+            "hmmbuild",
+            "--seed",
+            "42",
+            "-n",
+            "Pkinase",
+            "-o",
+            "build.txt",
+            "-O",
+            "annotated.sto",
+            "model.hmm",
+            "pkinase.sto"
+          ],
+          "outputs": [
+            "model.hmm",
+            "annotated.sto",
+            "build.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "model.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            },
+            {
+              "path": "annotated.sto",
+              "kind": "stockholm",
+              "minimumRecords": 2
+            },
+            {
+              "path": "build.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            }
+          ],
+          "biologicalArtifacts": [
+            "model.hmm"
+          ]
+        },
+        {
+          "id": "build-fn3",
+          "runner": "hmmer",
+          "args": [
+            "hmmbuild",
+            "--seed",
+            "42",
+            "-n",
+            "fn3",
+            "-o",
+            "build.txt",
+            "-O",
+            "annotated.sto",
+            "model.hmm",
+            "fn3.sto"
+          ],
+          "outputs": [
+            "model.hmm",
+            "annotated.sto",
+            "build.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "model.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            },
+            {
+              "path": "annotated.sto",
+              "kind": "stockholm",
+              "minimumRecords": 2
+            },
+            {
+              "path": "build.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            }
+          ],
+          "biologicalArtifacts": [
+            "model.hmm"
+          ]
+        },
+        {
+          "id": "build-made1",
+          "runner": "hmmer",
+          "args": [
+            "hmmbuild",
+            "--seed",
+            "42",
+            "-n",
+            "MADE1",
+            "-o",
+            "build.txt",
+            "-O",
+            "annotated.sto",
+            "model.hmm",
+            "made1.sto"
+          ],
+          "outputs": [
+            "model.hmm",
+            "annotated.sto",
+            "build.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "model.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            },
+            {
+              "path": "annotated.sto",
+              "kind": "stockholm",
+              "minimumRecords": 2
+            },
+            {
+              "path": "build.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            }
+          ],
+          "biologicalArtifacts": [
+            "model.hmm"
+          ]
+        },
+        {
+          "id": "build-symfrac",
+          "runner": "hmmer",
+          "args": [
+            "hmmbuild",
+            "--seed",
+            "42",
+            "--symfrac",
+            "0.9",
+            "-n",
+            "globins",
+            "-o",
+            "build.txt",
+            "-O",
+            "annotated.sto",
+            "model.hmm",
+            "globins.sto"
+          ],
+          "outputs": [
+            "model.hmm",
+            "annotated.sto",
+            "build.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "model.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            },
+            {
+              "path": "annotated.sto",
+              "kind": "stockholm",
+              "minimumRecords": 2
+            },
+            {
+              "path": "build.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            }
+          ],
+          "effect": "build-globins",
+          "biologicalArtifacts": [
+            "model.hmm"
+          ]
+        },
+        {
+          "id": "search-globins",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-globins",
+              "path": "model.hmm",
+              "as": "model.hmm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "search-strict",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "-T",
+            "180",
+            "--domT",
+            "180",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 1
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 1,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-globins",
+              "path": "model.hmm",
+              "as": "model.hmm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "effect": "search-globins"
+        },
+        {
+          "id": "search-max",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "--max",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-globins",
+              "path": "model.hmm",
+              "as": "model.hmm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "search-pkinase",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 1
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 1,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-pkinase",
+              "path": "model.hmm",
+              "as": "model.hmm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "search-fn3",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 1
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 5,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-fn3",
+              "path": "model.hmm",
+              "as": "model.hmm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "search-model-from-native",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-globins",
+              "path": "model.hmm",
+              "as": "model.hmm",
+              "target": "native"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "search-model-from-wasm",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-globins",
+              "path": "model.hmm",
+              "as": "model.hmm",
+              "target": "wasm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "press",
+          "runner": "hmmer",
+          "args": [
+            "hmmpress",
+            "globins.hmm"
+          ],
+          "outputs": [
+            "globins.hmm.h3m",
+            "globins.hmm.h3i",
+            "globins.hmm.h3f",
+            "globins.hmm.h3p"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "globins.hmm.h3m",
+              "kind": "exact",
+              "minimumRecords": 1
+            },
+            {
+              "path": "globins.hmm.h3i",
+              "kind": "exact",
+              "minimumRecords": 1
+            },
+            {
+              "path": "globins.hmm.h3f",
+              "kind": "exact",
+              "minimumRecords": 1
+            },
+            {
+              "path": "globins.hmm.h3p",
+              "kind": "exact",
+              "minimumRecords": 1
+            }
+          ]
+        },
+        {
+          "id": "scan",
+          "runner": "hmmer",
+          "args": [
+            "hmmscan",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "globins.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "press",
+              "path": "globins.hmm.h3m",
+              "as": "globins.hmm.h3m"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3i",
+              "as": "globins.hmm.h3i"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3f",
+              "as": "globins.hmm.h3f"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3p",
+              "as": "globins.hmm.h3p"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "scan-db-from-native",
+          "runner": "hmmer",
+          "args": [
+            "hmmscan",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "globins.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "press",
+              "path": "globins.hmm.h3m",
+              "as": "globins.hmm.h3m",
+              "target": "native"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3i",
+              "as": "globins.hmm.h3i",
+              "target": "native"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3f",
+              "as": "globins.hmm.h3f",
+              "target": "native"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3p",
+              "as": "globins.hmm.h3p",
+              "target": "native"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "scan-db-from-wasm",
+          "runner": "hmmer",
+          "args": [
+            "hmmscan",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "globins.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "press",
+              "path": "globins.hmm.h3m",
+              "as": "globins.hmm.h3m",
+              "target": "wasm"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3i",
+              "as": "globins.hmm.h3i",
+              "target": "wasm"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3f",
+              "as": "globins.hmm.h3f",
+              "target": "wasm"
+            },
+            {
+              "case": "press",
+              "path": "globins.hmm.h3p",
+              "as": "globins.hmm.h3p",
+              "target": "wasm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "align",
+          "runner": "hmmer",
+          "args": [
+            "hmmalign",
+            "-o",
+            "alignment.sto",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "alignment.sto"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "alignment.sto",
+              "kind": "stockholm",
+              "minimumRecords": 40
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-globins",
+              "path": "model.hmm",
+              "as": "model.hmm"
+            }
+          ]
+        },
+        {
+          "id": "fetch",
+          "runner": "hmmer",
+          "args": [
+            "hmmfetch",
+            "globins.hmm",
+            "globins4"
+          ],
+          "outputs": [
+            "fetched.hmm"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "fetched.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            }
+          ],
+          "stdoutFile": "fetched.hmm"
+        },
+        {
+          "id": "index",
+          "runner": "hmmer",
+          "args": [
+            "hmmfetch",
+            "--index",
+            "globins.hmm"
+          ],
+          "outputs": [
+            "globins.hmm.ssi"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "globins.hmm.ssi",
+              "kind": "exact",
+              "minimumRecords": 1
+            }
+          ]
+        },
+        {
+          "id": "fetch-indexed",
+          "runner": "hmmer",
+          "args": [
+            "hmmfetch",
+            "globins.hmm",
+            "globins4"
+          ],
+          "outputs": [
+            "fetched.hmm"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "fetched.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            }
+          ],
+          "stdoutFile": "fetched.hmm",
+          "inputsFrom": [
+            {
+              "case": "index",
+              "path": "globins.hmm.ssi",
+              "as": "globins.hmm.ssi"
+            }
+          ],
+          "equivalentTo": "fetch"
+        },
+        {
+          "id": "convert",
+          "runner": "hmmer",
+          "args": [
+            "hmmconvert",
+            "globins.hmm"
+          ],
+          "outputs": [
+            "converted.hmm"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "converted.hmm",
+              "kind": "hmm",
+              "minimumRecords": 1
+            }
+          ],
+          "stdoutFile": "converted.hmm"
+        },
+        {
+          "id": "emit",
+          "runner": "hmmer",
+          "args": [
+            "hmmemit",
+            "--seed",
+            "42",
+            "-N",
+            "3",
+            "globins.hmm"
+          ],
+          "outputs": [
+            "emitted.faa"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "emitted.faa",
+              "kind": "fasta",
+              "minimumRecords": 3
+            }
+          ],
+          "stdoutFile": "emitted.faa"
+        },
+        {
+          "id": "emit-consensus",
+          "runner": "hmmer",
+          "args": [
+            "hmmemit",
+            "-c",
+            "globins.hmm"
+          ],
+          "outputs": [
+            "consensus.faa"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "consensus.faa",
+              "kind": "fasta",
+              "minimumRecords": 1
+            }
+          ],
+          "stdoutFile": "consensus.faa"
+        },
+        {
+          "id": "stat",
+          "runner": "hmmer",
+          "args": [
+            "hmmstat",
+            "globins.hmm"
+          ],
+          "outputs": [
+            "statistics.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "statistics.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            }
+          ],
+          "stdoutFile": "statistics.txt"
+        },
+        {
+          "id": "phmmer",
+          "runner": "hmmer",
+          "args": [
+            "phmmer",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "hbb-human.faa",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 30
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 30,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "jackhmmer",
+          "runner": "hmmer",
+          "args": [
+            "jackhmmer",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "-N",
+            "2",
+            "hbb-human.faa",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 30
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 30,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ]
+        },
+        {
+          "id": "nhmmer",
+          "runner": "hmmer",
+          "args": [
+            "nhmmer",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "made1.hmm",
+            "dna-target.fa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 2,
+              "table": "dna"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl"
+          ]
+        },
+        {
+          "id": "nhmmer-watson",
+          "runner": "hmmer",
+          "args": [
+            "nhmmer",
+            "--seed",
+            "42",
+            "--watson",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "made1.hmm",
+            "dna-target.fa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 2,
+              "table": "dna"
+            }
+          ],
+          "effect": "nhmmer",
+          "biologicalArtifacts": [
+            "hits.tbl"
+          ]
+        },
+        {
+          "id": "press-dna",
+          "runner": "hmmer",
+          "args": [
+            "hmmpress",
+            "made1.hmm"
+          ],
+          "outputs": [
+            "made1.hmm.h3m",
+            "made1.hmm.h3i",
+            "made1.hmm.h3f",
+            "made1.hmm.h3p"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "made1.hmm.h3m",
+              "kind": "exact",
+              "minimumRecords": 1
+            },
+            {
+              "path": "made1.hmm.h3i",
+              "kind": "exact",
+              "minimumRecords": 1
+            },
+            {
+              "path": "made1.hmm.h3f",
+              "kind": "exact",
+              "minimumRecords": 1
+            },
+            {
+              "path": "made1.hmm.h3p",
+              "kind": "exact",
+              "minimumRecords": 1
+            }
+          ]
+        },
+        {
+          "id": "nhmmscan",
+          "runner": "hmmer",
+          "args": [
+            "nhmmscan",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "made1.hmm",
+            "dna-target.fa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 2,
+              "table": "dna"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "press-dna",
+              "path": "made1.hmm.h3m",
+              "as": "made1.hmm.h3m"
+            },
+            {
+              "case": "press-dna",
+              "path": "made1.hmm.h3i",
+              "as": "made1.hmm.h3i"
+            },
+            {
+              "case": "press-dna",
+              "path": "made1.hmm.h3f",
+              "as": "made1.hmm.h3f"
+            },
+            {
+              "case": "press-dna",
+              "path": "made1.hmm.h3p",
+              "as": "made1.hmm.h3p"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl"
+          ]
+        },
+        {
+          "id": "repeat",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "--seed",
+            "42",
+            "-o",
+            "search.txt",
+            "--tblout",
+            "hits.tbl",
+            "--domtblout",
+            "domains.tbl",
+            "model.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [
+            "search.txt",
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "wasm"
+          ],
+          "comparisons": [
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "search.txt",
+              "kind": "hmmer-text",
+              "minimumRecords": 1
+            },
+            {
+              "path": "hits.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40
+            },
+            {
+              "path": "domains.tbl",
+              "kind": "hmmer-table",
+              "minimumRecords": 40,
+              "table": "domain"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "build-globins",
+              "path": "model.hmm",
+              "as": "model.hmm"
+            }
+          ],
+          "biologicalArtifacts": [
+            "hits.tbl",
+            "domains.tbl"
+          ],
+          "baseline": "search-globins"
+        },
+        {
+          "id": "missing-input",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "missing.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "(failed|could not|error|file).*",
+          "expectedExitCode": 1
+        },
+        {
+          "id": "malformed-model",
+          "runner": "hmmer",
+          "args": [
+            "hmmsearch",
+            "bad.hmm",
+            "proteins.faa"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "extraFiles": {
+            "bad.hmm": "not a profile HMM\n"
+          },
+          "diagnosticRegex": "(format|recogniz|parse|HMM file)",
+          "expectedExitCode": 1
+        }
+      ]
+    }
+  }
+}
