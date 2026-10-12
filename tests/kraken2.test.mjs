@@ -2,10 +2,26 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdir, mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
+import { gzipSync } from 'node:zlib';
 import { Kraken2Runner } from '../runtime/kraken2.mjs';
 
 const text = bytes => new TextDecoder().decode(bytes);
 const absent = new URL('./no-compiled-kraken2/', import.meta.url);
+
+async function withTransportWorker(callback) {
+  const base = new URL('../build/', import.meta.url);
+  await mkdir(base, { recursive: true });
+  const directory = await mkdtemp(new URL('kraken2-transport-test-', base));
+  const worker = `${directory}/worker.mjs`;
+  await writeFile(worker, `import {parentPort} from 'node:worker_threads';
+parentPort.once('message', m => parentPort.postMessage({type:'result',result:{exitCode:0,
+stdout:new TextEncoder().encode(m.moduleUrl.endsWith('/estimate_capacity.mjs') ? '256\\n' : JSON.stringify({
+  args:m.args, files:m.files.map(f=>[f.path,new TextDecoder().decode(f.data)]),
+  outputs:m.outputs, stdin:new TextDecoder().decode(m.stdin)
+})),stderr:new Uint8Array(),files:[],missingOutputs:[]}}));\n`);
+  try { return await callback(new Kraken2Runner({ baseUrl: absent, workerUrl: pathToFileURL(worker) })); }
+  finally { await rm(directory, { recursive: true }); }
+}
 
 // These are wrapper/error contracts, not stand-ins for real classifications.
 // The separate metagenomics suite compares native and compiled C++ output.
@@ -133,4 +149,51 @@ stdout:new TextEncoder().encode(JSON.stringify(m.args)),stderr:new Uint8Array(),
     assert.ok(inspect.includes('-z'));
     assert.equal(inspect[inspect.indexOf('-O') + 1], '/dev/stdout');
   } finally { await rm(directory, { recursive: true }); }
+});
+
+test('a skipped database build collects requested files and reports every missing output', async () => {
+  await withTransportWorker(async runner => {
+    const files = ['db/library/reference.fna', 'db/seqid2taxid.map', 'db/taxonomy/nodes.dmp',
+      'db/taxonomy/names.dmp', 'db/hash.k2d', 'extra.txt'].map(path => ({ path, data: path }));
+    const options = { files, outputs: ['extra.txt', 'absent.txt'], outputDirectories: ['db', 'missing'] };
+    const result = await runner.run(['build', '--db', 'db', '--no-masking'], options);
+    assert.equal(result.exitCode, 0);
+    assert.deepEqual(result.stages.map(stage => stage.program), ['estimate_capacity']);
+    assert.deepEqual(result.missingOutputs, ['/work/db/taxo.k2d', '/work/db/opts.k2d', '/work/absent.txt', '/work/missing']);
+    assert.deepEqual(result.files.map(file => file.path).sort(), files.map(file => '/work/' + file.path).sort());
+    assert.equal(new Set(result.files.map(file => file.path)).size, result.files.length);
+    for (const file of result.files) assert.equal(text(file.data), file.path.slice(6));
+    await assert.rejects(runner.run(['build', '--db', 'db', '--no-masking'], { files, outputDirectories: ['extra.txt'] }), /not a directory/);
+  });
+});
+
+test('gzip transport handles stdin and repeated input filenames without mutating caller bytes', async () => {
+  await withTransportWorker(async runner => {
+    const reads = '>read\nACGTACGT\n', compressed = gzipSync(reads), original = Buffer.from(compressed);
+    for (const flags of [[], ['--gzip-compressed']]) {
+      const result = await runner.run(['--db', 'db', ...flags, '-'], { stdin: compressed });
+      const observed = JSON.parse(text(result.stdout));
+      assert.equal(observed.stdin, reads);
+      assert.equal(observed.args.at(-1), '/dev/stdin');
+    }
+    const result = await runner.run(['--db', 'db', 'reads.gz', 'reads.gz'], { files: [{ path: 'reads.gz', data: compressed }] });
+    const observed = JSON.parse(text(result.stdout));
+    assert.deepEqual(observed.args.slice(-2), ['/work/reads.gz', '/work/reads.gz']);
+    assert.deepEqual(observed.files, [['/work/reads.gz', reads]]);
+    assert.deepEqual(compressed, original);
+    const malformed = await runner.run(['--db', 'db', '--gzip-compressed', '-'], { stdin: 'invalid gzip' });
+    assert.equal(malformed.exitCode, 64);
+    assert.match(text(malformed.stderr), /Invalid gzip input/);
+  });
+});
+
+test('only the classification output treats a dash as suppression', async () => {
+  await withTransportWorker(async runner => {
+    for (const flag of ['--report', '--classified-out', '--unclassified-out']) {
+      const result = await runner.run(['--db', 'db', '--output', '-', flag, '-', 'reads.fna'], { files: [{ path: 'reads.fna', data: '' }] });
+      const observed = JSON.parse(text(result.stdout));
+      assert.deepEqual(observed.outputs, ['/work/-']);
+      assert.equal(observed.args[observed.args.indexOf('-O') + 1], '-');
+    }
+  });
 });

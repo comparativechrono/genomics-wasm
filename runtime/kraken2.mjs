@@ -197,7 +197,7 @@ async function classifyReads(args, options, execute) {
     if (flag && found.has(key) && !['threads', 'confidence', 'minimum-base-quality', 'minimum-hit-groups'].includes(key)) {
       const value = found.get(key);
       flags.push(flag, value === '-' && key === 'output' ? value : workspacePath(value));
-      if (value !== '-') {
+      if (value !== '-' || key !== 'output') {
         if (['classified-out', 'unclassified-out'].includes(key) && found.has('paired')) {
           if (value.split('#').length !== 2) throw new UsageError('Paired sequence output requires exactly one # character');
           outputs.push(value.replace('#', '_1'), value.replace('#', '_2'));
@@ -209,19 +209,25 @@ async function classifyReads(args, options, execute) {
   const mounted = fileMap(options.files);
   // The native Perl wrapper decompresses files before passing bytes to classify.
   // DecompressionStream performs that transport step; all classification stays C++.
-  const first = mounted.get(workspacePath(positional[0]));
+  let stdin = options.stdin;
+  const first = positional[0] === '-' ? stdin : mounted.get(workspacePath(positional[0]));
   const compressed = found.has('gzip-compressed') || (first?.[0] === 0x1f && first?.[1] === 0x8b);
   if (first?.[0] === 66 && first?.[1] === 90 && first?.[2] === 104) throw new UsageError('bzip2 input is not supported; provide uncompressed or gzip files');
+  const decompressed = new Set();
   for (const name of positional) {
     const path = name === '-' ? '/dev/stdin' : workspacePath(name);
     if (name !== '-' && !mounted.has(path)) throw new UsageError(`Input file is not mounted: ${path}`);
-    if (compressed && mounted.has(path)) {
-      try { mounted.set(path, await inflate(mounted.get(path), options.signal)); }
+    if (compressed && !decompressed.has(path)) {
+      try {
+        const data = await inflate(name === '-' ? stdin : mounted.get(path), options.signal);
+        if (name === '-') stdin = data; else mounted.set(path, data);
+        decompressed.add(path);
+      }
       catch (error) { if (error.name === 'AbortError') throw error; throw new UsageError(`Invalid gzip input: ${name}`); }
     }
     flags.push(path);
   }
-  const result = await execute('classify', flags, { files: [...mounted].map(([path, data]) => ({ path, data })), outputs });
+  const result = await execute('classify', flags, { files: [...mounted].map(([path, data]) => ({ path, data })), stdin, outputs });
   return { ...result, stages: [{ program: 'classify', args: flags, exitCode: result.exitCode }] };
 }
 
@@ -282,7 +288,18 @@ async function buildDatabase(args, options, execute) {
   const generated = ['hash.k2d', 'taxo.k2d', 'opts.k2d'].map(name => `${db}/${name}`);
   let result;
   if (files.has(`${db}/hash.k2d`)) {
-    result = { ...emptyResult(0), files: generated.filter(path => files.has(path)).map(path => ({ path, data: files.get(path) })) };
+    // Native build skips construction when hash.k2d exists. Keep the usual
+    // output contract even if this is an incomplete, previously interrupted DB.
+    const selected = new Set(), missingOutputs = [];
+    for (const path of new Set([...generated, ...options.outputs])) {
+      if (files.has(path)) selected.add(path); else missingOutputs.push(path);
+    }
+    for (const directory of new Set(options.outputDirectories)) {
+      if (files.has(directory)) throw new Error(`Output directory is not a directory: ${directory}`);
+      const found = [...files.keys()].filter(path => path.startsWith(`${directory}/`)).sort();
+      if (!found.length) missingOutputs.push(directory); else found.forEach(path => selected.add(path));
+    }
+    result = { ...emptyResult(0), files: [...selected].map(path => ({ path, data: files.get(path) })), missingOutputs };
   } else {
     result = await execute('build_db', command, { files: [...files].map(([path, data]) => ({ path, data })), stdin,
       outputs: [...new Set([...generated, ...(options.outputs ?? [])])], outputDirectories: options.outputDirectories ?? [] });
