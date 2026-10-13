@@ -44,6 +44,11 @@ directory under `tools/`.
   The package retains the upstream SIMD algorithms, serial command programs,
   original sources and dependency notices.
 - seqtk: Heng Li and contributors; MIT. Source: https://github.com/lh3/seqtk
+- bustools: BUStools authors and contributors; BSD-2-Clause.
+  Source: https://github.com/BUStools/bustools
+  The package contains the original C++ source, pinned zlib and the embedded
+  numerical and data-structure libraries with their individual licence notices.
+  Portability changes retain the upstream BUS-processing algorithms.
 - AdapterRemoval: Mikkel Schubert and contributors; GPL-3.0-or-later.
   Source: https://github.com/MikkelSchubert/adapterremoval
   Its package includes the pinned zlib and bzip2 sources and notices.

@@ -233,3 +233,11 @@ human nucleotide target. Original source hashes, selection rules and a frozen
 regeneration manifest are included. These inputs test native/browser agreement
 for gene prediction and profile-HMM analysis.
 
+## Single-cell BUS fixtures
+
+The [bustools fixture](bustools/README.md) contains experimental BUS records and
+matching reference metadata for barcode correction, UMI processing and count
+matrices. Its manifest records the original data sources, checksums and exact
+selection or identifier transformations. Regeneration checks those frozen
+identities before the native/browser comparisons run.
+

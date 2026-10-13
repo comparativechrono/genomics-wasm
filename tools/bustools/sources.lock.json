@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "tool": "bustools",
+  "version": "0.45.1",
+  "revision": "d4d7a283dbe9d34d2106e9ba31e2566413be6a70",
+  "url": "https://codeload.github.com/BUStools/bustools/tar.gz/d4d7a283dbe9d34d2106e9ba31e2566413be6a70",
+  "archive": "bustools-0.45.1.tar.gz",
+  "sha256": "b014317ea4501c3314ac358eb074dbbe3a10ed6daec53587f17a897e670e40df",
+  "emscripten": "3.1.64",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "zlib": {
+      "version": "1.3.1",
+      "url": "https://codeload.github.com/madler/zlib/tar.gz/refs/tags/v1.3.1",
+      "archive": "zlib-1.3.1-github.tar.gz",
+      "sha256": "17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+      "license": "Zlib"
+    }
+  },
+  "commands": [
+    "sort",
+    "merge",
+    "mash",
+    "text",
+    "fromtext",
+    "correct",
+    "count",
+    "predict",
+    "umicorrect",
+    "capture",
+    "whitelist",
+    "project",
+    "inspect",
+    "linker",
+    "collapse",
+    "clusterhist",
+    "extract",
+    "compress",
+    "decompress"
+  ],
+  "aliases": {
+    "dump": "text",
+    "allowlist": "whitelist",
+    "onlist": "whitelist",
+    "inflate": "decompress"
+  },
+  "runtime": {
+    "pthread": false,
+    "crossOriginIsolated": false,
+    "pointerWidth": 32,
+    "exportName": "createBustools",
+    "entryModule": "bustools.mjs",
+    "wasmBinary": "bustools.wasm",
+    "maximumMemory": 2147483648,
+    "defaultSortMemory": 67108864,
+    "waitForExit": false
+  },
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.eigen",
+    "LICENSE.eigen.BSD",
+    "LICENSE.eigen.README",
+    "LICENSE.LBFGSpp",
+    "LICENSE.CppNumericalSolvers",
+    "LICENSE.emscripten",
+    "LICENSE.zlib",
+    "LICENSE.kseq",
+    "LICENSE.CRoaring",
+    "THIRD_PARTY_LICENSES.txt"
+  ]
+}

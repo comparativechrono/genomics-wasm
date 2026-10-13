@@ -1,0 +1,72 @@
+{
+  "tools": {
+    "bustools": {
+      "label": "bustools",
+      "description": "Process Barcode, UMI and Set (BUS) records from single-cell RNA sequencing. Run the numbered commands in order to correct cell barcodes and produce a gene-count matrix.",
+      "argumentsHelp": "The first entry is a bustools command, such as sort or count. Do not include the bustools program name. Sorting uses one thread and a bounded memory budget.",
+      "commands": {
+        "sort": {
+          "label": "1. Sort BUS records",
+          "description": "Sort the supplied BUS records by cell barcode, UMI and equivalence class. Each output remains available to the next command.",
+          "args": ["sort", "-t", "1", "-m", "64M", "-T", "sort-temp", "-o", "sorted.bus", "input.bus"],
+          "outputs": ["sorted.bus"], "outputDirectories": []
+        },
+        "correct": {
+          "label": "2. Correct cell barcodes",
+          "description": "Correct the sorted records against the supplied barcode on-list. Run the first sorting step before this command.",
+          "args": ["correct", "-w", "whitelist.txt", "-o", "corrected.bus", "sorted.bus"],
+          "outputs": ["corrected.bus"], "outputDirectories": []
+        },
+        "resort": {
+          "label": "3. Sort corrected records",
+          "description": "Barcode correction can change record order. Sort the corrected BUS file before counting molecules.",
+          "args": ["sort", "-t", "1", "-m", "64M", "-T", "corrected-sort-temp", "-o", "corrected-sorted.bus", "corrected.bus"],
+          "outputs": ["corrected-sorted.bus"], "outputDirectories": []
+        },
+        "count": {
+          "label": "4. Count molecules by gene",
+          "description": "Use transcript names, equivalence classes and the transcript-to-gene map to create a sparse cell-by-gene matrix and its barcode and gene labels.",
+          "args": ["count", "--genecounts", "-g", "transcripts-to-genes.txt", "-e", "matrix.ec", "-t", "transcripts.txt", "-o", "counts/", "corrected-sorted.bus"],
+          "outputs": ["counts/output.mtx", "counts/output.barcodes.txt", "counts/output.genes.txt"], "outputDirectories": ["counts"]
+        },
+        "inspect": {
+          "label": "Inspect corrected BUS records",
+          "description": "Write a JSON summary of the sorted, corrected records, including barcode and UMI statistics.",
+          "args": ["inspect", "-o", "inspection.json", "-e", "matrix.ec", "-w", "whitelist.txt", "corrected-sorted.bus"],
+          "outputs": ["inspection.json"], "outputDirectories": []
+        },
+        "text": {
+          "label": "View corrected BUS records as text",
+          "description": "Export the corrected barcode, UMI, equivalence class and count fields for inspection. The BUS file remains binary and unchanged.",
+          "args": ["text", "-o", "records.txt", "corrected-sorted.bus"],
+          "outputs": ["records.txt"], "outputDirectories": []
+        },
+        "compress": {
+          "label": "Compress sorted BUS records",
+          "description": "Compress the sorted, corrected BUS records to BUSZ.",
+          "args": ["compress", "-o", "records.busz", "corrected-sorted.bus"],
+          "outputs": ["records.busz"], "outputDirectories": []
+        },
+        "inflate": {
+          "label": "Restore compressed BUS records",
+          "description": "Restore the BUS file from records.busz. Run the compression command first.",
+          "args": ["inflate", "-o", "restored.bus", "records.busz"],
+          "outputs": ["restored.bus"], "outputDirectories": []
+        },
+        "help": {
+          "label": "Command help",
+          "description": "Show sort options. Replace sort with another command name to view its help.",
+          "args": ["sort"], "outputs": [], "outputDirectories": []
+        }
+      }
+    }
+  },
+  "datasets": {
+    "bustools": {
+      "label": "Mouse single-cell RNA-seq BUS records",
+      "description": "BUS records from a real mouse single-cell RNA-seq experiment (SRR8599150, 10x v2), with matching transcript, gene and barcode reference files. See the data documentation for its source and selection.",
+      "path": "../../datasets/bustools/bustools/",
+      "files": ["input.bus", "matrix.ec", "transcripts.txt", "transcripts-to-genes.txt", "whitelist.txt"]
+    }
+  }
+}

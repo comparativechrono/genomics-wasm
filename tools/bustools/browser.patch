@@ -1,0 +1,194 @@
+--- a/src/Common.hpp
++++ b/src/Common.hpp
+@@ -127,7 +127,12 @@
+   uint32_t lossy_umi = 0;
+   uint32_t pfd_blocksize = 512;
+ 
++#ifdef BUSTOOLS_WASM_PORT
++  // The upstream 4 GiB default cannot fit a wasm32 address space.
++  Bustools_opt() : threads(1), max_memory(1ULL << 26), type(0),
++#else
+   Bustools_opt() : threads(1), max_memory(1ULL << 32), type(0),
++#endif
+                    threshold(0), start(-1), end(-1) {}
+ };
+ 
+@@ -142,7 +147,9 @@
+   v |= v >> 4;
+   v |= v >> 8;
+   v |= v >> 16;
++#if SIZE_MAX > UINT32_MAX
+   v |= v >> 32;
++#endif
+   v++;
+ 
+   return v;
+--- a/src/bustools_compress.cpp
++++ b/src/bustools_compress.cpp
+@@ -682,7 +682,7 @@
+ 				buf_checkpoint = bufpos;
+ 			}
+ 
+-			block_header = bufpos << 30;
++			block_header = static_cast<uint64_t>(bufpos) << 30;
+ 			block_header |= row_count;
+ 
+ 			outf.write((char *)&block_header, sizeof(block_header));
+--- a/src/bustools_count.cpp
++++ b/src/bustools_count.cpp
+@@ -791,6 +791,14 @@
+ 	cupcof << "barcode\tCU\tUMIs\n"; 
+ 
+ 	for (size_t bc = 0; bc < barcodes.size(); ++bc) {
++#ifdef BUSTOOLS_WASM_PORT
++		// WebAssembly permits either NaN sign for 0/0. Match the native
++		// reference's spelling of this undefined mean; counts are unchanged.
++		if (cellCounts[bc] == 0 && cellUMIs[bc] == 0) {
++			cupcof << binaryToString(barcodes[bc], bclen) << "\t-nan\t" << cellUMIs[bc] << '\n';
++			continue;
++		}
++#endif
+ 		cupcof << binaryToString(barcodes[bc], bclen) << '\t' << double(cellCounts[bc]) / double(cellUMIs[bc]) << '\t' << cellUMIs[bc] << '\n';
+ 	}
+ 	cupcof.close();
+--- a/src/bustools_main.cpp
++++ b/src/bustools_main.cpp
+@@ -1,4 +1,5 @@
+ #include <stdlib.h>
++#include <errno.h>
+ #include <getopt.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
+@@ -155,8 +156,24 @@
+         sh = 0;
+       break;
+       }
++#ifdef BUSTOOLS_WASM_PORT
++      {
++        const std::string amount_text = s.substr(0, n);
++        char *amount_end = nullptr;
++        errno = 0;
++        const uint64_t amount = strtoull(amount_text.c_str(), &amount_end, 10);
++        if (errno == ERANGE || amount_text.empty() || amount_text[0] == '-' ||
++            *amount_end != '\0' || amount == 0 || amount > (UINT32_MAX >> sh)) {
++          std::cerr << "Error: invalid or oversized WebAssembly sort memory budget" << std::endl;
++          opt.parse_error = true;
++        } else {
++          opt.max_memory = static_cast<size_t>(amount << sh);
++        }
++      }
++#else
+       opt.max_memory = atoi(s.substr(0, n).c_str());
+       opt.max_memory <<= sh;
++#endif
+       break;
+     case 'T':
+       opt.temp_files = optarg;
+@@ -1183,7 +1200,11 @@
+     ret = false;
+   }
+ 
++#ifdef BUSTOOLS_WASM_PORT
++  size_t max_threads = 1;
++#else
+   size_t max_threads = std::thread::hardware_concurrency();
++#endif
+   
+   if (opt.threads <= 0)
+   {
+@@ -1192,9 +1213,14 @@
+   }
+   else if (opt.threads > max_threads)
+   {
++#ifdef BUSTOOLS_WASM_PORT
++    std::cerr << "Error: this WebAssembly port supports only one thread (-t 1)" << std::endl;
++    ret = false;
++#else
+     std::cerr << "Warning: Number of threads cannot be greater than or equal to " << max_threads
+               << ". Setting number of threads to " << max_threads << std::endl;
+     opt.threads = max_threads;
++#endif
+   }
+   
+   if (!opt.stream_out)
+@@ -1216,6 +1242,12 @@
+     if (opt.max_memory < 128)
+     {
+       std::cerr << "Warning: low number supplied for maximum memory usage without M or G suffix\n  interpreting this as " << opt.max_memory << "Gb" << std::endl;
++#ifdef BUSTOOLS_WASM_PORT
++      if (opt.max_memory > 1) {
++        std::cerr << "Error: WebAssembly sort memory must not exceed 1 GiB" << std::endl;
++        ret = false;
++      }
++#endif
+       opt.max_memory <<= 30;
+     }
+     else
+@@ -1225,6 +1257,13 @@
+     }
+   }
+   
++#ifdef BUSTOOLS_WASM_PORT
++  if (opt.max_memory == 0 || opt.max_memory > (1ULL << 30)) {
++    std::cerr << "Error: WebAssembly sort memory must not exceed 1 GiB" << std::endl;
++    ret = false;
++  }
++#endif
++
+   if (opt.temp_files.empty())
+   {
+     if (opt.stream_out)
+--- a/src/bustools_predict.cpp
++++ b/src/bustools_predict.cpp
+@@ -518,6 +518,10 @@
+ 		//PredictZTNBForGene(&m_hists[1345 * m_histmax], m_histLengths[1345], m_t, size, mu, 1345);
+ 		//std::cout << "End Predicting 1345 \n";
+ 
++#ifdef BUSTOOLS_WASM_PORT
++		// Run the unchanged per-gene worker synchronously in the browser.
++		ThreadFunc();
++#else
+ 		//create the threads
+ 		for (int i = 0; i < numThreads; ++i) {
+ 			m_threads.push_back(std::shared_ptr<std::thread> (new std::thread(&PredictionExecuter::ThreadFunc, this)));
+@@ -526,6 +530,7 @@
+ 		for (int i = 0; i < numThreads; ++i) {
+ 			m_threads[i]->join();
+ 		}
++#endif
+ 		std::cerr << "\n";
+ 	}
+ private:
+@@ -645,7 +650,11 @@
+ 	std::vector<double> predVals(n_genes, 0);
+ 	std::vector<double> sizeVals(n_genes, 0);
+ 	std::vector<double> muVals(n_genes, 0);
++#ifdef BUSTOOLS_WASM_PORT
++	int numThreads = 1;
++#else
+ 	int numThreads = std::thread::hardware_concurrency();
++#endif
+ 	std::cerr << "Using " << numThreads << " threads\n";
+ 	PredictionExecuter pe(histograms, histogramLengths, opt.predict_t, predVals, sizeVals, muVals, histmax);
+ 	pe.Execute(numThreads);
+--- a/src/bustools_sort.cpp
++++ b/src/bustools_sort.cpp
+@@ -386,6 +386,7 @@
+ 
+ void sort_bus_array(BUSData* busdata, size_t N, const int t, bool (*cmp)(const BUSData &, const BUSData &)) {
+   //std::sort(busdata, busdata + N, cmp);
++#ifndef BUSTOOLS_WASM_PORT
+   if (t > 1 && N > 100000) {
+     const size_t s = 256;
+     std::vector<BUSData> samples, pivots;
+@@ -499,7 +500,9 @@
+     }
+ 
+ 
+-  } else {
++  } else
++#endif
++  {
+     std::sort(busdata, busdata + N, cmp);
+   }
+ 

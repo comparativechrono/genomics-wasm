@@ -1,0 +1,101 @@
+{
+  "10xv2_whitelist.txt": {
+    "bytes": 12533760,
+    "cachePath": "build/bustools-sources/10xv2_whitelist.txt",
+    "description": "Complete 10x Chromium v2 737280-barcode on-list.",
+    "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+    "sha256": "b0dda4b114d8fc7ea8def94fb472e6205c1831a72e3ac245ed13cc332d9f20d1",
+    "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/10xv2_whitelist.txt"
+  },
+  "kb-LICENSE": {
+    "bytes": 1321,
+    "cachePath": "build/bustools-sources/kb-LICENSE",
+    "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+    "member": "LICENSE",
+    "repository": "https://github.com/pachterlab/kb_python",
+    "sha256": "f74acc152a1999a2341f89257f9140d42c350c4f370525a1aae79a2e7de78570",
+    "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/LICENSE"
+  },
+  "kb-R1.fastq": {
+    "accession": "SRR8599150",
+    "bytes": 449434,
+    "cachePath": "build/bustools-sources/kb-R1.fastq",
+    "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+    "member": "tests/fixtures/R1.fastq",
+    "repository": "https://github.com/pachterlab/kb_python",
+    "sha256": "bd751ae1f56100fe00d602992af90a80613eeb14c17efe39c6f350b631f44629",
+    "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/R1.fastq"
+  },
+  "kb-R2.fastq": {
+    "accession": "SRR8599150",
+    "bytes": 809434,
+    "cachePath": "build/bustools-sources/kb-R2.fastq",
+    "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+    "member": "tests/fixtures/R2.fastq",
+    "repository": "https://github.com/pachterlab/kb_python",
+    "sha256": "f6790737bf3ca8593192c2d9e8007e0420cc2f0fbd77be7de62c13d74e87cd7d",
+    "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/R2.fastq"
+  },
+  "kb-matrix.ec": {
+    "accession": "SRR8599150",
+    "bytes": 44146,
+    "cachePath": "build/bustools-sources/kb-matrix.ec",
+    "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+    "member": "tests/fixtures/matrix.ec",
+    "repository": "https://github.com/pachterlab/kb_python",
+    "sha256": "26d8b10220fb963477ac8a93a08711f47d74f343f15d64bbc86fa9a6af5bcafe",
+    "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/matrix.ec"
+  },
+  "kb-output.bus": {
+    "accession": "SRR8599150",
+    "bytes": 1137,
+    "cachePath": "build/bustools-sources/kb-output.bus",
+    "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+    "member": "tests/fixtures/output.bus",
+    "repository": "https://github.com/pachterlab/kb_python",
+    "sha256": "a3f1eac5d4e2eac1d2bcf4d57643956cf6f30b286a22d1534dda836cbb13a4f1",
+    "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/output.bus"
+  },
+  "kb-transcripts.txt": {
+    "accession": "SRR8599150",
+    "bytes": 18173,
+    "cachePath": "build/bustools-sources/kb-transcripts.txt",
+    "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+    "member": "tests/fixtures/transcripts.txt",
+    "repository": "https://github.com/pachterlab/kb_python",
+    "sha256": "e69879483d270ffa5903f5939676b899bfc593e78b0ec8d118ac652415aec760",
+    "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/transcripts.txt"
+  },
+  "matrix.ec.gz": {
+    "accession": "SRR8599150",
+    "bytes": 5750355,
+    "cachePath": "build/bustools-sources/matrix.ec.gz",
+    "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+    "sha256": "9227ec7f1c0f181e54d4499c543c1359146d80487160c7934b14dfa24f43c5e4",
+    "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/matrix.ec.gz"
+  },
+  "output.correct.sort.bus.gz": {
+    "accession": "SRR8599150",
+    "bytes": 21962894,
+    "cachePath": "build/bustools-sources/output.correct.sort.bus.gz",
+    "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+    "sha256": "306dc20066c54d41dcc13ce38ebdbb0499423485b0f42e416d8a9331f70e72f5",
+    "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/output.correct.sort.bus.gz"
+  },
+  "transcripts.txt.gz": {
+    "accession": "SRR8599150",
+    "bytes": 384260,
+    "cachePath": "build/bustools-sources/transcripts.txt.gz",
+    "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+    "sha256": "fe81e3ebfe6edb69953cf82a5bbf3864756376dda74ea9eb4f5e9d8933bcdf1f",
+    "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/transcripts.txt.gz"
+  },
+  "transcripts_to_genes.txt": {
+    "accession": "SRR8599150",
+    "bytes": 7063053,
+    "cachePath": "build/bustools-sources/transcripts_to_genes.txt",
+    "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+    "sha256": "060b48d0c5d9150133e0d26705cc1533e331e59017303dc4b8f531dbad0de055",
+    "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/transcripts_to_genes.txt"
+  }
+}

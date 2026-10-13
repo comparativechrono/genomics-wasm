@@ -1,0 +1,118 @@
+{
+  "accession": "SRR8599150",
+  "files": {
+    "bustools/R1.fastq": {
+      "source": "kb-R1.fastq",
+      "transformation": "Unchanged source bytes."
+    },
+    "bustools/R2.fastq": {
+      "source": "kb-R2.fastq",
+      "transformation": "Unchanged source bytes."
+    },
+    "bustools/input.bus": {
+      "source": "kb-output.bus",
+      "transformation": "Unchanged source bytes."
+    },
+    "bustools/large/barcode-map.txt": {
+      "biologicalAnnotation": false,
+      "transformation": "Deterministic user parameter: project first observed barcode onto the second; all other barcodes retain upstream default behavior."
+    },
+    "bustools/large/capture-barcodes.txt": {
+      "biologicalAnnotation": false,
+      "transformation": "Deterministic user parameter: capture first floor(N/2) observed barcodes in lexicographic order."
+    },
+    "bustools/large/capture-transcripts.txt": {
+      "biologicalAnnotation": false,
+      "transformation": "Deterministic user parameter: capture first floor(N/2) transcript identifiers in retained source order."
+    },
+    "bustools/large/clusters.txt": {
+      "biologicalAnnotation": false,
+      "transformation": "Deterministic user parameter: assign observed barcodes alternately to groups 0 and 1; arbitrary test groups with no biological interpretation."
+    },
+    "bustools/large/input.bus": {
+      "excludedOriginalEcIds": [
+        45656,
+        133749,
+        139897,
+        140742,
+        177196,
+        188275,
+        287399,
+        328441,
+        328442,
+        338426
+      ],
+      "excludedRecords": 102,
+      "retainedRecords": 10235,
+      "source": "output.correct.sort.bus.gz",
+      "sourceFirstRecord": 0,
+      "sourcePrefixRecords": 10337,
+      "transformation": "Select first >=10000 records, extending through the complete last barcode; exclude records whose EC contains any transcript absent from the released gene map. Replace only EC integer with ascending-original-ID compact index. Preserve every retained barcode, UMI, count, flag, padding byte and header. Exact original source-record indices are recorded separately.",
+      "unannotatedTranscriptIds": [
+        "ENSMUST00000106371",
+        "ENSMUST00000173523",
+        "ENSMUST00000182362",
+        "ENSMUST00000183189",
+        "ENSMUST00000186158",
+        "ENSMUST00000202853",
+        "ENSMUST00000230303",
+        "ENSMUST00000230360"
+      ]
+    },
+    "bustools/large/matrix.ec": {
+      "source": "matrix.ec.gz",
+      "transformation": "Select referenced equivalence classes; losslessly reindex ECs and transcripts in ascending original integer-ID order. Transcript memberships are unchanged."
+    },
+    "bustools/large/transcripts-to-genes.txt": {
+      "source": "transcripts_to_genes.txt",
+      "transformation": "Select gene-map rows for retained transcripts; remove only transcript version suffix to match the unversioned released transcripts.txt identifiers. Preserve source gene identifiers, symbols and order."
+    },
+    "bustools/large/transcripts.txt": {
+      "source": "transcripts.txt.gz",
+      "transformation": "Select unchanged identifiers of every transcript referenced by retained ECs, in original integer-ID order."
+    },
+    "bustools/large/whitelist.txt": {
+      "inputs": [
+        "bustools/large/input.bus"
+      ],
+      "transformation": "Decode distinct observed barcodes from the already corrected source. This is an observed-barcode list, not an independent technology on-list or a cell-calling result."
+    },
+    "bustools/matrix.ec": {
+      "source": "kb-matrix.ec",
+      "transformation": "Unchanged source bytes."
+    },
+    "bustools/read-index.bus": {
+      "inputs": [
+        "bustools/input.bus",
+        "bustools/R1.fastq",
+        "bustools/R2.fastq"
+      ],
+      "transformation": "Replace flags only with the verified zero-based matching FASTQ read-pair index; retain barcode, UMI, EC, count and padding. Match unchanged 26-base R1 barcode/UMI with source N wildcard and consume duplicate matches in original order."
+    },
+    "bustools/transcripts-to-genes.txt": {
+      "source": "transcripts_to_genes.txt",
+      "transformation": "Retain unchanged source lines whose transcript identifiers occur in transcripts.txt, preserving source order."
+    },
+    "bustools/transcripts.txt": {
+      "source": "kb-transcripts.txt",
+      "transformation": "Unchanged source bytes."
+    },
+    "bustools/whitelist.txt": {
+      "source": "10xv2_whitelist.txt",
+      "transformation": "Retain unchanged on-list lines at Hamming distance <=1 from any encoded input barcode; preserve original order. This preserves every possible default bustools correct candidate for these inputs."
+    },
+    "provenance/kb-python-LICENSE": {
+      "source": "kb-LICENSE",
+      "transformation": "Unchanged source bytes."
+    },
+    "provenance/large-ec-map.tsv": {
+      "transformation": "Exact reversible integer EC-ID map for selected source records."
+    },
+    "provenance/large-record-map.tsv": {
+      "transformation": "Exact zero-based source BUS record offsets for every retained record."
+    },
+    "provenance/large-transcript-map.tsv": {
+      "transformation": "Exact reversible transcript integer-ID map; biological transcript identifiers unchanged."
+    }
+  }
+}

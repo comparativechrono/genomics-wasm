@@ -1,0 +1,2718 @@
+{
+  "schema": 1,
+  "datasets": [
+    "bustools"
+  ],
+  "comparisonPolicy": "Complete scientific fields and printed numbers are exact, with two explicitly declared unordered-map normalization scopes: within-group projected BUS record permutations and unreferenced transcript-EC identity assignments. All other bytes, used matrix column identities and ordered barcodes are exact; no numerical tolerance.",
+  "fixtureInputs": [
+    "bustools/input.bus",
+    "bustools/matrix.ec",
+    "bustools/transcripts.txt",
+    "bustools/transcripts-to-genes.txt",
+    "bustools/whitelist.txt",
+    "bustools/read-index.bus",
+    "bustools/R1.fastq",
+    "bustools/R2.fastq",
+    "bustools/large/input.bus",
+    "bustools/large/matrix.ec",
+    "bustools/large/transcripts.txt",
+    "bustools/large/transcripts-to-genes.txt",
+    "bustools/large/whitelist.txt",
+    "bustools/large/capture-barcodes.txt",
+    "bustools/large/capture-transcripts.txt",
+    "bustools/large/barcode-map.txt",
+    "bustools/large/clusters.txt"
+  ],
+  "tools": {
+    "bustools": {
+      "datasets": [
+        "bustools"
+      ],
+      "runtime": [
+        "runtime/index.mjs",
+        "runtime/execute.mjs",
+        "runtime/worker.mjs",
+        "runtime/bustools.mjs"
+      ],
+      "fixtureInputs": [
+        "input.bus",
+        "matrix.ec",
+        "transcripts.txt",
+        "transcripts-to-genes.txt",
+        "whitelist.txt",
+        "read-index.bus",
+        "R1.fastq",
+        "R2.fastq",
+        "large/input.bus",
+        "large/matrix.ec",
+        "large/transcripts.txt",
+        "large/transcripts-to-genes.txt",
+        "large/whitelist.txt",
+        "large/capture-barcodes.txt",
+        "large/capture-transcripts.txt",
+        "large/barcode-map.txt",
+        "large/clusters.txt"
+      ],
+      "cases": [
+        {
+          "id": "sort",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "-o",
+            "sorted.bus",
+            "input.bus"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "sortedBy": [
+                "barcode",
+                "umi",
+                "ec",
+                "flags"
+              ],
+              "minimumRecords": 20,
+              "minimum": {
+                "barcodes": 20,
+                "umis": 20,
+                "ecs": 5,
+                "duplicateMultiplicity": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "sort-umi",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "--umi",
+            "-o",
+            "sorted.bus",
+            "input.bus"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 20,
+              "sortedBy": [
+                "umi",
+                "barcode",
+                "ec"
+              ]
+            }
+          ],
+          "effect": "sort"
+        },
+        {
+          "id": "sort-count",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "--count",
+            "-o",
+            "sorted.bus",
+            "input.bus"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 20
+            }
+          ]
+        },
+        {
+          "id": "sort-flags",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "--flags",
+            "-o",
+            "sorted.bus",
+            "input.bus"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 20,
+              "sortedBy": [
+                "flags",
+                "ec",
+                "barcode",
+                "umi"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sort-stdin-stdout",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "-p",
+            "-"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "sortedBy": [
+                "barcode",
+                "umi",
+                "ec",
+                "flags"
+              ],
+              "minimumRecords": 20,
+              "minimum": {
+                "barcodes": 20,
+                "umis": 20,
+                "ecs": 5,
+                "duplicateMultiplicity": 1
+              }
+            }
+          ],
+          "stdinFile": "input.bus",
+          "stdoutFile": "sorted.bus",
+          "baseline": "sort"
+        },
+        {
+          "id": "text",
+          "runner": "bustools",
+          "args": [
+            "text",
+            "-f",
+            "-d",
+            "-o",
+            "records.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "records.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "records.txt",
+              "kind": "text",
+              "minimumRecords": 20
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "text-stdin",
+          "runner": "bustools",
+          "args": [
+            "text",
+            "-f",
+            "-d",
+            "-p",
+            "-"
+          ],
+          "outputs": [
+            "records.txt"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "records.txt",
+              "kind": "text",
+              "minimumRecords": 20
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "stdinFile": "sorted.bus",
+          "stdoutFile": "records.txt",
+          "baseline": "text"
+        },
+        {
+          "id": "fromtext",
+          "runner": "bustools",
+          "args": [
+            "fromtext",
+            "-o",
+            "converted.bus",
+            "records.txt"
+          ],
+          "outputs": [
+            "converted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "converted.bus",
+              "kind": "bus",
+              "minimumRecords": 20
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "text",
+              "path": "records.txt",
+              "as": "records.txt"
+            }
+          ]
+        },
+        {
+          "id": "fromtext-records",
+          "runner": "bustools",
+          "args": [
+            "text",
+            "-f",
+            "-d",
+            "-o",
+            "records.txt",
+            "converted.bus"
+          ],
+          "outputs": [
+            "records.txt"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "records.txt",
+              "kind": "text",
+              "minimumRecords": 20
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "fromtext",
+              "path": "converted.bus",
+              "as": "converted.bus"
+            }
+          ],
+          "baseline": "text"
+        },
+        {
+          "id": "correct",
+          "runner": "bustools",
+          "args": [
+            "correct",
+            "-w",
+            "whitelist.txt",
+            "-o",
+            "corrected.bus",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "corrected.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "corrected.bus",
+              "kind": "bus",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "correct-exact-only",
+          "runner": "bustools",
+          "args": [
+            "correct",
+            "--nocorrect",
+            "-w",
+            "whitelist.txt",
+            "-o",
+            "corrected.bus",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "corrected.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "corrected.bus",
+              "kind": "bus",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "effect": "correct"
+        },
+        {
+          "id": "corrected-sort",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "-o",
+            "sorted.bus",
+            "corrected.bus"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 1,
+              "sortedBy": [
+                "barcode",
+                "umi",
+                "ec",
+                "flags"
+              ]
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "correct",
+              "path": "corrected.bus",
+              "as": "corrected.bus"
+            }
+          ]
+        },
+        {
+          "id": "count-small",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "transcripts-to-genes.txt",
+            "-e",
+            "matrix.ec",
+            "-t",
+            "transcripts.txt",
+            "--genecounts",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "corrected-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "large-sort",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "-o",
+            "sorted.bus",
+            "large/input.bus"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 10000,
+              "minimum": {
+                "barcodes": 300,
+                "umis": 9000,
+                "ecs": 3000,
+                "duplicateMultiplicity": 100
+              },
+              "sortedBy": [
+                "barcode",
+                "umi",
+                "ec",
+                "flags"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "count-genes",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "count-multiplicities",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "--cm",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "effect": "count-genes"
+        },
+        {
+          "id": "count-multimapping",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "-m",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "count-umi-gene",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "--umi-gene",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "count-transcripts",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.ec.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.ec.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.ec.txt",
+              "kind": "ec",
+              "normalizeUnusedOrderWith": "counts.mtx"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "count-histograms",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "--hist",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt",
+            "counts.hist.txt",
+            "counts.cu.txt",
+            "counts.CUPerCell.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.hist.txt",
+              "kind": "text",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.cu.txt",
+              "kind": "text",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.CUPerCell.txt",
+              "kind": "text",
+              "minimumRecords": 300
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "count-downsample-one",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "-d",
+            "1",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "equivalentTo": "count-genes"
+        },
+        {
+          "id": "count-cross-native",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus",
+              "target": "native"
+            }
+          ],
+          "baseline": "count-genes"
+        },
+        {
+          "id": "count-cross-wasm",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus",
+              "target": "wasm"
+            }
+          ],
+          "baseline": "count-genes"
+        },
+        {
+          "id": "predict",
+          "runner": "bustools",
+          "args": [
+            "predict",
+            "-o",
+            "predicted",
+            "-t",
+            "2",
+            "counts"
+          ],
+          "outputs": [
+            "predicted.mtx",
+            "predicted.barcodes.txt",
+            "predicted.genes.txt",
+            "predicted.nb_params.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "predicted.mtx",
+              "kind": "matrix",
+              "rowLabels": "predicted.barcodes.txt",
+              "columnLabels": "predicted.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "predicted.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "predicted.genes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "predicted.nb_params.txt",
+              "kind": "text",
+              "minimumRecords": 1000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "count-histograms",
+              "path": "counts.mtx",
+              "as": "counts.mtx"
+            },
+            {
+              "case": "count-histograms",
+              "path": "counts.barcodes.txt",
+              "as": "counts.barcodes.txt"
+            },
+            {
+              "case": "count-histograms",
+              "path": "counts.genes.txt",
+              "as": "counts.genes.txt"
+            },
+            {
+              "case": "count-histograms",
+              "path": "counts.hist.txt",
+              "as": "counts.hist.txt"
+            }
+          ]
+        },
+        {
+          "id": "inspect",
+          "runner": "bustools",
+          "args": [
+            "inspect",
+            "-o",
+            "inspect.json",
+            "-e",
+            "large/matrix.ec",
+            "-w",
+            "large/whitelist.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "inspect.json"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "inspect.json",
+              "kind": "json"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "allowlist-1",
+          "runner": "bustools",
+          "args": [
+            "allowlist",
+            "-f",
+            "1",
+            "-o",
+            "allowlist.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "allowlist.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "allowlist.txt",
+              "kind": "identifiers",
+              "minimumRecords": 10
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "allowlist-20",
+          "runner": "bustools",
+          "args": [
+            "allowlist",
+            "-f",
+            "20",
+            "-o",
+            "allowlist.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "allowlist.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "allowlist.txt",
+              "kind": "identifiers",
+              "minimumRecords": 10
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "effect": "allowlist-1"
+        },
+        {
+          "id": "umicorrect",
+          "runner": "bustools",
+          "args": [
+            "umicorrect",
+            "-o",
+            "umi-corrected.bus",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "umi-corrected.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "umi-corrected.bus",
+              "kind": "bus",
+              "minimumRecords": 9000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "capture-barcodes",
+          "runner": "bustools",
+          "args": [
+            "capture",
+            "-b",
+            "-c",
+            "large/capture-barcodes.txt",
+            "-o",
+            "captured.bus",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "captured.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "captured.bus",
+              "kind": "bus",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "capture-complement",
+          "runner": "bustools",
+          "args": [
+            "capture",
+            "-b",
+            "-c",
+            "large/capture-barcodes.txt",
+            "-o",
+            "captured.bus",
+            "-x",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "captured.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "captured.bus",
+              "kind": "bus",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "effect": "capture-barcodes"
+        },
+        {
+          "id": "capture-transcripts",
+          "runner": "bustools",
+          "args": [
+            "capture",
+            "-s",
+            "-c",
+            "large/capture-transcripts.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "-o",
+            "captured.bus",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "captured.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "captured.bus",
+              "kind": "bus",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "project-barcodes",
+          "runner": "bustools",
+          "args": [
+            "project",
+            "-b",
+            "-m",
+            "large/barcode-map.txt",
+            "-o",
+            "projected.bus",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "projected.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "projected.bus",
+              "kind": "bus",
+              "minimumRecords": 10000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "project-transcripts",
+          "runner": "bustools",
+          "args": [
+            "project",
+            "-s",
+            "projected",
+            "-m",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "-o",
+            "projected.bus",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "projected.bus",
+            "projected/matrix.ec",
+            "projected/genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "projected.bus",
+              "kind": "bus",
+              "minimumRecords": 9000,
+              "normalizeWithinBarcodeUmi": true
+            },
+            {
+              "path": "projected/matrix.ec",
+              "kind": "ec"
+            },
+            {
+              "path": "projected/genes.txt",
+              "kind": "identifiers",
+              "minimumRecords": 1000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "linker",
+          "runner": "bustools",
+          "args": [
+            "linker",
+            "-s",
+            "0",
+            "-e",
+            "2",
+            "-o",
+            "linked.bus",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "linked.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "linked.bus",
+              "kind": "bus",
+              "minimumRecords": 10000,
+              "expected": {
+                "barcodeLength": 14
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "collapse",
+          "runner": "bustools",
+          "args": [
+            "collapse",
+            "-o",
+            "collapsed",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "collapsed.bus",
+            "collapsed.genes.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "collapsed.bus",
+              "kind": "bus",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "collapsed.genes.txt",
+              "kind": "identifiers",
+              "minimumRecords": 1000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "clusterhist",
+          "runner": "bustools",
+          "args": [
+            "clusterhist",
+            "-o",
+            "clusters/",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "-c",
+            "large/clusters.txt",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "clusters/genes.txt",
+            "clusters/cluster_hists/0.txt",
+            "clusters/cluster_hists/1.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "clusters/genes.txt",
+              "kind": "identifiers",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "clusters/cluster_hists/0.txt",
+              "kind": "text",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "clusters/cluster_hists/1.txt",
+              "kind": "text",
+              "minimumRecords": 1000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "compress",
+          "runner": "bustools",
+          "args": [
+            "compress",
+            "-o",
+            "compressed.busz",
+            "--index=compressed.busz.idx",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "compressed.busz",
+            "compressed.busz.idx"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "compressed.busz",
+              "kind": "busz"
+            },
+            {
+              "path": "compressed.busz.idx",
+              "kind": "exact"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "decompress",
+          "runner": "bustools",
+          "args": [
+            "decompress",
+            "-o",
+            "sorted.bus",
+            "compressed.busz"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 10000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "compress",
+              "path": "compressed.busz",
+              "as": "compressed.busz"
+            }
+          ]
+        },
+        {
+          "id": "compress-chunks",
+          "runner": "bustools",
+          "args": [
+            "compress",
+            "-o",
+            "compressed.busz",
+            "--index=compressed.busz.idx",
+            "-N",
+            "64",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "compressed.busz",
+            "compressed.busz.idx"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "compressed.busz",
+              "kind": "busz"
+            },
+            {
+              "path": "compressed.busz.idx",
+              "kind": "exact"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "effect": "compress"
+        },
+        {
+          "id": "decompress-chunks",
+          "runner": "bustools",
+          "args": [
+            "decompress",
+            "-o",
+            "sorted.bus",
+            "compressed.busz"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 10000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "compress-chunks",
+              "path": "compressed.busz",
+              "as": "compressed.busz"
+            }
+          ],
+          "baseline": "decompress"
+        },
+        {
+          "id": "decompress-cross-native",
+          "runner": "bustools",
+          "args": [
+            "decompress",
+            "-o",
+            "sorted.bus",
+            "compressed.busz"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 10000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "compress-chunks",
+              "path": "compressed.busz",
+              "as": "compressed.busz",
+              "target": "native"
+            }
+          ],
+          "baseline": "decompress"
+        },
+        {
+          "id": "decompress-cross-wasm",
+          "runner": "bustools",
+          "args": [
+            "decompress",
+            "-o",
+            "sorted.bus",
+            "compressed.busz"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 10000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "compress-chunks",
+              "path": "compressed.busz",
+              "as": "compressed.busz",
+              "target": "wasm"
+            }
+          ],
+          "baseline": "decompress"
+        },
+        {
+          "id": "decompress-stdin-stdout",
+          "runner": "bustools",
+          "args": [
+            "inflate",
+            "-p",
+            "-"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "minimumRecords": 10000
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "compress-chunks",
+              "path": "compressed.busz",
+              "as": "compressed.busz"
+            }
+          ],
+          "stdinFile": "compressed.busz",
+          "stdoutFile": "sorted.bus",
+          "baseline": "decompress"
+        },
+        {
+          "id": "count-decompressed-native",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "decompress",
+              "path": "sorted.bus",
+              "as": "sorted.bus",
+              "target": "native"
+            }
+          ],
+          "baseline": "count-genes"
+        },
+        {
+          "id": "count-decompressed-wasm",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "decompress",
+              "path": "sorted.bus",
+              "as": "sorted.bus",
+              "target": "wasm"
+            }
+          ],
+          "baseline": "count-genes"
+        },
+        {
+          "id": "read-index-sort",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "--flags",
+            "-o",
+            "output.bus",
+            "read-index.bus"
+          ],
+          "outputs": [
+            "output.bus"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "output.bus",
+              "kind": "bus",
+              "minimumRecords": 30,
+              "minimum": {
+                "nonzeroFlags": 30
+              },
+              "sortedBy": [
+                "flags",
+                "ec",
+                "barcode",
+                "umi"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "merge-no-intervals",
+          "runner": "bustools",
+          "args": [
+            "merge",
+            "-o",
+            "merged",
+            "-e",
+            "matrix.ec",
+            "-t",
+            "transcripts.txt",
+            "output.bus"
+          ],
+          "outputs": [
+            "merged/merged.bus",
+            "merged/merged.ec"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "merged/merged.bus",
+              "kind": "bus",
+              "minimumRecords": 0,
+              "expected": {
+                "records": 0
+              }
+            },
+            {
+              "path": "merged/merged.ec",
+              "kind": "ec"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "read-index-sort",
+              "path": "output.bus",
+              "as": "output.bus"
+            }
+          ]
+        },
+        {
+          "id": "mash",
+          "runner": "bustools",
+          "args": [
+            "mash",
+            "-o",
+            "mashed",
+            ".",
+            "."
+          ],
+          "outputs": [
+            "mashed/mashed.bus",
+            "mashed/matrix.ec",
+            "mashed/transcripts.txt"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "mashed/mashed.bus",
+              "kind": "bus",
+              "minimumRecords": 30
+            },
+            {
+              "path": "mashed/matrix.ec",
+              "kind": "ec"
+            },
+            {
+              "path": "mashed/transcripts.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "read-index-sort",
+              "path": "output.bus",
+              "as": "output.bus"
+            }
+          ]
+        },
+        {
+          "id": "extract-include",
+          "runner": "bustools",
+          "args": [
+            "extract",
+            "-o",
+            "extracted",
+            "-f",
+            "R1.fastq,R2.fastq",
+            "-N",
+            "2",
+            "--include",
+            "output.bus"
+          ],
+          "outputs": [
+            "extracted/1.fastq.gz",
+            "extracted/2.fastq.gz"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "extracted/1.fastq.gz",
+              "kind": "fastq-gzip",
+              "minimumRecords": 1
+            },
+            {
+              "path": "extracted/2.fastq.gz",
+              "kind": "fastq-gzip",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "read-index-sort",
+              "path": "output.bus",
+              "as": "output.bus"
+            }
+          ]
+        },
+        {
+          "id": "extract-exclude",
+          "runner": "bustools",
+          "args": [
+            "extract",
+            "-o",
+            "extracted",
+            "-f",
+            "R1.fastq,R2.fastq",
+            "-N",
+            "2",
+            "--exclude",
+            "output.bus"
+          ],
+          "outputs": [
+            "extracted/1.fastq.gz",
+            "extracted/2.fastq.gz"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "extracted/1.fastq.gz",
+              "kind": "fastq-gzip",
+              "minimumRecords": 1
+            },
+            {
+              "path": "extracted/2.fastq.gz",
+              "kind": "fastq-gzip",
+              "minimumRecords": 1
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "read-index-sort",
+              "path": "output.bus",
+              "as": "output.bus"
+            }
+          ],
+          "effect": "extract-include"
+        },
+        {
+          "id": "repeat-sort",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "-o",
+            "sorted.bus",
+            "input.bus"
+          ],
+          "outputs": [
+            "sorted.bus"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "sorted.bus",
+              "kind": "bus",
+              "sortedBy": [
+                "barcode",
+                "umi",
+                "ec",
+                "flags"
+              ],
+              "minimumRecords": 20,
+              "minimum": {
+                "barcodes": 20,
+                "umis": 20,
+                "ecs": 5,
+                "duplicateMultiplicity": 1
+              }
+            }
+          ],
+          "baseline": "sort"
+        },
+        {
+          "id": "repeat-count",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "sorted.bus"
+          ],
+          "outputs": [
+            "counts.mtx",
+            "counts.barcodes.txt",
+            "counts.genes.txt"
+          ],
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "counts.mtx",
+              "kind": "matrix",
+              "rowLabels": "counts.barcodes.txt",
+              "columnLabels": "counts.genes.txt",
+              "minimumRecords": 1000
+            },
+            {
+              "path": "counts.barcodes.txt",
+              "kind": "identifiers"
+            },
+            {
+              "path": "counts.genes.txt",
+              "kind": "identifiers"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ],
+          "baseline": "count-genes"
+        },
+        {
+          "id": "missing-input",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "1",
+            "-m",
+            "64M",
+            "-T",
+            "temporary",
+            "-o",
+            "sorted.bus",
+            "absent.bus"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "does not exist|not found|failed to open",
+          "expectedExitCode": 1,
+          "inputsFrom": []
+        },
+        {
+          "id": "missing-whitelist",
+          "runner": "bustools",
+          "args": [
+            "correct",
+            "-w",
+            "absent.txt",
+            "-o",
+            "out.bus",
+            "input.bus"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "does not exist|not found",
+          "expectedExitCode": 1,
+          "inputsFrom": []
+        },
+        {
+          "id": "count-incompatible",
+          "runner": "bustools",
+          "args": [
+            "count",
+            "-o",
+            "counts",
+            "-g",
+            "large/transcripts-to-genes.txt",
+            "-e",
+            "large/matrix.ec",
+            "-t",
+            "large/transcripts.txt",
+            "--genecounts",
+            "--cm",
+            "--hist",
+            "sorted.bus"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "incompatible",
+          "expectedExitCode": 1,
+          "inputsFrom": [
+            {
+              "case": "large-sort",
+              "path": "sorted.bus",
+              "as": "sorted.bus"
+            }
+          ]
+        },
+        {
+          "id": "serial-restriction",
+          "runner": "bustools",
+          "args": [
+            "sort",
+            "-t",
+            "2",
+            "-m",
+            "64M",
+            "-o",
+            "out.bus",
+            "input.bus"
+          ],
+          "outputs": [],
+          "kind": "restriction",
+          "executions": [
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "single.thread|serial|one thread|threads.*1",
+          "expectedExitCode": 1
+        }
+      ]
+    }
+  }
+}
