@@ -34,16 +34,18 @@ jobs:
       - name: Run diagnostic probes against the existing compiled build
         env:
           DIAG_PRODUCTION: '0'
-          DIAG_WORKER: load
+          DIAG_WORKER: sync
         run: |
-          set +e
+          diag_status=0
           for attempt in 1 2; do
-            node scripts/diagnose-macs3.mjs --engine webkit
+            if ! node scripts/diagnose-macs3.mjs --engine webkit; then
+              diag_status=1
+            fi
           done
-          exit 0
+          exit "$diag_status"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: macs3-webkit-load-${{ matrix.sample }}
+          name: macs3-webkit-sync-${{ matrix.sample }}
           path: build/macs3-validator-diagnostics/
           if-no-files-found: warn
