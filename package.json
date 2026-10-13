@@ -25,7 +25,9 @@
     "validate:annotation": "node scripts/validate-annotation.mjs",
     "package:annotation": "python3 scripts/package-annotation.py",
     "validate:bustools": "node scripts/validate-bustools.mjs",
-    "package:bustools": "python3 scripts/package-bustools.py"
+    "package:bustools": "python3 scripts/package-bustools.py",
+    "validate:plink2": "node scripts/validate-plink2.mjs",
+    "package:plink2": "python3 scripts/package-plink2.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

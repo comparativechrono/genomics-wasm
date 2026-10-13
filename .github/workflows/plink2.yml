@@ -1,0 +1,188 @@
+name: Build and validate PLINK 2
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+permissions:
+  contents: read
+concurrency:
+  group: plink2-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang cmake make git curl gzip xz-utils patch
+      - run: npm ci
+      - name: Test runtimes, comparators and package checks
+        run: npm test
+      - name: Verify and regenerate pinned PLINK 2 inputs
+        run: |
+          python3 scripts/fetch-plink2-test-data.py --verify
+          python3 scripts/fetch-plink2-test-data.py --fetch
+          python3 scripts/fetch-plink2-test-data.py --regenerate
+      - name: Install pinned WebAssembly compiler
+        run: bash scripts/setup-emsdk.sh
+      - name: Build unchanged native, patched native and WebAssembly plink2
+        run: |
+          source toolchain/emsdk/emsdk_env.sh
+          bash scripts/build-plink2.sh all
+      - name: Compare Node results with unchanged native plink2
+        run: node scripts/validate-plink2.mjs --engine node --tool plink2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plink2-validation-node
+          path: reports/plink2/node/
+          if-no-files-found: ignore
+      - name: Preserve executable permissions in compiled artifact
+        run: |
+          tar -czf build/plink2-compiled.tar.gz \
+            dist/plink2 build/native/plink2 build/patched-native/plink2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plink2-compiled
+          path: build/plink2-compiled.tar.gz
+          if-no-files-found: error
+          retention-days: 14
+  browsers:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: plink2-compiled
+          path: build
+      - run: tar -xzf build/plink2-compiled.tar.gz
+      - name: Compare browser results with unchanged native plink2
+        run: node scripts/validate-plink2.mjs --engine ${{ matrix.browser }} --tool plink2
+      - name: Exercise PLINK 2 workflows, uploads, downloads and cancellation
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: node scripts/test-plink2-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plink2-validation-${{ matrix.browser }}
+          path: reports/plink2/${{ matrix.browser }}/
+          if-no-files-found: ignore
+  release-gate:
+    needs: [build, browsers]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Require every native and browser comparison
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          BROWSER_RESULT: ${{ needs.browsers.result }}
+        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: plink2-compiled
+          path: build
+      - run: tar -xzf build/plink2-compiled.tar.gz
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: plink2-validation-*
+          path: build/plink2-validation-artifacts
+      - name: Collect native comparison reports
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          base = Path('build/plink2-validation-artifacts')
+          for engine in ('node', 'chromium', 'firefox', 'webkit'):
+              filename = 'summary-plink2-all.json'
+              matches = list((base / f'plink2-validation-{engine}').rglob(filename))
+              if len(matches) != 1:
+                  raise RuntimeError(f'Expected one {engine} report, found {len(matches)}')
+              target = Path('reports/plink2') / engine / filename
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(matches[0], target)
+          PY
+      - name: Assemble package from pinned sources and verified evidence
+        run: |
+          python3 scripts/fetch-plink2-test-data.py --fetch
+          python3 scripts/fetch-plink2-test-data.py --verify
+          reports=()
+          for engine in node chromium firefox webkit; do
+            reports+=(--validation-report "reports/plink2/$engine/summary-plink2-all.json")
+          done
+          python3 scripts/package-plink2.py --output releases "${reports[@]}"
+      - name: Install browsers for independent package tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Verify and exercise standalone ZIP independently
+        run: |
+          set -euo pipefail
+          task_root="$PWD"
+          archive="releases/plink2-2.0.0-b.1-dev-wasm.zip"
+          filename="$(basename "$archive")"
+          stem="${filename%.zip}"
+          (cd releases && sha256sum -c "$filename.sha256")
+          package_root="$(mktemp -d)"
+          python3 -m zipfile -e "$archive" "$package_root"
+          (
+            cd "$package_root/$stem"
+            sha256sum -c SHA256SUMS
+            npm ci
+            npm test
+            for engine in chromium firefox webkit; do
+              BROWSER="$engine" \
+                PLINK2_DEMO_REPORT="$task_root/reports/plink2/packages/$engine" \
+                node scripts/test-plink2-demo.mjs
+            done
+          )
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plink2-package-validation
+          path: reports/plink2/packages/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plink2-package
+          path: |
+            releases/plink2-2.0.0-b.1-dev-wasm.zip
+            releases/plink2-2.0.0-b.1-dev-wasm.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

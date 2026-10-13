@@ -1,7 +1,8 @@
 # Genomics WebAssembly tools
 
 Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
-quantification, single-cell preprocessing, coverage, variant calling, metagenomics and differential expression tools for web browsers and Node.js. Each tool has an independent
+quantification, single-cell preprocessing, coverage, variant calling, metagenomics,
+genotype analysis and differential expression tools for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
 using webR.
@@ -26,6 +27,7 @@ DESeq2 session retains its R objects until the session is closed.
 | [Prodigal](tools/prodigal/README.md) | 2.6.3 | Prokaryotic gene prediction, protein translation and saved training, one thread |
 | [HMMER](tools/hmmer/README.md) | 3.4 | Thirteen offline profile-HMM, protein and nucleotide programs, one thread |
 | [bustools](tools/bustools/README.md) | 0.45.1 | BUS processing, barcode correction, UMI handling and count matrices, one thread |
+| [PLINK 2](tools/plink2/README.md) | 2.0.0-b.1-dev, 12 Oct 2026 | Genotype conversion, QC, LD, relationships, scoring and regression; real worker threads; no PCA |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
@@ -99,6 +101,14 @@ example carries results through sorting, barcode correction and count-matrix
 generation. It uses ordinary static hosting and preserves binary files between
 commands. Browser execution is serial, with a 64 MiB default sort buffer.
 
+PLINK 2 has a [genotype-analysis example](examples/plink2/README.md) and
+[JavaScript API](runtime/PLINK2.md). The original C/C++ program runs with its
+upstream `NOLAPACK` matrix implementations, including linear, logistic and Firth
+regression. PCA and phenotype SVD are unavailable in this build. PLINK 2 uses
+real background reader threads even with one compute thread, so hosting needs
+cross-origin isolation. Its minimum working arena is 640 MiB, in addition to
+file copies, thread stacks and other allocations. Start with small datasets.
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
@@ -123,6 +133,7 @@ BRACKEN_PYTHON="$(command -v python3.14)" bash scripts/build-bracken.sh all
 bash scripts/build-prodigal.sh all
 bash scripts/build-hmmer.sh all
 bash scripts/build-bustools.sh all
+bash scripts/build-plink2.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
@@ -389,6 +400,21 @@ program, API, browser example, real BUS data, original sources, licences and
 validation evidence. The release gate independently extracts the ZIP, verifies
 all checksums, runs its included tests and exercises the example in all three
 browsers. Those checks are retained in `bustools-package-validation`.
+
+PLINK 2 is built and validated separately:
+
+```sh
+bash scripts/build-plink2.sh all
+python3 scripts/fetch-plink2-test-data.py --verify
+node scripts/validate-plink2.mjs --engine node
+```
+
+Repeat validation with `--engine chromium`, `firefox` and `webkit`. The
+`plink2-package` workflow artifact is assembled by `scripts/package-plink2.py`
+only after the native and browser comparisons pass. It includes the threaded
+program, example with a server that supplies isolation headers, authentic and
+labelled synthetic fixtures, corresponding sources, notices and validation
+reports. The release gate also verifies the extracted ZIP independently.
 
 ## Licence
 
