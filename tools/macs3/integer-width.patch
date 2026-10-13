@@ -1,0 +1,213 @@
+--- a/MACS3/IO/Parser.py
++++ b/MACS3/IO/Parser.py
+@@ -21,6 +21,7 @@
+ import sys
+ 
+ import cython
++from cython.cimports.libc.stdint import int64_t
+ from cython.cimports.cpython import bool
+ 
+ from cython.cimports.libc.stdlib import atoi
+@@ -533,7 +534,7 @@
+         left_pos: cython.int
+         right_pos: cython.int
+         i: cython.long = 0          # number of fragments
+-        m: cython.long = 0          # sum of fragment lengths
++        m: int64_t = 0          # sum of fragment lengths
+         tmp: bytes = b""
+ 
+         petrack = PETrackI(buffer_size=self.buffer_size)
+@@ -580,7 +581,7 @@
+         left_pos: cython.int
+         right_pos: cython.int
+         i: cython.long = 0          # number of fragments
+-        m: cython.long = 0          # sum of fragment lengths
++        m: int64_t = 0          # sum of fragment lengths
+         tmp: bytes = b""
+ 
+         add_loc = petrack.add_loc
+@@ -1200,7 +1201,7 @@
+                 petrack = parser.build_petrack()
+         """
+         i: cython.long = 0          # number of fragments kept
+-        m: cython.long = 0          # sum of fragment lengths
++        m: int64_t = 0          # sum of fragment lengths
+         entrylength: cython.int
+         fpos: cython.int
+         chrid: cython.int
+@@ -1262,7 +1263,7 @@
+                 petrack = parser2.append_petrack(petrack)
+         """
+         i: cython.long = 0          # number of fragments
+-        m: cython.long = 0          # sum of fragment lengths
++        m: int64_t = 0          # sum of fragment lengths
+         entrylength: cython.int
+         fpos: cython.int
+         chrid: cython.int
+@@ -1457,7 +1458,7 @@
+         barcode: bytes
+         count: cython.ushort
+         i: cython.long = 0          # number of fragments
+-        m: cython.long = 0          # sum of fragment lengths
++        m: int64_t = 0          # sum of fragment lengths
+         tmp: bytes = b""
+ 
+         petrack = PETrackII(buffer_size=self.buffer_size)
+@@ -1527,7 +1528,7 @@
+         barcode: bytes
+         count: cython.ushort
+         i: cython.long = 0          # number of fragments
+-        m: cython.long = 0          # sum of fragment lengths
++        m: int64_t = 0          # sum of fragment lengths
+         tmp: bytes = b""
+ 
+         add_loc = petrack.add_loc
+--- a/MACS3/Signal/PeakDetect.py
++++ b/MACS3/Signal/PeakDetect.py
+@@ -12,6 +12,7 @@
+ # Python modules
+ # ------------------------------------
+ import cython
++from cython.cimports.libc.stdint import int64_t
+ 
+ # ------------------------------------
+ # MACS3 modules
+@@ -146,11 +147,11 @@
+         d: cython.float
+         ctrl_scale_s: list
+         ctrl_d_s: list
+-        control_total: cython.long
++        control_total: int64_t
+         # approx sum of treatment pileup values
+-        treat_sum: cython.long
++        treat_sum: int64_t
+         # approx sum of control pileup values
+-        control_sum: cython.long
++        control_sum: int64_t
+ 
+         if self.PE_MODE:
+             d = self.treat.average_template_length
+--- a/MACS3/Signal/CallPeakUnit.py
++++ b/MACS3/Signal/CallPeakUnit.py
+@@ -23,6 +23,7 @@
+ # ------------------------------------
+ import numpy as np
+ import cython
++from cython.cimports.libc.stdint import int64_t
+ import cython.cimports.numpy as cnp
+ # from numpy cimport int32_t, int64_t, float32_t, float64_t
+ from cython.cimports.cpython import bool
+@@ -758,7 +759,7 @@
+         pscore_stat: dict
+         pre_p: cython.long
+         # pre_l: cython.long
+-        l: cython.long
++        l: int64_t
+         i: cython.long
+         j: cython.long
+         this_v: cython.float
+@@ -766,8 +767,8 @@
+         v: cython.float
+         q: cython.float
+         pre_q: cython.float
+-        N: cython.long
+-        k: cython.long
++        N: int64_t
++        k: int64_t
+         this_l: cython.long
+         f: cython.float
+         unique_values: list
+@@ -853,15 +854,15 @@
+         pre_p: cython.long
+         this_p: cython.long
+         j: cython.long
+-        l: cython.long
++        l: int64_t
+         i: cython.long
+         q: cython.float
+         pre_q: cython.float
+         this_v: cython.float
+         v: cython.float
+         cutoff: cython.float
+-        N: cython.long
+-        k: cython.long
++        N: int64_t
++        k: int64_t
+         this_l: cython.long
+         f: cython.float
+         unique_values: list
+--- a/MACS3/Signal/BedGraph.py
++++ b/MACS3/Signal/BedGraph.py
+@@ -13,6 +13,7 @@
+ # python modules
+ # ------------------------------------
+ import cython
++from cython.cimports.libc.stdint import int64_t
+ from array import array as pyarray
+ from math import prod
+ # ------------------------------------
+@@ -918,7 +919,7 @@
+         # l: cython.long
+         i: cython.long
+         nhcal: cython.long = 0
+-        N: cython.long
++        N: int64_t
+         k: cython.long
+         this_l: cython.long
+         this_v: cython.float
+--- a/MACS3/Signal/ScoreTrack.py
++++ b/MACS3/Signal/ScoreTrack.py
+@@ -25,6 +25,7 @@
+ # Other modules
+ # ------------------------------------
+ import cython
++from cython.cimports.libc.stdint import int64_t
+ import numpy as np
+ import cython.cimports.numpy as cnp
+ from cython.cimports.cpython import bool
+@@ -499,13 +500,13 @@
+         {-log10pvalue:(-log10qvalue,rank,basepairs)} relationships.
+ 
+         """
+-        ln: cython.long
++        ln: int64_t
+         i: cython.long
+         j: cython.long
+         v: cython.float
+         q: cython.float
+         pre_q: cython.float     # store the p and q scores
+-        N: cython.long
++        N: int64_t
+         k: cython.float
+         f: cython.float
+         pvalue2qvalue: object
+--- a/MACS3/Signal/PairedEndTrack.py
++++ b/MACS3/Signal/PairedEndTrack.py
+@@ -34,6 +34,7 @@
+ # Other modules
+ # ------------------------------------
+ import cython
++from cython.cimports.libc.stdint import uint64_t
+ import numpy as np
+ import cython.cimports.numpy as cnp
+ from cython.cimports.cpython import bool
+@@ -1014,7 +1015,7 @@
+     size = cython.declare(dict, visibility="public")
+     buf_size = cython.declare(dict, visibility="public")
+     is_sorted = cython.declare(bool, visibility="public")
+-    total = cython.declare(cython.ulong, visibility="public")
++    total = cython.declare(uint64_t, visibility="public")
+     annotation = cython.declare(str, visibility="public")
+     # rlengths: reference chromosome lengths dictionary
+     rlengths = cython.declare(dict, visibility="public")
+--- a/MACS3/Signal/SignalProcessing.py
++++ b/MACS3/Signal/SignalProcessing.py
+@@ -255,7 +255,7 @@
+        Cambridge University Press ISBN-13: 9780521880688
+     """
+     half_window: cython.int
+-    b: cnp.ndarray(cython.long, ndim=2)
++    b: cnp.ndarray(cnp.int64_t, ndim=2)
+     # pad the signal at the extremes with
+     # values taken from the signal itself
+     firstvals: cnp.ndarray(cython.float, ndim=1)

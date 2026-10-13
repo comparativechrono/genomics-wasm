@@ -1,0 +1,224 @@
+--- a/MACS3/Commands/callvar_cmd.py
++++ b/MACS3/Commands/callvar_cmd.py
+@@ -21,7 +21,6 @@
+ import datetime
+ import sys
+ from functools import partial
+-import multiprocessing as mp
+ 
+ # from time import time
+ from math import ceil
+@@ -213,16 +212,15 @@
+ 
+             if fermi == "auto" or fermi == "off":
+                 # first pass to call variant w/o assembly
+-                # multiprocessing the following part
++                # The browser port evaluates the same partitions serially.
+                 # t_call_variants_0 = time()
+                 info(" Call variants w/o assembly")
+ 
+-                # -- now make multi processes
++                # Keep the upstream NP partitions and result ordering.
+                 # divide right-left into NP parts
+                 window_size = ceil((ra_collection["right"] - ra_collection["left"]) / NP)
+ 
+-                P = mp.Pool(NP)
+-                # this partial function will only be used in multiprocessing
++                # Preserve the upstream per-range variant-calling function.
+                 p_call_variants_at_range = partial(call_variants_at_range, s=s, collection=ra_collection, top2allelesminr=top2allelesminr, max_allowed_ar=max_allowed_ar, min_altallele_count=min_altallele_count, min_homo_GQ=min_homo_GQ, min_heter_GQ=min_heter_GQ, minQ=minQ)
+ 
+                 ranges = []
+@@ -231,10 +229,7 @@
+                     r_d = min((i + 1) * window_size + ra_collection["left"], ra_collection["right"])
+                     ranges.append((l_d, r_d))
+ 
+-                mapresults = P.map_async(p_call_variants_at_range, ranges)
+-                P.close()
+-                P.join()
+-                results = mapresults.get(timeout=window_size*300)
++                results = list(map(p_call_variants_at_range, ranges))
+                 for i in range(NP):
+                     for result in results[i]:
+                         peak_variants.add_variant(result[0], result[1])
+@@ -303,11 +298,10 @@
+             if (fermi == "on" or (fermi == "auto" and peak_variants.has_indel())):
+                 peak_variants = PeakVariants(chrom.decode(), peak["start"], peak["end"], s)  # reset
+ 
+-                # --- make multi processes
++                # Keep the upstream NP partitions and result ordering.
+                 # divide right-left into NP parts
+                 window_size = ceil((ra_collection["right"] - ra_collection["left"]) / NP)
+-                P = mp.Pool(NP)
+-                # this partial function will only be used in multiprocessing
++                # Preserve the upstream per-range variant-calling function.
+                 p_call_variants_at_range = partial(call_variants_at_range, s=s, collection=unitig_collection, top2allelesminr=top2allelesminr, max_allowed_ar=max_allowed_ar, min_altallele_count=min_altallele_count, min_homo_GQ=min_homo_GQ, min_heter_GQ=min_heter_GQ, minQ=minQ)
+                 ranges = []
+                 for i in range(NP):
+@@ -315,10 +309,7 @@
+                     r_d = min((i + 1) * window_size + ra_collection["left"], ra_collection["right"])
+                     ranges.append((l_d, r_d))
+ 
+-                mapresults = P.map_async(p_call_variants_at_range, ranges)
+-                P.close()
+-                P.join()
+-                results = mapresults.get(timeout=window_size*300)
++                results = list(map(p_call_variants_at_range, ranges))
+                 for i in range(NP):
+                     for result in results[i]:
+                         peak_variants.add_variant(result[0], result[1])
+--- a/MACS3/Signal/swalign.c
++++ b/MACS3/Signal/swalign.c
+@@ -326,7 +326,7 @@
+   printf("Query:  %3d %s %-3d\n", result->start_b, result->seqs->b, result->end_b);
+ }
+ 
+-int main(int argc, const char **argv) {
++int macs3_swalign_test_main(int argc, const char **argv) {
+ 
+   if (argc != 3) {
+     printf("usage: swalign TARGET_SEQ QUERY_SEQ\n");
+--- a/MACS3/Utilities/Logger.py
++++ b/MACS3/Utilities/Logger.py
+@@ -1,8 +1,10 @@
+ # Logger.py to set time and memory monitoring to logging
+ import logging
+-import resource
+ import os
+ import sys
++
++if sys.platform != "emscripten":
++    import resource
+ 
+ 
+ class MemoryLogger(logging.Logger):
+@@ -12,11 +14,14 @@
+     def _log(self, level, msg, args, exc_info=None,
+              extra=None, stack_info=False):
+         mem_usage = self.get_memory_usage()
+-        super()._log(level, f"[{mem_usage} MB] {msg}",
++        prefix = f"[{mem_usage} MB] " if mem_usage is not None else "[RSS unavailable] "
++        super()._log(level, f"{prefix}{msg}",
+                      args, exc_info, extra, stack_info)
+ 
+     @staticmethod
+     def get_memory_usage():
++        if sys.platform == "emscripten":
++            return None
+         mem_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+         if os.name == 'posix' and os.uname().sysname == 'Darwin':
+             # macOS
+--- a/MACS3/IO/BAM.py
++++ b/MACS3/IO/BAM.py
+@@ -31,6 +31,7 @@
+ # ------------------------------------
+ import cython
+ from cython.cimports.cpython import bool
++from cython.cimports.libc.stdint import uint64_t
+ 
+ # ------------------------------------
+ # constants
+@@ -162,10 +163,10 @@
+     magic: bytes                # magic code for this file
+     n_ref: cython.uint             # number of refseqs/chromosomes
+     metadata: dict              # metadata for ref seqs
+-    n_bins: cython.ulong            # total number of bins
+-    n_chunks: cython.ulong          # total number of chunks
+-    n_mapped: cython.ulong          # total mapped reads
+-    n_unmapped: cython.ulong        # total unmapped reads
++    n_bins: uint64_t            # total number of bins
++    n_chunks: uint64_t          # total number of chunks
++    n_mapped: uint64_t          # total mapped reads
++    n_unmapped: uint64_t        # total unmapped reads
+     bins: list
+ 
+     def __init__(self, filename: str):
+@@ -412,7 +413,7 @@
+         return self.get_chunks_by_list_of_bins(ref_n, bins)
+ 
+     @cython.ccall
+-    def get_coffset_by_region(self, ref_n: cython.uint, beg: cython.uint, end: cython.uint) -> cython.ulong:
++    def get_coffset_by_region(self, ref_n: cython.uint, beg: cython.uint, end: cython.uint) -> uint64_t:
+         """Return the BGZF compressed offset for the leftmost overlapping block.
+ 
+         Args:
+@@ -432,11 +433,11 @@
+                 bai.read()
+                 coffset = bai.get_coffset_by_region(ref_n=0, beg=1_000_000, end=1_010_000)
+         """
+-        voffset_tmp: cython.ulong
+-        coffset_tmp: cython.ulong
++        voffset_tmp: uint64_t
++        coffset_tmp: uint64_t
+         chunks: list
+         i: cython.int
+-        coffset: cython.ulong
++        coffset: uint64_t
+ 
+         chunks = self.get_chunks_by_region(ref_n, beg, end)
+         if not chunks:
+@@ -450,7 +451,7 @@
+         return coffset
+ 
+     @cython.ccall
+-    def get_coffsets_by_list_of_regions(self, ref_n: cython.uint, regions: list) -> cython.ulong:
++    def get_coffsets_by_list_of_regions(self, ref_n: cython.uint, regions: list) -> uint64_t:
+         """Return compressed offsets for the leftmost block of each region.
+ 
+         Args:
+@@ -473,7 +474,7 @@
+         beg: cython.uint
+         end: cython.uint
+         i: cython.int
+-        coffset: cython.ulong
++        coffset: uint64_t
+         coffset_list: list
+ 
+         coffset_list = []
+@@ -513,9 +514,9 @@
+     references: list
+     rlengths: dict    # lengths of references/chromosomes
+     bgzf_block_cache: bytes     # cache of decompressed bgzf_block
+-    coffset_cache: cython.ulong     # coffset of the cached bgzf_block
++    coffset_cache: uint64_t     # coffset of the cached bgzf_block
+     # coffset of the next block of the cached bgzf_block
+-    noffset_cache: cython.ulong
++    noffset_cache: uint64_t
+ 
+     def __init__(self, BAM_filename: str):
+         """Open ``BAM_filename`` and load the companion ``.bai`` index."""
+@@ -624,7 +625,7 @@
+         return self.rlengths
+ 
+     @cython.ccall
+-    def __decode_voffset(self, voffset: cython.ulong) -> tuple:
++    def __decode_voffset(self, voffset: uint64_t) -> tuple:
+         """Split a virtual file offset into compressed and uncompressed parts.
+ 
+         Args:
+@@ -634,7 +635,7 @@
+             Tuple ``(coffset, uoffset)`` with the BGZF block pointer and
+             byte offset inside the uncompressed block.
+         """
+-        coffset: cython.ulong
++        coffset: uint64_t
+         uoffset: cython.uint
+ 
+         coffset = voffset >> 16
+@@ -642,7 +643,7 @@
+         return (coffset, uoffset)
+ 
+     @cython.ccall
+-    def __seek(self, offset: cython.ulong) -> bool:
++    def __seek(self, offset: uint64_t) -> bool:
+         """Seek to a compressed BGZF block offset within the BAM file.
+ 
+         Args:
+@@ -699,7 +700,7 @@
+         previous_read: ReadAlignment
+         dcdata: bytes
+         flag_end_searching: bool = False
+-        coffset: cython.ulong
++        coffset: uint64_t
+ 
+         previous_read = None
+         chrom_index = self.references.index(chrom)

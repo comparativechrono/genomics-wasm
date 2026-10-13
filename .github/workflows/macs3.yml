@@ -1,0 +1,205 @@
+name: Build and validate MACS3
+on:
+  push:
+    paths: &macs3-paths
+      - '.gitattributes'
+      - '.github/workflows/macs3.yml'
+      - 'tools/macs3/**'
+      - 'datasets/macs3/**'
+      - 'validation/macs3/**'
+      - 'examples/macs3/**'
+      - 'runtime/macs3*.mjs'
+      - 'runtime/MACS3.md'
+      - 'runtime/index.mjs'
+      - 'scripts/*macs3*'
+      - 'tests/*macs3*'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'LICENSE'
+  pull_request:
+    paths: *macs3-paths
+  workflow_dispatch:
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+permissions:
+  contents: read
+concurrency:
+  group: macs3-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang cmake make pkg-config gfortran libhdf5-dev libopenblas-dev liblapack-dev zlib1g-dev git curl xz-utils patch
+      - run: npm ci
+      - name: Test runtime, comparisons and release checks
+        run: |
+          python3 -m unittest discover -s tests -p 'test_macs3_*.py'
+          node --test tests/runtime.test.mjs tests/macs3*.test.mjs
+      - run: python3 -m pip install pysam==0.23.3
+      - name: Verify scientific fixtures and their regeneration
+        run: |
+          python3 scripts/fetch-macs3-test-data.py --verify
+          python3 scripts/fetch-macs3-test-data.py --fetch-sources
+          python3 scripts/fetch-macs3-test-data.py --regenerate
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
+      - name: Build native and WebAssembly MACS3
+        run: python3 scripts/build-macs3.py all
+      - name: Compare Node results with native MACS3
+        run: node scripts/validate-macs3.mjs --engine node
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: macs3-validation-node
+          path: reports/macs3/node/
+          if-no-files-found: ignore
+      - name: Preserve native libraries and file modes in the compiled artifact
+        run: tar -czf build/macs3-compiled.tar.gz dist/macs3 build/native/macs3* build/patched-native/macs3*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macs3-compiled
+          path: build/macs3-compiled.tar.gz
+          if-no-files-found: error
+          retention-days: 14
+  browsers:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: macs3-compiled
+          path: build
+      - run: tar -xzf build/macs3-compiled.tar.gz
+      - name: Compare browser results with native MACS3
+        run: node scripts/validate-macs3.mjs --engine ${{ matrix.browser }}
+      - name: Check uploads, downloads, cancellation and static hosting
+        env:
+          BROWSER: ${{ matrix.browser }}
+        run: node scripts/test-macs3-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: macs3-validation-${{ matrix.browser }}
+          path: reports/macs3/${{ matrix.browser }}/
+          if-no-files-found: ignore
+  release-gate:
+    needs: [build, browsers]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Require the build and all browser comparisons
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          BROWSER_RESULT: ${{ needs.browsers.result }}
+        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/download-artifact@v4
+        with:
+          name: macs3-compiled
+          path: build
+      - run: tar -xzf build/macs3-compiled.tar.gz
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: macs3-validation-*
+          path: build/macs3-validation-artifacts
+      - name: Collect the exact comparison reports
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          for engine in ('node', 'chromium', 'firefox', 'webkit'):
+              source = Path('build/macs3-validation-artifacts') / f'macs3-validation-{engine}'
+              matches = list(source.rglob('summary-all.json'))
+              if len(matches) != 1:
+                  raise RuntimeError(f'Expected one {engine} comparison report, found {len(matches)}')
+              target = Path('reports/macs3') / engine / 'summary-all.json'
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(matches[0], target)
+          PY
+      - name: Fetch pinned original data and assemble the tested package
+        run: |
+          python3 scripts/fetch-macs3-test-data.py --fetch-sources
+          python3 scripts/fetch-macs3-test-data.py --verify
+          reports=()
+          for engine in node chromium firefox webkit; do
+            reports+=(--validation-report "reports/macs3/$engine/summary-all.json")
+          done
+          python3 scripts/package-macs3.py --output releases "${reports[@]}"
+      - name: Install browsers for independent package tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Verify and exercise the extracted ZIP independently
+        run: |
+          set -euo pipefail
+          task_root="$PWD"
+          archive="releases/macs3-3.0.5-wasm.zip"
+          filename="$(basename "$archive")"
+          stem="${filename%.zip}"
+          (cd releases && sha256sum -c "$filename.sha256")
+          package_root="$(mktemp -d)"
+          python3 -m zipfile -e "$archive" "$package_root"
+          (
+            cd "$package_root/$stem"
+            sha256sum -c SHA256SUMS
+            npm ci
+            npm test
+            MACS3_PACKAGE_REPORT="$task_root/reports/macs3/packages/node" \
+              node scripts/test-macs3-package.mjs
+            for engine in chromium firefox webkit; do
+              BROWSER="$engine" \
+                MACS3_DEMO_REPORT="$task_root/reports/macs3/packages/$engine" \
+                node scripts/test-macs3-demo.mjs
+            done
+          )
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: macs3-package-validation
+          path: reports/macs3/packages/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macs3-package
+          path: |
+            releases/macs3-*-wasm.zip
+            releases/macs3-*-wasm.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

@@ -65,6 +65,13 @@ directory under `tools/`.
   The package includes Pyodide (MPL-2.0), CPython and their runtime libraries,
   with their corresponding sources and individual licences. See
   `tools/cutadapt/runtime-notices/` and the pinned source manifests.
+- MACS3: Tao Liu and contributors; BSD-3-Clause.
+  Source: https://github.com/macs3-project/MACS
+  The package retains the upstream Python/Cython scientific algorithms and
+  bundled fermi-lite, SIMDe and other component notices. Its Python/WebAssembly
+  runtime includes NumPy, SciPy, scikit-learn, hmmlearn, pandas, anndata and
+  their dependency sources and licences; see `tools/macs3/` for exact versions
+  and notices. Variant-calling work partitions execute serially in the browser.
 - Primer3: Primer3 contributors; GPL-2.0-or-later for its core libraries,
   with GPL-3.0-or-later Amplicon3 code also linked into the upstream core.
   Source: https://github.com/primer3-org/primer3

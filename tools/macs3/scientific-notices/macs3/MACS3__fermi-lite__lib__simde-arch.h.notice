@@ -1,0 +1,40 @@
+/* Architecture detection
+ * Created by Evan Nemerson <evan@nemerson.com>
+ *
+ *   To the extent possible under law, the authors have waived all
+ *   copyright and related or neighboring rights to this code.  For
+ *   details, see the Creative Commons Zero 1.0 Universal license at
+ *   <https://creativecommons.org/publicdomain/zero/1.0/>
+ *
+ * SPDX-License-Identifier: CC0-1.0
+ *
+ * Different compilers define different preprocessor macros for the
+ * same architecture.  This is an attempt to provide a single
+ * interface which is usable on any compiler.
+ *
+ * In general, a macro named SIMDE_ARCH_* is defined for each
+ * architecture the CPU supports.  When there are multiple possible
+ * versions, we try to define the macro to the target version.  For
+ * example, if you want to check for i586+, you could do something
+ * like:
+ *
+ *   #if defined(SIMDE_ARCH_X86) && (SIMDE_ARCH_X86 >= 5)
+ *   ...
+ *   #endif
+ *
+ * You could also just check that SIMDE_ARCH_X86 >= 5 without checking
+ * if it's defined first, but some compilers may emit a warning about
+ * an undefined macro being used (e.g., GCC with -Wundef).
+ *
+ * This was originally created for SIMDe
+ * <https://github.com/simd-everywhere/simde> (hence the prefix), but this
+ * header has no dependencies and may be used anywhere.  It is
+ * originally based on information from
+ * <https://sourceforge.net/p/predef/wiki/Architectures/>, though it
+ * has been enhanced with additional information.
+ *
+ * If you improve this file, or find a bug, please file the issue at
+ * <https://github.com/simd-everywhere/simde/issues>.  If you copy this into
+ * your project, even if you change the prefix, please keep the links
+ * to SIMDe intact so others know where to report issues, submit
+ * enhancements, and find the latest version. */

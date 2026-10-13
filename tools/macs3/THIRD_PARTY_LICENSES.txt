@@ -1,0 +1,37 @@
+MACS3 WebAssembly third-party licences
+===================================
+
+MACS3 3.0.5: BSD-3-Clause; full text in LICENSE and scientific-notices/macs3/.
+The incorporated fermi-lite/ksw and swalign sources carry MIT notices; SIMDe
+includes MIT and CC0 notices. All extracted embedded notices are preserved.
+
+Scientific dependencies (the exact versions and original archives are pinned
+in sources.lock.json):
+  NumPy, SciPy, pandas, scikit-learn, hmmlearn, h5py, anndata, joblib,
+  threadpoolctl, array-api-compat, packaging, python-dateutil, pytz, six,
+  natsort, pkgconfig and tzdata.
+
+Their full original licence files and incorporated-code notices are in
+scientific-notices/<component>/ and scientific-notices/<component>-wheel/.
+This includes the alternatives in packaging, the CloudPickle notice in
+joblib, and the upstream licences for the random generators, numerical
+algorithms and other incorporated libraries. The files, not this index,
+provide the complete terms and copyright attributions.
+
+Compiled scientific dependencies also include OpenBLAS 0.3.31, its LAPACK and
+libf2c (CLAPACK 3.2.1) code, HDF5 1.12.1, scientific zlib 1.3.1, and Boost
+1.84.0. Their original source archives and full licence notices accompany the
+package. pybind11 3.0.1 headers are used to compile hmmlearn; Cython 3.3.0
+notices are in cython-notices/. Cython-generated code and pybind11 licences
+remain separate from the Python runtime licence.
+
+Core Python 3.14.2/Pyodide 314.0.7/Emscripten 5.0.3 and linked-library notices
+are in runtime-notices/. Source locations, exact archive hashes and versions
+are listed in runtime-sources.json and sources.lock.json. Scientific recipes
+and patches are included as pyodide-recipes release 314-20260911 (MPL-2.0).
+
+scientific-notices/manifest.json and runtime-notices/manifest.json identify
+where every extracted notice came from and its SHA-256 checksum. The standalone
+ZIP contains the corresponding original source archives under dist/macs3/sources/.
+The complete archives preserve remaining per-file notices. Source archives can
+include optional components; retaining their notices does not imply linkage.

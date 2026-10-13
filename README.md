@@ -2,7 +2,7 @@
 
 Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
 quantification, single-cell preprocessing, coverage, variant calling, metagenomics,
-genotype analysis, primer design and differential expression tools
+genotype analysis, peak calling, primer design and differential expression tools
 for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
@@ -29,6 +29,7 @@ DESeq2 session retains its R objects until the session is closed.
 | [HMMER](tools/hmmer/README.md) | 3.4 | Thirteen offline profile-HMM, protein and nucleotide programs, one thread |
 | [bustools](tools/bustools/README.md) | 0.45.1 | BUS processing, barcode correction, UMI handling and count matrices, one thread |
 | [PLINK 2](tools/plink2/README.md) | 2.0.0-b.1-dev, 12 Oct 2026 | Genotype conversion, QC, LD, relationships, scoring and regression; real worker threads; no PCA |
+| [MACS3](tools/macs3/README.md) | 3.0.5 | Fourteen peak, coverage, HMM and variant commands in Python/WebAssembly; serial execution |
 | [Primer3](tools/primer3/README.md) | 2.6.1 | Seven original programs for primer design, thermodynamics, alignment and masking |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
@@ -437,6 +438,27 @@ comparisons pass in all four engines. The standalone ZIP includes its browser
 example, API, fixtures, validation evidence, original sources and dependency
 notices. The release job verifies the extracted ZIP, runs its included tests
 and exercises the example in all three browsers.
+
+MACS3 has a separate build and validation workflow:
+
+```sh
+python3 scripts/build-macs3.py all
+python3 scripts/fetch-macs3-test-data.py --verify
+node scripts/validate-macs3.mjs --engine node
+```
+
+The build requires CPython 3.14.2 to match the pinned Pyodide runtime. Repeat
+validation with `--engine chromium`, `firefox` and `webkit`. The
+[JavaScript API](runtime/MACS3.md) runs each command in a fresh worker, and the
+[browser example](examples/macs3/README.md) supports uploads, editable arguments
+and downloadable results on an ordinary static server. Inputs and outputs are
+held in memory; the validation fixtures do not establish whole-genome capacity.
+
+`scripts/package-macs3.py` requires matching native comparisons from all four
+engines. Its standalone ZIP includes the Python/WebAssembly runtime, scientific
+dependencies, example, fixtures, pinned sources and licence notices. The release
+workflow also extracts and tests that ZIP in all three browsers. A compiled build
+or a source checkpoint alone is not a validated release.
 
 ## Licence
 

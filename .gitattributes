@@ -6,3 +6,6 @@
 *.bai binary
 *.gz binary
 *.wasm binary
+# Licence provenance records bind the exact bytes from upstream archives.
+tools/macs3/runtime-notices/** -text
+tools/macs3/scientific-notices/** -text
