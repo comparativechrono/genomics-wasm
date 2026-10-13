@@ -19,7 +19,7 @@ assert.ok(config.datasets.plink2);
 const reportBase = resolve(process.env.PLINK2_DEMO_REPORT || join(root, 'reports/plink2', engine));
 const reportDir = join(reportBase, 'browser-demo');
 await mkdir(reportDir, { recursive: true });
-const summary = { schema: 1, runId: randomUUID(), engine, tools: ['plink2'], status: 'running', startedAt: new Date().toISOString(), phases: [], cases: [], assets: {}, sources: {}, browserErrors: [], browserConsole: [], requests: [], failedRequests: [], externalRequests: [], workerCalls: [], downloads: [] };
+const summary = { schema: 1, runId: randomUUID(), engine, tools: ['plink2'], status: 'running', startedAt: new Date().toISOString(), phases: [], cases: [], assets: {}, sources: {}, browserErrors: [], browserConsole: [], requests: [], serverRequests: [], failedRequests: [], externalRequests: [], workerCalls: [], downloads: [] };
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const phase = message => { summary.phases.push({ at: new Date().toISOString(), message }); console.log(`[plink2 demo] ${message}`); };
 const passed = (id, details = {}) => summary.cases.push({ id, status: 'passed', ...details });
@@ -42,13 +42,21 @@ async function serve(isolation = true) {
     response.setHeader('Cache-Control', 'no-store');
     try {
       const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+      // Playwright does not report every nested pthread worker request. Record
+      // actual served bytes here, including response completion, independently.
+      const served = { pathname, method: request.method, isolation, completed: false };
+      summary.serverRequests.push(served);
+      response.once('finish', () => { served.completed = true; served.status = response.statusCode; });
       const held = holds.get(pathname);
       if (held) { holds.delete(pathname); held.arrived(); await held.unblocked; }
       if (response.destroyed) return;
       const path = resolve(root, `.${pathname}`);
       if (!path.startsWith(root.endsWith(sep) ? root : `${root}${sep}`)) { response.writeHead(403).end(); return; }
       const filename = (await stat(path)).isDirectory() ? join(path, 'index.html') : path;
-      response.writeHead(200, { 'Content-Type': mime[extname(filename)] || 'application/octet-stream' }).end(await readFile(filename));
+      const bytes = await readFile(filename);
+      served.bytes = bytes.length;
+      served.sha256 = hash(bytes);
+      response.writeHead(200, { 'Content-Type': mime[extname(filename)] || 'application/octet-stream' }).end(bytes);
     } catch { if (!response.destroyed) response.writeHead(404).end('Not found'); }
   });
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
@@ -300,8 +308,10 @@ try {
   assert.deepEqual(await workerCalls(staticPage), []);
   await staticPage.close();
   passed('nonisolated-hosting-diagnostic');
-  const paths = summary.requests.filter(request => /^https?:/.test(request.url)).map(request => new URL(request.url).pathname);
-  for (const extension of ['mjs', 'wasm', 'worker.mjs']) assert.ok(paths.includes(`/dist/plink2/plink2.${extension}`), `Real local asset fetched: plink2.${extension}`);
+  for (const extension of ['mjs', 'wasm', 'worker.mjs']) {
+    const path = `dist/plink2/plink2.${extension}`;
+    assert.ok(summary.serverRequests.some(request => request.pathname === `/${path}` && request.method === 'GET' && request.isolation && request.completed && request.status === 200 && request.bytes > 0 && request.sha256 === summary.assets[path]), `Real local asset served with matching bytes: plink2.${extension}`);
+  }
   assert.ok(summary.workerCalls.length >= 14);
   assert.ok(summary.workerCalls.every(call => new URL(call.moduleUrl).pathname === '/dist/plink2/plink2.mjs'));
   assert.deepEqual(summary.externalRequests, []); assert.deepEqual(summary.browserErrors, []);
