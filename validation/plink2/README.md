@@ -92,7 +92,7 @@ Identities bind both native binaries, every WASM execution asset, build inputs,
 runtime modules, harness, comparator, case plan and the entire fixture manifest
 and bytes. The same identities are checked again at the end of the run; edits
 during execution invalidate the run. The strict packager independently
-recomputes comparisons against retained output files and requires matching
+verifies the recorded comparison evidence and requires matching
 Node, Chromium, Firefox and WebKit reports for the exact packaged files.
 Passing cases are the tested scope; this does not establish equivalence of
 every upstream PLINK 2 command or make arbitrary cohort sizes browser-safe.
