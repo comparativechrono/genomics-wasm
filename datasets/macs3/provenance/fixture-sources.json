@@ -1,0 +1,102 @@
+{
+  "macs3/atac-chrI.bedpe.gz": {
+    "source": "yeast_500k_SRR1822137.bedpe.gz",
+    "transformation": "Retain all records whose first tab-separated field is chrI, in source order. gzip mtime=0."
+  },
+  "macs3/background.bdg": {
+    "source": "synthetic",
+    "transformation": "Explicit artificial score track for independently calculable algebra/interval tests, not a biological measurement."
+  },
+  "macs3/background2.bdg": {
+    "source": "synthetic",
+    "transformation": "Explicit artificial score track for independently calculable algebra/interval tests, not a biological measurement."
+  },
+  "macs3/barcodes.txt": {
+    "source": "barcodes.txt",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/chip.bed.gz": {
+    "source": "CTCF_SE_ChIP_chr22_50k.bed.gz",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/chip.bedpe.gz": {
+    "source": "CTCF_PE_ChIP_chr22_50k.bedpe.gz",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/control.bed.gz": {
+    "source": "CTCF_SE_CTRL_chr22_50k.bed.gz",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/control.bedpe.gz": {
+    "source": "CTCF_PE_CTRL_chr22_50k.bedpe.gz",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/fragments.tsv.gz": {
+    "source": "test.fragments.tsv.gz",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/regions.bed": {
+    "source": "synthetic",
+    "transformation": "Exact regions above score 5 in signal.bdg."
+  },
+  "macs3/signal.bdg": {
+    "source": "synthetic",
+    "transformation": "Explicit artificial score track for independently calculable algebra/interval tests, not a biological measurement."
+  },
+  "macs3/signal2.bdg": {
+    "source": "synthetic",
+    "transformation": "Explicit artificial score track for independently calculable algebra/interval tests, not a biological measurement."
+  },
+  "macs3/tiny.bam": {
+    "source": "tiny.bam",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/tiny.bam.bai": {
+    "source": "tiny.bam.bai",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/tiny.sam.gz": {
+    "source": "tiny.sam.gz",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/training.bed": {
+    "source": "yeast_500k_SRR1822137.bedpe.gz",
+    "transformation": "Explicit whole-chrI training interval for deterministic small-model validation."
+  },
+  "macs3/upstream-peaks.narrowPeak": {
+    "source": "standard_results_callpeak_narrow/run_callpeak_narrow0_peaks.narrowPeak",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/variants-chip.bam": {
+    "source": "CTCF_PE_ChIP_chr22_50k.bam",
+    "transformation": "pysam 0.23.3: retain source-order mapped alignments overlapping union of upstream callvar_testing.narrowPeak intervals padded by 2000 bases each side; preserve complete header, sequence, quality, CIGAR, flags and auxiliary tags; BGZF re-encode and BAI index."
+  },
+  "macs3/variants-chip.bam.bai": {
+    "source": "CTCF_PE_ChIP_chr22_50k.bam",
+    "transformation": "pysam 0.23.3: retain source-order mapped alignments overlapping union of upstream callvar_testing.narrowPeak intervals padded by 2000 bases each side; preserve complete header, sequence, quality, CIGAR, flags and auxiliary tags; BGZF re-encode and BAI index."
+  },
+  "macs3/variants-control.bam": {
+    "source": "CTCF_PE_CTRL_chr22_50k.bam",
+    "transformation": "pysam 0.23.3: retain source-order mapped alignments overlapping union of upstream callvar_testing.narrowPeak intervals padded by 2000 bases each side; preserve complete header, sequence, quality, CIGAR, flags and auxiliary tags; BGZF re-encode and BAI index."
+  },
+  "macs3/variants-control.bam.bai": {
+    "source": "CTCF_PE_CTRL_chr22_50k.bam",
+    "transformation": "pysam 0.23.3: retain source-order mapped alignments overlapping union of upstream callvar_testing.narrowPeak intervals padded by 2000 bases each side; preserve complete header, sequence, quality, CIGAR, flags and auxiliary tags; BGZF re-encode and BAI index."
+  },
+  "macs3/variants.narrowPeak": {
+    "source": "callvar_testing.narrowPeak",
+    "transformation": "Unchanged upstream bytes."
+  },
+  "macs3/wide-background.bdg": {
+    "source": "synthetic",
+    "transformation": "Five sparse 1-gigabase intervals on distinct artificial chromosomes; aggregate 5,000,000,000 bases crosses signed and unsigned 32-bit arithmetic boundaries. No biological measurement claimed."
+  },
+  "macs3/wide-fragments.bedpe": {
+    "source": "synthetic",
+    "transformation": "Five sparse 1-gigabase intervals on distinct artificial chromosomes; aggregate 5,000,000,000 bases crosses signed and unsigned 32-bit arithmetic boundaries. No biological measurement claimed."
+  },
+  "macs3/wide-signal.bdg": {
+    "source": "synthetic",
+    "transformation": "Five sparse 1-gigabase intervals on distinct artificial chromosomes; aggregate 5,000,000,000 bases crosses signed and unsigned 32-bit arithmetic boundaries. No biological measurement claimed."
+  }
+}

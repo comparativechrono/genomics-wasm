@@ -1,0 +1,472 @@
+{
+  "commands": {
+    "callpeak": {
+      "label": "Call narrow peaks",
+      "description": "Call narrow peaks in public chromosome 22 ChIP-seq reads against the corresponding control. The example uses a fixed 150 bp extension and q-value cutoff 0.05.",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bed.gz",
+        "-c",
+        "control.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "51000000",
+        "--nomodel",
+        "--extsize",
+        "150",
+        "--keep-dup",
+        "all",
+        "-q",
+        "0.05",
+        "-B",
+        "-n",
+        "narrow",
+        "--outdir",
+        "narrow"
+      ],
+      "outputs": [],
+      "outputDirectories": [
+        "narrow"
+      ]
+    },
+    "callpeak-broad": {
+      "label": "Call broad peaks",
+      "description": "Call broad enrichment regions on the same public ChIP-seq subset. Adjust genome size, model and thresholds for your own experiment.",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bed.gz",
+        "-c",
+        "control.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "51000000",
+        "--nomodel",
+        "--extsize",
+        "150",
+        "--keep-dup",
+        "all",
+        "-q",
+        "0.05",
+        "--broad",
+        "--broad-cutoff",
+        "0.1",
+        "-n",
+        "broad",
+        "--outdir",
+        "broad"
+      ],
+      "outputs": [],
+      "outputDirectories": [
+        "broad"
+      ]
+    },
+    "callpeak-paired": {
+      "label": "Call peaks from paired fragments",
+      "description": "Use observed fragment intervals in MACS3 three-column BEDPE format. This format differs from the six-column BEDTools BEDPE format.",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bedpe.gz",
+        "-c",
+        "control.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "-g",
+        "51000000",
+        "--keep-dup",
+        "all",
+        "-q",
+        "0.05",
+        "-n",
+        "paired",
+        "--outdir",
+        "paired"
+      ],
+      "outputs": [],
+      "outputDirectories": [
+        "paired"
+      ]
+    },
+    "filterdup": {
+      "label": "Filter duplicate alignments",
+      "description": "Keep one read at each genomic position and strand in the public ChIP-seq example.",
+      "args": [
+        "filterdup",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "--keep-dup",
+        "1",
+        "-o",
+        "deduplicated.bed"
+      ],
+      "outputs": [
+        "deduplicated.bed"
+      ],
+      "outputDirectories": []
+    },
+    "pileup": {
+      "label": "Generate a coverage track",
+      "description": "Extend ChIP-seq reads to 150 bp and write their coverage as a bedGraph track. This output can be used by later commands.",
+      "args": [
+        "pileup",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "--extsize",
+        "150",
+        "-o",
+        "pileup.bdg"
+      ],
+      "outputs": [
+        "pileup.bdg"
+      ],
+      "outputDirectories": []
+    },
+    "randsample": {
+      "label": "Sample reads reproducibly",
+      "description": "Keep approximately 10% of the public ChIP-seq reads using random seed 42.",
+      "args": [
+        "randsample",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "-p",
+        "10",
+        "--seed",
+        "42",
+        "-o",
+        "sampled.bed"
+      ],
+      "outputs": [
+        "sampled.bed"
+      ],
+      "outputDirectories": []
+    },
+    "predictd": {
+      "label": "Measure paired fragment lengths",
+      "description": "Report the mean fragment length from the public paired-end alignment subset. In paired-end mode this command reports to the command log and does not create a model file.",
+      "args": [
+        "predictd",
+        "-i",
+        "chip.bedpe.gz",
+        "-f",
+        "BEDPE"
+      ],
+      "outputs": [],
+      "outputDirectories": []
+    },
+    "bdgpeakcall": {
+      "label": "Call peaks from a score track",
+      "description": "Call regions with scores at least 5, length at least 50 bp and gaps no larger than 50 bp in a small synthetic track with known regions.",
+      "args": [
+        "bdgpeakcall",
+        "-i",
+        "signal.bdg",
+        "-c",
+        "5",
+        "-l",
+        "50",
+        "-g",
+        "50",
+        "-o",
+        "score-peaks.bed"
+      ],
+      "outputs": [
+        "score-peaks.bed"
+      ],
+      "outputDirectories": []
+    },
+    "bdgbroadcall": {
+      "label": "Call broad regions from a score track",
+      "description": "Call nested broad regions in a synthetic score track with peak cutoff 5 and linking cutoff 2.",
+      "args": [
+        "bdgbroadcall",
+        "-i",
+        "signal.bdg",
+        "-c",
+        "5",
+        "-C",
+        "2",
+        "-l",
+        "50",
+        "-g",
+        "50",
+        "-G",
+        "200",
+        "-o",
+        "score-broad.bed"
+      ],
+      "outputs": [
+        "score-broad.bed"
+      ],
+      "outputDirectories": []
+    },
+    "bdgcmp": {
+      "label": "Compare treatment and control tracks",
+      "description": "Calculate Poisson enrichment scores from synthetic treatment and background tracks.",
+      "args": [
+        "bdgcmp",
+        "-t",
+        "signal.bdg",
+        "-c",
+        "background.bdg",
+        "-m",
+        "ppois",
+        "-o",
+        "comparison.bdg"
+      ],
+      "outputs": [
+        "comparison.bdg"
+      ],
+      "outputDirectories": []
+    },
+    "bdgopt": {
+      "label": "Transform track scores",
+      "description": "Multiply every score in the synthetic bedGraph track by 2.",
+      "args": [
+        "bdgopt",
+        "-i",
+        "signal.bdg",
+        "-m",
+        "multiply",
+        "-p",
+        "2",
+        "-o",
+        "scaled.bdg"
+      ],
+      "outputs": [
+        "scaled.bdg"
+      ],
+      "outputDirectories": []
+    },
+    "cmbreps": {
+      "label": "Combine replicate score tracks",
+      "description": "Average scores from two synthetic tracks with matching genomic coordinates.",
+      "args": [
+        "cmbreps",
+        "-i",
+        "signal.bdg",
+        "signal2.bdg",
+        "-m",
+        "mean",
+        "-o",
+        "combined.bdg"
+      ],
+      "outputs": [
+        "combined.bdg"
+      ],
+      "outputDirectories": []
+    },
+    "bdgdiff": {
+      "label": "Find differential regions",
+      "description": "Compare synthetic treatment and background tracks for two conditions using log-likelihood ratio cutoff 1.",
+      "args": [
+        "bdgdiff",
+        "--t1",
+        "signal.bdg",
+        "--c1",
+        "background.bdg",
+        "--t2",
+        "signal2.bdg",
+        "--c2",
+        "background2.bdg",
+        "-C",
+        "1",
+        "-l",
+        "50",
+        "-g",
+        "25",
+        "-o",
+        "condition1.bed",
+        "condition2.bed",
+        "common.bed"
+      ],
+      "outputs": [
+        "condition1.bed",
+        "condition2.bed",
+        "common.bed"
+      ],
+      "outputDirectories": []
+    },
+    "refinepeak": {
+      "label": "Refine candidate peak summits",
+      "description": "Refine candidate summits using the public single-end ChIP-seq reads.",
+      "args": [
+        "refinepeak",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "-b",
+        "upstream-peaks.narrowPeak",
+        "-o",
+        "refined.bed"
+      ],
+      "outputs": [
+        "refined.bed"
+      ],
+      "outputDirectories": []
+    },
+    "hmmratac": {
+      "label": "Analyze ATAC cutoffs",
+      "description": "Run HMMRATAC cutoff analysis on a public yeast chromosome I ATAC-seq subset. The report helps choose training and decoding cutoffs; this preset stops before model training.",
+      "args": [
+        "hmmratac",
+        "-i",
+        "atac-chrI.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--cutoff-analysis-only",
+        "--no-fragem",
+        "-n",
+        "atac",
+        "--outdir",
+        "atac"
+      ],
+      "outputs": [],
+      "outputDirectories": [
+        "atac"
+      ]
+    },
+    "callvar": {
+      "label": "Call variants in peak regions",
+      "description": "Call variants in public indexed treatment and control BAM files over supplied peak regions. Browser execution uses one process.",
+      "args": [
+        "callvar",
+        "-t",
+        "variants-chip.bam",
+        "-c",
+        "variants-control.bam",
+        "-b",
+        "variants.narrowPeak",
+        "-o",
+        "variants.vcf",
+        "-m",
+        "1"
+      ],
+      "outputs": [
+        "variants.vcf"
+      ],
+      "outputDirectories": []
+    },
+    "help": {
+      "label": "Show command-line help",
+      "description": "Show all MACS3 subcommands. Edit the arguments to [\"callpeak\", \"--help\"] or another subcommand for its full options.",
+      "args": [
+        "--help"
+      ],
+      "outputs": [],
+      "outputDirectories": []
+    },
+    "version": {
+      "label": "Show MACS3 version",
+      "description": "Print the bundled upstream MACS3 version. No data is needed.",
+      "args": [
+        "--version"
+      ],
+      "outputs": [],
+      "outputDirectories": []
+    },
+    "hmmratac-model": {
+      "label": "Train and apply a Poisson ATAC model",
+      "description": "Train a Poisson HMM on selected regions of the public yeast chromosome I ATAC-seq subset, then decode accessible regions with 1 kb flanks. Fixed fragment distributions and a recorded random seed make this small example reproducible.",
+      "args": [
+        "hmmratac",
+        "-i",
+        "atac-chrI.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--no-fragem",
+        "-t",
+        "training.bed",
+        "--training-flanking",
+        "1000",
+        "--randomSeed",
+        "12345",
+        "--minlen",
+        "50",
+        "-c",
+        "1.2",
+        "-n",
+        "model",
+        "--outdir",
+        "model",
+        "--save-states",
+        "--save-likelihoods",
+        "--hmm-type",
+        "poisson"
+      ],
+      "outputs": [],
+      "outputDirectories": [
+        "model"
+      ]
+    },
+    "hmmratac-gaussian": {
+      "label": "Train and apply a Gaussian ATAC model",
+      "description": "Learn the fragment distributions and select training regions using upstream defaults, then train and apply a Gaussian HMM to the public yeast chromosome I subset. A recorded random seed and 1 kb flanks support reproducible comparisons.",
+      "args": [
+        "hmmratac",
+        "-i",
+        "atac-chrI.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--training-flanking",
+        "1000",
+        "--randomSeed",
+        "12345",
+        "--minlen",
+        "50",
+        "-c",
+        "1.2",
+        "-n",
+        "gaussian",
+        "--outdir",
+        "gaussian",
+        "--save-states",
+        "--save-likelihoods",
+        "--hmm-type",
+        "gaussian"
+      ],
+      "outputs": [],
+      "outputDirectories": [
+        "gaussian"
+      ]
+    }
+  },
+  "datasets": {
+    "macs3": {
+      "label": "Public MACS3 examples and synthetic score tracks",
+      "description": "Public upstream ChIP-seq, paired-end, ATAC-seq and variant fixtures, plus clearly labeled synthetic score tracks for inspecting exact transformations. These small subsets demonstrate commands; they do not describe the full experiments.",
+      "path": "../../datasets/macs3/macs3/",
+      "files": [
+        "chip.bed.gz",
+        "control.bed.gz",
+        "chip.bedpe.gz",
+        "control.bedpe.gz",
+        "atac-chrI.bedpe.gz",
+        "fragments.tsv.gz",
+        "barcodes.txt",
+        "variants-chip.bam",
+        "variants-chip.bam.bai",
+        "variants-control.bam",
+        "variants-control.bam.bai",
+        "variants.narrowPeak",
+        "signal.bdg",
+        "background.bdg",
+        "signal2.bdg",
+        "background2.bdg",
+        "regions.bed",
+        "training.bed",
+        "upstream-peaks.narrowPeak"
+      ]
+    }
+  }
+}

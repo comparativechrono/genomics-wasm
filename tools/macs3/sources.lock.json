@@ -1,0 +1,1519 @@
+{
+  "schema": 1,
+  "tool": "macs3",
+  "version": "3.0.5",
+  "archive": "macs3-3.0.5.tar.gz",
+  "url": "https://files.pythonhosted.org/packages/b2/4b/d228c770577e48a11bdad778130590f0f68e7659e3d5bafa1bdef7ce25ad/macs3-3.0.5.tar.gz",
+  "sha256": "22cb5e22903ef0598e8078cc19d4593cb43be43870808335c98e0f7298597224",
+  "python": "3.14.2",
+  "pyodide": "314.0.7",
+  "emscripten": "5.0.3",
+  "dependencies": {
+    "pyodide-core": {
+      "version": "314.0.7",
+      "archive": "pyodide-core-314.0.7.tar.bz2",
+      "url": "https://github.com/pyodide/pyodide/releases/download/314.0.7/pyodide-core-314.0.7.tar.bz2",
+      "sha256": "2abdcc2e35208af406e07724cffa85bc582ced97e9028383ecf5462541393f95"
+    },
+    "xbuildenv": {
+      "version": "314.0.7",
+      "archive": "xbuildenv-314.0.7.tar.bz2",
+      "url": "https://github.com/pyodide/pyodide/releases/download/314.0.7/xbuildenv-314.0.7.tar.bz2",
+      "sha256": "9d69e6cd67d36ecb97c02c2df4ba4fbc4a66c81e3bb9edda48f57483d3ce9bc9"
+    },
+    "emsdk": {
+      "version": "5.0.3",
+      "archive": "emsdk-5.0.3.tar.gz",
+      "url": "https://codeload.github.com/emscripten-core/emsdk/tar.gz/refs/tags/5.0.3",
+      "sha256": "9a44a58bca0a3ea594ea7340d9a726cb58c772144dd37406d1c4e921823a75eb"
+    },
+    "runtime-pyodide": {
+      "name": "pyodide",
+      "version": "314.0.7",
+      "archive": "pyodide-314.0.7.tar.gz",
+      "url": "https://github.com/pyodide/pyodide/archive/refs/tags/314.0.7.tar.gz",
+      "sha256": "0731cd39bd1897c8cf0cac4da5cf9752594e5427cf4bad584200f8c9b617b9ef",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/pyodide/LICENSE",
+        "tools/macs3/runtime-notices/pyodide/src__js__vendor__stackframe__LICENSE"
+      ]
+    },
+    "runtime-emscripten": {
+      "name": "emscripten",
+      "version": "5.0.3",
+      "archive": "emscripten-5.0.3.tar.gz",
+      "url": "https://github.com/emscripten-core/emscripten/archive/refs/tags/5.0.3.tar.gz",
+      "sha256": "b32ce4192bae12f15b06b1eec67b7ea6ac8ae809fc81230a43354c3c24251360",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/emscripten/LICENSE",
+        "tools/macs3/runtime-notices/emscripten/system__lib__compiler-rt__LICENSE.TXT",
+        "tools/macs3/runtime-notices/emscripten/system__lib__libc__musl__COPYRIGHT",
+        "tools/macs3/runtime-notices/emscripten/system__lib__libcxx__LICENSE.TXT",
+        "tools/macs3/runtime-notices/emscripten/system__lib__libcxxabi__LICENSE.TXT",
+        "tools/macs3/runtime-notices/emscripten/system__lib__libunwind__LICENSE.TXT",
+        "tools/macs3/runtime-notices/emscripten/system__lib__llvm-libc__LICENSE.TXT",
+        "tools/macs3/runtime-notices/emscripten/system__lib__mimalloc__LICENSE",
+        "tools/macs3/runtime-notices/emscripten/third_party__mini-lz4.js.notice",
+        "tools/macs3/runtime-notices/emscripten/system__lib__dlmalloc.c.notice"
+      ]
+    },
+    "runtime-libffi": {
+      "name": "libffi",
+      "version": "f08493d249d2067c8b3207ba46693dd858f95db3",
+      "archive": "libffi-f08493d249d2067c8b3207ba46693dd858f95db3.tar.gz",
+      "url": "https://github.com/libffi/libffi/archive/f08493d249d2067c8b3207ba46693dd858f95db3.tar.gz",
+      "sha256": "0c4e5647b79e21b900eb872dd98a3e0a66be12b36ad89677f61fd901a2615778",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/libffi/LICENSE",
+        "tools/macs3/runtime-notices/libffi/LICENSE-BUILDTOOLS"
+      ]
+    },
+    "runtime-hiwire": {
+      "name": "hiwire",
+      "version": "6a1e67280a15d929ebeceee54a6358c9c8d5f697",
+      "archive": "hiwire-6a1e67280a15d929ebeceee54a6358c9c8d5f697.tar.gz",
+      "url": "https://github.com/pyodide/hiwire/archive/6a1e67280a15d929ebeceee54a6358c9c8d5f697.tar.gz",
+      "sha256": "0d64144f149c0de3bd157551421833c6c16fdc0492c312a6325ffc25d185c93c",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/hiwire/LICENSE"
+      ]
+    },
+    "runtime-xz": {
+      "name": "xz",
+      "version": "5.2.2",
+      "archive": "xz-5.2.2.tar.gz",
+      "url": "https://github.com/xz-mirror/xz/releases/download/v5.2.2/xz-5.2.2.tar.gz",
+      "sha256": "73df4d5d34f0468bd57d09f2d8af363e95ed6cc3a4a86129d2f2c366259902a2",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/xz/COPYING",
+        "tools/macs3/runtime-notices/xz/COPYING.LGPLv2.1",
+        "tools/macs3/runtime-notices/xz/COPYING.GPLv2",
+        "tools/macs3/runtime-notices/xz/COPYING.GPLv3"
+      ]
+    },
+    "runtime-zstd": {
+      "name": "zstd",
+      "version": "1.5.7",
+      "archive": "cpython-source-deps-zstd-1.5.7.tar.gz",
+      "url": "https://github.com/python/cpython-source-deps/archive/refs/tags/zstd-1.5.7.tar.gz",
+      "sha256": "f24b52470d12f466e9fa4fcc94e6c530625ada51d7b36de7fdc6ed7e6f499c8e",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/zstd/COPYING",
+        "tools/macs3/runtime-notices/zstd/LICENSE",
+        "tools/macs3/runtime-notices/zstd/build__LICENSE"
+      ]
+    },
+    "runtime-sqlite": {
+      "name": "sqlite",
+      "version": "3.39.0",
+      "archive": "sqlite-autoconf-3390000.tar.gz",
+      "url": "https://www.sqlite.org/2022/sqlite-autoconf-3390000.tar.gz",
+      "sha256": "e90bcaef6dd5813fcdee4e867f6b65f3c9bfd0aec0f1017f9f3bbce1e4ed09e2",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/sqlite/sqlite3.c.notice"
+      ]
+    },
+    "runtime-bzip2": {
+      "name": "bzip2",
+      "version": "1.0.6",
+      "archive": "bzip2-1.0.6.zip",
+      "url": "https://github.com/emscripten-ports/bzip2/archive/1.0.6.zip",
+      "sha256": "9628e7bc598719335ce1d1219c1a4fc241652c0a7b4d993fa82a9b98a6c5dec6",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/bzip2/LICENSE"
+      ]
+    },
+    "runtime-zlib": {
+      "name": "zlib",
+      "version": "1.3.1",
+      "archive": "zlib-1.3.1-emscripten.tar.gz",
+      "url": "https://github.com/madler/zlib/archive/refs/tags/v1.3.1.tar.gz",
+      "sha256": "17e88863f3600672ab49182f217281b6fc4d3c762bde361935e436a95214d05c",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/zlib/LICENSE"
+      ]
+    },
+    "runtime-cpython": {
+      "name": "cpython",
+      "version": "3.14.2",
+      "archive": "Python-3.14.2.tgz",
+      "url": "https://www.python.org/ftp/python/3.14.2/Python-3.14.2.tgz",
+      "sha256": "c609e078adab90e2c6bacb6afafacd5eaf60cd94cf670f1e159565725fcd448d",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/cpython/LICENSE",
+        "tools/macs3/runtime-notices/cpython/Doc__license.rst",
+        "tools/macs3/runtime-notices/cpython/Modules__expat__COPYING",
+        "tools/macs3/runtime-notices/cpython/Modules___decimal__libmpdec__mpdecimal.c.notice",
+        "tools/macs3/runtime-notices/cpython/Modules___hacl__Hacl_Hash_MD5.c.notice"
+      ]
+    },
+    "runtime-ws": {
+      "name": "ws",
+      "version": "8.18.3",
+      "archive": "ws-8.18.3.tgz",
+      "url": "https://registry.npmjs.org/ws/-/ws-8.18.3.tgz",
+      "sha256": "424be604c8e7926fc29a1f067bf2dac256af3bcea62fe30395018bbaf8a9be2a",
+      "licensePaths": [
+        "tools/macs3/runtime-notices/ws/LICENSE"
+      ]
+    },
+    "numpy": {
+      "version": "2.4.6",
+      "archive": "macs3-runtime-sources/numpy-2.4.6.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/d0/ad/fed0499ce6a338d2a03ebae59cd15093910c8875328855781952abf6c2fe/numpy-2.4.6.tar.gz",
+      "sha256": "f3a3570c4a2a16746ac2c31a7c7c7b0c186b95ce902e33db6f28094ed7387dda",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/numpy-2.4.6-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/f3/eb/ebffaa97dc55502df69584a8f0dcf07f69a3e0b3e2323670a2722db9aa39/numpy-2.4.6-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "a2c306dea656c12c68f51f4cea133cbe78ca7435eb28c735eac1d3ebe73be6e8"
+      },
+      "wheel": {
+        "filename": "pyodide/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "archive": "macs3-pyodide-wheels/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf"
+      },
+      "origin": "pyodide"
+    },
+    "scipy": {
+      "version": "1.18.0",
+      "archive": "macs3-runtime-sources/scipy-1.18.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/a7/25/c2700dfaf6442b4effaa91af24ebce5dc9d31bb4a69706313aae70d72cd0/scipy-1.18.0.tar.gz",
+      "sha256": "67b2ad2ad54c72ca6d04975a9b2df8c3638c34ddd5b28738e94fc2b57929d378",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/scipy-1.18.0-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/7f/c4/bc41eb19b0fd0db868f4132920879019318d80cc522ad8f2bca4611af808/scipy-1.18.0-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "8ca01e8ae69f1b18e9a58d91afead31be3cef0dd905a10249dac559ee15460a0"
+      },
+      "wheel": {
+        "filename": "pyodide/scipy-1.18.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "archive": "macs3-pyodide-wheels/scipy-1.18.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/scipy-1.18.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "sha256": "17ee329a957863516d1bb6a6aaa0c60576fac027e9cd3d43de27f58b5b599b50"
+      },
+      "origin": "pyodide"
+    },
+    "six": {
+      "version": "1.17.0",
+      "archive": "macs3-runtime-sources/six-1.17.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz",
+      "sha256": "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/six-1.17.0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+        "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"
+      },
+      "wheel": {
+        "filename": "pyodide/six-1.17.0-py2.py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/six-1.17.0-py2.py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/six-1.17.0-py2.py3-none-any.whl",
+        "sha256": "228c50f73aa7addf2c2ccf2979c256802a59ab69cad8152b31b9443cc8140f42"
+      },
+      "origin": "pyodide"
+    },
+    "python-dateutil": {
+      "version": "2.9.0.post0",
+      "archive": "macs3-runtime-sources/python-dateutil-2.9.0.post0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz",
+      "sha256": "37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+        "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
+      },
+      "wheel": {
+        "filename": "pyodide/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+        "sha256": "9b13365edf9c188f570baf9c540bbb3029ada2a2dacb9694b3659941693ee9e5"
+      },
+      "origin": "pyodide"
+    },
+    "pytz": {
+      "version": "2026.1.post1",
+      "archive": "macs3-runtime-sources/pytz-2026.1.post1.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/56/db/b8721d71d945e6a8ac63c0fc900b2067181dbb50805958d4d4661cf7d277/pytz-2026.1.post1.tar.gz",
+      "sha256": "3378dde6a0c3d26719182142c56e60c7f9af7e968076f31aae569d72a0358ee1",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/pytz-2026.1.post1-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/10/99/781fe0c827be2742bcc775efefccb3b048a3a9c6ce9aec0cbf4a101677e5/pytz-2026.1.post1-py2.py3-none-any.whl",
+        "sha256": "f2fd16142fda348286a75e1a524be810bb05d444e5a081f37f7affc635035f7a"
+      },
+      "wheel": {
+        "filename": "pyodide/pytz-2026.1.post1-py2.py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/pytz-2026.1.post1-py2.py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pytz-2026.1.post1-py2.py3-none-any.whl",
+        "sha256": "b8249d6450146e0b61e6d710dc02ebb35a904796c4c2f97fe87d4ac5872db36a"
+      },
+      "origin": "pyodide"
+    },
+    "pandas": {
+      "version": "3.0.2",
+      "archive": "macs3-runtime-sources/pandas-3.0.2.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/da/99/b342345300f13440fe9fe385c3c481e2d9a595ee3bab4d3219247ac94e9a/pandas-3.0.2.tar.gz",
+      "sha256": "f4753e73e34c8d83221ba58f232433fca2748be8b18dbca02d242ed153945043",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/pandas-3.0.2-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/15/88/3cdd54fa279341afa10acf8d2b503556b1375245dccc9315659f795dd2e9/pandas-3.0.2-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "deeca1b5a931fdf0c2212c8a659ade6d3b1edc21f0914ce71ef24456ca7a6535"
+      },
+      "wheel": {
+        "filename": "pyodide/pandas-3.0.2-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "archive": "macs3-pyodide-wheels/pandas-3.0.2-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pandas-3.0.2-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "sha256": "45ff57772cc2f366a8582c7d3097cc4e6676342ecd5a3c08184a43462d5a02ae"
+      },
+      "origin": "pyodide"
+    },
+    "joblib": {
+      "version": "1.5.3",
+      "archive": "macs3-runtime-sources/joblib-1.5.3.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/41/f2/d34e8b3a08a9cc79a50b2208a93dce981fe615b64d5a4d4abee421d898df/joblib-1.5.3.tar.gz",
+      "sha256": "8561a3269e6801106863fd0d6d84bb737be9e7631e33aaed3fb9ce5953688da3",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/joblib-1.5.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/7b/91/984aca2ec129e2757d1e4e3c81c3fcda9d0f85b74670a094cc443d9ee949/joblib-1.5.3-py3-none-any.whl",
+        "sha256": "5fc3c5039fc5ca8c0276333a188bbd59d6b7ab37fe6632daa76bc7f9ec18e713"
+      },
+      "wheel": {
+        "filename": "pyodide/joblib-1.5.3-py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/joblib-1.5.3-py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/joblib-1.5.3-py3-none-any.whl",
+        "sha256": "fb2860ff70d0b6b43a3df5e3ce52d3a938ad2fcacd80a3f2f3f37e930843e607"
+      },
+      "origin": "pyodide"
+    },
+    "threadpoolctl": {
+      "version": "3.6.0",
+      "archive": "macs3-runtime-sources/threadpoolctl-3.6.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/b7/4d/08c89e34946fce2aec4fbb45c9016efd5f4d7f24af8e5d93296e935631d8/threadpoolctl-3.6.0.tar.gz",
+      "sha256": "8ab8b4aa3491d812b623328249fab5302a68d2d71745c8a4c719a2fcaba9f44e",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/threadpoolctl-3.6.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl",
+        "sha256": "43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb"
+      },
+      "wheel": {
+        "filename": "pyodide/threadpoolctl-3.6.0-py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/threadpoolctl-3.6.0-py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/threadpoolctl-3.6.0-py3-none-any.whl",
+        "sha256": "3521783ffb6bf212e03fb67ec1955af206d6ba7ea09ac21f200875077bbbe7c2"
+      },
+      "origin": "pyodide"
+    },
+    "scikit-learn": {
+      "version": "1.8.0",
+      "archive": "macs3-runtime-sources/scikit_learn-1.8.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/0e/d4/40988bf3b8e34feec1d0e6a051446b1f66225f8529b9309becaeef62b6c4/scikit_learn-1.8.0.tar.gz",
+      "sha256": "9bccbb3b40e3de10351f8f5068e105d0f4083b1a65fa07b6634fbc401a6287fd",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/scikit_learn-1.8.0-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/b8/cb/861b41341d6f1245e6ca80b1c1a8c4dfce43255b03df034429089ca2a2c5/scikit_learn-1.8.0-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "fb65db5d7531bccf3a4f6bec3462223bea71384e2cda41da0f10b7c292b9e7c4"
+      },
+      "wheel": {
+        "filename": "pyodide/scikit_learn-1.8.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "archive": "macs3-pyodide-wheels/scikit_learn-1.8.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/scikit_learn-1.8.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "sha256": "432f560f54c5283d13e9d7c11dddc8bdf2f15aec326cc1d7314f600786154181"
+      },
+      "origin": "pyodide"
+    },
+    "pkgconfig": {
+      "version": "1.6.0",
+      "archive": "macs3-runtime-sources/pkgconfig-1.6.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/52/fd/0adde075cd3bfecd557bc7d757e00e231d34d8a6edb4c8d1642759254c21/pkgconfig-1.6.0.tar.gz",
+      "sha256": "4a5a6631ce937fafac457104a40d558785a658bbdca5c49b6295bc3fd651907f",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/pkgconfig-1.6.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/75/6f/f7ec07fba48f07c555cc4099481df644fbbc12067879072c17ac229f6556/pkgconfig-1.6.0-py3-none-any.whl",
+        "sha256": "98e71754855e9563838d952a160eb577edabb57782e49853edb5381927e6bea1"
+      },
+      "wheel": {
+        "filename": "pyodide/pkgconfig-1.6.0-py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/pkgconfig-1.6.0-py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pkgconfig-1.6.0-py3-none-any.whl",
+        "sha256": "721ee452ae0f46f7d41b0e8bc27ce5e2036e4691f1a8c08ec6b5ace221c6e1f1"
+      },
+      "origin": "pyodide"
+    },
+    "h5py": {
+      "version": "3.13.0",
+      "archive": "macs3-runtime-sources/h5py-3.13.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/03/2e/a22d6a8bfa6f8be33e7febd985680fba531562795f0a9077ed1eb047bfb0/h5py-3.13.0.tar.gz",
+      "sha256": "1870e46518720023da85d0895a1960ff2ce398c5671eac3b1a41ec696b7105c3",
+      "wheel": {
+        "filename": "pyodide/h5py-3.13.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "archive": "macs3-pyodide-wheels/h5py-3.13.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/h5py-3.13.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+        "sha256": "2e25205901ed3d47d1651ee55fa9eacc29473785fee2b64d9dac5a5d27f738f2"
+      },
+      "origin": "pyodide"
+    },
+    "packaging": {
+      "version": "26.1",
+      "archive": "macs3-runtime-sources/packaging-26.1.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/df/de/0d2b39fb4af88a0258f3bac87dfcbb48e73fbdea4a2ed0e2213f9a4c2f9a/packaging-26.1.tar.gz",
+      "sha256": "f042152b681c4bfac5cae2742a55e103d27ab2ec0f3d88037136b6bfe7c9c5de",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/packaging-26.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/7a/c2/920ef838e2f0028c8262f16101ec09ebd5969864e5a64c4c05fad0617c56/packaging-26.1-py3-none-any.whl",
+        "sha256": "5d9c0669c6285e491e0ced2eee587eaf67b670d94a19e94e3984a481aba6802f"
+      },
+      "wheel": {
+        "filename": "pyodide/packaging-26.1-py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/packaging-26.1-py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/packaging-26.1-py3-none-any.whl",
+        "sha256": "565acbbea54da30348b6d68b6a54373e6f777987db9f1db6966b4b3a5060d303"
+      },
+      "origin": "pyodide"
+    },
+    "hmmlearn": {
+      "version": "0.3.3",
+      "archive": "macs3-runtime-sources/hmmlearn-0.3.3.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/bb/77/89cdfbfaa2beb51f8cc57f83f9b4f653ec3faa660ba2e2146cc84bfc8eb9/hmmlearn-0.3.3.tar.gz",
+      "sha256": "1d3c5dc4c5257e0c238dc1fe5387700b8cb987eab808edb3e0c73829f1cc44ec"
+    },
+    "anndata": {
+      "version": "0.10.9",
+      "archive": "macs3-runtime-sources/anndata-0.10.9.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/99/10/2f8ef0568ca38adce91585cc4da33167cf7bba1e47abd5d2f9cdfca8d41a/anndata-0.10.9.tar.gz",
+      "sha256": "fe36f2f3f8040ffed866c4932253407f594cfe34d420fe5b7854986cb6bb7178",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/anndata-0.10.9-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ca/a2/52b1fb4d7bbb022929300a4351c363958c1377b33c0d0be94f803987af7a/anndata-0.10.9-py3-none-any.whl",
+        "sha256": "e16c259bfd06c0f9ba7fdc9c2208828f5ef5f174356596c33206bb3f015b053a"
+      },
+      "wheel": {
+        "archive": "macs3-native-wheels/anndata-0.10.9-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ca/a2/52b1fb4d7bbb022929300a4351c363958c1377b33c0d0be94f803987af7a/anndata-0.10.9-py3-none-any.whl",
+        "sha256": "e16c259bfd06c0f9ba7fdc9c2208828f5ef5f174356596c33206bb3f015b053a"
+      },
+      "origin": "wheel"
+    },
+    "array-api-compat": {
+      "version": "1.11.2",
+      "archive": "macs3-runtime-sources/array_api_compat-1.11.2.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/6c/1e/d04312a19a67744298b7546885149488b8afbb965dfe693aa4964bb60586/array_api_compat-1.11.2.tar.gz",
+      "sha256": "a3b7f7b6af18f4c42e79423b1b2479798998b6a74355069d77a01a5282755b5d",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/array_api_compat-1.11.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/9f/d8/3388c7da49f522e51ab2f919797db28782216cadc9ecc9976160302cfcd6/array_api_compat-1.11.2-py3-none-any.whl",
+        "sha256": "b1d0059714a4153b3ae37c989e47b07418f727be5b22908dd3cf9d19bdc2c547"
+      },
+      "wheel": {
+        "archive": "macs3-native-wheels/array_api_compat-1.11.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/9f/d8/3388c7da49f522e51ab2f919797db28782216cadc9ecc9976160302cfcd6/array_api_compat-1.11.2-py3-none-any.whl",
+        "sha256": "b1d0059714a4153b3ae37c989e47b07418f727be5b22908dd3cf9d19bdc2c547"
+      },
+      "origin": "wheel"
+    },
+    "natsort": {
+      "version": "8.4.0",
+      "archive": "macs3-runtime-sources/natsort-8.4.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/e2/a9/a0c57aee75f77794adaf35322f8b6404cbd0f89ad45c87197a937764b7d0/natsort-8.4.0.tar.gz",
+      "sha256": "45312c4a0e5507593da193dedd04abb1469253b601ecaf63445ad80f0a1ea581",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/natsort-8.4.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ef/82/7a9d0550484a62c6da82858ee9419f3dd1ccc9aa1c26a1e43da3ecd20b0d/natsort-8.4.0-py3-none-any.whl",
+        "sha256": "4732914fb471f56b5cce04d7bae6f164a592c7712e1c85f9ef585e197299521c"
+      },
+      "wheel": {
+        "archive": "macs3-native-wheels/natsort-8.4.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ef/82/7a9d0550484a62c6da82858ee9419f3dd1ccc9aa1c26a1e43da3ecd20b0d/natsort-8.4.0-py3-none-any.whl",
+        "sha256": "4732914fb471f56b5cce04d7bae6f164a592c7712e1c85f9ef585e197299521c"
+      },
+      "origin": "wheel"
+    },
+    "pybind11": {
+      "version": "3.0.1",
+      "archive": "macs3-runtime-sources/pybind11-3.0.1.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/2f/7b/a6d8dcb83c457e24a9df1e4d8fd5fb8034d4bbc62f3c324681e8a9ba57c2/pybind11-3.0.1.tar.gz",
+      "sha256": "9c0f40056a016da59bab516efb523089139fcc6f2ba7e4930854c61efb932051",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/pybind11-3.0.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/cd/8a/37362fc2b949d5f733a8b0f2ff51ba423914cabefe69f1d1b6aab710f5fe/pybind11-3.0.1-py3-none-any.whl",
+        "sha256": "aa8f0aa6e0a94d3b64adfc38f560f33f15e589be2175e103c0a33c6bce55ee89"
+      },
+      "wheel": {
+        "archive": "macs3-native-wheels/pybind11-3.0.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/cd/8a/37362fc2b949d5f733a8b0f2ff51ba423914cabefe69f1d1b6aab710f5fe/pybind11-3.0.1-py3-none-any.whl",
+        "sha256": "aa8f0aa6e0a94d3b64adfc38f560f33f15e589be2175e103c0a33c6bce55ee89"
+      },
+      "origin": "wheel"
+    },
+    "native-hdf5": {
+      "version": "1.12.1",
+      "archive": "macs3-runtime-sources/hdf5-1.12.1.tar.gz",
+      "url": "https://github.com/HDFGroup/hdf5/archive/refs/tags/hdf5-1_12_1.tar.gz",
+      "sha256": "e6dde173c2d243551922d23a0387a79961205b018502e6a742acb30b61bc2d5f"
+    },
+    "runtime-openblas": {
+      "version": "0.3.31",
+      "archive": "macs3-runtime-sources/OpenBLAS-0.3.31.tar.gz",
+      "url": "https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.31/OpenBLAS-0.3.31.tar.gz",
+      "sha256": "6dd2a63ac9d32643b7cc636eab57bf4e57d0ed1fff926dfbc5d3d97f2d2be3a6"
+    },
+    "runtime-libf2c": {
+      "version": "CLAPACK-3.2.1",
+      "archive": "macs3-runtime-sources/clapack.tgz",
+      "url": "https://github.com/pyodide/artifacts/releases/download/packages/clapack.tgz",
+      "sha256": "6dc4c382164beec8aaed8fd2acc36ad24232c406eda6db462bd4c41d5e455fac"
+    },
+    "runtime-boost": {
+      "version": "1.84.0",
+      "archive": "macs3-runtime-sources/boost-1.84.0.tar.gz",
+      "url": "https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.gz",
+      "sha256": "4d27e9efed0f6f152dc28db6430b9d3dfb40c0345da7342eaa5a987dde57bd95"
+    },
+    "runtime-hdf5": {
+      "version": "1.12.1",
+      "archive": "macs3-runtime-sources/hdf5-1.12.1.tar.gz",
+      "url": "https://github.com/HDFGroup/hdf5/archive/refs/tags/hdf5-1_12_1.tar.gz",
+      "sha256": "e6dde173c2d243551922d23a0387a79961205b018502e6a742acb30b61bc2d5f"
+    },
+    "runtime-scientific-recipes": {
+      "version": "314-20260911",
+      "archive": "macs3-runtime-sources/pyodide-recipes-314-20260911.tar.gz",
+      "url": "https://github.com/pyodide/pyodide-recipes/archive/refs/tags/314-20260911.tar.gz",
+      "sha256": "caf4a2752d74abae09adafb8dfaa9730b8f850885c78d23650be1b4d24f8e925",
+      "revision": "fc8587207ecbf0fb54305d5da25ab7ed70f126d3"
+    },
+    "runtime-scientific-zlib": {
+      "version": "1.3.1",
+      "archive": "macs3-runtime-sources/zlib-1.3.1.tar.gz",
+      "url": "https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
+    },
+    "tzdata": {
+      "version": "2025.3",
+      "archive": "macs3-runtime-sources/tzdata-2025.3.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/5e/a7/c202b344c5ca7daf398f3b8a477eeb205cf3b6f32e7ec3a6bac0629ca975/tzdata-2025.3.tar.gz",
+      "sha256": "de39c2ca5dc7b0344f2eba86f49d614019d29f060fc4ebc8a417896a620b56a7",
+      "nativeWheel": {
+        "archive": "macs3-native-wheels/tzdata-2025.3-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/c7/b0/003792df09decd6849a5e39c28b513c06e84436a54440380862b5aeff25d/tzdata-2025.3-py2.py3-none-any.whl",
+        "sha256": "06a47e5700f3081aab02b2e513160914ff0694bce9947d6b76ebd6bf57cfc5d1"
+      },
+      "origin": "pyodide",
+      "wheel": {
+        "filename": "pyodide/tzdata-2025.3-py2.py3-none-any.whl",
+        "archive": "macs3-pyodide-wheels/tzdata-2025.3-py2.py3-none-any.whl",
+        "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/tzdata-2025.3-py2.py3-none-any.whl",
+        "sha256": "9ce669f4f075843c7ff6a3f3dc306ebafa504717ec7beb6aa2233693722ddcfc"
+      }
+    }
+  },
+  "buildRequirements": [
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/attrs-26.1.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl",
+        "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/attrs-26.1.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/9a/8e/82a0fe20a541c03148528be8cac2408564a6c9a0cc7e9171802bc1d26985/attrs-26.1.0.tar.gz",
+        "sha256": "d03ceb89cb322a8fd706d4fb91940737b6642aa36998fe130a9bc96c985eff32"
+      }
+    },
+    {
+      "name": "auditwheel_emscripten",
+      "version": "0.3.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/auditwheel_emscripten-0.3.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/30/2e/771cb7d23bbc2fc5ef31c57f84542b27a36ad3a199203f6657326d30b095/auditwheel_emscripten-0.3.0-py3-none-any.whl",
+        "sha256": "2e6e731243d65560a9c7daccd9159cc2b6bb4e99a1625d9e5e44ab2b415a280e"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/auditwheel_emscripten-0.3.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/0c/87/17c9ff3abc9f0e031a37662aabac7ba9b9d526429579d58d8d6e308e5d13/auditwheel_emscripten-0.3.0.tar.gz",
+        "sha256": "a58fbd4adc7573548146ea64e73b3f603cbb52c7f9269cdf711818c0e9d69854"
+      }
+    },
+    {
+      "name": "build",
+      "version": "1.5.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/build-1.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/0d/fe/6bea5c9162869c5beba5d9c8abbed835ec85bf1ec1fba05a3822325c45f3/build-1.5.0-py3-none-any.whl",
+        "sha256": "13f3eecb844759ab66efec90ca17639bbf14dc06cb2fdf37a9010322d9c50a6f"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/build-1.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/78/e0/df5e171f685f82f37b12e1f208064e24244911079d7b767447d1af7e0d70/build-1.5.0.tar.gz",
+        "sha256": "302c22c3ba2a0fd5f3911918651341ebb3896176cbdec15bd421f80b1afc7647"
+      }
+    },
+    {
+      "name": "cattrs",
+      "version": "26.2.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/cattrs-26.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e8/cf/22794a399d99480486120e26e879ef008e21f5e85274c2ed591d568bb326/cattrs-26.2.1-py3-none-any.whl",
+        "sha256": "a12aaa3453dc8f633a815293179f08b7421ed18d2575c459c3c736f840beac24"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/cattrs-26.2.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/23/75/e72b839c3dc869c990b4842f3dba730bdcdf5215f68fc7955edf849a1792/cattrs-26.2.1.tar.gz",
+        "sha256": "679132bfdc225c5ee40c024fc42519954767c387f950dc6751946c586bccdc6d"
+      }
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/certifi-2026.7.22-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl",
+        "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/certifi-2026.7.22.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz",
+        "sha256": "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55"
+      }
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/18/24/bad3ac4271589df29cf5ce2f5ae490518a5739358052bd0d61209e6fea54/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "34276fd796040bf0993ab33a369aa572e6979c7aab225a88893667ad8eac8f7a"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/charset_normalizer-3.5.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz",
+        "sha256": "39de2a259fc954455c57274dc94c79d5842774e1247a016aff30bc0efed0f4ef"
+      }
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/click-8.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/58/50/6c0d534c5f134586a8e1ba4e330569e32f057e33372ae556463212fb4cd3/click-8.5.0-py3-none-any.whl",
+        "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/click-8.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c7/0e/7fa0ef50764b67090eca4114772a2abf8b6148198475e54c660b97caeee6/click-8.5.0.tar.gz",
+        "sha256": "ba0d2089de75ea0310e2dde03160e6ca10009947fb95a182f9b54021bb272e34"
+      }
+    },
+    {
+      "name": "Cython",
+      "version": "3.3.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/cython-3.3.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/9f/57/6d620ebee4fc24d89340427702f6ceaf7b956511d1f2222a88c92c1a72b7/cython-3.3.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "sha256": "82f94565b6001bab8e31bf52a0911672910b5735910612a2c0f772c719670006"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/cython-3.3.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/a9/d8/4981ef716ad0e3ff0d3ef383aefc6b03c4a88dee33b272bf8e0d833001ca/cython-3.3.0.tar.gz",
+        "sha256": "eed0d93fbca7087f143b42c34b05a825849bdf17f101572c2105acfa49aa88b8"
+      }
+    },
+    {
+      "name": "distlib",
+      "version": "0.4.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/distlib-0.4.3-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/02/08/9c41fb51ab5b43eb21674aff13df270e8ba6c4b29c8624e328dc7a9482af/distlib-0.4.3-py2.py3-none-any.whl",
+        "sha256": "4b0ce306c966eb73bc3a7b6abad017c556dadd92c44701562cd528ac7fde4d5b"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/distlib-0.4.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c9/02/bd72be9134d25ed783ecbbc38a539ffaefbf90c78418c7fb7229600dbac7/distlib-0.4.3.tar.gz",
+        "sha256": "f152097224a0ae24be5a0f6bae1b9359af82133bce63f98a95f86cae1aede9ed"
+      }
+    },
+    {
+      "name": "filelock",
+      "version": "4.1.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/filelock-4.1.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ee/86/032133892a5de43b5a98200b01aadcad68cc255e274a762f08b8a76d2912/filelock-4.1.0-py3-none-any.whl",
+        "sha256": "2ce9818e3e2d8f284c1a964414447ef148d42a5fd5e2a477a7118e574b293ec1"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/filelock-4.1.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/4c/58/6fd434bec86eff7c38a3168454cb132b762b2bea9b3ac094101a2f7bc32a/filelock-4.1.0.tar.gz",
+        "sha256": "ad7f724afef953e731b1cc39bcd3a09166d72ed7fcdf29e6e88b1c3235c6715d"
+      }
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/idna-3.20-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl",
+        "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/idna-3.20.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz",
+        "sha256": "a7db850025b95ded1eae8a46181a1a6c56c92c96f0e2b005d9ff8dc0210cab44"
+      }
+    },
+    {
+      "name": "leb128",
+      "version": "1.0.9",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/leb128-1.0.9-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/0c/f6/62cd379fe8527c6d685013ebed11c85fd4fced125bde9b3c80ebd5759850/leb128-1.0.9-py2.py3-none-any.whl",
+        "sha256": "fef16ef20aca33dfdd2f4841d8004ec4acb7ed8545b63a7bc1183292c9a3e594"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/leb128-1.0.9.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/a4/3c/ef6fe994b4b45d84187fea994f124173d587f4f8ab0641693ef269e80f56/leb128-1.0.9.tar.gz",
+        "sha256": "8f8b0e2216ba8a318e2897360d9a34d88e2c968656fcb7c7bbb1aef31010f1c6"
+      }
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/markdown_it_py-4.2.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b3/81/4da04ced5a082363ecfa159c010d200ecbd959ae410c10c0264a38cac0f5/markdown_it_py-4.2.0-py3-none-any.whl",
+        "sha256": "9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/markdown_it_py-4.2.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/06/ff/7841249c247aa650a76b9ee4bbaeae59370dc8bfd2f6c01f3630c35eb134/markdown_it_py-4.2.0.tar.gz",
+        "sha256": "04a21681d6fbb623de53f6f364d352309d4094dd4194040a10fd51833e418d49"
+      }
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/mdurl-0.1.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl",
+        "sha256": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/mdurl-0.1.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/d6/54/cfe61301667036ec958cb99bd3efefba235e65cdeb9c84d24a8293ba1d90/mdurl-0.1.2.tar.gz",
+        "sha256": "bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"
+      }
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/packaging-26.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+        "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/packaging-26.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz",
+        "sha256": "94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79"
+      }
+    },
+    {
+      "name": "pip",
+      "version": "25.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pip-25.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/44/3c/d717024885424591d5376220b5e836c2d5293ce2011523c9de23ff7bf068/pip-25.3-py3-none-any.whl",
+        "sha256": "9655943313a94722b7774661c21049070f6bbb0a1516bf02f7c8d5d9201514cd"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pip-25.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/fe/6e/74a3f0179a4a73a53d66ce57fdb4de0080a8baa1de0063de206d6167acc2/pip-25.3.tar.gz",
+        "sha256": "8d0538dbbd7babbd207f261ed969c65de439f6bc9e5dbd3b3b9a77f25d95f343"
+      }
+    },
+    {
+      "name": "platformdirs",
+      "version": "4.13.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/platformdirs-4.13.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/8d/15/1633010b26e88e872c93b67c0b6c5e174fb74cb6fb5c1472b4d51d4a8f22/platformdirs-4.13.0-py3-none-any.whl",
+        "sha256": "3dbcf4cd708f21cf876c4eaa90e58412bc4f033d87143f41b1493ff77c25b7e1"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/platformdirs-4.13.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/80/a8/66d45abadff219e36e2a824181b8f6a67e7ed4572934d6252c71c29d5731/platformdirs-4.13.0.tar.gz",
+        "sha256": "1aa0b0d3f224c1f07c295121e312a5a24a180d6ae5a8425ea1784b3e3863e9c0"
+      }
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pygments-2.21.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+        "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pygments-2.21.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz",
+        "sha256": "610ca751c9bc2492b38eb9a38a7fbc93edbbb2d7182edaf34e66ae493dee5c8c"
+      }
+    },
+    {
+      "name": "pyodide-build",
+      "version": "0.39.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyodide_build-0.39.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ba/dc/7e78309378fd03f9cb90b555639ffbdf97994d4a241ff43f0620e71531c9/pyodide_build-0.39.1-py3-none-any.whl",
+        "sha256": "80ee9e5e11ff0b4b97c6b170fb72da1293874e4a47e42324a505a7bc42d331e7"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyodide_build-0.39.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/d7/2c/607536e41516ee1968c9b40586372882d0cbb55898ec643d4e1fc8310379/pyodide_build-0.39.1.tar.gz",
+        "sha256": "c0882f7bf945c20dd60f7ceb6b186bde419c9fb5a3961533ba37a22ffaac1d6c"
+      }
+    },
+    {
+      "name": "pyodide-cli",
+      "version": "0.5.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyodide_cli-0.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/4a/07/76977bbd73c686df55fbc3685c6c336158dc11b2ba155abe3e3a802447b2/pyodide_cli-0.5.0-py3-none-any.whl",
+        "sha256": "24c02736f1d6c99396f5e9330fd30bd98db88cf49ef059b62b025fa1f5f6e29c"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyodide_cli-0.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/f1/44/fe74049e3e776bd56fae8bd9370900d6d6dc5e541299ae90cb2330a9a8a4/pyodide_cli-0.5.0.tar.gz",
+        "sha256": "14df0797e791558b6976d4612f9df9619334f8914bfe3efbdd22e3886f5275b7"
+      }
+    },
+    {
+      "name": "pyodide-lock",
+      "version": "0.2.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyodide_lock-0.2.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/d3/4a/bd0bfb7aabdada073774b4c7203069de4ba5cc515a92e489d3014c6a14d2/pyodide_lock-0.2.1-py3-none-any.whl",
+        "sha256": "5181ec109ab230d0539884b29b45ddb736e5df79d9378e68a2ccd41574346879"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyodide_lock-0.2.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/86/e1/72874a2efee51666c634d3eb3d04e5b297af3e54333f2febd7cd4e80d8ae/pyodide_lock-0.2.1.tar.gz",
+        "sha256": "a2a60f7e87d97391be887cb00050382c192bb5a86451b1dbd44abe7272e674c3"
+      }
+    },
+    {
+      "name": "pyproject_hooks",
+      "version": "1.3.3",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/pyproject_hooks-1.3.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/85/11/044d1ae1b4ec0d7af88ee5bc91e081be1022533032b906a7bdabdbb60977/pyproject_hooks-1.3.3-py3-none-any.whl",
+        "sha256": "5fc53fdac9f7bd63fbcdc868fb5f90b4784d78a53a3d3388cd738b807441a20b"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/pyproject_hooks-1.3.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/6d/5d/f2ddeef4a855a102aaae5e97826a0260007522ab504421b75addfdb1517c/pyproject_hooks-1.3.3.tar.gz",
+        "sha256": "defda19b854fa0d3bd4f76ea4ddcba8abd7dcfcdd585a6690ade050744fc5f43"
+      }
+    },
+    {
+      "name": "python-discovery",
+      "version": "1.6.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/python_discovery-1.6.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/61/3b/50ed32583bfffa737df67d33b9c15d7b25df232c55ab606d059f610ef6ca/python_discovery-1.6.2-py3-none-any.whl",
+        "sha256": "f0c697f95a3aaec4174a6e5e58f5885e25768684bafc76f1afde384709ebdcf2"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/python_discovery-1.6.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/b0/73/54993df8fc57e906dc9b7e01d1d9b0b2d3eb0ce3190639e33dccb12853f7/python_discovery-1.6.2.tar.gz",
+        "sha256": "cd1738ca1d37c86ef9d0b654dd46fcee1e41c97c6add12575e8501ced39afdb4"
+      }
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/requests-2.34.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl",
+        "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/requests-2.34.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179abd6d00ebd70bff6273f37fb3e0cc209f48b39d00cbf/requests-2.34.2.tar.gz",
+        "sha256": "f288924cae4e29463698d6d60bc6a4da69c89185ad1e0bcc4104f584e960b9ed"
+      }
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/rich-15.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/82/3b/64d4899d73f91ba49a8c18a8ff3f0ea8f1c1d75481760df8c68ef5235bf5/rich-15.0.0-py3-none-any.whl",
+        "sha256": "33bd4ef74232fb73fe9279a257718407f169c09b78a87ad3d296f548e27de0bb"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/rich-15.0.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c0/8f/0722ca900cc807c13a6a0c696dacf35430f72e0ec571c4275d2371fca3e9/rich-15.0.0.tar.gz",
+        "sha256": "edd07a4824c6b40189fb7ac9bc4c52536e9780fbbfbddf6f1e2502c31b068c36"
+      }
+    },
+    {
+      "name": "ruamel.yaml",
+      "version": "0.19.1",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/ruamel_yaml-0.19.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b8/0c/51f6841f1d84f404f92463fc2b1ba0da357ca1e3db6b7fbda26956c3b82a/ruamel_yaml-0.19.1-py3-none-any.whl",
+        "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/ruamel_yaml-0.19.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/c7/3b/ebda527b56beb90cb7652cb1c7e4f91f48649fbcd8d2eb2fb6e77cd3329b/ruamel_yaml-0.19.1.tar.gz",
+        "sha256": "53eb66cd27849eff968ebf8f0bf61f46cdac2da1d1f3576dd4ccee9b25c31993"
+      }
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/setuptools-84.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/95/9c/c510029fc6ef33a6275cd2c5d3cecd6613dfd6aa401d57c54f1c18852ccf/setuptools-84.0.0-py3-none-any.whl",
+        "sha256": "51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/setuptools-84.0.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/6d/44/f5da03a8ef95d369145c5bb53050e7877c9f3d312e128605fd9504829143/setuptools-84.0.0.tar.gz",
+        "sha256": "f4695c21257f0d9b537ec2692c941d02ee143b7cc1276941349a546573b2ef73"
+      }
+    },
+    {
+      "name": "setuptools-scm",
+      "version": "10.3.4",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/setuptools_scm-10.3.4-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/da/f5/54538a1f17ea753c42b0928dc2e62986d463f8c393340b9a1e602f2d4dd9/setuptools_scm-10.3.4-py3-none-any.whl",
+        "sha256": "82f34c3e3084fc2b57d397200637cc13f2338004052d2fee47baa5f0e902464e"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/setuptools_scm-10.3.4.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/85/d8/fc143f88819ccf10ba2388ba86732ee2de193e578234e25a783f6cc14bf7/setuptools_scm-10.3.4.tar.gz",
+        "sha256": "a69f28bfc245608781205e912faae437c2b2165773afa4e7b979d77447a69dd2"
+      }
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/typing_extensions-4.16.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/typing_extensions-4.16.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz",
+        "sha256": "dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5"
+      }
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/urllib3-2.8.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl",
+        "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/urllib3-2.8.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz",
+        "sha256": "63bf2ead4c879426ebf22ef2a781eeb4aa3b4ae798a0435506f8687fd5bb9b63"
+      }
+    },
+    {
+      "name": "vcs-versioning",
+      "version": "2.6.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/vcs_versioning-2.6.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/73/1d/ad4064bf12f4503bf61e65d74c93c523672776d25ee0a06aaf42ae09ef3f/vcs_versioning-2.6.0-py3-none-any.whl",
+        "sha256": "f8bebd1302ebc12e67ceb30fc7dd698ec969414b6fa43b30c3f14ac9b1e72c41"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/vcs_versioning-2.6.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/ad/e7/2a691db7d076b75d099fdba1a14cd966931f2aeb591e77f6d22f15097326/vcs_versioning-2.6.0.tar.gz",
+        "sha256": "22e9159288e2d8bca2fa6f6c31c34c9c66aec157f60e9e526f5d160d2516d60f"
+      }
+    },
+    {
+      "name": "virtualenv",
+      "version": "21.14.6",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/virtualenv-21.14.6-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/c9/1f/e5182163bcee149dda4eec823d88b0f51f2c0c531b12da896f666f0b80c1/virtualenv-21.14.6-py3-none-any.whl",
+        "sha256": "eb1a20c5878569b69667f6a1af03458a8512b3afa7be771a2dafe92fdca05bb9"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/virtualenv-21.14.6.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/92/f3/589727d02bc832750cfa00ced4315d127535a22a6d7cfcb369b2fe219a2e/virtualenv-21.14.6.tar.gz",
+        "sha256": "c6b74616e64bffa9532cfa9dfd54ffbab0dc9b999df2bb8ec0d75e559b983661"
+      }
+    },
+    {
+      "name": "wheel",
+      "version": "0.48.0",
+      "wheel": {
+        "archive": "cutadapt-build-wheels/wheel-0.48.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/2e/29/69cfbb602cd91690c55d38ba9fe53e6a7e76a6fa647bf38f19c138d25449/wheel-0.48.0-py3-none-any.whl",
+        "sha256": "3217dcc807155e45db462d7ef2431f5ddda0d7273b700d05a67b271ceb1287ab"
+      },
+      "source": {
+        "archive": "cutadapt-build-sources/wheel-0.48.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/d0/20/50ed6bdf27dec98b568a8ae25dc599f35baa3d9709f9e83fd1edb56b9a90/wheel-0.48.0.tar.gz",
+        "sha256": "94800765601e9171bf5d58d066e640662842bcedcbab982b2c90787a2c987322"
+      }
+    },
+    {
+      "name": "pybind11",
+      "version": "3.0.1",
+      "wheel": {
+        "archive": "macs3-native-wheels/pybind11-3.0.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/cd/8a/37362fc2b949d5f733a8b0f2ff51ba423914cabefe69f1d1b6aab710f5fe/pybind11-3.0.1-py3-none-any.whl",
+        "sha256": "aa8f0aa6e0a94d3b64adfc38f560f33f15e589be2175e103c0a33c6bce55ee89"
+      },
+      "source": {
+        "archive": "macs3-runtime-sources/pybind11-3.0.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/2f/7b/a6d8dcb83c457e24a9df1e4d8fd5fb8034d4bbc62f3c324681e8a9ba57c2/pybind11-3.0.1.tar.gz",
+        "sha256": "9c0f40056a016da59bab516efb523089139fcc6f2ba7e4930854c61efb932051"
+      }
+    }
+  ],
+  "toolchainDownloads": [
+    {
+      "filename": "cutadapt-toolchain/065bfade0ee2c02138b83cb10049d8be95e146b6-wasm-binaries.tar.xz",
+      "url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/065bfade0ee2c02138b83cb10049d8be95e146b6/wasm-binaries.tar.xz",
+      "sha256": "7ae996db24911edc535cccf069fb8a3ed63e8dac7abe58e758431abfe3255165",
+      "role": "host-toolchain",
+      "distribute": false
+    },
+    {
+      "filename": "cutadapt-toolchain/node-v22.16.0-linux-x64.tar.xz",
+      "url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v22.16.0-linux-x64.tar.xz",
+      "sha256": "f4cb75bb036f0d0eddf6b79d9596df1aaab9ddccd6a20bf489be5abe9467e84e",
+      "role": "host-toolchain",
+      "distribute": false
+    }
+  ],
+  "requiredNotices": [
+    "LICENSE",
+    "THIRD_PARTY_LICENSES.txt",
+    "runtime-notices/README.md",
+    "runtime-notices/bzip2/LICENSE",
+    "runtime-notices/cpython/Doc__license.rst",
+    "runtime-notices/cpython/LICENSE",
+    "runtime-notices/cpython/Modules___decimal__libmpdec__mpdecimal.c.notice",
+    "runtime-notices/cpython/Modules___hacl__Hacl_Hash_MD5.c.notice",
+    "runtime-notices/cpython/Modules__expat__COPYING",
+    "runtime-notices/emscripten/LICENSE",
+    "runtime-notices/emscripten/system__lib__compiler-rt__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__dlmalloc.c.notice",
+    "runtime-notices/emscripten/system__lib__libc__musl__COPYRIGHT",
+    "runtime-notices/emscripten/system__lib__libcxx__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__libcxxabi__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__libunwind__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__llvm-libc__LICENSE.TXT",
+    "runtime-notices/emscripten/system__lib__mimalloc__LICENSE",
+    "runtime-notices/emscripten/third_party__mini-lz4.js.notice",
+    "runtime-notices/hiwire/LICENSE",
+    "runtime-notices/libffi/LICENSE",
+    "runtime-notices/libffi/LICENSE-BUILDTOOLS",
+    "runtime-notices/manifest.json",
+    "runtime-notices/pyodide/LICENSE",
+    "runtime-notices/pyodide/src__js__vendor__stackframe__LICENSE",
+    "runtime-notices/sqlite/sqlite3.c.notice",
+    "runtime-notices/ws/LICENSE",
+    "runtime-notices/xz/COPYING",
+    "runtime-notices/xz/COPYING.GPLv2",
+    "runtime-notices/xz/COPYING.GPLv3",
+    "runtime-notices/xz/COPYING.LGPLv2.1",
+    "runtime-notices/zlib/LICENSE",
+    "runtime-notices/zstd/COPYING",
+    "runtime-notices/zstd/LICENSE",
+    "runtime-notices/zstd/build__LICENSE",
+    "cython-notices/COPYING.txt",
+    "cython-notices/LICENSE.txt",
+    "scientific-notices/README.md",
+    "scientific-notices/anndata/LICENSE",
+    "scientific-notices/anndata-wheel/licenses__LICENSE",
+    "scientific-notices/array-api-compat/LICENSE",
+    "scientific-notices/array-api-compat-wheel/licenses__LICENSE",
+    "scientific-notices/h5py/LICENSE",
+    "scientific-notices/h5py/licenses__hdf5.txt",
+    "scientific-notices/h5py/licenses__license.txt",
+    "scientific-notices/h5py/licenses__pytables.txt",
+    "scientific-notices/h5py/licenses__python.txt",
+    "scientific-notices/h5py/licenses__stdint.txt",
+    "scientific-notices/h5py/lzf__LICENSE.txt",
+    "scientific-notices/h5py-wheel/licenses__LICENSE",
+    "scientific-notices/hmmlearn/LICENSE.txt",
+    "scientific-notices/joblib/LICENSE.txt",
+    "scientific-notices/joblib/joblib__externals__cloudpickle__cloudpickle.py.notice",
+    "scientific-notices/joblib-wheel/licenses__LICENSE.txt",
+    "scientific-notices/macs3/LICENSE",
+    "scientific-notices/macs3/MACS3__Signal__swalign.c.notice",
+    "scientific-notices/macs3/MACS3__Signal__swalign.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__khash.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__kseq.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__ksort.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__kstring.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__ksw.c.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__kvec.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__aba.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__abd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__abdl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__abs.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__add.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__addl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__addl_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__addlv.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__addv.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__addw.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__addw_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__and.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__bic.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__bsl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cagt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__ceq.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__ceqz.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cge.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cgez.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cgt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cgtz.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cle.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__clez.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cls.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__clt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cltz.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__clz.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cnt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__combine.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__create.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__cvt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__dot.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__dot_lane.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__dup_lane.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__dup_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__eor.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__ext.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__get_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__get_lane.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__get_low.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__hadd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__hsub.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__ld1.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__ld3.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__ld4.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__max.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__maxnm.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__maxv.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__min.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__minnm.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__minv.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mla.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mla_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mlal.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mlal_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mlal_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mls.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mlsl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mlsl_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mlsl_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__movl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__movl_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__movn.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__movn_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mul.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mul_lane.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mul_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mull.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mull_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mull_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__mvn.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__neg.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__orn.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__orr.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__padal.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__padd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__paddl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__pmax.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__pmin.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qabs.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qadd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qdmulh.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qdmull.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qmovn.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qmovn_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qmovun.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qneg.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qrdmulh.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qrdmulh_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qshl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qsub.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qtbl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__qtbx.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rbit.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__reinterpret.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rev16.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rev32.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rev64.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rhadd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rnd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rshl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rshr_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__rsra_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__set_lane.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__shl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__shl_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__shr_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__sra_n.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__st1.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__st1_lane.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__st3.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__st4.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__sub.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__subl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__subw.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__subw_high.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__tbl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__tbx.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__trn.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__trn1.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__trn2.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__tst.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__types.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__uqadd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__uzp.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__uzp1.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__uzp2.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__zip.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__zip1.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__arm__neon__zip2.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__check.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__debug-trap.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__hedley.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-align.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-arch.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-common.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-constify.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-detect-clang.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-diagnostic.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-features.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__simde-math.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx2.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__2intersect.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__abs.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__add.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__adds.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__and.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__andnot.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__avg.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__blend.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__broadcast.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cast.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cmp.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cmpeq.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cmpge.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cmpgt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cmple.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cmplt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__copysign.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cvt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__cvts.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__div.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__extract.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__fmadd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__fmsub.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__fnmadd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__fnmsub.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__insert.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__kshift.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__load.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__loadu.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__lzcnt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__madd.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__maddubs.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__max.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__min.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__mov.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__mov_mask.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__movm.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__mul.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__mulhi.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__mulhrs.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__mullo.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__negate.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__or.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__packs.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__packus.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__permutex2var.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__permutexvar.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__sad.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__set.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__set1.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__set4.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__setone.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__setr.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__setr4.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__setzero.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__shuffle.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__sll.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__slli.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__sllv.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__sqrt.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__sra.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__srai.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__srav.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__srl.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__srli.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__srlv.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__store.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__storeu.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__sub.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__subs.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__test.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__types.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__unpackhi.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__unpacklo.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__xor.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__avx512__xorsign.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__clmul.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__fma.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__gfni.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__mmx.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__sse.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__sse2.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__sse3.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__sse4.1.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__sse4.2.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__ssse3.h.notice",
+    "scientific-notices/macs3/MACS3__fermi-lite__lib__x86__svml.h.notice",
+    "scientific-notices/manifest.json",
+    "scientific-notices/natsort/LICENSE",
+    "scientific-notices/natsort-wheel/LICENSE",
+    "scientific-notices/numpy/LICENSE.txt",
+    "scientific-notices/numpy/numpy___build_utils__tempita__LICENSE.txt",
+    "scientific-notices/numpy/numpy___core__include__numpy__libdivide__LICENSE.txt",
+    "scientific-notices/numpy/numpy___core__src__common__pythoncapi-compat__COPYING",
+    "scientific-notices/numpy/numpy___core__src__highway__LICENSE",
+    "scientific-notices/numpy/numpy___core__src__highway__debian__copyright",
+    "scientific-notices/numpy/numpy___core__src__multiarray__dragon4_LICENSE.txt",
+    "scientific-notices/numpy/numpy___core__src__npysort__x86-simd-sort__LICENSE.md",
+    "scientific-notices/numpy/numpy___core__src__umath__svml__LICENSE",
+    "scientific-notices/numpy/numpy__fft__pocketfft__LICENSE.md",
+    "scientific-notices/numpy/numpy__linalg__lapack_lite__LICENSE.txt",
+    "scientific-notices/numpy/numpy__ma__LICENSE",
+    "scientific-notices/numpy/numpy__random__LICENSE.md",
+    "scientific-notices/numpy/numpy__random__src__distributions__LICENSE.md",
+    "scientific-notices/numpy/numpy__random__src__mt19937__LICENSE.md",
+    "scientific-notices/numpy/numpy__random__src__pcg64__LICENSE.md",
+    "scientific-notices/numpy/numpy__random__src__philox__LICENSE.md",
+    "scientific-notices/numpy/numpy__random__src__sfc64__LICENSE.md",
+    "scientific-notices/numpy/numpy__random__src__splitmix64__LICENSE.md",
+    "scientific-notices/numpy-wheel/_core__include__numpy__random__LICENSE.txt",
+    "scientific-notices/numpy-wheel/licenses__LICENSE.txt",
+    "scientific-notices/numpy-wheel/licenses__numpy___core__include__numpy__libdivide__LICENSE.txt",
+    "scientific-notices/numpy-wheel/licenses__numpy___core__src__common__pythoncapi-compat__COPYING",
+    "scientific-notices/numpy-wheel/licenses__numpy___core__src__highway__LICENSE",
+    "scientific-notices/numpy-wheel/licenses__numpy___core__src__multiarray__dragon4_LICENSE.txt",
+    "scientific-notices/numpy-wheel/licenses__numpy___core__src__npysort__x86-simd-sort__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy___core__src__umath__svml__LICENSE",
+    "scientific-notices/numpy-wheel/licenses__numpy__fft__pocketfft__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy__linalg__lapack_lite__LICENSE.txt",
+    "scientific-notices/numpy-wheel/licenses__numpy__ma__LICENSE",
+    "scientific-notices/numpy-wheel/licenses__numpy__random__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy__random__src__distributions__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy__random__src__mt19937__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy__random__src__pcg64__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy__random__src__philox__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy__random__src__sfc64__LICENSE.md",
+    "scientific-notices/numpy-wheel/licenses__numpy__random__src__splitmix64__LICENSE.md",
+    "scientific-notices/numpy-wheel/ma__LICENSE",
+    "scientific-notices/numpy-wheel/random__LICENSE.md",
+    "scientific-notices/packaging/LICENSE",
+    "scientific-notices/packaging/LICENSE.APACHE",
+    "scientific-notices/packaging/LICENSE.BSD",
+    "scientific-notices/packaging-wheel/licenses__LICENSE",
+    "scientific-notices/packaging-wheel/licenses__LICENSE.APACHE",
+    "scientific-notices/packaging-wheel/licenses__LICENSE.BSD",
+    "scientific-notices/pandas/LICENSE",
+    "scientific-notices/pandas/LICENSES__BOTTLENECK_LICENCE",
+    "scientific-notices/pandas/LICENSES__DATEUTIL_LICENSE",
+    "scientific-notices/pandas/LICENSES__HAVEN_LICENSE",
+    "scientific-notices/pandas/LICENSES__HAVEN_MIT",
+    "scientific-notices/pandas/LICENSES__KLIB_LICENSE",
+    "scientific-notices/pandas/LICENSES__MUSL_LICENSE",
+    "scientific-notices/pandas/LICENSES__NUMPY_LICENSE",
+    "scientific-notices/pandas/LICENSES__PACKAGING_LICENSE",
+    "scientific-notices/pandas/LICENSES__PSF_LICENSE",
+    "scientific-notices/pandas/LICENSES__PYPERCLIP_LICENSE",
+    "scientific-notices/pandas/LICENSES__PYUPGRADE_LICENSE",
+    "scientific-notices/pandas/LICENSES__SAS7BDAT_LICENSE",
+    "scientific-notices/pandas/LICENSES__ULTRAJSON_LICENSE",
+    "scientific-notices/pandas-wheel/LICENSE",
+    "scientific-notices/pkgconfig/LICENSE",
+    "scientific-notices/pkgconfig-wheel/licenses__LICENSE",
+    "scientific-notices/pybind11/LICENSE",
+    "scientific-notices/pybind11-wheel/licenses__LICENSE",
+    "scientific-notices/python-dateutil/LICENSE",
+    "scientific-notices/python-dateutil-wheel/LICENSE",
+    "scientific-notices/pytz/LICENSE.txt",
+    "scientific-notices/pytz-wheel/LICENSE.txt",
+    "scientific-notices/runtime-boost/LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__algorithm__LICENSE",
+    "scientific-notices/runtime-boost/libs__assign__LICENSE",
+    "scientific-notices/runtime-boost/libs__beast__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__callable_traits__LICENSE.md",
+    "scientific-notices/runtime-boost/libs__compute__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__concept_check__LICENSE",
+    "scientific-notices/runtime-boost/libs__container__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__contract__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__date_time__LICENSE",
+    "scientific-notices/runtime-boost/libs__date_time__xmldoc__license.xml",
+    "scientific-notices/runtime-boost/libs__dynamic_bitset__LICENSE",
+    "scientific-notices/runtime-boost/libs__exception__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__format__LICENSE",
+    "scientific-notices/runtime-boost/libs__geometry__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__gil__LICENSE.txt",
+    "scientific-notices/runtime-boost/libs__hana__LICENSE.md",
+    "scientific-notices/runtime-boost/libs__histogram__LICENSE",
+    "scientific-notices/runtime-boost/libs__hof__LICENSE.md",
+    "scientific-notices/runtime-boost/libs__iostreams__LICENSE",
+    "scientific-notices/runtime-boost/libs__json__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__leaf__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__locale__LICENSE",
+    "scientific-notices/runtime-boost/libs__logic__LICENSE",
+    "scientific-notices/runtime-boost/libs__math__LICENSE",
+    "scientific-notices/runtime-boost/libs__move__LICENSE",
+    "scientific-notices/runtime-boost/libs__mpl__LICENSE",
+    "scientific-notices/runtime-boost/libs__multiprecision__LICENSE",
+    "scientific-notices/runtime-boost/libs__mysql__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__nowide__LICENSE",
+    "scientific-notices/runtime-boost/libs__numeric__interval__LICENSE",
+    "scientific-notices/runtime-boost/libs__pfr__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__pool__LICENSE",
+    "scientific-notices/runtime-boost/libs__property_map__LICENSE",
+    "scientific-notices/runtime-boost/libs__ptr_container__LICENSE",
+    "scientific-notices/runtime-boost/libs__python__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__qvm__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__rational__LICENSE",
+    "scientific-notices/runtime-boost/libs__redis__LICENSE.txt",
+    "scientific-notices/runtime-boost/libs__safe_numerics__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__signals2__LICENSE",
+    "scientific-notices/runtime-boost/libs__static_string__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__stl_interfaces__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__tokenizer__LICENSE",
+    "scientific-notices/runtime-boost/libs__unordered__LICENSE",
+    "scientific-notices/runtime-boost/libs__url__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__uuid__LICENSE",
+    "scientific-notices/runtime-boost/libs__yap__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/libs__yap__example__autodiff_library__LICENSE",
+    "scientific-notices/runtime-boost/tools__bcp__licence_info.cpp",
+    "scientific-notices/runtime-boost/tools__bcp__licence_info.hpp",
+    "scientific-notices/runtime-boost/tools__bcp__output_licence_info.cpp",
+    "scientific-notices/runtime-boost/tools__bcp__scan_licence.cpp",
+    "scientific-notices/runtime-boost/tools__boostbook__xsl__caramel__LICENSE",
+    "scientific-notices/runtime-boost/tools__build__LICENSE.txt",
+    "scientific-notices/runtime-boost/tools__build__src__engine__debian__copyright",
+    "scientific-notices/runtime-boost/tools__docca__LICENSE_1_0.txt",
+    "scientific-notices/runtime-boost/tools__inspect__copyright_check.cpp",
+    "scientific-notices/runtime-boost/tools__inspect__copyright_check.hpp",
+    "scientific-notices/runtime-boost/tools__inspect__license_check.cpp",
+    "scientific-notices/runtime-boost/tools__inspect__license_check.hpp",
+    "scientific-notices/runtime-hdf5/COPYING",
+    "scientific-notices/runtime-hdf5/COPYING_LBNL_HDF5",
+    "scientific-notices/runtime-hdf5/config__sanitizer__LICENSE",
+    "scientific-notices/runtime-libf2c/COPYING",
+    "scientific-notices/runtime-libf2c/F2CLIBS__libf2c__Notice",
+    "scientific-notices/runtime-openblas/LICENSE",
+    "scientific-notices/runtime-openblas/ctest__LICENSE",
+    "scientific-notices/runtime-openblas/lapack-netlib__LAPACKE__LICENSE",
+    "scientific-notices/runtime-openblas/lapack-netlib__LICENSE",
+    "scientific-notices/runtime-openblas/reference__LICENSE",
+    "scientific-notices/runtime-openblas/relapack__LICENSE",
+    "scientific-notices/runtime-scientific-recipes/LICENSE",
+    "scientific-notices/runtime-scientific-zlib/LICENSE",
+    "scientific-notices/runtime-scientific-zlib/contrib__dotzlib__LICENSE_1_0.txt",
+    "scientific-notices/scikit-learn/COPYING",
+    "scientific-notices/scikit-learn/sklearn__externals__array_api_compat__LICENSE",
+    "scientific-notices/scikit-learn/sklearn__externals__array_api_extra__LICENSE",
+    "scientific-notices/scikit-learn/sklearn__svm__src__liblinear__COPYRIGHT",
+    "scientific-notices/scikit-learn-wheel/externals__array_api_compat__LICENSE",
+    "scientific-notices/scikit-learn-wheel/externals__array_api_extra__LICENSE",
+    "scientific-notices/scikit-learn-wheel/licenses__COPYING",
+    "scientific-notices/scikit-learn-wheel/svm__src__liblinear__COPYRIGHT",
+    "scientific-notices/scipy/LICENSE.txt",
+    "scientific-notices/scipy/LICENSES_bundled.txt",
+    "scientific-notices/scipy/scipy___build_utils__tempita__LICENSE.txt",
+    "scientific-notices/scipy/scipy___external__packaging_version__src__LICENSE.BSD",
+    "scientific-notices/scipy/scipy___lib___uarray__LICENSE",
+    "scientific-notices/scipy/scipy__fft___duccfft__LICENSE.md",
+    "scientific-notices/scipy/scipy__integrate__src__LICENSE_DOP",
+    "scientific-notices/scipy/scipy__io___fast_matrix_market__LICENSE.txt",
+    "scientific-notices/scipy/scipy__io___fast_matrix_market__fast_matrix_market__dependencies__fast_float__LICENSE-MIT",
+    "scientific-notices/scipy/scipy__io___fast_matrix_market__fast_matrix_market__dependencies__ryu__LICENSE-Boost",
+    "scientific-notices/scipy/scipy__ndimage__LICENSE.txt",
+    "scientific-notices/scipy/scipy__optimize___direct__COPYING",
+    "scientific-notices/scipy/scipy__optimize__tnc__LICENSE",
+    "scientific-notices/scipy/scipy__sparse__linalg___dsolve__SuperLU__License.txt",
+    "scientific-notices/scipy/scipy__sparse__linalg___eigen__arpack__arnaud__ARPACK_LICENSE.txt",
+    "scientific-notices/scipy/scipy__sparse__linalg___eigen__arpack__arnaud__LICENSE",
+    "scientific-notices/scipy/scipy__sparse__linalg___propack__PROPACK__LICENSE",
+    "scientific-notices/scipy/scipy__sparse__linalg___propack__PROPACK__PROPACK_LICENSE.txt",
+    "scientific-notices/scipy/scipy__spatial__COPYING_QHULL.txt",
+    "scientific-notices/scipy/scipy__stats__biasedurn__license.txt",
+    "scientific-notices/scipy/subprojects__array_api_compat__array_api_compat__LICENSE",
+    "scientific-notices/scipy/subprojects__array_api_extra__LICENSE",
+    "scientific-notices/scipy/subprojects__boost_math__math__LICENSE",
+    "scientific-notices/scipy/subprojects__cobyqa__LICENSE",
+    "scientific-notices/scipy/subprojects__duccfft__LICENSE.md",
+    "scientific-notices/scipy/subprojects__highs__LICENSE.txt",
+    "scientific-notices/scipy/subprojects__highs__extern__LICENCE_1_0.txt",
+    "scientific-notices/scipy/subprojects__highs__extern__filereaderlp__LICENSE",
+    "scientific-notices/scipy/subprojects__highs__extern__pdqsort__license.txt",
+    "scientific-notices/scipy/subprojects__pyprima__pyprima__LICENCE.txt",
+    "scientific-notices/scipy/subprojects__qhull_r__libqhull_r__COPYING.txt",
+    "scientific-notices/scipy/subprojects__unuran__license.txt",
+    "scientific-notices/scipy/subprojects__xsf__LICENSE",
+    "scientific-notices/scipy/subprojects__xsf__LICENSES_bundled.txt",
+    "scientific-notices/scipy-wheel/LICENSE.txt",
+    "scientific-notices/scipy-wheel/_lib___uarray__LICENSE",
+    "scientific-notices/scipy-wheel/fft___duccfft__LICENSE.md",
+    "scientific-notices/scipy-wheel/integrate__LICENSE_DOP",
+    "scientific-notices/scipy-wheel/spatial__qhull_src__COPYING_QHULL.txt",
+    "scientific-notices/six/LICENSE",
+    "scientific-notices/six-wheel/LICENSE",
+    "scientific-notices/threadpoolctl/LICENSE",
+    "scientific-notices/threadpoolctl-wheel/licenses__LICENSE",
+    "scientific-notices/tzdata/LICENSE",
+    "scientific-notices/tzdata/licenses__LICENSE_APACHE",
+    "scientific-notices/tzdata-wheel/licenses__LICENSE",
+    "scientific-notices/tzdata-wheel/licenses__licenses__LICENSE_APACHE"
+  ],
+  "runtimePackages": [
+    "numpy",
+    "scipy",
+    "six",
+    "python-dateutil",
+    "pytz",
+    "tzdata",
+    "pandas",
+    "joblib",
+    "threadpoolctl",
+    "scikit-learn",
+    "pkgconfig",
+    "h5py",
+    "packaging",
+    "array-api-compat",
+    "natsort",
+    "anndata",
+    "hmmlearn",
+    "macs3"
+  ]
+}

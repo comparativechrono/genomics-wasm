@@ -1,0 +1,2236 @@
+{
+  "schema": 1,
+  "tool": "macs3",
+  "version": "3.0.5",
+  "pythonVersion": "3.14.2",
+  "datasets": [
+    "macs3"
+  ],
+  "numericPolicy": {
+    "score": {
+      "absolute": 1e-05,
+      "relative": 1e-06
+    },
+    "hmm": {
+      "absolute": 1e-07,
+      "relative": 1e-05
+    }
+  },
+  "cases": [
+    {
+      "id": "callpeak-model",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bed.gz",
+        "-c",
+        "control.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B"
+      ],
+      "inputFiles": [
+        "chip.bed.gz",
+        "control.bed.gz"
+      ],
+      "outputs": [
+        "result_peaks.narrowPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_summits.bed",
+        "result_model.r"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1
+        },
+        {
+          "path": "result_summits.bed",
+          "kind": "bed5",
+          "minRows": 1
+        },
+        {
+          "path": "result_model.r",
+          "kind": "numeric-text",
+          "required": [
+            "p <- c(",
+            "m <- c(",
+            "xcorr <- c("
+          ]
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "callpeak-fixed",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bed.gz",
+        "-c",
+        "control.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B",
+        "--nomodel",
+        "--extsize",
+        "100"
+      ],
+      "inputFiles": [
+        "chip.bed.gz",
+        "control.bed.gz"
+      ],
+      "outputs": [
+        "result_peaks.narrowPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_summits.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1
+        },
+        {
+          "path": "result_summits.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "callpeak-shift",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bed.gz",
+        "-c",
+        "control.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B",
+        "--nomodel",
+        "--extsize",
+        "100",
+        "--shift",
+        "-50"
+      ],
+      "inputFiles": [
+        "chip.bed.gz",
+        "control.bed.gz"
+      ],
+      "outputs": [
+        "result_peaks.narrowPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_summits.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1
+        },
+        {
+          "path": "result_summits.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "callpeak-fixed"
+    },
+    {
+      "id": "callpeak-broad",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bed.gz",
+        "-c",
+        "control.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B",
+        "--nomodel",
+        "--extsize",
+        "100",
+        "--broad"
+      ],
+      "inputFiles": [
+        "chip.bed.gz",
+        "control.bed.gz"
+      ],
+      "outputs": [
+        "result_peaks.broadPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_peaks.gappedPeak"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.broadPeak",
+          "kind": "broadPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1,
+          "columns": 9
+        },
+        {
+          "path": "result_peaks.gappedPeak",
+          "kind": "gappedPeak",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "callpeak-no-control",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B",
+        "--nomodel",
+        "--extsize",
+        "100"
+      ],
+      "inputFiles": [
+        "chip.bed.gz"
+      ],
+      "outputs": [
+        "result_peaks.narrowPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_summits.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1
+        },
+        {
+          "path": "result_summits.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "callpeak-paired",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "chip.bedpe.gz",
+        "-c",
+        "control.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B",
+        "--call-summits"
+      ],
+      "inputFiles": [
+        "chip.bedpe.gz",
+        "control.bedpe.gz"
+      ],
+      "outputs": [
+        "result_peaks.narrowPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_summits.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1
+        },
+        {
+          "path": "result_summits.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "callpeak-fragments",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "fragments.tsv.gz",
+        "-f",
+        "FRAG",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B"
+      ],
+      "inputFiles": [
+        "fragments.tsv.gz"
+      ],
+      "outputs": [
+        "result_peaks.narrowPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_summits.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1
+        },
+        {
+          "path": "result_summits.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "callpeak-barcodes",
+      "kind": "success",
+      "args": [
+        "callpeak",
+        "-t",
+        "fragments.tsv.gz",
+        "-f",
+        "FRAG",
+        "-g",
+        "52000000",
+        "-n",
+        "result",
+        "-B",
+        "--barcodes",
+        "barcodes.txt",
+        "--max-count",
+        "1"
+      ],
+      "inputFiles": [
+        "fragments.tsv.gz",
+        "barcodes.txt"
+      ],
+      "outputs": [
+        "result_peaks.narrowPeak",
+        "result_treat_pileup.bdg",
+        "result_control_lambda.bdg",
+        "result_peaks.xls",
+        "result_summits.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result_peaks.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_treat_pileup.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_control_lambda.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_peaks.xls",
+          "kind": "xls",
+          "minRows": 1
+        },
+        {
+          "path": "result_summits.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "callpeak-fragments"
+    },
+    {
+      "id": "pileup-bed",
+      "kind": "success",
+      "args": [
+        "pileup",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "--extsize",
+        "200",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "chip.bed.gz"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "exactFloats": true,
+          "integral": 9924400
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "pileup-both",
+      "kind": "success",
+      "args": [
+        "pileup",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "--extsize",
+        "200",
+        "-B",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "chip.bed.gz"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "exactFloats": true,
+          "integral": 19848800
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "pileup-bed"
+    },
+    {
+      "id": "pileup-paired",
+      "kind": "success",
+      "args": [
+        "pileup",
+        "-i",
+        "chip.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "chip.bedpe.gz"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "exactFloats": true,
+          "integral": 12579772
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "pileup-bam",
+      "kind": "success",
+      "args": [
+        "pileup",
+        "-i",
+        "variants-chip.bam",
+        "-f",
+        "BAMPE",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "variants-chip.bam"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "exactFloats": true
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "filterdup-bed",
+      "kind": "success",
+      "args": [
+        "filterdup",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "--keep-dup",
+        "1",
+        "-o",
+        "result.bed"
+      ],
+      "inputFiles": [
+        "chip.bed.gz"
+      ],
+      "outputs": [
+        "result.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bed",
+          "kind": "bed6",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "filterdup-paired",
+      "kind": "success",
+      "args": [
+        "filterdup",
+        "-i",
+        "chip.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--keep-dup",
+        "1",
+        "-o",
+        "result.bed"
+      ],
+      "inputFiles": [
+        "chip.bedpe.gz"
+      ],
+      "outputs": [
+        "result.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bed",
+          "kind": "bed3",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "predictd-bed",
+      "kind": "success",
+      "args": [
+        "predictd",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "-g",
+        "52000000",
+        "--d-min",
+        "10",
+        "--rfile",
+        "model.r"
+      ],
+      "inputFiles": [
+        "chip.bed.gz"
+      ],
+      "outputs": [
+        "model.r",
+        "prediction.json"
+      ],
+      "artifacts": [
+        {
+          "path": "model.r",
+          "kind": "numeric-text",
+          "required": [
+            "p <- c(",
+            "m <- c(",
+            "xcorr <- c("
+          ]
+        },
+        {
+          "path": "prediction.json",
+          "kind": "json-exact",
+          "requiredKeys": [
+            "fragmentLength",
+            "alternatives"
+          ]
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "stderrExtract": {
+        "fragmentLength": "predicted fragment length is (\\d+) bps",
+        "alternatives": "alternative fragment length\\(s\\) may be ([0-9,]+) bps"
+      }
+    },
+    {
+      "id": "predictd-paired",
+      "kind": "success",
+      "args": [
+        "predictd",
+        "-i",
+        "chip.bedpe.gz",
+        "-f",
+        "BEDPE"
+      ],
+      "inputFiles": [
+        "chip.bedpe.gz"
+      ],
+      "outputs": [
+        "prediction.json"
+      ],
+      "artifacts": [
+        {
+          "path": "prediction.json",
+          "kind": "json-exact",
+          "requiredKeys": [
+            "fragmentLength"
+          ]
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "stderrExtract": {
+        "fragmentLength": "Average insertion length of all pairs is (\\d+) bps"
+      }
+    },
+    {
+      "id": "randsample-bed",
+      "kind": "success",
+      "args": [
+        "randsample",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "-n",
+        "1000",
+        "--seed",
+        "31415926",
+        "-o",
+        "result.bed"
+      ],
+      "inputFiles": [
+        "chip.bed.gz"
+      ],
+      "outputs": [
+        "result.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bed",
+          "kind": "bed6",
+          "rows": 999
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "randsample-paired",
+      "kind": "success",
+      "args": [
+        "randsample",
+        "-i",
+        "chip.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "-n",
+        "1000",
+        "--seed",
+        "31415926",
+        "-o",
+        "result.bed"
+      ],
+      "inputFiles": [
+        "chip.bedpe.gz"
+      ],
+      "outputs": [
+        "result.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bed",
+          "kind": "bed3",
+          "rows": 999
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "bdgcmp",
+      "kind": "success",
+      "args": [
+        "bdgcmp",
+        "-t",
+        "signal.bdg",
+        "-c",
+        "background.bdg",
+        "-m",
+        "ppois",
+        "qpois",
+        "subtract",
+        "logFE",
+        "FE",
+        "logLR",
+        "slogLR",
+        "max",
+        "-p",
+        "1",
+        "--o-prefix",
+        "result"
+      ],
+      "inputFiles": [
+        "signal.bdg",
+        "background.bdg"
+      ],
+      "outputs": [
+        "result_ppois.bdg",
+        "result_qpois.bdg",
+        "result_subtract.bdg",
+        "result_logFE.bdg",
+        "result_FE.bdg",
+        "result_logLR.bdg",
+        "result_slogLR.bdg",
+        "result_max.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result_ppois.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_qpois.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_subtract.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_logFE.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_FE.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_logLR.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_slogLR.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        },
+        {
+          "path": "result_max.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "bdgopt-multiply",
+      "kind": "success",
+      "args": [
+        "bdgopt",
+        "-i",
+        "signal.bdg",
+        "-m",
+        "multiply",
+        "-p",
+        "2",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "signal.bdg"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "truth": {
+        "operation": "multiply",
+        "parameter": 2.0
+      }
+    },
+    {
+      "id": "bdgopt-p2q",
+      "kind": "success",
+      "args": [
+        "bdgopt",
+        "-i",
+        "signal.bdg",
+        "-m",
+        "p2q",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "signal.bdg"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "truth": {
+        "operation": "p2q",
+        "parameter": null
+      }
+    },
+    {
+      "id": "bdgopt-max",
+      "kind": "success",
+      "args": [
+        "bdgopt",
+        "-i",
+        "signal.bdg",
+        "-m",
+        "max",
+        "-p",
+        "5",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "signal.bdg"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "truth": {
+        "operation": "max",
+        "parameter": 5.0
+      }
+    },
+    {
+      "id": "cmbreps-mean",
+      "kind": "success",
+      "args": [
+        "cmbreps",
+        "-i",
+        "signal.bdg",
+        "signal2.bdg",
+        "-m",
+        "mean",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "signal.bdg",
+        "signal2.bdg"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "truth": {
+        "operation": "mean"
+      }
+    },
+    {
+      "id": "cmbreps-fisher",
+      "kind": "success",
+      "args": [
+        "cmbreps",
+        "-i",
+        "signal.bdg",
+        "signal2.bdg",
+        "-m",
+        "fisher",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "signal.bdg",
+        "signal2.bdg"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "bdgpeakcall",
+      "kind": "success",
+      "args": [
+        "bdgpeakcall",
+        "-i",
+        "signal.bdg",
+        "-c",
+        "5",
+        "-l",
+        "50",
+        "-g",
+        "50",
+        "-o",
+        "result.narrowPeak"
+      ],
+      "inputFiles": [
+        "signal.bdg"
+      ],
+      "outputs": [
+        "result.narrowPeak"
+      ],
+      "artifacts": [
+        {
+          "path": "result.narrowPeak",
+          "kind": "narrowPeak",
+          "rows": 3,
+          "coordinates": [
+            [
+              "chrTest",
+              100,
+              300
+            ],
+            [
+              "chrTest",
+              400,
+              600
+            ],
+            [
+              "chrTest",
+              700,
+              900
+            ]
+          ]
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "bdgbroadcall",
+      "kind": "success",
+      "args": [
+        "bdgbroadcall",
+        "-i",
+        "signal.bdg",
+        "-c",
+        "5",
+        "-C",
+        "1",
+        "-l",
+        "50",
+        "-g",
+        "50",
+        "-G",
+        "150",
+        "-o",
+        "result.bed12"
+      ],
+      "inputFiles": [
+        "signal.bdg"
+      ],
+      "outputs": [
+        "result.bed12"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bed12",
+          "kind": "gappedPeak",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "bdgdiff",
+      "kind": "success",
+      "args": [
+        "bdgdiff",
+        "--t1",
+        "signal.bdg",
+        "--c1",
+        "background.bdg",
+        "--t2",
+        "signal2.bdg",
+        "--c2",
+        "background2.bdg",
+        "-C",
+        "1",
+        "-l",
+        "50",
+        "-g",
+        "20",
+        "-o",
+        "condition1.bed",
+        "condition2.bed",
+        "common.bed"
+      ],
+      "inputFiles": [
+        "signal.bdg",
+        "background.bdg",
+        "signal2.bdg",
+        "background2.bdg"
+      ],
+      "outputs": [
+        "condition1.bed",
+        "condition2.bed",
+        "common.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "condition1.bed",
+          "kind": "bed5",
+          "minRows": 1
+        },
+        {
+          "path": "condition2.bed",
+          "kind": "bed5",
+          "minRows": 1
+        },
+        {
+          "path": "common.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "refinepeak",
+      "kind": "success",
+      "args": [
+        "refinepeak",
+        "-b",
+        "upstream-peaks.narrowPeak",
+        "-i",
+        "chip.bed.gz",
+        "-f",
+        "BED",
+        "-o",
+        "result.bed"
+      ],
+      "inputFiles": [
+        "chip.bed.gz",
+        "upstream-peaks.narrowPeak"
+      ],
+      "outputs": [
+        "result.bed"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bed",
+          "kind": "bed5",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "hmmratac-gaussian",
+      "kind": "success",
+      "args": [
+        "hmmratac",
+        "-i",
+        "atac-chrI.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--randomSeed",
+        "12345",
+        "--hmm-type",
+        "gaussian",
+        "--minlen",
+        "50",
+        "-c",
+        "1.2",
+        "-n",
+        "result",
+        "--save-states",
+        "--save-likelihoods",
+        "--training-flanking",
+        "1000",
+        "--save-training-data"
+      ],
+      "inputFiles": [
+        "atac-chrI.bedpe.gz"
+      ],
+      "outputs": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed",
+        "result_open.bdg",
+        "result_nuc.bdg",
+        "result_bg.bdg",
+        "result_model.json",
+        "result_training_data.txt",
+        "result_training_lengths.txt"
+      ],
+      "artifacts": [
+        {
+          "path": "result_accessible_regions.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_states.bed",
+          "kind": "states",
+          "minRows": 1
+        },
+        {
+          "path": "result_open.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_nuc.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_bg.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_model.json",
+          "kind": "hmm-model",
+          "hmmType": "gaussian"
+        },
+        {
+          "path": "result_training_data.txt",
+          "kind": "numeric-table",
+          "minRows": 1
+        },
+        {
+          "path": "result_training_lengths.txt",
+          "kind": "integers",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "biologicalArtifacts": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed"
+      ]
+    },
+    {
+      "id": "hmmratac-reload-gaussian",
+      "kind": "success",
+      "args": [
+        "hmmratac",
+        "-i",
+        "atac-chrI.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--randomSeed",
+        "12345",
+        "--hmm-type",
+        "gaussian",
+        "--minlen",
+        "50",
+        "-c",
+        "1.2",
+        "-n",
+        "result",
+        "--save-states",
+        "--save-likelihoods",
+        "--model",
+        "supplied-model.json",
+        "--training-flanking",
+        "1000"
+      ],
+      "inputFiles": [
+        "atac-chrI.bedpe.gz"
+      ],
+      "outputs": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed",
+        "result_open.bdg",
+        "result_nuc.bdg",
+        "result_bg.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result_accessible_regions.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_states.bed",
+          "kind": "states",
+          "minRows": 1
+        },
+        {
+          "path": "result_open.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_nuc.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_bg.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "dependencies": [
+        {
+          "case": "hmmratac-gaussian",
+          "path": "result_model.json",
+          "as": "supplied-model.json"
+        }
+      ],
+      "equivalentTo": "hmmratac-gaussian",
+      "biologicalArtifacts": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed"
+      ]
+    },
+    {
+      "id": "hmmratac-poisson",
+      "kind": "success",
+      "args": [
+        "hmmratac",
+        "-i",
+        "atac-chrI.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--no-fragem",
+        "--randomSeed",
+        "12345",
+        "--hmm-type",
+        "poisson",
+        "--minlen",
+        "50",
+        "-c",
+        "1.2",
+        "-n",
+        "result",
+        "--save-states",
+        "--save-likelihoods",
+        "-t",
+        "training.bed",
+        "--training-flanking",
+        "1000",
+        "--save-training-data"
+      ],
+      "inputFiles": [
+        "atac-chrI.bedpe.gz",
+        "training.bed"
+      ],
+      "outputs": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed",
+        "result_open.bdg",
+        "result_nuc.bdg",
+        "result_bg.bdg",
+        "result_model.json",
+        "result_training_data.txt",
+        "result_training_lengths.txt"
+      ],
+      "artifacts": [
+        {
+          "path": "result_accessible_regions.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_states.bed",
+          "kind": "states",
+          "minRows": 1
+        },
+        {
+          "path": "result_open.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_nuc.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_bg.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_model.json",
+          "kind": "hmm-model",
+          "hmmType": "poisson"
+        },
+        {
+          "path": "result_training_data.txt",
+          "kind": "numeric-table",
+          "minRows": 1
+        },
+        {
+          "path": "result_training_lengths.txt",
+          "kind": "integers",
+          "minRows": 1
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "biologicalArtifacts": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed"
+      ]
+    },
+    {
+      "id": "hmmratac-reload-poisson",
+      "kind": "success",
+      "args": [
+        "hmmratac",
+        "-i",
+        "atac-chrI.bedpe.gz",
+        "-f",
+        "BEDPE",
+        "--no-fragem",
+        "--randomSeed",
+        "12345",
+        "--hmm-type",
+        "poisson",
+        "--minlen",
+        "50",
+        "-c",
+        "1.2",
+        "-n",
+        "result",
+        "--save-states",
+        "--save-likelihoods",
+        "--model",
+        "supplied-model.json",
+        "--training-flanking",
+        "1000"
+      ],
+      "inputFiles": [
+        "atac-chrI.bedpe.gz"
+      ],
+      "outputs": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed",
+        "result_open.bdg",
+        "result_nuc.bdg",
+        "result_bg.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result_accessible_regions.narrowPeak",
+          "kind": "narrowPeak",
+          "minRows": 1
+        },
+        {
+          "path": "result_states.bed",
+          "kind": "states",
+          "minRows": 1
+        },
+        {
+          "path": "result_open.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_nuc.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        },
+        {
+          "path": "result_bg.bdg",
+          "kind": "bedgraph",
+          "minRows": 1,
+          "probability": true
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "dependencies": [
+        {
+          "case": "hmmratac-poisson",
+          "path": "result_model.json",
+          "as": "supplied-model.json"
+        }
+      ],
+      "equivalentTo": "hmmratac-poisson",
+      "biologicalArtifacts": [
+        "result_accessible_regions.narrowPeak",
+        "result_states.bed"
+      ]
+    },
+    {
+      "id": "callvar-off",
+      "kind": "success",
+      "args": [
+        "callvar",
+        "-t",
+        "variants-chip.bam",
+        "-c",
+        "variants-control.bam",
+        "-b",
+        "variants.narrowPeak",
+        "-o",
+        "result.vcf",
+        "--fermi",
+        "off",
+        "-m",
+        "1"
+      ],
+      "inputFiles": [
+        "variants-chip.bam",
+        "variants-chip.bam.bai",
+        "variants-control.bam",
+        "variants-control.bam.bai",
+        "variants.narrowPeak"
+      ],
+      "outputs": [
+        "result.vcf"
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "minRows": 5,
+          "requiredVariants": [
+            [
+              "chr22",
+              17373009,
+              "A",
+              "C"
+            ],
+            [
+              "chr22",
+              17392546,
+              "T",
+              "TA"
+            ]
+          ]
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "callvar-on",
+      "kind": "success",
+      "args": [
+        "callvar",
+        "-t",
+        "variants-chip.bam",
+        "-c",
+        "variants-control.bam",
+        "-b",
+        "variants.narrowPeak",
+        "-o",
+        "result.vcf",
+        "--fermi",
+        "on",
+        "-m",
+        "1"
+      ],
+      "inputFiles": [
+        "variants-chip.bam",
+        "variants-chip.bam.bai",
+        "variants-control.bam",
+        "variants-control.bam.bai",
+        "variants.narrowPeak"
+      ],
+      "outputs": [
+        "result.vcf"
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "minRows": 5,
+          "requiredVariants": [
+            [
+              "chr22",
+              17373009,
+              "A",
+              "C"
+            ],
+            [
+              "chr22",
+              17392546,
+              "T",
+              "TA"
+            ]
+          ]
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "callvar-off"
+    },
+    {
+      "id": "callvar-auto",
+      "kind": "success",
+      "args": [
+        "callvar",
+        "-t",
+        "variants-chip.bam",
+        "-c",
+        "variants-control.bam",
+        "-b",
+        "variants.narrowPeak",
+        "-o",
+        "result.vcf",
+        "--fermi",
+        "auto",
+        "-m",
+        "2"
+      ],
+      "inputFiles": [
+        "variants-chip.bam",
+        "variants-chip.bam.bai",
+        "variants-control.bam",
+        "variants-control.bam.bai",
+        "variants.narrowPeak"
+      ],
+      "outputs": [
+        "result.vcf"
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "minRows": 5,
+          "requiredVariants": [
+            [
+              "chr22",
+              17373009,
+              "A",
+              "C"
+            ],
+            [
+              "chr22",
+              17392546,
+              "T",
+              "TA"
+            ]
+          ]
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "effect": "callvar-off"
+    },
+    {
+      "id": "predictd-wide-counter",
+      "kind": "success",
+      "args": [
+        "predictd",
+        "-i",
+        "wide-fragments.bedpe",
+        "-f",
+        "BEDPE"
+      ],
+      "inputFiles": [
+        "wide-fragments.bedpe"
+      ],
+      "outputs": [
+        "prediction.json"
+      ],
+      "artifacts": [
+        {
+          "path": "prediction.json",
+          "kind": "json-exact",
+          "requiredKeys": [
+            "fragmentLength"
+          ],
+          "equals": {
+            "fragmentLength": "1000000000"
+          }
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "stderrExtract": {
+        "fragmentLength": "Average insertion length of all pairs is (\\d+) bps"
+      }
+    },
+    {
+      "id": "bdgopt-wide-p2q",
+      "kind": "success",
+      "args": [
+        "bdgopt",
+        "-i",
+        "wide-signal.bdg",
+        "-m",
+        "p2q",
+        "-o",
+        "result.bdg"
+      ],
+      "inputFiles": [
+        "wide-signal.bdg"
+      ],
+      "outputs": [
+        "result.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result.bdg",
+          "kind": "bedgraph",
+          "rows": 5,
+          "coordinates": [
+            [
+              "chrWide1",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide2",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide3",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide4",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide5",
+              0,
+              1000000000
+            ]
+          ],
+          "coveredBases": 5000000000,
+          "positiveScores": true
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ],
+      "truth": {
+        "operation": "wide-p2q"
+      }
+    },
+    {
+      "id": "bdgcmp-wide-qpois",
+      "kind": "success",
+      "args": [
+        "bdgcmp",
+        "-t",
+        "wide-signal.bdg",
+        "-c",
+        "wide-background.bdg",
+        "-m",
+        "qpois",
+        "--o-prefix",
+        "result"
+      ],
+      "inputFiles": [
+        "wide-signal.bdg",
+        "wide-background.bdg"
+      ],
+      "outputs": [
+        "result_qpois.bdg"
+      ],
+      "artifacts": [
+        {
+          "path": "result_qpois.bdg",
+          "kind": "bedgraph",
+          "rows": 5,
+          "coordinates": [
+            [
+              "chrWide1",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide2",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide3",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide4",
+              0,
+              1000000000
+            ],
+            [
+              "chrWide5",
+              0,
+              1000000000
+            ]
+          ],
+          "coveredBases": 5000000000,
+          "minPositiveScores": 4
+        }
+      ],
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": [
+        "native-contract",
+        "patched-native",
+        "wasm"
+      ]
+    },
+    {
+      "id": "invalid-option",
+      "kind": "failure",
+      "args": [
+        "pileup",
+        "--not-a-real-option"
+      ],
+      "inputFiles": [],
+      "outputs": [],
+      "artifacts": [],
+      "diagnosticRegex": "required|unrecognized arguments",
+      "executions": [
+        "native",
+        "patched-native",
+        "wasm"
+      ],
+      "comparisons": []
+    }
+  ]
+}

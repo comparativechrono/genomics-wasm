@@ -1,0 +1,7 @@
+chrTest	0	100	1
+chrTest	100	300	1
+chrTest	300	400	1
+chrTest	400	600	1
+chrTest	600	700	1
+chrTest	700	900	1
+chrTest	900	1000	1

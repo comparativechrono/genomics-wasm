@@ -1,0 +1,15 @@
+--- a/ext/_hmmc.cpp
++++ b/ext/_hmmc.cpp
+@@ -37,9 +37,12 @@
+   for (auto i = 0; i < n; ++i) {
+     *(log_ptr++) = std::log(*(ptr++));
+   }
++#ifdef FE_DIVBYZERO
+   if (std::fetestexcept(FE_DIVBYZERO)) {
+     std::feclearexcept(FE_DIVBYZERO);  // log(0) = -inf, ignore exception.
+   }
++  // WebAssembly has no floating-point exception flags. Values are unchanged.
++#endif
+   return log.reshape(std::vector<ssize_t>(x_.shape(), x_.shape() + x_.ndim()));
+ }
+ 

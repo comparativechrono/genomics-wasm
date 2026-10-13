@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/macs3-project/MACS",
+  "tag": "v3.0.5",
+  "commit": "c5443190e3edfeb301cc94acf450e2b2c026a223",
+  "sources": [
+    {
+      "name": "CTCF_SE_ChIP_chr22_50k.bed.gz",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_SE_ChIP_chr22_50k.bed.gz",
+      "cachePath": "build/macs3-fixture-sources/CTCF_SE_ChIP_chr22_50k.bed.gz",
+      "bytes": 332681,
+      "sha256": "3f246659d3317de9fe150c4696959dec9668ab458520a1a44307d07a15ba69d1",
+      "gitBlobSha": "b948c1a4b85d9587a892daf1412fbb875d84d9d5"
+    },
+    {
+      "name": "CTCF_SE_CTRL_chr22_50k.bed.gz",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_SE_CTRL_chr22_50k.bed.gz",
+      "cachePath": "build/macs3-fixture-sources/CTCF_SE_CTRL_chr22_50k.bed.gz",
+      "bytes": 388072,
+      "sha256": "0d6b01b6894073deb8fe85e1ef200c461dcbd661a7f079c0141c8b1bd648d665",
+      "gitBlobSha": "5625f0e36e5c9bf107ea1c43de7a1ac108d1bd81"
+    },
+    {
+      "name": "CTCF_PE_ChIP_chr22_50k.bedpe.gz",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_PE_ChIP_chr22_50k.bedpe.gz",
+      "cachePath": "build/macs3-fixture-sources/CTCF_PE_ChIP_chr22_50k.bedpe.gz",
+      "bytes": 304707,
+      "sha256": "c7713c4d80c832e0d496257d7e4dd1c27f126a7c1a6de6dcef4f27bfb77a43a2",
+      "gitBlobSha": "b4b0a0f892d8292c223912297c7b2d44a9b072f3"
+    },
+    {
+      "name": "CTCF_PE_CTRL_chr22_50k.bedpe.gz",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_PE_CTRL_chr22_50k.bedpe.gz",
+      "cachePath": "build/macs3-fixture-sources/CTCF_PE_CTRL_chr22_50k.bedpe.gz",
+      "bytes": 364086,
+      "sha256": "10a728379b105f11acf9b41c9b2a365eb8b5d06e10bb643782e22de48cf00e0f",
+      "gitBlobSha": "8f127a88253d503e76484da346838210269c73d0"
+    },
+    {
+      "name": "CTCF_PE_ChIP_chr22_50k.bam",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_PE_ChIP_chr22_50k.bam",
+      "cachePath": "build/macs3-fixture-sources/CTCF_PE_ChIP_chr22_50k.bam",
+      "bytes": 9490466,
+      "sha256": "9810ced330a8f60b2b0443c412d7c3b49a3f6a723b84fe22ba3a73f1dd77552e",
+      "gitBlobSha": "2fd94690ed8a83d62af66104543f3618c76cb9c5"
+    },
+    {
+      "name": "CTCF_PE_ChIP_chr22_50k.bam.bai",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_PE_ChIP_chr22_50k.bam.bai",
+      "cachePath": "build/macs3-fixture-sources/CTCF_PE_ChIP_chr22_50k.bam.bai",
+      "bytes": 52064,
+      "sha256": "82e5b0ca1e6e835389555c4e3e38d297d8e1af21ffefa033324f2e8e4f30d3ff",
+      "gitBlobSha": "7d5913a3a0c9ef99016df725e6d630b7c04d27f6"
+    },
+    {
+      "name": "CTCF_PE_CTRL_chr22_50k.bam",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_PE_CTRL_chr22_50k.bam",
+      "cachePath": "build/macs3-fixture-sources/CTCF_PE_CTRL_chr22_50k.bam",
+      "bytes": 11769997,
+      "sha256": "90c727b6794de0bced1fddde1252dc6435a009b98684d1c0406d235d4f854aba",
+      "gitBlobSha": "7994585cf9881384fb2eab36bb62a270c8f4ff61"
+    },
+    {
+      "name": "CTCF_PE_CTRL_chr22_50k.bam.bai",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/CTCF_PE_CTRL_chr22_50k.bam.bai",
+      "cachePath": "build/macs3-fixture-sources/CTCF_PE_CTRL_chr22_50k.bam.bai",
+      "bytes": 38192,
+      "sha256": "151f2a4ebe16668b4b0fc1f7e7eb09fb6c67f0f0267963b4c212a27b082f85b7",
+      "gitBlobSha": "58395a5a5b4975683bbca7b734386e9266edd00e"
+    },
+    {
+      "name": "callvar_testing.narrowPeak",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/callvar_testing.narrowPeak",
+      "cachePath": "build/macs3-fixture-sources/callvar_testing.narrowPeak",
+      "bytes": 907,
+      "sha256": "34ac60e41f136951a9e629fb4f33b5df43d5a356a4aa1dc531b18e624bbeb839",
+      "gitBlobSha": "b6bd78598e2a4942a2b356a23600123bce3d0ff7"
+    },
+    {
+      "name": "yeast_500k_SRR1822137.bedpe.gz",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/yeast_500k_SRR1822137.bedpe.gz",
+      "cachePath": "build/macs3-fixture-sources/yeast_500k_SRR1822137.bedpe.gz",
+      "bytes": 1829813,
+      "sha256": "e501d404c31da397affc92427be25d6a2b29d0d993fc4e7b61f8976c9bfe6eb9",
+      "gitBlobSha": "b89890914ce71e412bb156eaaa9c1c0438de6b20"
+    },
+    {
+      "name": "test.fragments.tsv.gz",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/test.fragments.tsv.gz",
+      "cachePath": "build/macs3-fixture-sources/test.fragments.tsv.gz",
+      "bytes": 506956,
+      "sha256": "f06c4acc3705a65a69f6e3c7ee082b7a9fbf286a0c0b5526e9d1a5ff9456a780",
+      "gitBlobSha": "572c1c43b85da99855600ff2d8e850fad44936bc"
+    },
+    {
+      "name": "barcodes.txt",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/barcodes.txt",
+      "cachePath": "build/macs3-fixture-sources/barcodes.txt",
+      "bytes": 850,
+      "sha256": "bda8c7e8087723f65212f6498fc6a4c6b21aa4345fb5c8ff611d3bd11b39c554",
+      "gitBlobSha": "0aed00e446531b2d0fd5c9bf100fe2bdd5742a40"
+    },
+    {
+      "name": "tiny.bam",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/tiny.bam",
+      "cachePath": "build/macs3-fixture-sources/tiny.bam",
+      "bytes": 41368,
+      "sha256": "7c316d720bdcfefcf119da291acea2aed9ed7d45232fdeffc6e5183b89b86ef1",
+      "gitBlobSha": "3224a63e02762807746ee7cda6d799bc92a78ba3"
+    },
+    {
+      "name": "tiny.bam.bai",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/tiny.bam.bai",
+      "cachePath": "build/macs3-fixture-sources/tiny.bam.bai",
+      "bytes": 1424,
+      "sha256": "4a89768c1b224e09451ae222594ee5440915e09a8266153d96c4040c9adef63d",
+      "gitBlobSha": "eacaa31d804e7b634cc4c1c210b6c677e10ed3f9"
+    },
+    {
+      "name": "tiny.sam.gz",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/tiny.sam.gz",
+      "cachePath": "build/macs3-fixture-sources/tiny.sam.gz",
+      "bytes": 38068,
+      "sha256": "181c3b27b655cf95489f083f7a91c9d3e60343277e1ed3ee7b80cf6840e5cde9",
+      "gitBlobSha": "075d7017d3a10c54b142e2bd95994a0249fb73b1"
+    },
+    {
+      "name": "standard_results_callvar/PEsample.vcf",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/standard_results_callvar/PEsample.vcf",
+      "cachePath": "build/macs3-fixture-sources/standard_results_callvar/PEsample.vcf",
+      "bytes": 7014,
+      "sha256": "a44262b542c3f3512a1e205bcb9666133ea1a81c49ca69a580d979dfa82a4d20",
+      "gitBlobSha": "467bdccc6abff59bcb22d9149f50535f65cf3450"
+    },
+    {
+      "name": "standard_results_callpeak_narrow/run_callpeak_narrow0_peaks.narrowPeak",
+      "url": "https://raw.githubusercontent.com/macs3-project/MACS/c5443190e3edfeb301cc94acf450e2b2c026a223/test/standard_results_callpeak_narrow/run_callpeak_narrow0_peaks.narrowPeak",
+      "cachePath": "build/macs3-fixture-sources/standard_results_callpeak_narrow/run_callpeak_narrow0_peaks.narrowPeak",
+      "bytes": 63619,
+      "sha256": "9dded4214d30b81f29b3614c28980b52f8752db1e1c7a6a3a42edde7d71bb89e",
+      "gitBlobSha": "a02a008530bff442815717ebd2f1ede4da68f27d"
+    }
+  ]
+}
