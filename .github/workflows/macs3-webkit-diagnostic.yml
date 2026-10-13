@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode: [production, logged]
+        mode: [production, no-omg, stage]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.2'
       - run: npm ci
       - run: npx playwright install --with-deps webkit
       - uses: actions/download-artifact@v4
@@ -30,21 +33,20 @@ jobs:
       - run: tar -xzf build/macs3-compiled.tar.gz
       - name: Run diagnostic probes against the existing compiled build
         env:
-          BROWSER: webkit
-          DIAG_CASES: callpeak-model,callpeak-shift,predictd-bed
-          DIAG_TIMEOUT: '60000'
           DIAG_MODE: ${{ matrix.mode }}
-          DIAG_VERBOSE: '0'
-          DIAG_WRAPPERS: '0'
-          DIAG_REPEAT: '2'
         run: |
-          if [ "$DIAG_MODE" = production ]; then
+          if [ "$DIAG_MODE" = stage ]; then
+            export DIAG_PRODUCTION=0
+          else
             export DIAG_PRODUCTION=1
           fi
-          node build/macs3-webkit-diagnostics/run.mjs
+          if [ "$DIAG_MODE" = no-omg ]; then
+            export JSC_useOMGJIT=false
+          fi
+          node scripts/diagnose-macs3.mjs --engine webkit
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: macs3-webkit-diagnostic-${{ matrix.mode }}
-          path: build/macs3-webkit-diagnostics/logs-*/
+          path: build/macs3-validator-diagnostics/
           if-no-files-found: warn
