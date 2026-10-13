@@ -1,0 +1,24 @@
+PLINK 2.0.0-b.1-dev (12 Oct 2026), NOLAPACK WebAssembly distribution
+
+PLINK2 is distributed under GNU GPL version 3 or later (LICENSE). Its library
+components additionally carry LGPL version 3 or later notices (LICENSE.LGPL).
+The complete corresponding pinned source archive is provided under sources/.
+The local build scripts, guarded portability patch and Emscripten mailbox
+override are distributed with the package. No BLAS/LAPACK binary is included.
+
+Vendored libdeflate 1.25 uses the MIT license (LICENSE.libdeflate). Vendored
+zstd 1.5.7 offers BSD-3-Clause or GPL-2.0 (LICENSE.zstd, LICENSE.zstd.GPL).
+Vendored SIMDe 0.8.2 uses MIT terms (LICENSE.simde). The embedded QD-derived
+high-precision operations use BSD-3-Clause-LBNL terms (LICENSE.QD).
+zlib 1.3.2 uses the zlib license (LICENSE.zlib).
+
+LICENSE.embedded preserves complete, unmodified upstream source files with
+SFMT's BSD-3-Clause notices, Shigeo Mitsunari's fmath attribution and license
+references, Boost Software License 1.0 portions in statistical routines,
+QD attribution, and libdeflate-derived CPU detection notices. The complete
+archive retains all other per-file notices and the bundled dependency source.
+
+The Emscripten 3.1.64 runtime and adapted mailbox override use MIT and
+University of Illinois/NCSA terms, preserved in LICENSE.emscripten.
+Local changes are described in README.md and browser.patch.
+The original authors do not endorse this WebAssembly port.

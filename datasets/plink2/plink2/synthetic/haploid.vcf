@@ -1,0 +1,10 @@
+##fileformat=VCFv4.3
+##contig=<ID=Y,length=1000000>
+##contig=<ID=MT,length=20000>
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DS,Number=A,Type=Float,Description="Dosage">
+##FORMAT=<ID=HDS,Number=.,Type=Float,Description="Haplotype dosage">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	a	b	c	d
+Y	100	y1	A	G	.	.	.	GT:DS:HDS	1:1:1	0:0:0	1:1:1	0:0.3:0.3
+Y	200	y2	C	T	.	.	.	GT:DS:HDS	0:0:0	1:1:1	1:1:1	1:0.8:0.8
+MT	300	m1	A	G	.	.	.	GT:DS:HDS	1:1:1	0:0:0	0:0:0	.:.:.

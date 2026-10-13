@@ -1,0 +1,132 @@
+{
+  "files": {
+    "plink2/real/1kg-phase3-chr21.vcf.gz": {
+      "source": "2.0/Tests/TEST_PHASED_VCF/1kg_phase3_chr21_start.vcf.gz",
+      "transformation": "Unchanged original source bytes."
+    },
+    "plink2/real/keep48.samples.txt": {
+      "source": "2.0/Tests/TEST_PHASED_VCF/1kg_phase3_chr21_start.vcf.gz",
+      "transformation": "First 48 unchanged sample identifiers, in source order; an explicit bounded test subset."
+    },
+    "plink2/real/scores.tsv": {
+      "source": "2.0/Tests/TEST_PHASED_VCF/1kg_phase3_chr21_start.vcf.gz",
+      "transformation": "Choose 20 variants with greatest ALT allele count, source order breaks ties. Assign arbitrary coefficient ((rank % 7)-3)/8. Synthetic software-test coefficients, not measured effects or a clinical score."
+    },
+    "plink2/synthetic/glm-missing/covariates.tsv": {
+      "source": "2.0/Tests/TEST_GLM_LOGISTIC_MISSING/run_tests.sh",
+      "transformation": "Upstream two-covariate formulas and seed 7, with explicit LCG replacing awk rand; entirely synthetic."
+    },
+    "plink2/synthetic/glm-missing/input.vcf": {
+      "sources": [
+        "2.0/Tests/TEST_GLM_LOGISTIC_MISSING/run_tests.sh",
+        "2.0/Tests/TEST_MULTIALLELIC_PHASED_R/run_tests.sh"
+      ],
+      "transformation": "Synthetic adaptation: retain upstream 603 samples, 30 variants and exact alternating missingness formula. Replace PLINK --dummy and implementation-dependent awk rand with the explicit upstream LCG (seed 3), common-allele frequencies 0.12+0.36*U and two Bernoulli allele draws per genotype."
+    },
+    "plink2/synthetic/glm-missing/phenotypes.tsv": {
+      "source": "2.0/Tests/TEST_GLM_LOGISTIC_MISSING/run_tests.sh",
+      "transformation": "BINARY uses upstream 0.4 case probability, LCG seed 11 replacing awk rand. QUANT is independent 4*U-2 (seed19). FIRTH is intentionally 2 for v1 ALT carriers, 1 otherwise to force separation. All labels synthetic; no biological association claim."
+    },
+    "plink2/synthetic/haploid.psam": {
+      "source": "2.0/Tests/TEST_BCF_HAPLOID_HDS/run_tests.sh",
+      "transformation": "Exact contents of upstream printf-generated synthetic sex table."
+    },
+    "plink2/synthetic/haploid.vcf": {
+      "source": "2.0/Tests/TEST_BCF_HAPLOID_HDS/run_tests.sh",
+      "transformation": "Unchanged bytes of the named literal VCF here-document; synthetic upstream regression input."
+    },
+    "plink2/synthetic/multiallelic.vcf": {
+      "source": "2.0/Tests/TEST_VCF_MULTIALLELIC_DS_FIELDS/run_tests.sh",
+      "transformation": "Unchanged bytes of the named literal VCF here-document; synthetic upstream regression input."
+    },
+    "plink2/synthetic/multinomial/covar.txt": {
+      "source": "2.0/Tests/TEST_GLM_MULTINOMIAL/covar.txt",
+      "transformation": "Unchanged original source bytes."
+    },
+    "plink2/synthetic/multinomial/mn.vcf.gz": {
+      "source": "2.0/Tests/TEST_GLM_MULTINOMIAL/mn.vcf.gz",
+      "transformation": "Unchanged original source bytes."
+    },
+    "plink2/synthetic/multinomial/mn_multi.vcf.gz": {
+      "source": "2.0/Tests/TEST_GLM_MULTINOMIAL/mn_multi.vcf.gz",
+      "transformation": "Unchanged original source bytes."
+    },
+    "plink2/synthetic/multinomial/pheno.txt": {
+      "source": "2.0/Tests/TEST_GLM_MULTINOMIAL/pheno.txt",
+      "transformation": "Unchanged original source bytes."
+    },
+    "plink2/synthetic/multinomial/sex.txt": {
+      "source": "2.0/Tests/TEST_GLM_MULTINOMIAL/sex.txt",
+      "transformation": "Unchanged original source bytes."
+    },
+    "plink2/synthetic/phased-multiallelic.vcf": {
+      "source": "2.0/Tests/TEST_MULTIALLELIC_PHASED_R/run_tests.sh",
+      "transformation": "First upstream Python generator reproduced with identical PRNG, sample counts and genotype formulas. Contig length metadata changed from 1000 to 100000000; genotype and variant records unchanged."
+    },
+    "plink2/synthetic/score-dosage/input.vcf": {
+      "source": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "transformation": "Upstream sample/variant counts, rare/common allele, missingness, dosage and haploid formulas, with explicit LCG replacing implementation-dependent awk rand; same seeds 17/18. Synthetic regression data."
+    },
+    "plink2/synthetic/score-dosage/scores.tsv": {
+      "source": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "transformation": "Upstream score formulas and seed 5, LCG replacing awk rand; header added. Synthetic arbitrary coefficients."
+    },
+    "plink2/synthetic/score-dosage/sex.tsv": {
+      "source": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "transformation": "All synthetic samples assigned male as upstream dosage test requires; supplied in both sets for consistent import."
+    },
+    "plink2/synthetic/score-hardcall/input.vcf": {
+      "source": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "transformation": "Upstream sample/variant counts, rare/common allele, missingness, dosage and haploid formulas, with explicit LCG replacing implementation-dependent awk rand; same seeds 17/18. Synthetic regression data."
+    },
+    "plink2/synthetic/score-hardcall/scores.tsv": {
+      "source": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "transformation": "Upstream score formulas and seed 5, LCG replacing awk rand; header added. Synthetic arbitrary coefficients."
+    },
+    "plink2/synthetic/score-hardcall/sex.tsv": {
+      "source": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "transformation": "All synthetic samples assigned male as upstream dosage test requires; supplied in both sets for consistent import."
+    },
+    "provenance/PLINK2-COPYING": {
+      "source": "2.0/COPYING",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_BCF_HAPLOID_HDS__run_tests.sh": {
+      "source": "2.0/Tests/TEST_BCF_HAPLOID_HDS/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_BCF_UNPHASED_DOSAGE_HDS__run_tests.sh": {
+      "source": "2.0/Tests/TEST_BCF_UNPHASED_DOSAGE_HDS/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_GLM_LOGISTIC_MISSING__run_tests.sh": {
+      "source": "2.0/Tests/TEST_GLM_LOGISTIC_MISSING/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_GLM_MISSING__run_tests.sh": {
+      "source": "2.0/Tests/TEST_GLM_MISSING/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_GLM_MULTINOMIAL__make_fixture.py": {
+      "source": "2.0/Tests/TEST_GLM_MULTINOMIAL/make_fixture.py",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_MULTIALLELIC_PHASED_R__run_tests.sh": {
+      "source": "2.0/Tests/TEST_MULTIALLELIC_PHASED_R/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_PHASED_VCF__run_tests.sh": {
+      "source": "2.0/Tests/TEST_PHASED_VCF/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_SCORE_CENTER_MISSING__run_tests.sh": {
+      "source": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    },
+    "provenance/upstream/TEST_VCF_MULTIALLELIC_DS_FIELDS__run_tests.sh": {
+      "source": "2.0/Tests/TEST_VCF_MULTIALLELIC_DS_FIELDS/run_tests.sh",
+      "transformation": "Unchanged original source bytes."
+    }
+  },
+  "upstreamRevision": "72119068234ce0acf7189e53dfe67a527bc53e2c"
+}

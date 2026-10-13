@@ -1,5 +1,11 @@
 # Test data
 
+The [PLINK 2 fixtures](plink2/README.md) include an unchanged public 1000 Genomes
+Phase 3 chromosome 21 subset with 2,504 samples and 600 phased variants, plus
+clearly labelled synthetic regression and format-edge fixtures. These test
+native/browser agreement, including missingness, dosage, scoring and regression;
+they do not establish association accuracy or genome-wide ancestry performance.
+
 The [airway count matrix](deseq2-airway/README.md) is provided separately for
 DESeq2. It contains 63,677 genes and eight human samples from four paired cell
 lines. Its biological replicates are independent of the read subsets below.

@@ -1,0 +1,2631 @@
+{
+  "schema": 1,
+  "datasets": [
+    "plink2"
+  ],
+  "comparisonPolicy": "Exact binary files and discrete biological fields, ordered rows and exact error codes. Only declared float columns use upstream printed-precision tolerance; integer-looking values remain exact. VCF fileDate and source platform metadata are narrowly normalized.",
+  "fixtureInputs": [
+    "plink2/real/1kg-phase3-chr21.vcf.gz",
+    "plink2/real/keep48.samples.txt",
+    "plink2/real/scores.tsv",
+    "plink2/synthetic/glm-missing/input.vcf",
+    "plink2/synthetic/glm-missing/phenotypes.tsv",
+    "plink2/synthetic/glm-missing/covariates.tsv",
+    "plink2/synthetic/multiallelic.vcf",
+    "plink2/synthetic/haploid.vcf",
+    "plink2/synthetic/haploid.psam",
+    "plink2/synthetic/phased-multiallelic.vcf",
+    "plink2/synthetic/score-hardcall/input.vcf",
+    "plink2/synthetic/score-hardcall/scores.tsv",
+    "plink2/synthetic/score-hardcall/sex.tsv",
+    "plink2/synthetic/score-dosage/input.vcf",
+    "plink2/synthetic/score-dosage/scores.tsv",
+    "plink2/synthetic/score-dosage/sex.tsv"
+  ],
+  "tools": {
+    "plink2": {
+      "datasets": [
+        "plink2"
+      ],
+      "runtime": [
+        "runtime/index.mjs",
+        "runtime/execute.mjs",
+        "runtime/worker.mjs",
+        "runtime/plink2.mjs"
+      ],
+      "fixtureInputs": [
+        "real/1kg-phase3-chr21.vcf.gz",
+        "real/keep48.samples.txt",
+        "real/scores.tsv",
+        "synthetic/glm-missing/input.vcf",
+        "synthetic/glm-missing/phenotypes.tsv",
+        "synthetic/glm-missing/covariates.tsv",
+        "synthetic/multiallelic.vcf",
+        "synthetic/haploid.vcf",
+        "synthetic/haploid.psam",
+        "synthetic/phased-multiallelic.vcf",
+        "synthetic/score-hardcall/input.vcf",
+        "synthetic/score-hardcall/scores.tsv",
+        "synthetic/score-hardcall/sex.tsv",
+        "synthetic/score-dosage/input.vcf",
+        "synthetic/score-dosage/scores.tsv",
+        "synthetic/score-dosage/sex.tsv"
+      ],
+      "cases": [
+        {
+          "id": "real-import",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "real/1kg-phase3-chr21.vcf.gz",
+            "--make-pgen",
+            "--out",
+            "real"
+          ],
+          "outputs": [
+            "real.pgen",
+            "real.pvar",
+            "real.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "real.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "real.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "real.psam",
+              "kind": "text"
+            }
+          ]
+        },
+        {
+          "id": "real-frequencies",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--freq",
+            "--out",
+            "result"
+          ],
+          "outputs": [
+            "result.afreq"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.afreq",
+              "kind": "table",
+              "floatColumns": [
+                "ALT_FREQS"
+              ],
+              "expected": {
+                "records": 600
+              },
+              "exactColumnValues": {
+                "OBS_CT": "5008"
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-frequencies-threads2",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "2",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--freq",
+            "--out",
+            "result"
+          ],
+          "outputs": [
+            "result.afreq"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.afreq",
+              "kind": "table",
+              "floatColumns": [
+                "ALT_FREQS"
+              ],
+              "expected": {
+                "records": 600
+              },
+              "exactColumnValues": {
+                "OBS_CT": "5008"
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ],
+          "baseline": "real-frequencies"
+        },
+        {
+          "id": "real-qc",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--missing",
+            "--hardy",
+            "--het",
+            "--geno-counts",
+            "--out",
+            "qc"
+          ],
+          "outputs": [
+            "qc.smiss",
+            "qc.vmiss",
+            "qc.hardy",
+            "qc.het",
+            "qc.gcount"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "qc.smiss",
+              "kind": "table",
+              "floatColumns": [
+                "F_MISS"
+              ],
+              "expected": {
+                "records": 2504
+              },
+              "exactColumnValues": {
+                "MISSING_CT": "0",
+                "OBS_CT": "600"
+              }
+            },
+            {
+              "path": "qc.vmiss",
+              "kind": "table",
+              "floatColumns": [
+                "F_MISS"
+              ],
+              "expected": {
+                "records": 600
+              },
+              "exactColumnValues": {
+                "MISSING_CT": "0",
+                "OBS_CT": "2504"
+              }
+            },
+            {
+              "path": "qc.hardy",
+              "kind": "table",
+              "floatColumns": [
+                "O(HET_A1)",
+                "E(HET_A1)",
+                "P"
+              ],
+              "expected": {
+                "records": 600
+              }
+            },
+            {
+              "path": "qc.het",
+              "kind": "table",
+              "floatColumns": [
+                "E(HOM)",
+                "F"
+              ],
+              "expected": {
+                "records": 2504
+              }
+            },
+            {
+              "path": "qc.gcount",
+              "kind": "table",
+              "floatColumns": [],
+              "expected": {
+                "records": 600
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-filter",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--maf",
+            "0.05",
+            "--geno",
+            "0.02",
+            "--make-pgen",
+            "--out",
+            "filtered"
+          ],
+          "outputs": [
+            "filtered.pgen",
+            "filtered.pvar",
+            "filtered.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "filtered.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "filtered.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "filtered.psam",
+              "kind": "text"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-subset48",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--keep",
+            "real/keep48.samples.txt",
+            "--make-pgen",
+            "--out",
+            "subset"
+          ],
+          "outputs": [
+            "subset.pgen",
+            "subset.pvar",
+            "subset.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "subset.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "subset.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "subset.psam",
+              "kind": "text"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-export-vcf",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--export",
+            "vcf",
+            "--out",
+            "export"
+          ],
+          "outputs": [
+            "export.vcf"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "export.vcf",
+              "kind": "vcf",
+              "expected": {
+                "records": 600,
+                "samples": 2504
+              },
+              "minimum": {
+                "phasedCalls": 10000
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-vcf-reimport",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "export.vcf",
+            "--make-pgen",
+            "--out",
+            "roundtrip"
+          ],
+          "outputs": [
+            "roundtrip.pgen",
+            "roundtrip.pvar",
+            "roundtrip.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "roundtrip.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "roundtrip.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "roundtrip.psam",
+              "kind": "text"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-export-vcf",
+              "path": "export.vcf",
+              "as": "export.vcf"
+            }
+          ]
+        },
+        {
+          "id": "real-vcf-roundtrip-frequencies",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--freq",
+            "--out",
+            "result"
+          ],
+          "outputs": [
+            "result.afreq"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.afreq",
+              "kind": "table",
+              "floatColumns": [
+                "ALT_FREQS"
+              ],
+              "expected": {
+                "records": 600
+              },
+              "exactColumnValues": {
+                "OBS_CT": "5008"
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-vcf-reimport",
+              "path": "roundtrip.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-vcf-reimport",
+              "path": "roundtrip.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-vcf-reimport",
+              "path": "roundtrip.psam",
+              "as": "input.psam"
+            }
+          ],
+          "equivalentTo": "real-frequencies"
+        },
+        {
+          "id": "real-vcf-roundtrip-export",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--export",
+            "vcf",
+            "--out",
+            "export"
+          ],
+          "outputs": [
+            "export.vcf"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "export.vcf",
+              "kind": "vcf",
+              "expected": {
+                "records": 600,
+                "samples": 2504
+              },
+              "minimum": {
+                "phasedCalls": 10000
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-vcf-reimport",
+              "path": "roundtrip.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-vcf-reimport",
+              "path": "roundtrip.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-vcf-reimport",
+              "path": "roundtrip.psam",
+              "as": "input.psam"
+            }
+          ],
+          "equivalentTo": "real-export-vcf"
+        },
+        {
+          "id": "real-make-bed",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--make-bed",
+            "--out",
+            "bed"
+          ],
+          "outputs": [
+            "bed.bed",
+            "bed.bim",
+            "bed.fam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "bed.bed",
+              "kind": "exact",
+              "magicHex": "6c1b01"
+            },
+            {
+              "path": "bed.bim",
+              "kind": "text"
+            },
+            {
+              "path": "bed.fam",
+              "kind": "text"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-bed-reimport",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--bfile",
+            "bed",
+            "--make-pgen",
+            "--out",
+            "roundtrip",
+            "--real-ref-alleles"
+          ],
+          "outputs": [
+            "roundtrip.pgen",
+            "roundtrip.pvar",
+            "roundtrip.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "roundtrip.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "roundtrip.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "roundtrip.psam",
+              "kind": "text"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-make-bed",
+              "path": "bed.bed",
+              "as": "bed.bed"
+            },
+            {
+              "case": "real-make-bed",
+              "path": "bed.bim",
+              "as": "bed.bim"
+            },
+            {
+              "case": "real-make-bed",
+              "path": "bed.fam",
+              "as": "bed.fam"
+            }
+          ]
+        },
+        {
+          "id": "real-bed-roundtrip-frequencies",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--freq",
+            "--out",
+            "result"
+          ],
+          "outputs": [
+            "result.afreq"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.afreq",
+              "kind": "table",
+              "floatColumns": [
+                "ALT_FREQS"
+              ],
+              "expected": {
+                "records": 600
+              },
+              "exactColumnValues": {
+                "OBS_CT": "5008"
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-bed-reimport",
+              "path": "roundtrip.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-bed-reimport",
+              "path": "roundtrip.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-bed-reimport",
+              "path": "roundtrip.psam",
+              "as": "input.psam"
+            }
+          ],
+          "equivalentTo": "real-frequencies"
+        },
+        {
+          "id": "real-bed-roundtrip-genotypes",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--pgen-diff",
+            "roundtrip",
+            "include-missing",
+            "--out",
+            "diff"
+          ],
+          "outputs": [
+            "diff.pdiff"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "diff.pdiff",
+              "kind": "table",
+              "floatColumns": [],
+              "minimumRecords": 0,
+              "expected": {
+                "records": 0
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            },
+            {
+              "case": "real-bed-reimport",
+              "path": "roundtrip.pgen",
+              "as": "roundtrip.pgen"
+            },
+            {
+              "case": "real-bed-reimport",
+              "path": "roundtrip.pvar",
+              "as": "roundtrip.pvar"
+            },
+            {
+              "case": "real-bed-reimport",
+              "path": "roundtrip.psam",
+              "as": "roundtrip.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-cross-native",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--freq",
+            "--out",
+            "result"
+          ],
+          "outputs": [
+            "result.afreq"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.afreq",
+              "kind": "table",
+              "floatColumns": [
+                "ALT_FREQS"
+              ],
+              "expected": {
+                "records": 600
+              },
+              "exactColumnValues": {
+                "OBS_CT": "5008"
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "target": "native",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "target": "native",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "target": "native",
+              "as": "input.psam"
+            }
+          ],
+          "equivalentTo": "real-frequencies"
+        },
+        {
+          "id": "real-cross-wasm",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--freq",
+            "--out",
+            "result"
+          ],
+          "outputs": [
+            "result.afreq"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.afreq",
+              "kind": "table",
+              "floatColumns": [
+                "ALT_FREQS"
+              ],
+              "expected": {
+                "records": 600
+              },
+              "exactColumnValues": {
+                "OBS_CT": "5008"
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "target": "wasm",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "target": "wasm",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "target": "wasm",
+              "as": "input.psam"
+            }
+          ],
+          "equivalentTo": "real-frequencies"
+        },
+        {
+          "id": "real-ld-prune",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--maf",
+            "0.05",
+            "--indep-pairwise",
+            "50",
+            "5",
+            "0.2",
+            "--out",
+            "ld"
+          ],
+          "outputs": [
+            "ld.prune.in",
+            "ld.prune.out"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "ld.prune.in",
+              "kind": "text",
+              "minimumRecords": 2
+            },
+            {
+              "path": "ld.prune.out",
+              "kind": "text",
+              "minimumRecords": 2
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-ld-report",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--maf",
+            "0.05",
+            "--r2-unphased",
+            "cols=chrom,pos,id,ref,alt",
+            "--ld-window-kb",
+            "100",
+            "--ld-window-r2",
+            "0.2",
+            "--out",
+            "ld"
+          ],
+          "outputs": [
+            "ld.vcor"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "ld.vcor",
+              "kind": "table",
+              "floatColumns": [
+                "UNPHASED_R2"
+              ],
+              "minimumRecords": 10
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-subset48",
+              "path": "subset.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-subset48",
+              "path": "subset.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-subset48",
+              "path": "subset.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-king",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--make-king-table",
+            "--out",
+            "king"
+          ],
+          "outputs": [
+            "king.kin0"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "king.kin0",
+              "kind": "table",
+              "floatColumns": [
+                "HETHET",
+                "IBS0",
+                "KINSHIP"
+              ],
+              "expected": {
+                "records": 1128
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-subset48",
+              "path": "subset.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-subset48",
+              "path": "subset.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-subset48",
+              "path": "subset.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "real-grm",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--maf",
+            "0.05",
+            "--make-grm-list",
+            "--out",
+            "grm",
+            "--read-freq",
+            "reference.afreq"
+          ],
+          "outputs": [
+            "grm.grm",
+            "grm.grm.id"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "grm.grm",
+              "kind": "table",
+              "floatColumns": [
+                "GRM"
+              ],
+              "columns": [
+                "I",
+                "J",
+                "N",
+                "GRM"
+              ],
+              "expected": {
+                "records": 1176
+              }
+            },
+            {
+              "path": "grm.grm.id",
+              "kind": "text",
+              "expected": {
+                "records": 48
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-subset48",
+              "path": "subset.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-subset48",
+              "path": "subset.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-subset48",
+              "path": "subset.psam",
+              "as": "input.psam"
+            },
+            {
+              "case": "real-frequencies",
+              "path": "result.afreq",
+              "as": "reference.afreq"
+            }
+          ]
+        },
+        {
+          "id": "real-score",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--score",
+            "real/scores.tsv",
+            "1",
+            "2",
+            "3",
+            "header-read",
+            "list-variants",
+            "cols=+scoresums",
+            "--out",
+            "score"
+          ],
+          "outputs": [
+            "score.sscore",
+            "score.sscore.vars"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "score.sscore",
+              "kind": "table",
+              "floatColumns": [
+                "NAMED_ALLELE_DOSAGE_SUM",
+                "WEIGHT_AVG",
+                "WEIGHT_SUM"
+              ],
+              "expected": {
+                "records": 2504
+              }
+            },
+            {
+              "path": "score.sscore.vars",
+              "kind": "text",
+              "expected": {
+                "records": 20
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "real-import",
+              "path": "real.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "real-import",
+              "path": "real.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "real-import",
+              "path": "real.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "glm-import",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "synthetic/glm-missing/input.vcf",
+            "--make-pgen",
+            "--out",
+            "glm"
+          ],
+          "outputs": [
+            "glm.pgen",
+            "glm.pvar",
+            "glm.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "glm.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "glm.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "glm.psam",
+              "kind": "text"
+            }
+          ]
+        },
+        {
+          "id": "glm-linear",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--pheno",
+            "synthetic/glm-missing/phenotypes.tsv",
+            "--pheno-name",
+            "QUANT",
+            "--covar",
+            "synthetic/glm-missing/covariates.tsv",
+            "--glm",
+            "hide-covar",
+            "--out",
+            "glm"
+          ],
+          "outputs": [
+            "glm.QUANT.glm.linear"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "glm.QUANT.glm.linear",
+              "kind": "table",
+              "floatColumns": [
+                "BETA",
+                "SE",
+                "T_STAT",
+                "P"
+              ],
+              "expected": {
+                "records": 30
+              },
+              "nonmissingColumns": [
+                "P"
+              ],
+              "minimum": {
+                "nonmissing:P": 20
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "glm-import",
+              "path": "glm.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "glm-logistic",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--pheno",
+            "synthetic/glm-missing/phenotypes.tsv",
+            "--pheno-name",
+            "BINARY",
+            "--covar",
+            "synthetic/glm-missing/covariates.tsv",
+            "--glm",
+            "hide-covar",
+            "--out",
+            "glm"
+          ],
+          "outputs": [
+            "glm.BINARY.glm.logistic.hybrid"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "glm.BINARY.glm.logistic.hybrid",
+              "kind": "table",
+              "floatColumns": [
+                "OR",
+                "LOG(OR)_SE",
+                "Z_STAT",
+                "P"
+              ],
+              "expected": {
+                "records": 30
+              },
+              "nonmissingColumns": [
+                "P"
+              ],
+              "minimum": {
+                "nonmissing:P": 20
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "glm-import",
+              "path": "glm.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "glm-logistic-threads2",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "2",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--pheno",
+            "synthetic/glm-missing/phenotypes.tsv",
+            "--pheno-name",
+            "BINARY",
+            "--covar",
+            "synthetic/glm-missing/covariates.tsv",
+            "--glm",
+            "hide-covar",
+            "--out",
+            "glm"
+          ],
+          "outputs": [
+            "glm.BINARY.glm.logistic.hybrid"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "glm.BINARY.glm.logistic.hybrid",
+              "kind": "table",
+              "floatColumns": [
+                "OR",
+                "LOG(OR)_SE",
+                "Z_STAT",
+                "P"
+              ],
+              "expected": {
+                "records": 30
+              },
+              "nonmissingColumns": [
+                "P"
+              ],
+              "minimum": {
+                "nonmissing:P": 20
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "glm-import",
+              "path": "glm.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.psam",
+              "as": "input.psam"
+            }
+          ],
+          "equivalentTo": "glm-logistic"
+        },
+        {
+          "id": "glm-firth",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--pheno",
+            "synthetic/glm-missing/phenotypes.tsv",
+            "--pheno-name",
+            "FIRTH",
+            "--covar",
+            "synthetic/glm-missing/covariates.tsv",
+            "--glm",
+            "hide-covar",
+            "firth",
+            "--out",
+            "glm"
+          ],
+          "outputs": [
+            "glm.FIRTH.glm.firth"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "glm.FIRTH.glm.firth",
+              "kind": "table",
+              "floatColumns": [
+                "OR",
+                "LOG(OR)_SE",
+                "Z_STAT",
+                "P"
+              ],
+              "expected": {
+                "records": 30
+              },
+              "nonmissingColumns": [
+                "P"
+              ],
+              "minimum": {
+                "nonmissing:P": 20
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "glm-import",
+              "path": "glm.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "glm-firth-threads2",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "2",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--pheno",
+            "synthetic/glm-missing/phenotypes.tsv",
+            "--pheno-name",
+            "FIRTH",
+            "--covar",
+            "synthetic/glm-missing/covariates.tsv",
+            "--glm",
+            "hide-covar",
+            "firth",
+            "--out",
+            "glm"
+          ],
+          "outputs": [
+            "glm.FIRTH.glm.firth"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "glm.FIRTH.glm.firth",
+              "kind": "table",
+              "floatColumns": [
+                "OR",
+                "LOG(OR)_SE",
+                "Z_STAT",
+                "P"
+              ],
+              "expected": {
+                "records": 30
+              },
+              "nonmissingColumns": [
+                "P"
+              ],
+              "minimum": {
+                "nonmissing:P": 20
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "glm-import",
+              "path": "glm.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "glm-import",
+              "path": "glm.psam",
+              "as": "input.psam"
+            }
+          ],
+          "equivalentTo": "glm-firth"
+        },
+        {
+          "id": "score-hardcall-import",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "synthetic/score-hardcall/input.vcf",
+            "--make-pgen",
+            "--out",
+            "scored"
+          ],
+          "outputs": [
+            "scored.pgen",
+            "scored.pvar",
+            "scored.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "scored.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "scored.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "scored.psam",
+              "kind": "text"
+            }
+          ]
+        },
+        {
+          "id": "score-hardcall",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--update-sex",
+            "synthetic/score-hardcall/sex.tsv",
+            "--score",
+            "synthetic/score-hardcall/scores.tsv",
+            "1",
+            "2",
+            "header-read",
+            "center",
+            "cols=+scoresums",
+            "--score-col-nums",
+            "3-4",
+            "--out",
+            "score"
+          ],
+          "outputs": [
+            "score.sscore"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "score.sscore",
+              "kind": "table",
+              "floatColumns": [
+                "NAMED_ALLELE_DOSAGE_SUM",
+                "SCORE1_AVG",
+                "SCORE2_AVG",
+                "SCORE1_SUM",
+                "SCORE2_SUM"
+              ],
+              "expected": {
+                "records": 203
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "score-hardcall-import",
+              "path": "scored.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "score-hardcall-import",
+              "path": "scored.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "score-hardcall-import",
+              "path": "scored.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "score-dosage-import",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "synthetic/score-dosage/input.vcf",
+            "dosage=DS",
+            "--make-pgen",
+            "--out",
+            "scored"
+          ],
+          "outputs": [
+            "scored.pgen",
+            "scored.pvar",
+            "scored.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "scored.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "scored.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "scored.psam",
+              "kind": "text"
+            }
+          ]
+        },
+        {
+          "id": "score-dosage",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--update-sex",
+            "synthetic/score-dosage/sex.tsv",
+            "--score",
+            "synthetic/score-dosage/scores.tsv",
+            "1",
+            "2",
+            "header-read",
+            "center",
+            "cols=+scoresums",
+            "--score-col-nums",
+            "3-4",
+            "--out",
+            "score"
+          ],
+          "outputs": [
+            "score.sscore"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "score.sscore",
+              "kind": "table",
+              "floatColumns": [
+                "NAMED_ALLELE_DOSAGE_SUM",
+                "SCORE1_AVG",
+                "SCORE2_AVG",
+                "SCORE1_SUM",
+                "SCORE2_SUM"
+              ],
+              "expected": {
+                "records": 203
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "score-dosage-import",
+              "path": "scored.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "score-dosage-import",
+              "path": "scored.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "score-dosage-import",
+              "path": "scored.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "multiallelic-import",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "synthetic/multiallelic.vcf",
+            "--make-pgen",
+            "--out",
+            "multi"
+          ],
+          "outputs": [
+            "multi.pgen",
+            "multi.pvar",
+            "multi.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "multi.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "multi.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "multi.psam",
+              "kind": "text"
+            }
+          ]
+        },
+        {
+          "id": "multiallelic-export",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--export",
+            "vcf",
+            "--out",
+            "multi"
+          ],
+          "outputs": [
+            "multi.vcf"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "multi.vcf",
+              "kind": "vcf",
+              "minimum": {
+                "multiallelicRecords": 1
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "multiallelic-import",
+              "path": "multi.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "multiallelic-import",
+              "path": "multi.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "multiallelic-import",
+              "path": "multi.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "haploid-import",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "synthetic/haploid.vcf",
+            "dosage=HDS",
+            "--psam",
+            "synthetic/haploid.psam",
+            "--make-pgen",
+            "--out",
+            "haploid"
+          ],
+          "outputs": [
+            "haploid.pgen",
+            "haploid.pvar",
+            "haploid.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "haploid.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "haploid.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "haploid.psam",
+              "kind": "text"
+            }
+          ]
+        },
+        {
+          "id": "haploid-export",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--export",
+            "vcf",
+            "vcf-dosage=HDS",
+            "--out",
+            "haploid"
+          ],
+          "outputs": [
+            "haploid.vcf"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "haploid.vcf",
+              "kind": "vcf"
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "haploid-import",
+              "path": "haploid.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "haploid-import",
+              "path": "haploid.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "haploid-import",
+              "path": "haploid.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "phased-multiallelic-import",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--vcf",
+            "synthetic/phased-multiallelic.vcf",
+            "--make-pgen",
+            "--out",
+            "phased"
+          ],
+          "outputs": [
+            "phased.pgen",
+            "phased.pvar",
+            "phased.psam"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "phased.pgen",
+              "kind": "exact",
+              "magicHex": "6c1b"
+            },
+            {
+              "path": "phased.pvar",
+              "kind": "text"
+            },
+            {
+              "path": "phased.psam",
+              "kind": "text"
+            }
+          ]
+        },
+        {
+          "id": "phased-multiallelic-export",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "input",
+            "--export",
+            "vcf",
+            "--out",
+            "phased"
+          ],
+          "outputs": [
+            "phased.vcf"
+          ],
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "phased.vcf",
+              "kind": "vcf",
+              "expected": {
+                "records": 8,
+                "samples": 400
+              },
+              "minimum": {
+                "phasedCalls": 100,
+                "multiallelicRecords": 1
+              }
+            }
+          ],
+          "inputsFrom": [
+            {
+              "case": "phased-multiallelic-import",
+              "path": "phased.pgen",
+              "as": "input.pgen"
+            },
+            {
+              "case": "phased-multiallelic-import",
+              "path": "phased.pvar",
+              "as": "input.pvar"
+            },
+            {
+              "case": "phased-multiallelic-import",
+              "path": "phased.psam",
+              "as": "input.psam"
+            }
+          ]
+        },
+        {
+          "id": "pca-unavailable",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pca",
+            "2"
+          ],
+          "outputs": [],
+          "kind": "restriction",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "--pca requires PLINK.*LAPACK",
+          "expectedExitCode": 8
+        },
+        {
+          "id": "pca-approx-unavailable",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pca",
+            "2",
+            "approx"
+          ],
+          "outputs": [],
+          "kind": "restriction",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "--pca requires PLINK.*LAPACK",
+          "expectedExitCode": 8
+        },
+        {
+          "id": "pheno-svd-unavailable",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pheno-svd",
+            "2"
+          ],
+          "outputs": [],
+          "kind": "restriction",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "--pheno-svd requires PLINK.*LAPACK",
+          "expectedExitCode": 8
+        },
+        {
+          "id": "missing-input",
+          "runner": "plink2",
+          "args": [
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require",
+            "--seed",
+            "42",
+            "--pfile",
+            "absent",
+            "--freq"
+          ],
+          "outputs": [],
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "diagnosticRegex": "Failed to open absent\\.(psam|pgen|pvar)",
+          "expectedExitCode": 3
+        }
+      ]
+    }
+  }
+}

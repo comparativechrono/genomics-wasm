@@ -1,0 +1,151 @@
+{
+  "repository": "https://github.com/chrchang/plink-ng",
+  "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+  "schema_version": 1,
+  "sources": [
+    {
+      "bytes": 35147,
+      "cachePath": "build/plink2-sources/COPYING",
+      "name": "COPYING",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "upstreamPath": "2.0/COPYING",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/COPYING"
+    },
+    {
+      "bytes": 78046,
+      "cachePath": "build/plink2-sources/Tests__TEST_PHASED_VCF__1kg_phase3_chr21_start.vcf.gz",
+      "name": "Tests__TEST_PHASED_VCF__1kg_phase3_chr21_start.vcf.gz",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "db71978e9bc08df06ef798256cff6781f4f1bf9788b38dd22a94b987da67ea73",
+      "upstreamPath": "2.0/Tests/TEST_PHASED_VCF/1kg_phase3_chr21_start.vcf.gz",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_PHASED_VCF/1kg_phase3_chr21_start.vcf.gz"
+    },
+    {
+      "bytes": 14296,
+      "cachePath": "build/plink2-sources/Tests__TEST_PHASED_VCF__run_tests.sh",
+      "name": "Tests__TEST_PHASED_VCF__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "2ac048d079b3eca55ee1087e91b5f29997045e4ff73c709bd990e830c6b0a8fd",
+      "upstreamPath": "2.0/Tests/TEST_PHASED_VCF/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_PHASED_VCF/run_tests.sh"
+    },
+    {
+      "bytes": 3350,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_LOGISTIC_MISSING__run_tests.sh",
+      "name": "Tests__TEST_GLM_LOGISTIC_MISSING__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "c67490525d54a9a1f42089fb5da8b7549d6b15e9ccb18a2ae5657396bcb87870",
+      "upstreamPath": "2.0/Tests/TEST_GLM_LOGISTIC_MISSING/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_LOGISTIC_MISSING/run_tests.sh"
+    },
+    {
+      "bytes": 7049,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_MISSING__run_tests.sh",
+      "name": "Tests__TEST_GLM_MISSING__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "e0c3c5e2a5fa6c91e4daf11307ee6234f7825dd86eb1cde4ff94fbeb9342143b",
+      "upstreamPath": "2.0/Tests/TEST_GLM_MISSING/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_MISSING/run_tests.sh"
+    },
+    {
+      "bytes": 4855,
+      "cachePath": "build/plink2-sources/Tests__TEST_SCORE_CENTER_MISSING__run_tests.sh",
+      "name": "Tests__TEST_SCORE_CENTER_MISSING__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "c71555e166b4efe4133b7a72e557e401e8e1ee374ac590b8428db4d218a84fde",
+      "upstreamPath": "2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh"
+    },
+    {
+      "bytes": 1004,
+      "cachePath": "build/plink2-sources/Tests__TEST_VCF_MULTIALLELIC_DS_FIELDS__run_tests.sh",
+      "name": "Tests__TEST_VCF_MULTIALLELIC_DS_FIELDS__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "cd671ffe7bce07da396ebf8d59576d7a0be356b0a847f1264ebc49aa156105d1",
+      "upstreamPath": "2.0/Tests/TEST_VCF_MULTIALLELIC_DS_FIELDS/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_VCF_MULTIALLELIC_DS_FIELDS/run_tests.sh"
+    },
+    {
+      "bytes": 1548,
+      "cachePath": "build/plink2-sources/Tests__TEST_BCF_HAPLOID_HDS__run_tests.sh",
+      "name": "Tests__TEST_BCF_HAPLOID_HDS__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "a0a1dec61abf867ffe24ee40430a808b3733ff6d69b6be19c33bfe3aa8690824",
+      "upstreamPath": "2.0/Tests/TEST_BCF_HAPLOID_HDS/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_BCF_HAPLOID_HDS/run_tests.sh"
+    },
+    {
+      "bytes": 4717,
+      "cachePath": "build/plink2-sources/Tests__TEST_MULTIALLELIC_PHASED_R__run_tests.sh",
+      "name": "Tests__TEST_MULTIALLELIC_PHASED_R__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "30d0ea09995fc2662dbe924b2edc63b2e599799c87ab10c01d5febd511139cba",
+      "upstreamPath": "2.0/Tests/TEST_MULTIALLELIC_PHASED_R/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_MULTIALLELIC_PHASED_R/run_tests.sh"
+    },
+    {
+      "bytes": 2165,
+      "cachePath": "build/plink2-sources/Tests__TEST_BCF_UNPHASED_DOSAGE_HDS__run_tests.sh",
+      "name": "Tests__TEST_BCF_UNPHASED_DOSAGE_HDS__run_tests.sh",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "10cbcc01bb4e1045c4382aee48f72b1c39212f9205c589ad6aa3c5b8110da43b",
+      "upstreamPath": "2.0/Tests/TEST_BCF_UNPHASED_DOSAGE_HDS/run_tests.sh",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_BCF_UNPHASED_DOSAGE_HDS/run_tests.sh"
+    },
+    {
+      "bytes": 6232,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_MULTINOMIAL__make_fixture.py",
+      "name": "Tests__TEST_GLM_MULTINOMIAL__make_fixture.py",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "751dc0fc7bab9f9099f22bff9f7c50ab872eb6002426229515554951030d7729",
+      "upstreamPath": "2.0/Tests/TEST_GLM_MULTINOMIAL/make_fixture.py",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_MULTINOMIAL/make_fixture.py"
+    },
+    {
+      "bytes": 12017,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_MULTINOMIAL__mn.vcf.gz",
+      "name": "Tests__TEST_GLM_MULTINOMIAL__mn.vcf.gz",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "572444a489fbc8c09ee3ab6cb6c0a8ed2314d085b1c1fda26b2749cad8aec676",
+      "upstreamPath": "2.0/Tests/TEST_GLM_MULTINOMIAL/mn.vcf.gz",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_MULTINOMIAL/mn.vcf.gz"
+    },
+    {
+      "bytes": 2904,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_MULTINOMIAL__mn_multi.vcf.gz",
+      "name": "Tests__TEST_GLM_MULTINOMIAL__mn_multi.vcf.gz",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "804c2dd1d15275316d0cd1e9e450eb19b32932d1e76c79f0b9cb94891cd426eb",
+      "upstreamPath": "2.0/Tests/TEST_GLM_MULTINOMIAL/mn_multi.vcf.gz",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_MULTINOMIAL/mn_multi.vcf.gz"
+    },
+    {
+      "bytes": 12696,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_MULTINOMIAL__pheno.txt",
+      "name": "Tests__TEST_GLM_MULTINOMIAL__pheno.txt",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "7ec3226afa7e4ee69c1f4cfaf01e5fbe5d080932715f18aeb549493463759b71",
+      "upstreamPath": "2.0/Tests/TEST_GLM_MULTINOMIAL/pheno.txt",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_MULTINOMIAL/pheno.txt"
+    },
+    {
+      "bytes": 18694,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_MULTINOMIAL__covar.txt",
+      "name": "Tests__TEST_GLM_MULTINOMIAL__covar.txt",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "18c4d63100abc7c8747b5bdd7fbdb4c9ce82dbffa7fbeadb18db34be3ed4d8c0",
+      "upstreamPath": "2.0/Tests/TEST_GLM_MULTINOMIAL/covar.txt",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_MULTINOMIAL/covar.txt"
+    },
+    {
+      "bytes": 4099,
+      "cachePath": "build/plink2-sources/Tests__TEST_GLM_MULTINOMIAL__sex.txt",
+      "name": "Tests__TEST_GLM_MULTINOMIAL__sex.txt",
+      "revision": "72119068234ce0acf7189e53dfe67a527bc53e2c",
+      "sha256": "7d5c03599f175c9621f2445b50fa68723d198d4913355b892195df41745570e8",
+      "upstreamPath": "2.0/Tests/TEST_GLM_MULTINOMIAL/sex.txt",
+      "url": "https://raw.githubusercontent.com/chrchang/plink-ng/72119068234ce0acf7189e53dfe67a527bc53e2c/2.0/Tests/TEST_GLM_MULTINOMIAL/sex.txt"
+    }
+  ]
+}

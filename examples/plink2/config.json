@@ -1,0 +1,172 @@
+{
+  "tools": {
+    "plink2": {
+      "label": "PLINK 2",
+      "description": "Convert genotype files, calculate quality-control statistics, filter samples and variants, and perform regression. Numbered commands use the real cohort; the regression control is explicitly synthetic.",
+      "argumentsHelp": "Enter PLINK 2 flags without the program name. Examples use one compute thread and a 640 MiB analysis arena. The supported compute-thread range is 1\u20132. PCA and other LAPACK-dependent commands are unavailable.",
+      "commands": {
+        "convert": {
+          "label": "1. Convert 1000 Genomes VCF",
+          "description": "Convert the supplied real chromosome 21 genotypes to PLINK 2 files. Run this first; subsequent quality-control commands use the generated cohort files.",
+          "args": [
+            "--vcf",
+            "real/1kg-phase3-chr21.vcf.gz",
+            "--make-pgen",
+            "--out",
+            "cohort",
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require"
+          ],
+          "outputs": [
+            "cohort.pgen",
+            "cohort.pvar",
+            "cohort.psam",
+            "cohort.log"
+          ],
+          "outputDirectories": []
+        },
+        "qc": {
+          "label": "2. Summarize genotype quality",
+          "description": "Report allele frequencies, sample and variant missingness, and Hardy\u2013Weinberg statistics. These describe the supplied subset; they do not establish clinical interpretation.",
+          "args": [
+            "--pfile",
+            "cohort",
+            "--freq",
+            "--missing",
+            "--hardy",
+            "--out",
+            "qc",
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require"
+          ],
+          "outputs": [
+            "qc.afreq",
+            "qc.smiss",
+            "qc.vmiss",
+            "qc.hardy",
+            "qc.log"
+          ],
+          "outputDirectories": []
+        },
+        "filter": {
+          "label": "3. Filter genotypes",
+          "description": "Keep variants with minor allele frequency at least 0.01 and missingness at most 0.1, and samples with missingness at most 0.1. These example thresholds are editable.",
+          "args": [
+            "--pfile",
+            "cohort",
+            "--maf",
+            "0.01",
+            "--geno",
+            "0.1",
+            "--mind",
+            "0.1",
+            "--make-pgen",
+            "--out",
+            "filtered",
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require"
+          ],
+          "outputs": [
+            "filtered.pgen",
+            "filtered.pvar",
+            "filtered.psam",
+            "filtered.log"
+          ],
+          "outputDirectories": []
+        },
+        "export": {
+          "label": "Export the cohort as VCF",
+          "description": "Export the converted, unfiltered cohort to an uncompressed VCF. The original genotype inputs remain available.",
+          "args": [
+            "--pfile",
+            "cohort",
+            "--export",
+            "vcf",
+            "--out",
+            "exported",
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require"
+          ],
+          "outputs": [
+            "exported.vcf",
+            "exported.log"
+          ],
+          "outputDirectories": []
+        },
+        "linear": {
+          "label": "Synthetic control: linear regression",
+          "description": "Run linear regression on explicitly synthetic genotypes, phenotype and covariates. This checks software behavior and is separate from the real 1000 Genomes cohort.",
+          "args": [
+            "--vcf",
+            "synthetic/glm-missing/input.vcf",
+            "--pheno",
+            "synthetic/glm-missing/phenotypes.tsv",
+            "--pheno-name",
+            "QUANT",
+            "--covar",
+            "synthetic/glm-missing/covariates.tsv",
+            "--glm",
+            "hide-covar",
+            "--out",
+            "linear",
+            "--threads",
+            "1",
+            "--memory",
+            "640",
+            "require"
+          ],
+          "outputs": [
+            "linear.QUANT.glm.linear",
+            "linear.log"
+          ],
+          "outputDirectories": []
+        },
+        "help": {
+          "label": "Command help",
+          "description": "Display PLINK 2 help. Request help for particular flags by adding them after --help.",
+          "args": [
+            "--help"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        },
+        "version": {
+          "label": "Program version",
+          "description": "Display the pinned PLINK 2 version.",
+          "args": [
+            "--version"
+          ],
+          "outputs": [],
+          "outputDirectories": []
+        }
+      },
+      "requiresIsolation": true,
+      "waitForExit": true
+    }
+  },
+  "datasets": {
+    "plink2": {
+      "label": "1000 Genomes and synthetic regression control",
+      "description": "A real 1000 Genomes chromosome 21 VCF with 2,504 samples and 600 variants, plus a separate, explicitly synthetic regression control. The files are for demonstrating and validating software.",
+      "path": "../../datasets/plink2/plink2/",
+      "files": [
+        "real/1kg-phase3-chr21.vcf.gz",
+        "synthetic/glm-missing/input.vcf",
+        "synthetic/glm-missing/phenotypes.tsv",
+        "synthetic/glm-missing/covariates.tsv"
+      ]
+    }
+  }
+}

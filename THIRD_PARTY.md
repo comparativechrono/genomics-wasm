@@ -49,6 +49,12 @@ directory under `tools/`.
   The package contains the original C++ source, pinned zlib and the embedded
   numerical and data-structure libraries with their individual licence notices.
   Portability changes retain the upstream BUS-processing algorithms.
+- PLINK 2: Shaun Purcell, Christopher Chang and contributors;
+  GPL-3.0-or-later for the application and LGPL-3.0-or-later for its reusable
+  libraries. Source: https://github.com/chrchang/plink-ng
+  The package retains the pinned upstream source, bundled compression-library
+  notices, zlib, Emscripten notices and the portability patch. Its first browser
+  build uses upstream `NOLAPACK` algorithms and does not include PCA.
 - AdapterRemoval: Mikkel Schubert and contributors; GPL-3.0-or-later.
   Source: https://github.com/MikkelSchubert/adapterremoval
   Its package includes the pinned zlib and bzip2 sources and notices.
