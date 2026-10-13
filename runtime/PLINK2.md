@@ -51,8 +51,9 @@ small datasets. The fixture tests are not a whole-cohort scalability benchmark.
 
 PLINK 2 uses genuine reader threads even with one compute thread. The helper
 always sets `waitForExit: true` so output collection waits for the application
-thread to finish. Keep the generated pthread worker module beside `plink2.mjs`
-and `plink2.wasm`.
+thread to finish. This pinned Emscripten build starts pthreads by loading
+`plink2.mjs` again as an ES-module worker. Keep it beside `plink2.wasm`.
+The packaged `plink2.worker.mjs` is an unused compatibility placeholder.
 
 ## Hosting
 

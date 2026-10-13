@@ -82,6 +82,10 @@ async function recordTree(directory, target) {
   }
 }
 
+function servedAssetRequests(path, since = 0) {
+  return summary.serverRequests.slice(since).filter(request => request.pathname === `/${path}` && request.method === 'GET' && request.isolation && request.completed && request.status === 200 && request.bytes > 0 && request.sha256 === summary.assets[path]);
+}
+
 function table(bytes) {
   const lines = bytes.toString('utf8').trim().split(/\r?\n/).filter(line => line && !line.startsWith('##'));
   assert.ok(lines.length >= 1);
@@ -152,6 +156,13 @@ try {
   for (const name of ['index', 'execute', 'worker', 'plink2']) summary.sources[`runtime/${name}.mjs`] = hash(await readFile(join(root, `runtime/${name}.mjs`)));
   summary.sources['scripts/test-plink2-demo.mjs'] = hash(await readFile(join(root, 'scripts/test-plink2-demo.mjs')));
   await recordTree('examples/plink2', summary.sources);
+  const runtimeLock = JSON.parse(await readFile(join(root, 'tools/plink2/sources.lock.json'), 'utf8')).runtime;
+  const generatedModule = await readFile(join(root, 'dist/plink2', runtimeLock.entryModule), 'utf8');
+  const pthreadEntry = generatedModule.match(/workerOptions=\{type:"module",workerData:"em-pthread",name:"em-pthread"\};worker=new Worker\(new URL\("([^"]+)",import\.meta\.url\),workerOptions\)/);
+  assert.ok(pthreadEntry, 'The generated module declares its actual ES-module pthread entry');
+  assert.equal(pthreadEntry[1], runtimeLock.entryModule);
+  assert.equal(Number(generatedModule.match(/var pthreadPoolSize=(\d+);/)?.[1]), runtimeLock.pthreadPoolSize);
+  summary.pthreadEvidence = { entryPath: `dist/plink2/${pthreadEntry[1]}`, poolSize: runtimeLock.pthreadPoolSize };
   host = await serve(); browser = await browserType.launch({ headless: true }); summary.browserVersion = browser.version();
   const context = await browser.newContext({ viewport: { width: 1100, height: 900 } }); context.setDefaultTimeout(30000);
   context.on('request', request => summary.requests.push({ url: request.url(), type: request.resourceType() }));
@@ -184,7 +195,14 @@ try {
   passed('threaded-hosting');
 
   phase('Convert authentic 1000 Genomes genotypes and inspect quality');
-  await load(page); await choose(page, 'convert'); await run(page);
+  await load(page); await choose(page, 'convert');
+  const firstCommandRequestStart = summary.serverRequests.length;
+  await run(page);
+  // Emscripten's ES-module pthreads load the main .mjs again. The separate
+  // .worker.mjs in this SDK is an unused compatibility placeholder, already
+  // covered by the distribution hashes; requesting it would throw an error.
+  summary.pthreadEvidence.firstCommandModuleRequests = servedAssetRequests(summary.pthreadEvidence.entryPath, firstCommandRequestStart).length;
+  assert.ok(summary.pthreadEvidence.firstCommandModuleRequests >= 2, 'The first command fetched its runtime and actual pthread entry with matching bytes');
   const pgen = await downloadBytes(page, 'cohort.pgen');
   assert.equal(pgen.subarray(0, 2).toString('hex'), '6c1b');
   const pvar = table(await downloadBytes(page, 'cohort.pvar'));
@@ -308,9 +326,9 @@ try {
   assert.deepEqual(await workerCalls(staticPage), []);
   await staticPage.close();
   passed('nonisolated-hosting-diagnostic');
-  for (const extension of ['mjs', 'wasm', 'worker.mjs']) {
+  for (const extension of ['mjs', 'wasm']) {
     const path = `dist/plink2/plink2.${extension}`;
-    assert.ok(summary.serverRequests.some(request => request.pathname === `/${path}` && request.method === 'GET' && request.isolation && request.completed && request.status === 200 && request.bytes > 0 && request.sha256 === summary.assets[path]), `Real local asset served with matching bytes: plink2.${extension}`);
+    assert.ok(servedAssetRequests(path).length > 0, `Real local asset served with matching bytes: plink2.${extension}`);
   }
   assert.ok(summary.workerCalls.length >= 14);
   assert.ok(summary.workerCalls.every(call => new URL(call.moduleUrl).pathname === '/dist/plink2/plink2.mjs'));
