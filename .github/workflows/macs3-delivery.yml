@@ -1,0 +1,119 @@
+name: Deliver validated MACS3 package parts
+on:
+  push:
+    branches: [codex/macs3-delivery]
+    paths: [.github/workflows/macs3-delivery.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  deliver:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check immutable source artifact identity
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: artifact } = await github.rest.actions.getArtifact({
+              owner: context.repo.owner, repo: context.repo.repo, artifact_id: 11835122831
+            });
+            if (artifact.id !== 11835122831 || artifact.name !== 'macs3-package' ||
+                artifact.size_in_bytes !== 545382186 || artifact.expired ||
+                artifact.digest !== 'sha256:8d07010c17a1f7dfa976468f6b0ebc325509da1e90e96a99958e819e42f07f95' ||
+                artifact.workflow_run.id !== 38435223609 ||
+                artifact.workflow_run.head_sha !== '1b306c53afaa0eee7c15900cc9d6c79b8e66ae71') {
+              throw new Error('Original validated artifact identity differs');
+            }
+            console.log(JSON.stringify(artifact, null, 2));
+      - name: Download the already validated package
+        uses: actions/download-artifact@v4
+        with:
+          name: macs3-package
+          run-id: 38435223609
+          github-token: ${{ github.token }}
+          path: original
+      - name: Verify and split unchanged package bytes
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, re, shutil
+          filename = 'macs3-3.0.5-wasm.zip'
+          matches = list(pathlib.Path('original').rglob(filename))
+          assert len(matches) == 1, matches
+          package = matches[0]
+          sidecar = package.with_suffix('.zip.sha256')
+          original_sidecar = sidecar.read_bytes()
+          fields = original_sidecar.decode().split()
+          assert len(fields) == 2 and re.fullmatch('[0-9a-f]{64}', fields[0])
+          assert fields[1].lstrip('*') == filename
+          expected = fields[0]
+          def digest(path):
+              with path.open('rb') as stream:
+                  return hashlib.file_digest(stream, 'sha256').hexdigest()
+          assert digest(package) == expected, 'Original package checksum mismatch'
+          output = pathlib.Path('delivery')
+          output.mkdir()
+          parts = []
+          rebuilt = hashlib.sha256()
+          with package.open('rb') as stream:
+              while block := stream.read(256 * 1024 * 1024):
+                  part = output / (filename + '.part' + str(len(parts)).zfill(3))
+                  part.write_bytes(block)
+                  parts.append({'filename': part.name, 'bytes': len(block), 'sha256': digest(part)})
+                  rebuilt.update(part.read_bytes())
+          assert 1 <= len(parts) <= 3
+          assert rebuilt.hexdigest() == expected, 'Split/reassembly checksum mismatch'
+          assert sum(p['bytes'] for p in parts) == package.stat().st_size
+          metadata = output / 'metadata'
+          metadata.mkdir()
+          (metadata / sidecar.name).write_bytes(original_sidecar)
+          evidence = {
+              'schema': 1,
+              'deliveryWorkflowRun': int(os.environ['GITHUB_RUN_ID']),
+              'sourceWorkflowRun': 38435223609,
+              'sourceHeadSha': '1b306c53afaa0eee7c15900cc9d6c79b8e66ae71',
+              'sourceArtifact': {
+                  'id': 11835122831, 'name': 'macs3-package', 'bytes': 545382186,
+                  'sha256': '8d07010c17a1f7dfa976468f6b0ebc325509da1e90e96a99958e819e42f07f95',
+                  'downloadIntegrity': 'actions/download-artifact@v4; computed archive digest recorded in job log'
+              },
+              'package': {'filename': filename, 'bytes': package.stat().st_size, 'sha256': expected},
+              'parts': parts,
+              'originalSidecarPreserved': True,
+              'reassembledSha256Verified': True,
+              'packageModified': False
+          }
+          (metadata / 'delivery.json').write_text(json.dumps(evidence, indent=2, sort_keys=True) + '\n')
+          (metadata / 'PARTS.sha256').write_text(''.join(p['sha256'] + '  ' + p['filename'] + '\n' for p in parts))
+          print(json.dumps(evidence, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macs3-package-part000
+          path: delivery/*.part000
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('delivery/*.part001') != ''
+        with:
+          name: macs3-package-part001
+          path: delivery/*.part001
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('delivery/*.part002') != ''
+        with:
+          name: macs3-package-part002
+          path: delivery/*.part002
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macs3-package-delivery-metadata
+          path: delivery/metadata/
+          if-no-files-found: error
+          retention-days: 30
