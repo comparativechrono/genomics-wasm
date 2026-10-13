@@ -1,0 +1,214 @@
+{
+  "primer3/config/dangle.dh": {
+    "path": "src/primer3_config/dangle.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/dangle.ds": {
+    "path": "src/primer3_config/dangle.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/loops.dh": {
+    "path": "src/primer3_config/loops.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/loops.ds": {
+    "path": "src/primer3_config/loops.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/stack.dh": {
+    "path": "src/primer3_config/stack.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/stack.ds": {
+    "path": "src/primer3_config/stack.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/stackmm.dh": {
+    "path": "src/primer3_config/stackmm.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/stackmm.ds": {
+    "path": "src/primer3_config/stackmm.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/tetraloop.dh": {
+    "path": "src/primer3_config/tetraloop.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/tetraloop.ds": {
+    "path": "src/primer3_config/tetraloop.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/triloop.dh": {
+    "path": "src/primer3_config/triloop.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/triloop.ds": {
+    "path": "src/primer3_config/triloop.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/tstack.dh": {
+    "path": "src/primer3_config/tstack.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/tstack2.dh": {
+    "path": "src/primer3_config/tstack2.dh",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/tstack2.ds": {
+    "path": "src/primer3_config/tstack2.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/config/tstack_tm_inf.ds": {
+    "path": "src/primer3_config/tstack_tm_inf.ds",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/real/NM_000518.5.fasta": {
+    "source": "hbb",
+    "transformation": "Unchanged versioned NCBI RefSeq FASTA response."
+  },
+  "primer3/real/hbb-constrained.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"SEQUENCE_TARGET\": \"250,50\", \"SEQUENCE_EXCLUDED_REGION\": \"100,20\", \"SEQUENCE_INCLUDED_REGION\": \"40,540\"}"
+  },
+  "primer3/real/hbb-high-gc.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"PRIMER_GC_CLAMP\": \"2\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"200-300\"}"
+  },
+  "primer3/real/hbb-internal.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"PRIMER_PICK_INTERNAL_OLIGO\": \"1\"}"
+  },
+  "primer3/real/hbb-invalid.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"PRIMER_MIN_SIZE\": \"30\", \"PRIMER_OPT_SIZE\": \"20\"}"
+  },
+  "primer3/real/hbb-legacy.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"PRIMER_THERMODYNAMIC_OLIGO_ALIGNMENT\": \"0\", \"PRIMER_TM_FORMULA\": \"0\", \"PRIMER_SALT_CORRECTIONS\": \"0\"}"
+  },
+  "primer3/real/hbb-mispriming.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"PRIMER_MISPRIMING_LIBRARY\": \"synthetic/repeat-library.fasta\", \"PRIMER_MAX_LIBRARY_MISPRIMING\": \"8\", \"PRIMER_PAIR_MAX_LIBRARY_MISPRIMING\": \"16\"}"
+  },
+  "primer3/real/hbb-missing-config.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"PRIMER_THERMODYNAMIC_PARAMETERS_PATH\": \"absent-config/\"}"
+  },
+  "primer3/real/hbb-multi.boulder": {
+    "source": "hbb",
+    "transformation": "Two complete HBB Boulder records; second record changes product-size range to 220-320."
+  },
+  "primer3/real/hbb-pairs.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\"}"
+  },
+  "primer3/real/hbb-thermodynamic.boulder": {
+    "source": "hbb",
+    "transformation": "Remove FASTA header/newlines; retain all 628 transcript nucleotides. Add explicit software-test Boulder IO parameters: {\"SEQUENCE_ID\": \"NM_000518.5-HBB\", \"SEQUENCE_TEMPLATE\": \"[complete source sequence]\", \"PRIMER_TASK\": \"generic\", \"PRIMER_NUM_RETURN\": \"5\", \"PRIMER_PRODUCT_SIZE_RANGE\": \"120-220\", \"PRIMER_EXPLAIN_FLAG\": \"1\", \"PRIMER_THERMODYNAMIC_OLIGO_ALIGNMENT\": \"1\", \"PRIMER_THERMODYNAMIC_TEMPLATE_ALIGNMENT\": \"1\", \"PRIMER_THERMODYNAMIC_PARAMETERS_PATH\": \"config/\"}"
+  },
+  "primer3/synthetic/masker-4mer.list": {
+    "path": "src/masker.c",
+    "source": "primer3",
+    "transformation": "Synthetic complete 4-mer index in upstream little-endian glistmaker format: all 256 sorted two-bit words, frequency20 for word divisible by3 else1; 40byte header. Exercises mmap, binary search and masking; not measured genome frequencies."
+  },
+  "primer3/synthetic/masker.fasta": {
+    "source": "synthetic",
+    "transformation": "Explicit artificial 44-base test oligo; no biological provenance claimed."
+  },
+  "primer3/synthetic/ntthal-interactive.txt": {
+    "path": "test/thal_batch_input",
+    "source": "primer3",
+    "transformation": "First two complete comma-separated upstream pair records, unchanged, for ntthal -i."
+  },
+  "primer3/synthetic/repeat-library.fasta": {
+    "source": "hbb",
+    "transformation": "Artificial mispriming library consisting of HBB bases [100:180] and [300:380], zero-based half-open; not a genome-wide specificity screen."
+  },
+  "primer3/upstream/amplicon3-amplicons.csv": {
+    "path": "test/amplicon3/amplicons.csv",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/dpal_input": {
+    "path": "test/dpal_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/example.boulder": {
+    "path": "example",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/long_seq_tm_test.pl": {
+    "path": "test/long_seq_tm_test.pl",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/oligotm_test.pl": {
+    "path": "test/oligotm_test.pl",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/primer_annealing_temp_input": {
+    "path": "test/primer_annealing_temp_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/primer_high_tm_load_set.set": {
+    "path": "test/primer_high_tm_load_set.set",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/primer_internal1_input": {
+    "path": "test/primer_internal1_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/primer_new_tasks_input": {
+    "path": "test/primer_new_tasks_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/primer_ok_regions_input": {
+    "path": "test/primer_ok_regions_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/primer_overhang_input": {
+    "path": "test/primer_overhang_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/thal_batch_input": {
+    "path": "test/thal_batch_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "primer3/upstream/thal_input": {
+    "path": "test/thal_input",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  },
+  "provenance/PRIMER3-LICENSE": {
+    "path": "LICENSE",
+    "source": "primer3",
+    "transformation": "Unchanged bytes."
+  }
+}

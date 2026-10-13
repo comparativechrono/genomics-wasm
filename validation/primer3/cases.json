@@ -1,0 +1,1377 @@
+{
+  "schema": 1,
+  "datasets": [
+    "primer3"
+  ],
+  "comparisonPolicy": "Every ordered Boulder IO field, sequence, coordinate, rank, count and printed numeric value is exact. CRLF alone is normalized. All CLI scientific stdout and declared output files are retained.",
+  "fixtureInputs": [
+    "primer3/config/dangle.dh",
+    "primer3/config/dangle.ds",
+    "primer3/config/loops.dh",
+    "primer3/config/loops.ds",
+    "primer3/config/stack.dh",
+    "primer3/config/stack.ds",
+    "primer3/config/stackmm.dh",
+    "primer3/config/stackmm.ds",
+    "primer3/config/tetraloop.dh",
+    "primer3/config/tetraloop.ds",
+    "primer3/config/triloop.dh",
+    "primer3/config/triloop.ds",
+    "primer3/config/tstack.dh",
+    "primer3/config/tstack2.dh",
+    "primer3/config/tstack2.ds",
+    "primer3/config/tstack_tm_inf.ds",
+    "primer3/real/NM_000518.5.fasta",
+    "primer3/real/hbb-constrained.boulder",
+    "primer3/real/hbb-high-gc.boulder",
+    "primer3/real/hbb-internal.boulder",
+    "primer3/real/hbb-invalid.boulder",
+    "primer3/real/hbb-legacy.boulder",
+    "primer3/real/hbb-mispriming.boulder",
+    "primer3/real/hbb-missing-config.boulder",
+    "primer3/real/hbb-multi.boulder",
+    "primer3/real/hbb-pairs.boulder",
+    "primer3/real/hbb-thermodynamic.boulder",
+    "primer3/synthetic/masker-4mer.list",
+    "primer3/synthetic/masker.fasta",
+    "primer3/synthetic/ntthal-interactive.txt",
+    "primer3/synthetic/repeat-library.fasta",
+    "primer3/upstream/amplicon3-amplicons.csv",
+    "primer3/upstream/dpal_input",
+    "primer3/upstream/example.boulder",
+    "primer3/upstream/long_seq_tm_test.pl",
+    "primer3/upstream/oligotm_test.pl",
+    "primer3/upstream/primer_annealing_temp_input",
+    "primer3/upstream/primer_high_tm_load_set.set",
+    "primer3/upstream/primer_internal1_input",
+    "primer3/upstream/primer_new_tasks_input",
+    "primer3/upstream/primer_ok_regions_input",
+    "primer3/upstream/primer_overhang_input",
+    "primer3/upstream/thal_batch_input",
+    "primer3/upstream/thal_input"
+  ],
+  "tools": {
+    "primer3": {
+      "datasets": [
+        "primer3"
+      ],
+      "runtime": [
+        "runtime/index.mjs",
+        "runtime/execute.mjs",
+        "runtime/worker.mjs",
+        "runtime/primer3.mjs"
+      ],
+      "fixtureInputs": [
+        "config/dangle.dh",
+        "config/dangle.ds",
+        "config/loops.dh",
+        "config/loops.ds",
+        "config/stack.dh",
+        "config/stack.ds",
+        "config/stackmm.dh",
+        "config/stackmm.ds",
+        "config/tetraloop.dh",
+        "config/tetraloop.ds",
+        "config/triloop.dh",
+        "config/triloop.ds",
+        "config/tstack.dh",
+        "config/tstack2.dh",
+        "config/tstack2.ds",
+        "config/tstack_tm_inf.ds",
+        "real/NM_000518.5.fasta",
+        "real/hbb-constrained.boulder",
+        "real/hbb-high-gc.boulder",
+        "real/hbb-internal.boulder",
+        "real/hbb-invalid.boulder",
+        "real/hbb-legacy.boulder",
+        "real/hbb-mispriming.boulder",
+        "real/hbb-missing-config.boulder",
+        "real/hbb-multi.boulder",
+        "real/hbb-pairs.boulder",
+        "real/hbb-thermodynamic.boulder",
+        "synthetic/masker-4mer.list",
+        "synthetic/masker.fasta",
+        "synthetic/ntthal-interactive.txt",
+        "synthetic/repeat-library.fasta",
+        "upstream/amplicon3-amplicons.csv",
+        "upstream/dpal_input",
+        "upstream/example.boulder",
+        "upstream/long_seq_tm_test.pl",
+        "upstream/oligotm_test.pl",
+        "upstream/primer_annealing_temp_input",
+        "upstream/primer_high_tm_load_set.set",
+        "upstream/primer_internal1_input",
+        "upstream/primer_new_tasks_input",
+        "upstream/primer_ok_regions_input",
+        "upstream/primer_overhang_input",
+        "upstream/thal_batch_input",
+        "upstream/thal_input"
+      ],
+      "cases": [
+        {
+          "id": "hbb-pairs",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5,
+              "minPrimers": 10
+            }
+          ],
+          "stdinFile": "real/hbb-pairs.boulder"
+        },
+        {
+          "id": "hbb-internal",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5,
+              "minPrimers": 15
+            }
+          ],
+          "stdinFile": "real/hbb-internal.boulder",
+          "effect": "hbb-pairs"
+        },
+        {
+          "id": "hbb-constrained",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5,
+              "minPrimers": 10
+            }
+          ],
+          "stdinFile": "real/hbb-constrained.boulder",
+          "effect": "hbb-pairs"
+        },
+        {
+          "id": "hbb-thermodynamic",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5,
+              "minPrimers": 10
+            }
+          ],
+          "stdinFile": "real/hbb-thermodynamic.boulder"
+        },
+        {
+          "id": "hbb-legacy",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5,
+              "minPrimers": 10
+            }
+          ],
+          "stdinFile": "real/hbb-legacy.boulder",
+          "effect": "hbb-pairs"
+        },
+        {
+          "id": "hbb-high-gc",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5,
+              "minPrimers": 10
+            }
+          ],
+          "stdinFile": "real/hbb-high-gc.boulder",
+          "effect": "hbb-pairs"
+        },
+        {
+          "id": "hbb-mispriming",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5,
+              "minPrimers": 10
+            }
+          ],
+          "stdinFile": "real/hbb-mispriming.boulder",
+          "effect": "hbb-pairs"
+        },
+        {
+          "id": "hbb-multi",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 2,
+              "errors": 0,
+              "minPairs": 10,
+              "minPrimers": 10
+            }
+          ],
+          "stdinFile": "real/hbb-multi.boulder",
+          "effect": "hbb-pairs"
+        },
+        {
+          "id": "hbb-settings",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [
+            "--p3_settings_file=upstream/primer_high_tm_load_set.set"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5
+            }
+          ],
+          "stdinFile": "real/hbb-pairs.boulder",
+          "effect": "hbb-pairs"
+        },
+        {
+          "id": "hbb-file-io",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [
+            "--output=selected.txt",
+            "real/hbb-pairs.boulder"
+          ],
+          "outputs": [
+            "selected.txt"
+          ],
+          "stdoutFile": null,
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "selected.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5
+            }
+          ]
+        },
+        {
+          "id": "upstream-primer-internal1",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 29,
+              "errors": 1,
+              "minPairs": 15
+            }
+          ],
+          "stdinFile": "upstream/primer_internal1_input"
+        },
+        {
+          "id": "upstream-primer-new-tasks",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 32,
+              "errors": 2,
+              "minPairs": 27
+            }
+          ],
+          "stdinFile": "upstream/primer_new_tasks_input"
+        },
+        {
+          "id": "upstream-primer-ok-regions",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 10,
+              "errors": 0,
+              "minPairs": 6
+            }
+          ],
+          "stdinFile": "upstream/primer_ok_regions_input"
+        },
+        {
+          "id": "upstream-primer-overhang",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 23,
+              "errors": 5,
+              "minPairs": 21
+            }
+          ],
+          "stdinFile": "upstream/primer_overhang_input"
+        },
+        {
+          "id": "upstream-primer-annealing-temp",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 8,
+              "errors": 0,
+              "minPairs": 32
+            }
+          ],
+          "stdinFile": "upstream/primer_annealing_temp_input"
+        },
+        {
+          "id": "hbb-invalid",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "stdinFile": "real/hbb-invalid.boulder",
+          "diagnosticRegex": "PRIMER_ERROR=PRIMER_.*SIZE < PRIMER_MIN_SIZE",
+          "expectedExitCode": 252
+        },
+        {
+          "id": "hbb-missing-config",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "failure",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [],
+          "artifacts": [],
+          "stdinFile": "real/hbb-missing-config.boulder",
+          "diagnosticRegex": "Unable to open file absent-config/dangle.dh",
+          "expectedExitCode": 252
+        },
+        {
+          "id": "oligotm-default",
+          "runner": "primer3",
+          "program": "oligotm",
+          "args": [
+            "AAAACCCGCTTTGCTAGCTACG"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "numeric": true
+            }
+          ]
+        },
+        {
+          "id": "oligotm-salt",
+          "runner": "primer3",
+          "program": "oligotm",
+          "args": [
+            "-mv",
+            "100",
+            "-dv",
+            "2.5",
+            "-n",
+            "0.8",
+            "-d",
+            "100",
+            "AAAACCCGCTTTGCTAGCTACG"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "numeric": true
+            }
+          ],
+          "effect": "oligotm-default"
+        },
+        {
+          "id": "oligotm-legacy",
+          "runner": "primer3",
+          "program": "oligotm",
+          "args": [
+            "-tp",
+            "0",
+            "-sc",
+            "0",
+            "AAAACCCGCTTTGCTAGCTACG"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "numeric": true
+            }
+          ],
+          "effect": "oligotm-default"
+        },
+        {
+          "id": "ntthal-any",
+          "runner": "primer3",
+          "program": "ntthal",
+          "args": [
+            "-s1",
+            "AAAACCCGCTTTGCTAGCTACG",
+            "-s2",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "-a",
+            "ANY"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "dS =",
+                "dH =",
+                "dG =",
+                "SEQ",
+                "STR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ntthal-end1",
+          "runner": "primer3",
+          "program": "ntthal",
+          "args": [
+            "-s1",
+            "AAAACCCGCTTTGCTAGCTACG",
+            "-s2",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "-a",
+            "END1"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "dS =",
+                "dH =",
+                "dG =",
+                "SEQ",
+                "STR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ntthal-end2",
+          "runner": "primer3",
+          "program": "ntthal",
+          "args": [
+            "-s1",
+            "AAAACCCGCTTTGCTAGCTACG",
+            "-s2",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "-a",
+            "END2"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "dS =",
+                "dH =",
+                "dG =",
+                "SEQ",
+                "STR"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ntthal-hairpin",
+          "runner": "primer3",
+          "program": "ntthal",
+          "args": [
+            "-s1",
+            "ccgcagtaagctgcgg",
+            "-a",
+            "HAIRPIN"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "dS =",
+                "dH =",
+                "dG ="
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ntthal-explicit-config",
+          "runner": "primer3",
+          "program": "ntthal",
+          "args": [
+            "-path",
+            "config/",
+            "-s1",
+            "AAAACCCGCTTTGCTAGCTACG",
+            "-s2",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "-a",
+            "ANY"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "dS =",
+                "SEQ"
+              ]
+            }
+          ],
+          "equivalentTo": "ntthal-any"
+        },
+        {
+          "id": "ntthal-interactive",
+          "runner": "primer3",
+          "program": "ntthal",
+          "args": [
+            "-i",
+            "-r"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "numeric": true
+            }
+          ],
+          "stdinFile": "synthetic/ntthal-interactive.txt"
+        },
+        {
+          "id": "ntdpal-local",
+          "runner": "primer3",
+          "program": "ntdpal",
+          "args": [
+            "AAAACCCGCTTTGCTAGCTACG",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "l"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "score=",
+                "len=",
+                "|"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ntdpal-global-end",
+          "runner": "primer3",
+          "program": "ntdpal",
+          "args": [
+            "AAAACCCGCTTTGCTAGCTACG",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "e"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "score=",
+                "len=",
+                "|"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ntdpal-global",
+          "runner": "primer3",
+          "program": "ntdpal",
+          "args": [
+            "AAAACCCGCTTTGCTAGCTACG",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "g"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "score=",
+                "len=",
+                "|"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ntdpal-local-end",
+          "runner": "primer3",
+          "program": "ntdpal",
+          "args": [
+            "AAAACCCGCTTTGCTAGCTACG",
+            "AACCCGCTTGCTAGCAAAAAAAA",
+            "L"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "score=",
+                "len=",
+                "|"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "amplicon-melting",
+          "runner": "primer3",
+          "program": "amplicon3_core",
+          "args": [
+            "TCTGCGGGCCAAGGTGGACATCCACAACACCAATGTGGGCATCAAGGCTGTCAAAAATGGACTCAAAACCACATGCAAGTGCCACGGCGTCT"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "AMPLICON_PRODUCT_SIZE=92",
+                "AMPLICON_MELTPOINTS="
+              ]
+            }
+          ]
+        },
+        {
+          "id": "amplicon-dmso",
+          "runner": "primer3",
+          "program": "amplicon3_core",
+          "args": [
+            "-dmso",
+            "5",
+            "TCTGCGGGCCAAGGTGGACATCCACAACACCAATGTGGGCATCAAGGCTGTCAAAAATGGACTCAAAACCACATGCAAGTGCCACGGCGTCT"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "AMPLICON_DMSO=5.0",
+                "AMPLICON_MELTPOINTS="
+              ]
+            }
+          ]
+        },
+        {
+          "id": "long-sequence-tm",
+          "runner": "primer3",
+          "program": "long_seq_tm_test",
+          "args": [
+            "AAAAGGGCCCCCCCCTTTTTTTTTTT",
+            "3",
+            "20"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                "start=3, length=20",
+                "tm ="
+              ]
+            }
+          ]
+        },
+        {
+          "id": "masker-hard",
+          "runner": "primer3",
+          "program": "primer3_masker",
+          "args": [
+            "-l",
+            "synthetic/masker-4mer.list",
+            "1",
+            "0",
+            "-a",
+            "2",
+            "synthetic/masker.fasta"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                ">synthetic",
+                "NNCNNNATNNANNNNANNAANNGTNNNNNNNNNNNNNNANNATN"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "masker-soft",
+          "runner": "primer3",
+          "program": "primer3_masker",
+          "args": [
+            "-l",
+            "synthetic/masker-4mer.list",
+            "1",
+            "0",
+            "-a",
+            "2",
+            "-s",
+            "synthetic/masker.fasta"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                ">synthetic",
+                "aaCgtgATccAgttcAggAAccGTatcgtacgttgccgAtcATg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "masker-stdin",
+          "runner": "primer3",
+          "program": "primer3_masker",
+          "args": [
+            "-l",
+            "synthetic/masker-4mer.list",
+            "1",
+            "0",
+            "-a",
+            "2",
+            "-s"
+          ],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "success",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "text",
+              "required": [
+                ">synthetic",
+                "aaCgtgATccAgttcAggAAccGTatcgtacgttgccgAtcATg"
+              ]
+            }
+          ],
+          "stdinFile": "synthetic/masker.fasta",
+          "nativeStdinTransport": "file",
+          "equivalentTo": "masker-soft"
+        },
+        {
+          "id": "repeat-hbb",
+          "runner": "primer3",
+          "program": "primer3_core",
+          "args": [],
+          "outputs": [
+            "result.txt"
+          ],
+          "stdoutFile": "result.txt",
+          "kind": "repeat",
+          "executions": [
+            "native",
+            "patched-native",
+            "wasm"
+          ],
+          "comparisons": [
+            "native-contract",
+            "patched-native",
+            "wasm"
+          ],
+          "artifacts": [
+            {
+              "path": "result.txt",
+              "kind": "boulder",
+              "records": 1,
+              "errors": 0,
+              "minPairs": 5
+            }
+          ],
+          "stdinFile": "real/hbb-pairs.boulder",
+          "baseline": "hbb-pairs"
+        }
+      ]
+    }
+  }
+}

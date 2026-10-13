@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "bytes": 700,
+      "cachePath": "build/primer3-sources/NM_000518.5.fasta",
+      "name": "hbb",
+      "sha256": "ec3dafd5f4db5198cf12c778dc664f90c79305dfabc9483b22f5eaef34db6fbc",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=NM_000518.5&rettype=fasta&retmode=text"
+    },
+    {
+      "bytes": 32858944,
+      "cachePath": "build/primer3-sources/primer3-2.6.1.tar.gz",
+      "name": "primer3",
+      "revision": "7f9f17d6012f404e83bbf0f931a4d06eb4af465b",
+      "sha256": "805cef7ef39607cd40f0f5bb8b32e35e20007153a0a55131dd430ce644c8fb9e",
+      "url": "https://github.com/primer3-org/primer3/archive/refs/tags/v2.6.1.tar.gz"
+    }
+  ],
+  "upstreamFiles": {
+    "LICENSE": "provenance/PRIMER3-LICENSE",
+    "example": "primer3/upstream/example.boulder",
+    "src/primer3_config/dangle.dh": "primer3/config/dangle.dh",
+    "src/primer3_config/dangle.ds": "primer3/config/dangle.ds",
+    "src/primer3_config/loops.dh": "primer3/config/loops.dh",
+    "src/primer3_config/loops.ds": "primer3/config/loops.ds",
+    "src/primer3_config/stack.dh": "primer3/config/stack.dh",
+    "src/primer3_config/stack.ds": "primer3/config/stack.ds",
+    "src/primer3_config/stackmm.dh": "primer3/config/stackmm.dh",
+    "src/primer3_config/stackmm.ds": "primer3/config/stackmm.ds",
+    "src/primer3_config/tetraloop.dh": "primer3/config/tetraloop.dh",
+    "src/primer3_config/tetraloop.ds": "primer3/config/tetraloop.ds",
+    "src/primer3_config/triloop.dh": "primer3/config/triloop.dh",
+    "src/primer3_config/triloop.ds": "primer3/config/triloop.ds",
+    "src/primer3_config/tstack.dh": "primer3/config/tstack.dh",
+    "src/primer3_config/tstack2.dh": "primer3/config/tstack2.dh",
+    "src/primer3_config/tstack2.ds": "primer3/config/tstack2.ds",
+    "src/primer3_config/tstack_tm_inf.ds": "primer3/config/tstack_tm_inf.ds",
+    "test/amplicon3/amplicons.csv": "primer3/upstream/amplicon3-amplicons.csv",
+    "test/dpal_input": "primer3/upstream/dpal_input",
+    "test/long_seq_tm_test.pl": "primer3/upstream/long_seq_tm_test.pl",
+    "test/oligotm_test.pl": "primer3/upstream/oligotm_test.pl",
+    "test/primer_annealing_temp_input": "primer3/upstream/primer_annealing_temp_input",
+    "test/primer_high_tm_load_set.set": "primer3/upstream/primer_high_tm_load_set.set",
+    "test/primer_internal1_input": "primer3/upstream/primer_internal1_input",
+    "test/primer_new_tasks_input": "primer3/upstream/primer_new_tasks_input",
+    "test/primer_ok_regions_input": "primer3/upstream/primer_ok_regions_input",
+    "test/primer_overhang_input": "primer3/upstream/primer_overhang_input",
+    "test/thal_batch_input": "primer3/upstream/thal_batch_input",
+    "test/thal_input": "primer3/upstream/thal_input"
+  },
+  "upstreamIdentities": {
+    "LICENSE": {
+      "bytes": 18032,
+      "sha256": "ef50d0e1023053dddae5f87e82aee569d9d2fe8b796142824ba935c885c42642"
+    },
+    "example": {
+      "bytes": 368,
+      "sha256": "6a46dbc7c2318e627888336ddef1d6da098228c4d960f1f0c9c8a59f9f6fd754"
+    },
+    "src/primer3_config/dangle.dh": {
+      "bytes": 373,
+      "sha256": "c88f09dc5be829a130ccbb00f142e4ff89259411355262911799d0be0571d4aa"
+    },
+    "src/primer3_config/dangle.ds": {
+      "bytes": 548,
+      "sha256": "167c423714d0d350cfb8df5439a7621c0e34033b1f6b87c1cb58760d75bdb529"
+    },
+    "src/primer3_config/loops.dh": {
+      "bytes": 441,
+      "sha256": "2d26b74caf8e80ece50b659acb4bd547812ead5143ffb35338428637368a3087"
+    },
+    "src/primer3_config/loops.ds": {
+      "bytes": 692,
+      "sha256": "68b67437eb75485231ab8792e58b1e7ca488b81d4640b61d40f0d1402291da90"
+    },
+    "src/primer3_config/stack.dh": {
+      "bytes": 1057,
+      "sha256": "c7305ddec2c690990358e207f5a6beb118283a74ce711a4aa68f89b788fa7c27"
+    },
+    "src/primer3_config/stack.ds": {
+      "bytes": 1056,
+      "sha256": "4def88bee217039784583159a69ea50cab4e9ea5b82132f7938dfd2866d0524e"
+    },
+    "src/primer3_config/stackmm.dh": {
+      "bytes": 1144,
+      "sha256": "89e1069d20209f1a0c4c3ddf89bad19af167ddc343e45423f39d232026d064da"
+    },
+    "src/primer3_config/stackmm.ds": {
+      "bytes": 1109,
+      "sha256": "7ba2b0669b5bf6f4c78ea2543f8d39f75f9d5a3429e1cf26eaf46f70b6bb2704"
+    },
+    "src/primer3_config/tetraloop.dh": {
+      "bytes": 913,
+      "sha256": "a4b9e1ca1015f89254fad5cb63d9ffcde6e996618ee1a7d417ee032a16613f4f"
+    },
+    "src/primer3_config/tetraloop.ds": {
+      "bytes": 824,
+      "sha256": "36f1b2927f2fabbc7135a9bdfe9c415efcbf10951c680a92baa331e7cb408ebc"
+    },
+    "src/primer3_config/triloop.dh": {
+      "bytes": 192,
+      "sha256": "71aa016d8c94371e715dbcc161f6884a6243d0c050932bfadc446168aecc3c2a"
+    },
+    "src/primer3_config/triloop.ds": {
+      "bytes": 128,
+      "sha256": "117eed025fbd50f0543083f5bd2db4edf9b54df748f6a1b57caa271cc9ab409e"
+    },
+    "src/primer3_config/tstack.dh": {
+      "bytes": 890,
+      "sha256": "12821532c4408bf12f81b4fa3deb62452926506902c925134b72fb3cdeb5c5cf"
+    },
+    "src/primer3_config/tstack2.dh": {
+      "bytes": 950,
+      "sha256": "35fa4a70818c13bd4b3aeea40322368cba3af19192dcef92d28d17f881434ee8"
+    },
+    "src/primer3_config/tstack2.ds": {
+      "bytes": 1184,
+      "sha256": "c3e1b6e80924c0d47e9d8f3ab928f665a88f993d44019e0cebea72612e7a6034"
+    },
+    "src/primer3_config/tstack_tm_inf.ds": {
+      "bytes": 1152,
+      "sha256": "181c3175ba570c433ce7a345043003259a510f5960b41beb1c96ba73658e60ba"
+    },
+    "test/amplicon3/amplicons.csv": {
+      "bytes": 1849,
+      "sha256": "68d8b7966e01c24ba5c8d152da13a6795ed7d9e6140e5aae66d555c5ad3ada4f"
+    },
+    "test/dpal_input": {
+      "bytes": 13680,
+      "sha256": "63972beb75feb9ff28002179592600bf2eb1851f804caece9efb46a2140d7cce"
+    },
+    "test/long_seq_tm_test.pl": {
+      "bytes": 426,
+      "sha256": "bdca3606531b67146512ddce1beb98c81457c80d55bf4a33426dd9fd197b2595"
+    },
+    "test/oligotm_test.pl": {
+      "bytes": 4244,
+      "sha256": "266bfc52163213709e4d135a493fdd039cb08318b37cef8a66b850b368adbfd5"
+    },
+    "test/primer_annealing_temp_input": {
+      "bytes": 14722,
+      "sha256": "98fdb0d590a4094ee9bd6e7e1ee7cc0b9dacd8f9302e196b5a2fdb4bd8c911b5"
+    },
+    "test/primer_high_tm_load_set.set": {
+      "bytes": 141,
+      "sha256": "9c461bc886337f69ef0914ab0372d07b0e447dd52afa21cdbcbe7c7b0050e12f"
+    },
+    "test/primer_internal1_input": {
+      "bytes": 10400,
+      "sha256": "78ef462eca6b7e62bf7862fcba47b445c99b3ae1202cedd65556b6ea93e6846b"
+    },
+    "test/primer_new_tasks_input": {
+      "bytes": 38205,
+      "sha256": "0d502d5df9b317554534955be609b5a55703ef55949396564832806a60b5cc6a"
+    },
+    "test/primer_ok_regions_input": {
+      "bytes": 3701,
+      "sha256": "4ead9763b7a99f9a82e6ade82973728236d8a6bfc83f03ba2f8802df8021b7d7"
+    },
+    "test/primer_overhang_input": {
+      "bytes": 9031,
+      "sha256": "371e260720d2fc64afb50921a37bd7938d47519174f3d53b76d61d0e77406bb7"
+    },
+    "test/thal_batch_input": {
+      "bytes": 430,
+      "sha256": "955b22374f5acebbef1b7ca28bbc08fb6435311363e6e6894e573a016acef3c9"
+    },
+    "test/thal_input": {
+      "bytes": 21987,
+      "sha256": "4ababf4e61e1fe88c027c2ce455780efcfef8af59ece3a56ef366c3ce9947c87"
+    }
+  }
+}
