@@ -1,0 +1,293 @@
+{
+  "datasets": {
+    "bustools": {
+      "accession": "SRR8599150",
+      "observations": {
+        "large": {
+          "barcodes": 358,
+          "duplicateBarcodeUmiEcRecords": 0,
+          "equivalenceClasses": 4022,
+          "genes": 3733,
+          "multiplicityHistogram": {
+            "1": 9402,
+            "2": 772,
+            "3": 54,
+            "4": 7
+          },
+          "readMultiplicity": 11136,
+          "records": 10235,
+          "recordsExcludedForMissingGeneAnnotation": 102,
+          "sourcePrefixRecords": 10337,
+          "transcripts": 8586,
+          "umis": 9961
+        },
+        "raw": {
+          "barcodes": 31,
+          "duplicateBarcodeUmiEcRecords": 3,
+          "equivalenceClasses": 14,
+          "fastqReadPairs": 2500,
+          "genes": 602,
+          "multiplicityHistogram": {
+            "1": 34
+          },
+          "onlistBarcodes": 32,
+          "readMultiplicity": 34,
+          "records": 34,
+          "transcripts": 865,
+          "umis": 31
+        }
+      },
+      "requiredEffects": [
+        "Raw real reads contain repeated barcode-UMI-EC observations; sorting aggregates records.",
+        "Default barcode correction uses the complete candidate subset from the original upstream on-list.",
+        "Count produces nonempty gene and transcript-compatibility matrices with exact native/WebAssembly agreement.",
+        "Larger already corrected subset exercises 10000+ records, many barcodes/UMIs/genes, and read multiplicity versus UMI counts.",
+        "Capture, projection and cluster inputs are explicit arbitrary user parameters, not inferred biological labels."
+      ],
+      "species": "Mus musculus",
+      "technology": "10x Chromium v2"
+    }
+  },
+  "files": {
+    "README.md": {
+      "bytes": 7083,
+      "generated": false,
+      "sha256": "0666355c0575ab2bf259ced5792f32d8634331313ab0f3eedc26a0d0d05ad368"
+    },
+    "bustools/R1.fastq": {
+      "bytes": 449434,
+      "generated": true,
+      "sha256": "bd751ae1f56100fe00d602992af90a80613eeb14c17efe39c6f350b631f44629"
+    },
+    "bustools/R2.fastq": {
+      "bytes": 809434,
+      "generated": true,
+      "sha256": "f6790737bf3ca8593192c2d9e8007e0420cc2f0fbd77be7de62c13d74e87cd7d"
+    },
+    "bustools/input.bus": {
+      "bytes": 1137,
+      "generated": true,
+      "sha256": "a3f1eac5d4e2eac1d2bcf4d57643956cf6f30b286a22d1534dda836cbb13a4f1"
+    },
+    "bustools/large/barcode-map.txt": {
+      "bytes": 34,
+      "generated": true,
+      "sha256": "42abc80a0aa7ed16c95570d567861bd2c350bda8368c07ca0602852098298ce7"
+    },
+    "bustools/large/capture-barcodes.txt": {
+      "bytes": 3043,
+      "generated": true,
+      "sha256": "ea85e9982ebac2c0e61cab8e3803e319bbed688eb1945413e53e94160ee39fa6"
+    },
+    "bustools/large/capture-transcripts.txt": {
+      "bytes": 81567,
+      "generated": true,
+      "sha256": "5e2d8036826ef23a202c27f04308a0df6e966919588319a2704746da02c5469b"
+    },
+    "bustools/large/clusters.txt": {
+      "bytes": 6802,
+      "generated": true,
+      "sha256": "192e130eb6464552257882ab32f673abaf4a874513e6a3ef7549d58d8ee7bf62"
+    },
+    "bustools/large/input.bus": {
+      "bytes": 327569,
+      "generated": true,
+      "sha256": "f393aacbde1a0781d0ef8676c8ed8792771db381a81ee91a6f0d7b8375b3112c"
+    },
+    "bustools/large/matrix.ec": {
+      "bytes": 76645,
+      "generated": true,
+      "sha256": "9f7431e79ea61dadc302633cce4cdfb7da4403db51d5fbfbec52af2a0486f34c"
+    },
+    "bustools/large/transcripts-to-genes.txt": {
+      "bytes": 405234,
+      "generated": true,
+      "sha256": "c91521a1bf3fedd3c32de3851e4549fc9fc19108e882b361a10f1716af26c560"
+    },
+    "bustools/large/transcripts.txt": {
+      "bytes": 163134,
+      "generated": true,
+      "sha256": "e4114db1a49b04494e02d6232194faf26a5dbe80dd4b27c94a8ea7272463c0f7"
+    },
+    "bustools/large/whitelist.txt": {
+      "bytes": 6086,
+      "generated": true,
+      "sha256": "539627f9221907205de8751a78ec57cefb5c53242ad99a24d63301bf0e0a2033"
+    },
+    "bustools/matrix.ec": {
+      "bytes": 44146,
+      "generated": true,
+      "sha256": "26d8b10220fb963477ac8a93a08711f47d74f343f15d64bbc86fa9a6af5bcafe"
+    },
+    "bustools/read-index.bus": {
+      "bytes": 1137,
+      "generated": true,
+      "sha256": "bd5c2962ff38ff9a690b4bdc84f81ac56aac5a9e799c329cd08ecf06362dd701"
+    },
+    "bustools/transcripts-to-genes.txt": {
+      "bytes": 43725,
+      "generated": true,
+      "sha256": "2d385a191a8d1cea59e31c43c63e01db563d027dd1bc5e7dde2fd0c64b8eb80c"
+    },
+    "bustools/transcripts.txt": {
+      "bytes": 18173,
+      "generated": true,
+      "sha256": "e69879483d270ffa5903f5939676b899bfc593e78b0ec8d118ac652415aec760"
+    },
+    "bustools/whitelist.txt": {
+      "bytes": 544,
+      "generated": true,
+      "sha256": "7e90b998fc05b50e7d7561e26d7c7de9b53eebc41303b54169355e175b82d166"
+    },
+    "provenance/fixture-sources.json": {
+      "bytes": 5270,
+      "generated": true,
+      "sha256": "f4465ebc1e739a295cc81dfbc93e8207304cfd19895a568b2dcc5834e184d7fa"
+    },
+    "provenance/kb-python-LICENSE": {
+      "bytes": 1321,
+      "generated": true,
+      "sha256": "f74acc152a1999a2341f89257f9140d42c350c4f370525a1aae79a2e7de78570"
+    },
+    "provenance/large-ec-map.tsv": {
+      "bytes": 45729,
+      "generated": true,
+      "sha256": "511adf20cf0b8fd59a6c6824e0b60eac26c948515e4eb329c17323fa15997159"
+    },
+    "provenance/large-record-map.tsv": {
+      "bytes": 100738,
+      "generated": true,
+      "sha256": "be92ffb7057c66217c055b91412e5b927c631ff40a1a8d66949660d69132af7c"
+    },
+    "provenance/large-transcript-map.tsv": {
+      "bytes": 256372,
+      "generated": true,
+      "sha256": "81cd5d41ade3ce5cf3cbaa34c9533054b3288ac97f3d56d7fdb4292143c67f71"
+    },
+    "provenance/read-index-map.json": {
+      "bytes": 3705,
+      "generated": true,
+      "sha256": "38f30a54066dba441ec9c933fc44f2e90d3dba59a7a385e61c58a7326b4d54b3"
+    },
+    "provenance/sources.lock.json": {
+      "bytes": 5221,
+      "generated": false,
+      "sha256": "60dbfaf912fbe3b60c323490c32406f2a72a3ed3c610f7be4e8bc4a95a78f049"
+    }
+  },
+  "regeneration": {
+    "files": {
+      "scripts/fetch-bustools-test-data.py": {
+        "bytes": 21998,
+        "sha256": "3487ae9f537027f25010638a618a273fd7b13d08f73b1cea1c4647b0f2d38a4f"
+      }
+    },
+    "method": "Unchanged genuine input copies, lossless source-record selection and reversible integer-ID remapping; no inferred tool-result goldens.",
+    "requirements": [
+      "Python 3.11+"
+    ],
+    "script": "scripts/fetch-bustools-test-data.py"
+  },
+  "schema_version": 1,
+  "sources": {
+    "10xv2_whitelist.txt": {
+      "bytes": 12533760,
+      "cachePath": "build/bustools-sources/10xv2_whitelist.txt",
+      "description": "Complete 10x Chromium v2 737280-barcode on-list.",
+      "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+      "sha256": "b0dda4b114d8fc7ea8def94fb472e6205c1831a72e3ac245ed13cc332d9f20d1",
+      "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/10xv2_whitelist.txt"
+    },
+    "kb-LICENSE": {
+      "bytes": 1321,
+      "cachePath": "build/bustools-sources/kb-LICENSE",
+      "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+      "member": "LICENSE",
+      "repository": "https://github.com/pachterlab/kb_python",
+      "sha256": "f74acc152a1999a2341f89257f9140d42c350c4f370525a1aae79a2e7de78570",
+      "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/LICENSE"
+    },
+    "kb-R1.fastq": {
+      "accession": "SRR8599150",
+      "bytes": 449434,
+      "cachePath": "build/bustools-sources/kb-R1.fastq",
+      "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+      "member": "tests/fixtures/R1.fastq",
+      "repository": "https://github.com/pachterlab/kb_python",
+      "sha256": "bd751ae1f56100fe00d602992af90a80613eeb14c17efe39c6f350b631f44629",
+      "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/R1.fastq"
+    },
+    "kb-R2.fastq": {
+      "accession": "SRR8599150",
+      "bytes": 809434,
+      "cachePath": "build/bustools-sources/kb-R2.fastq",
+      "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+      "member": "tests/fixtures/R2.fastq",
+      "repository": "https://github.com/pachterlab/kb_python",
+      "sha256": "f6790737bf3ca8593192c2d9e8007e0420cc2f0fbd77be7de62c13d74e87cd7d",
+      "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/R2.fastq"
+    },
+    "kb-matrix.ec": {
+      "accession": "SRR8599150",
+      "bytes": 44146,
+      "cachePath": "build/bustools-sources/kb-matrix.ec",
+      "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+      "member": "tests/fixtures/matrix.ec",
+      "repository": "https://github.com/pachterlab/kb_python",
+      "sha256": "26d8b10220fb963477ac8a93a08711f47d74f343f15d64bbc86fa9a6af5bcafe",
+      "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/matrix.ec"
+    },
+    "kb-output.bus": {
+      "accession": "SRR8599150",
+      "bytes": 1137,
+      "cachePath": "build/bustools-sources/kb-output.bus",
+      "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+      "member": "tests/fixtures/output.bus",
+      "repository": "https://github.com/pachterlab/kb_python",
+      "sha256": "a3f1eac5d4e2eac1d2bcf4d57643956cf6f30b286a22d1534dda836cbb13a4f1",
+      "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/output.bus"
+    },
+    "kb-transcripts.txt": {
+      "accession": "SRR8599150",
+      "bytes": 18173,
+      "cachePath": "build/bustools-sources/kb-transcripts.txt",
+      "commit": "188d9c7034498d83be86a461659968dd8da2db7f",
+      "member": "tests/fixtures/transcripts.txt",
+      "repository": "https://github.com/pachterlab/kb_python",
+      "sha256": "e69879483d270ffa5903f5939676b899bfc593e78b0ec8d118ac652415aec760",
+      "url": "https://raw.githubusercontent.com/pachterlab/kb_python/188d9c7034498d83be86a461659968dd8da2db7f/tests/fixtures/transcripts.txt"
+    },
+    "matrix.ec.gz": {
+      "accession": "SRR8599150",
+      "bytes": 5750355,
+      "cachePath": "build/bustools-sources/matrix.ec.gz",
+      "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+      "sha256": "9227ec7f1c0f181e54d4499c543c1359146d80487160c7934b14dfa24f43c5e4",
+      "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/matrix.ec.gz"
+    },
+    "output.correct.sort.bus.gz": {
+      "accession": "SRR8599150",
+      "bytes": 21962894,
+      "cachePath": "build/bustools-sources/output.correct.sort.bus.gz",
+      "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+      "sha256": "306dc20066c54d41dcc13ce38ebdbb0499423485b0f42e416d8a9331f70e72f5",
+      "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/output.correct.sort.bus.gz"
+    },
+    "transcripts.txt.gz": {
+      "accession": "SRR8599150",
+      "bytes": 384260,
+      "cachePath": "build/bustools-sources/transcripts.txt.gz",
+      "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+      "sha256": "fe81e3ebfe6edb69953cf82a5bbf3864756376dda74ea9eb4f5e9d8933bcdf1f",
+      "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/transcripts.txt.gz"
+    },
+    "transcripts_to_genes.txt": {
+      "accession": "SRR8599150",
+      "bytes": 7063053,
+      "cachePath": "build/bustools-sources/transcripts_to_genes.txt",
+      "release": "https://github.com/BUStools/getting_started/releases/tag/getting_started",
+      "sha256": "060b48d0c5d9150133e0d26705cc1533e331e59017303dc4b8f531dbad0de055",
+      "url": "https://github.com/BUStools/getting_started/releases/download/getting_started/transcripts_to_genes.txt"
+    }
+  }
+}

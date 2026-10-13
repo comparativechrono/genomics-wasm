@@ -43,7 +43,7 @@
         },
         "compress": {
           "label": "Compress sorted BUS records",
-          "description": "Losslessly compress the sorted, corrected records to the BUSZ format.",
+          "description": "Compress the sorted, corrected BUS records to BUSZ.",
           "args": ["compress", "-o", "records.busz", "corrected-sorted.bus"],
           "outputs": ["records.busz"], "outputDirectories": []
         },
