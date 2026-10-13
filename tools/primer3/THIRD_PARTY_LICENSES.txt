@@ -1,0 +1,13 @@
+Primer3 2.6.1 WebAssembly distribution
+
+Primer3, libprimer3, oligotm, dpal, thal and masker: GPL-2.0-or-later;
+see LICENSE and the original file headers in the complete source archive.
+Amplicon3 / amplicontm: GPL-3.0-or-later; see
+LICENSE_GPL3_for_Amplicon3. Amplicon3 derives from MeltPolymer.c in the
+GPL-3 DECIPHER package by Erik Wright. Its original attribution is retained
+in the source archive. The Primer3 core links this upstream component too.
+Emscripten runtime and libc/libc++: see LICENSE.emscripten.
+
+The complete pinned upstream source archive, including the thermodynamic
+parameters and their attribution, is distributed in sources/. This build
+does not patch upstream sources or replace scientific algorithms in JavaScript.

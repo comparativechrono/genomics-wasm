@@ -2,7 +2,8 @@
 
 Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
 quantification, single-cell preprocessing, coverage, variant calling, metagenomics,
-genotype analysis and differential expression tools for web browsers and Node.js. Each tool has an independent
+genotype analysis, primer design and differential expression tools
+for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
 using webR.
@@ -28,6 +29,7 @@ DESeq2 session retains its R objects until the session is closed.
 | [HMMER](tools/hmmer/README.md) | 3.4 | Thirteen offline profile-HMM, protein and nucleotide programs, one thread |
 | [bustools](tools/bustools/README.md) | 0.45.1 | BUS processing, barcode correction, UMI handling and count matrices, one thread |
 | [PLINK 2](tools/plink2/README.md) | 2.0.0-b.1-dev, 12 Oct 2026 | Genotype conversion, QC, LD, relationships, scoring and regression; real worker threads; no PCA |
+| [Primer3](tools/primer3/README.md) | 2.6.1 | Seven original programs for primer design, thermodynamics, alignment and masking |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
 | [AdapterRemoval](tools/adapterremoval/README.md) | 2.3.4 | Adapter and quality trimming, paired-read merging, one thread |
 | [Cutadapt](tools/cutadapt/README.md) | 5.2 | Adapter and quality trimming, read filtering, paired and single reads, one thread |
@@ -109,6 +111,11 @@ real background reader threads even with one compute thread, so hosting needs
 cross-origin isolation. Its minimum working arena is 640 MiB, in addition to
 file copies, thread stacks and other allocations. Start with small datasets.
 
+Primer3 has a [primer-design example](examples/primer3/README.md) and
+[JavaScript API](runtime/PRIMER3.md), including the upstream thermodynamic
+parameters and companion command-line programs. It runs in disposable workers
+on ordinary static hosting. Files and results stay in browser memory.
+
 ## Build
 
 On Linux, install GCC and Clang, Make, Git, curl, Python 3.12 or newer and
@@ -134,6 +141,7 @@ bash scripts/build-prodigal.sh all
 bash scripts/build-hmmer.sh all
 bash scripts/build-bustools.sh all
 bash scripts/build-plink2.sh all
+bash scripts/build-primer3.sh all
 bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
@@ -415,6 +423,20 @@ only after the native and browser comparisons pass. It includes the threaded
 program, example with a server that supplies isolation headers, authentic and
 labelled synthetic fixtures, corresponding sources, notices and validation
 reports. The release gate also verifies the extracted ZIP independently.
+
+Primer3 has a separate build, validation and package workflow:
+
+```sh
+python3 scripts/fetch-primer3-test-data.py --verify
+node scripts/validate-primer3.mjs --engine node
+```
+
+Repeat with `--engine chromium`, `firefox` and `webkit`. The
+`primer3-package` workflow artifact is assembled only after the native
+comparisons pass in all four engines. The standalone ZIP includes its browser
+example, API, fixtures, validation evidence, original sources and dependency
+notices. The release job verifies the extracted ZIP, runs its included tests
+and exercises the example in all three browsers.
 
 ## Licence
 

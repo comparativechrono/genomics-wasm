@@ -1,0 +1,18 @@
+{
+  "tool": "primer3",
+  "version": "2.6.1",
+  "revision": "7f9f17d6012f404e83bbf0f931a4d06eb4af465b",
+  "url": "https://codeload.github.com/primer3-org/primer3/tar.gz/refs/tags/v2.6.1",
+  "archive": "primer3-2.6.1.tar.gz",
+  "sha256": "805cef7ef39607cd40f0f5bb8b32e35e20007153a0a55131dd430ce644c8fb9e",
+  "emscripten": "3.1.64",
+  "programs": ["primer3_core", "ntdpal", "ntthal", "oligotm", "amplicon3_core", "long_seq_tm_test", "primer3_masker"],
+  "runtime": {
+    "pthread": false,
+    "crossOriginIsolated": false,
+    "pointerWidth": 32,
+    "maximumMemory": 2147483648,
+    "waitForExit": false
+  },
+  "requiredNotices": ["LICENSE", "LICENSE_GPL3_for_Amplicon3", "LICENSE.emscripten", "THIRD_PARTY_LICENSES.txt"]
+}

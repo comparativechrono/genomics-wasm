@@ -27,7 +27,9 @@
     "validate:bustools": "node scripts/validate-bustools.mjs",
     "package:bustools": "python3 scripts/package-bustools.py",
     "validate:plink2": "node scripts/validate-plink2.mjs",
-    "package:plink2": "python3 scripts/package-plink2.py"
+    "package:plink2": "python3 scripts/package-plink2.py",
+    "validate:primer3": "node scripts/validate-primer3.mjs",
+    "package:primer3": "python3 scripts/package-primer3.py"
   },
   "devDependencies": {
     "playwright": "1.64.0"

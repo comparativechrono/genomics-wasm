@@ -65,6 +65,12 @@ directory under `tools/`.
   The package includes Pyodide (MPL-2.0), CPython and their runtime libraries,
   with their corresponding sources and individual licences. See
   `tools/cutadapt/runtime-notices/` and the pinned source manifests.
+- Primer3: Primer3 contributors; GPL-2.0-or-later for its core libraries,
+  with GPL-3.0-or-later Amplicon3 code also linked into the upstream core.
+  Source: https://github.com/primer3-org/primer3
+  All seven command-line programs retain the original scientific code.
+  The package includes the complete source and thermodynamic parameters,
+  the component licences and Emscripten notices.
 - minimap2: Heng Li and contributors; MIT. Source: https://github.com/lh3/minimap2
 - kallisto: Nicolas Bray, Harold Pimentel, Páll Melsted, Lior Pachter and
   contributors; BSD-2-Clause. Source: https://github.com/pachterlab/kallisto

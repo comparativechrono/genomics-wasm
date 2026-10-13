@@ -1,5 +1,10 @@
 # Test data
 
+The [Primer3 fixtures](primer3/README.md) combine an authentic versioned HBB
+reference transcript with original upstream regression inputs and small
+synthetic masking indices. See its manifest for provenance and the validation
+plan for the exact tested operations.
+
 The [PLINK 2 fixtures](plink2/README.md) include an unchanged public 1000 Genomes
 Phase 3 chromosome 21 subset with 2,504 samples and 600 phased variants, plus
 clearly labelled synthetic regression and format-edge fixtures. These test

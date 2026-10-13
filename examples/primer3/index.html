@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Primer3 in the browser</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><h1>Primer3 in the browser</h1><p>Design primers and inspect oligonucleotide thermodynamics.</p></header>
+<main>
+<p>Load a reference sequence example or add your own Boulder-IO input, then choose an analysis. Files stay on this device. Reloading clears this tab's workspace.</p>
+<section aria-labelledby="files-heading">
+<h2 id="files-heading">Files</h2>
+<div class="row"><label>Example data<select id="dataset" disabled></select></label><button id="load-data" type="button" disabled>Load example data</button></div>
+<p id="data-description" class="hint"></p><p class="hint"><a href="../../datasets/primer3/README.md">Data sources and selection</a></p>
+<label for="upload">Add input files</label><input id="upload" type="file" multiple disabled>
+<label for="upload-folder">Add a folder</label><input id="upload-folder" type="file" webkitdirectory multiple disabled>
+<p class="hint">Folder paths are retained. Use filenames exactly as shown below.</p>
+<ul id="files"><li>No files loaded.</li></ul><button id="clear" type="button" disabled>Clear files</button>
+</section>
+<p class="hint">Primer3 runs locally in a dedicated worker. Use modest sequence sets; the browser holds inputs and outputs in memory. Primer design is a computational candidate selection step; experimental specificity and performance need separate assessment.</p>
+<form id="command-form"><fieldset id="controls" disabled>
+<legend>Analysis</legend>
+<label>Preset<select id="command"></select></label><p id="command-description" class="hint"></p>
+<label>Program<select id="program"></select></label>
+<label for="arguments">Arguments (JSON array)</label><textarea id="arguments" rows="7" spellcheck="false">[]</textarea>
+<p class="hint">Each entry is one argument. Enter flags without the program name. Primer3 core reads Boulder-IO records from standard input. Other programs need their own arguments; sequence masking also requires separately supplied k-mer tables. Pipes and shell redirection are not interpreted.</p>
+<details open><summary>Standard input and output</summary>
+<label>Standard input source<select id="stdin-mode"><option value="none">None</option><option value="file">A loaded file</option><option value="text">Text entered below</option></select></label>
+<label id="stdin-file-label" hidden>Input filename<input id="stdin-file" type="text" spellcheck="false"></label>
+<label id="stdin-text-label" hidden>Input text<textarea id="stdin-text" rows="10" spellcheck="false"></textarea></label>
+<label>Save standard output as a workspace file (optional)<input id="stdout-path" type="text" spellcheck="false"></label>
+<p class="hint">Loaded files and downloads retain their original bytes. Text entered here is encoded as UTF-8.</p>
+</details>
+<label for="outputs">Files to keep (one path per line)</label><textarea id="outputs" rows="3" spellcheck="false"></textarea>
+<label for="output-directories">Folders to collect (one path per line)</label><textarea id="output-directories" rows="2" spellcheck="false"></textarea>
+<p class="hint">Returned files remain available to later commands. Explicit output files must be regenerated. Folder collection includes existing loaded and generated files; list files above when you require fresh outputs.</p>
+<label class="timeout">Time limit (seconds)<input id="timeout" type="number" min="1" max="3600" value="300" required></label>
+<button id="run" type="submit">Run</button>
+</fieldset></form>
+<button id="cancel" type="button" disabled>Cancel</button><p id="status" role="status" aria-live="polite">Loading controls…</p>
+<section aria-labelledby="result-heading"><h2 id="result-heading">Results</h2>
+<p class="hint">Text previews show at most 100,000 bytes. Downloads contain complete files.</p>
+<label>File to view<select id="result-file" disabled><option>No output files yet</option></select></label>
+<pre id="preview">No output yet.</pre><div id="downloads"></div>
+<h3>Standard output from the last command</h3><pre id="stdout">No output yet.</pre>
+<h3>Standard error from the last command</h3><pre id="stderr">No output yet.</pre><div id="stream-downloads"></div>
+</section><p><a href="README.md">Running and hosting this example</a></p>
+</main><script type="module" src="app.mjs"></script>
+</body></html>

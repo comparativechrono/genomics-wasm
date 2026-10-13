@@ -1,0 +1,151 @@
+{
+  "label": "Primer3",
+  "programs": {
+    "primer3_core": "Primer design (primer3_core)",
+    "ntthal": "Thermodynamic alignment (ntthal)",
+    "oligotm": "Oligonucleotide melting temperature (oligotm)",
+    "ntdpal": "Sequence alignment (ntdpal)",
+    "amplicon3_core": "Amplicon melting analysis (amplicon3_core)",
+    "long_seq_tm_test": "Long-sequence melting temperature (long_seq_tm_test)",
+    "primer3_masker": "Sequence masking (primer3_masker)"
+  },
+  "commands": {
+    "pairs": {
+      "label": "Design primer pairs",
+      "description": "Pick up to five primer pairs for the authentic human HBB transcript NM_000518.5, with products of 120\u2013220 bases.",
+      "program": "primer3_core",
+      "args": [],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdinFile": "real/hbb-pairs.boulder",
+      "stdoutPath": "hbb-pairs.out"
+    },
+    "internal": {
+      "label": "Design primers and an internal oligo",
+      "description": "Add internal oligonucleotide selection using the same transcript and product-size range.",
+      "program": "primer3_core",
+      "args": [],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdinFile": "real/hbb-internal.boulder",
+      "stdoutPath": "hbb-internal.out"
+    },
+    "constrained": {
+      "label": "Design around a target region",
+      "description": "Require primers around target bases 250\u2013299, exclude bases 100\u2013119 and search the specified included region. Boulder-IO coordinates are zero-based.",
+      "program": "primer3_core",
+      "args": [],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdinFile": "real/hbb-constrained.boulder",
+      "stdoutPath": "hbb-constrained.out"
+    },
+    "oligotm": {
+      "label": "Calculate oligonucleotide melting temperature",
+      "description": "Calculate melting temperature for an oligonucleotide from the HBB transcript, using the program defaults.",
+      "program": "oligotm",
+      "args": [
+        "ACTCCTGATGCTGTTATGGGC"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "oligotm.txt"
+    },
+    "ntthal": {
+      "label": "Inspect oligonucleotide self-alignment",
+      "description": "Evaluate the thermodynamic alignment of an HBB oligonucleotide with itself.",
+      "program": "ntthal",
+      "args": [
+        "-s1",
+        "ACTCCTGATGCTGTTATGGGC",
+        "-s2",
+        "ACTCCTGATGCTGTTATGGGC",
+        "-a",
+        "ANY"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "ntthal.txt"
+    },
+    "alignment": {
+      "label": "Align overlapping HBB oligos",
+      "description": "Align transcript bases 200\u2013220 and 207\u2013227 with the original local sequence-alignment utility.",
+      "program": "ntdpal",
+      "args": [
+        "ACTCCTGATGCTGTTATGGGC",
+        "ATGCTGTTATGGGCAACCCTA",
+        "l"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "alignment.txt"
+    },
+    "amplicon": {
+      "label": "Calculate amplicon melting",
+      "description": "Calculate melting properties of the authentic HBB transcript segment at bases 200\u2013349.",
+      "program": "amplicon3_core",
+      "args": [
+        "ACTCCTGATGCTGTTATGGGCAACCCTAAGGTGAAGGCTCATGGCAAGAAAGTGCTCGGTGCCTTTAGTGATGGCCTGGCTCACCTGGACAACCTCAAGGGCACCTTTGCCACACTGAGTGAGCTGCACTGTGACAAGCTGCACGTGGAT"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "amplicon.txt"
+    },
+    "long-tm": {
+      "label": "Calculate long-sequence melting temperature",
+      "description": "Run the original long-sequence utility on all 628 bases of the HBB transcript.",
+      "program": "long_seq_tm_test",
+      "args": [
+        "ACATTTGCTTCTGACACAACTGTGTTCACTAGCAACCTCAAACAGACACCATGGTGCATCTGACTCCTGAGGAGAAGTCTGCCGTTACTGCCCTGTGGGGCAAGGTGAACGTGGATGAAGTTGGTGGTGAGGCCCTGGGCAGGCTGCTGGTGGTCTACCCTTGGACCCAGAGGTTCTTTGAGTCCTTTGGGGATCTGTCCACTCCTGATGCTGTTATGGGCAACCCTAAGGTGAAGGCTCATGGCAAGAAAGTGCTCGGTGCCTTTAGTGATGGCCTGGCTCACCTGGACAACCTCAAGGGCACCTTTGCCACACTGAGTGAGCTGCACTGTGACAAGCTGCACGTGGATCCTGAGAACTTCAGGCTCCTGGGCAACGTGCTGGTCTGTGTGCTGGCCCATCACTTTGGCAAAGAATTCACCCCACCAGTGCAGGCTGCCTATCAGAAAGTGGTGGCTGGTGTGGCTAATGCCCTGGCCCACAAGTATCACTAAGCTCGCTTTCTTGCTGTCCAATTTCTATTAAAGGTTCCTTTGTTCCCTAAGTCCAACTACTAAACTGGGGGATATTATGAAGGGCCTTGAGCATCTGGATTCTGCCTAATAAAAAACATTTATTTTCATTGCAA",
+        "0",
+        "628"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "long-tm.txt"
+    },
+    "masker": {
+      "label": "Synthetic control: mask a sequence",
+      "description": "Demonstrate soft masking using an explicitly synthetic sequence and a tiny synthetic 4-mer frequency table. This is not a genome-frequency reference.",
+      "program": "primer3_masker",
+      "args": [
+        "-l",
+        "synthetic/masker-4mer.list",
+        "1",
+        "0",
+        "-a",
+        "2",
+        "-s",
+        "synthetic/masker.fasta"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "masked.fasta"
+    },
+    "help": {
+      "label": "About Primer3",
+      "description": "Show the original program version, authors and copyright information.",
+      "program": "primer3_core",
+      "args": [
+        "--about"
+      ],
+      "outputs": [],
+      "outputDirectories": []
+    }
+  },
+  "datasets": {
+    "primer3": {
+      "label": "Human HBB transcript and synthetic masking control",
+      "description": "Authentic 628-base human HBB transcript NM_000518.5, with separate examples for paired primers, an internal oligo and target constraints. Sequence provenance is included. A separate tiny synthetic sequence and 4-mer table demonstrate masking only.",
+      "path": "../../datasets/primer3/primer3/",
+      "files": [
+        "real/hbb-pairs.boulder",
+        "real/hbb-internal.boulder",
+        "real/hbb-constrained.boulder",
+        "real/hbb-invalid.boulder",
+        "synthetic/masker.fasta",
+        "synthetic/masker-4mer.list"
+      ]
+    }
+  }
+}
