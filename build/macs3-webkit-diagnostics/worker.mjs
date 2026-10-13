@@ -16,7 +16,9 @@ receive(async request => {
     const result = await executeMACS3(request);
     const transfer = [...new Set([result.stdout.buffer, result.stderr.buffer,
       ...result.files.map(file => file.data.buffer)])];
+    console.log('[MACS3 diagnostic] posting result ' + JSON.stringify(transfer.map(buffer=>buffer.byteLength)));
     post({ type: 'result', result }, transfer);
+    console.log('[MACS3 diagnostic] result posted');
   } catch (error) {
     post({ type: 'error', error: { name: error?.name || 'Error',
       message: error?.message || String(error), stack: error?.stack } });

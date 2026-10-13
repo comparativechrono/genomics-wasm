@@ -9,7 +9,7 @@ const root=fileURLToPath(new URL('../../',import.meta.url));
 // substituted executable is the small, logged diagnostic entry script.
 const manifest=JSON.parse(await readFile(new URL('../../dist/macs3/manifest.json',import.meta.url),'utf8'));
 const entry=await readFile(new URL('entry.py',import.meta.url));
-manifest.entrypoint={filename:'entry.py',sha256:createHash('sha256').update(entry).digest('hex')};
+if(process.env.DIAG_WRAPPERS!=='0') manifest.entrypoint={filename:'entry.py',sha256:createHash('sha256').update(entry).digest('hex')};
 await writeFile(new URL('manifest.json',import.meta.url),JSON.stringify(manifest,null,2)+'\n');
 const engine=process.env.BROWSER||'webkit';
 const out=new URL(`logs-${engine}-${Date.now()}/`,import.meta.url);await mkdir(out);
@@ -18,7 +18,7 @@ function log(...args){const line=[new Date().toISOString(),...args].join(' ');lo
 const mime={'.mjs':'application/javascript','.js':'application/javascript','.json':'application/json','.wasm':'application/wasm','.html':'text/html'};
 const server=createServer(async(req,res)=>{
  try{const path=new URL(req.url,'http://localhost').pathname;if(path==='/__probe__'){res.writeHead(200,{'Content-Type':'text/html'}).end('<!doctype html><title>MACS3 diagnostic</title>');return;}
- const servedPath=path.replace(/^\/build\/macs3-webkit-diagnostics\/(pyodide|wheels)\//,'/dist/macs3/$1/');
+ const servedPath=path.replace(/^\/build\/macs3-webkit-diagnostics\/(pyodide|wheels)\//,'/dist/macs3/$1/').replace('/build/macs3-webkit-diagnostics/macs3.py','/dist/macs3/macs3.py');
  const file=resolve(root,'.'+decodeURIComponent(servedPath));if(!file.startsWith(root)){res.writeHead(403).end();return;}
  const bytes=await readFile(file);res.writeHead(200,{'Content-Type':mime[extname(file)]||'application/octet-stream'}).end(bytes);
  }catch(error){res.writeHead(404).end(String(error));}
@@ -34,19 +34,22 @@ try{
  const selected=(process.env.DIAG_CASES||'callpeak-model,callpeak-shift,predictd-bed').split(',');
  const ids=Array.from({length:Number(process.env.DIAG_REPEAT||1)},()=>selected).flat();
  for(const id of ids){
-  let args,inputFiles;
+  let args,inputFiles,outputs=[];
   if(id==='probe'){args=['--probe',...(process.env.DIAG_PROBE_ARGS?JSON.parse(process.env.DIAG_PROBE_ARGS):[])];inputFiles=['chip.bed.gz'];}
-  else{const spec=plan.cases.find(c=>c.id===id);args=[...spec.args,'--verbose','3'];inputFiles=spec.inputFiles;}
+  else{const spec=plan.cases.find(c=>c.id===id);args=[...spec.args,...(process.env.DIAG_VERBOSE==='0'?[]:['--verbose','3'])];inputFiles=spec.inputFiles;outputs=spec.outputs.filter(path=>!(spec.stderrExtract&&path==='prediction.json'));}
   log('CASE',id,JSON.stringify(args));
-  const result=await page.evaluate(async({origin,args,inputFiles,timeoutMs,id})=>{
+  const result=await page.evaluate(async({origin,args,inputFiles,outputs,timeoutMs,id,production})=>{
    const {MACS3Runner}=await import(origin+'/runtime/macs3.mjs');
    const files=await Promise.all(inputFiles.map(async path=>({path,data:new Uint8Array(await(await fetch(origin+'/datasets/macs3/macs3/'+path)).arrayBuffer())})));
    const script=id==='probe'?'build/macs3-webkit-diagnostics/probe-pileup.py':'dist/macs3/macs3.py';
    files.push({path:id==='probe'?'probe.py':'upstream-macs3.py',data:new Uint8Array(await(await fetch(origin+'/'+script)).arrayBuffer())});
-   try{const result=await new MACS3Runner({baseUrl:origin+'/build/macs3-webkit-diagnostics/',workerUrl:origin+'/build/macs3-webkit-diagnostics/worker.mjs'}).run(args,{files,timeoutMs});
-    return{exitCode:result.exitCode,stdout:new TextDecoder().decode(result.stdout),stderr:new TextDecoder().decode(result.stderr)};
+   try{const runner=production?new MACS3Runner({baseUrl:origin+'/dist/macs3/'}):new MACS3Runner({baseUrl:origin+'/build/macs3-webkit-diagnostics/',workerUrl:origin+'/build/macs3-webkit-diagnostics/worker.mjs'});
+    const result=await runner.run(args,{files,outputs,timeoutMs});
+    console.log('[MACS3 diagnostic] main thread received result',result.exitCode,JSON.stringify(result.files.map(f=>[f.path,f.data.byteLength])));
+    const hashes=await Promise.all(result.files.map(async file=>({path:file.path,bytes:file.data.byteLength,sha256:Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',file.data)),byte=>byte.toString(16).padStart(2,'0')).join('')})));
+    return{exitCode:result.exitCode,stdout:new TextDecoder().decode(result.stdout),stderr:new TextDecoder().decode(result.stderr),files:hashes,missingOutputs:result.missingOutputs};
    }catch(error){return{error:String(error),stack:error.stack};}
-  },{origin,args,inputFiles,id,timeoutMs:Number(process.env.DIAG_TIMEOUT||60000)});
+  },{origin,args,inputFiles,outputs,id,timeoutMs:Number(process.env.DIAG_TIMEOUT||60000),production:process.env.DIAG_PRODUCTION==='1'});
   results.push({id,...result});log('RESULT',id,JSON.stringify(result));
   await writeFile(new URL('results.json',out),JSON.stringify(results,null,2));await writeFile(new URL('console.log',out),logs.join('\n')+'\n');
  }

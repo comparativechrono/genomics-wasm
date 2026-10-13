@@ -108,9 +108,11 @@ _run_macs3()
   if (!Number.isInteger(exitCode)) throw new Error('MACS3 returned an invalid exit status');
   const resultFiles = [], missingOutputs = [], collected = new Set();
   const collectFile = path => {
+    console.log('[MACS3 diagnostic] reading output ' + path);
     if (collected.has(path)) return;
     if (!FS.isFile(FS.lstat(path).mode)) throw new Error(`Output is not a regular file: ${path}`);
     resultFiles.push({ path, data: FS.readFile(path) });
+    console.log('[MACS3 diagnostic] read output ' + path + ' bytes=' + resultFiles.at(-1).data.byteLength);
     collected.add(path);
   };
   const collectDirectory = path => {
@@ -129,6 +131,7 @@ _run_macs3()
     if (!FS.analyzePath(path).exists) missingOutputs.push(path);
     else collectDirectory(path);
   }
+  console.log('[MACS3 diagnostic] output collection complete');
   return { exitCode, stdout: stdout.finish(), stderr: stderr.finish(), files: resultFiles, missingOutputs };
 }
 

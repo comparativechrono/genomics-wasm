@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tier: [default, no-omg]
+        mode: [production, logged]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -31,17 +31,20 @@ jobs:
       - name: Run diagnostic probes against the existing compiled build
         env:
           BROWSER: webkit
-          DIAG_CASES: probe,callpeak-model,callpeak-shift,predictd-bed
+          DIAG_CASES: callpeak-model,callpeak-shift,predictd-bed
           DIAG_TIMEOUT: '60000'
-          JIT_TIER: ${{ matrix.tier }}
+          DIAG_MODE: ${{ matrix.mode }}
+          DIAG_VERBOSE: '0'
+          DIAG_WRAPPERS: '0'
+          DIAG_REPEAT: '2'
         run: |
-          if [ "$JIT_TIER" = no-omg ]; then
-            export JSC_useOMGJIT=false
+          if [ "$DIAG_MODE" = production ]; then
+            export DIAG_PRODUCTION=1
           fi
           node build/macs3-webkit-diagnostics/run.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: macs3-webkit-diagnostic-${{ matrix.tier }}
+          name: macs3-webkit-diagnostic-${{ matrix.mode }}
           path: build/macs3-webkit-diagnostics/logs-*/
           if-no-files-found: warn
