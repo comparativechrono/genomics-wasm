@@ -22,15 +22,28 @@ export async function executeMACS3({ moduleUrl, args, files, outputs,
     packages: [],
   });
   if (pyodide.version !== manifest.pyodide.version) throw new Error('Pyodide version differs from the MACS3 bundle manifest');
-  for (const pkg of manifest.packages) {
-    const errors = [];
-    const source = pkg.source === 'pyodide' ? pkg.name : await loaderPath(new URL(pkg.filename, base));
-    await pyodide.loadPackage(source, {
-      messageCallback: () => {}, errorCallback: message => errors.push(String(message)),
-    });
-    // loadPackage can log an installation failure while resolving its promise.
-    const loaded = Object.keys(pyodide.loadedPackages).some(name => packageName(name) === packageName(pkg.name));
-    if (errors.length || !loaded) throw new Error(`Could not install ${pkg.name}: ${errors.join('; ') || 'package was not loaded'}`);
+  // WebKit can leave async side-module instantiation pending indefinitely.
+  // Compile packages synchronously in this isolated worker, keeping Promise
+  // and result contracts. Restore the native API before running MACS3.
+  const instantiate = WebAssembly.instantiate;
+  WebAssembly.instantiate = async function (source, imports, options) {
+    if (source instanceof WebAssembly.Module) return new WebAssembly.Instance(source, imports);
+    const module = new WebAssembly.Module(source, options);
+    return { module, instance: new WebAssembly.Instance(module, imports) };
+  };
+  try {
+    for (const pkg of manifest.packages) {
+      const errors = [];
+      const source = pkg.source === 'pyodide' ? pkg.name : await loaderPath(new URL(pkg.filename, base));
+      await pyodide.loadPackage(source, {
+        messageCallback: () => {}, errorCallback: message => errors.push(String(message)),
+      });
+      // loadPackage can log an installation failure while resolving its promise.
+      const loaded = Object.keys(pyodide.loadedPackages).some(name => packageName(name) === packageName(pkg.name));
+      if (errors.length || !loaded) throw new Error(`Could not install ${pkg.name}: ${errors.join('; ') || 'package was not loaded'}`);
+    }
+  } finally {
+    WebAssembly.instantiate = instantiate;
   }
   const distributions = manifest.packages.filter(pkg => pkg.distribution !== null)
     .map(pkg => [pkg.distribution || pkg.name, pkg.version]);

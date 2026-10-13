@@ -87,6 +87,14 @@ including its native fermi-lite assembly and scoring. On WebAssembly a
 requested process count is executed serially because process creation is not
 available. It does not create shared-memory threads.
 
+During package installation, the worker compiles and instantiates WebAssembly
+side modules synchronously. This avoids an observed WebKit failure in which an
+asynchronous side-module instantiation promise remains pending. The override
+is limited to the serial package loader and restored before MACS3 executes,
+including when installation fails. It preserves the package bytes, imports and
+scientific algorithms; compilation runs in the worker so the page stays
+responsive and cancellation can still terminate the worker.
+
 Serve the runtime, bundle and your page from an ordinary HTTP(S) static server.
 Use HTTPS for remote hosting; HTTP on localhost also supports the WebCrypto
 checksum verification. Cross-origin isolation headers are not required. Opening a browser demo as a
