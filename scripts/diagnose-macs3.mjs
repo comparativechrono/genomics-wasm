@@ -24,8 +24,8 @@ const diagnosticCases = new Set(['callpeak-model', 'callpeak-fixed', 'callpeak-s
 plan.cases = plan.cases.filter(test => diagnosticCases.has(test.id));
 const diagnosticProduction = process.env.DIAG_PRODUCTION === '1';
 const diagnosticWorkerKind = process.env.DIAG_WORKER || 'stage';
-if (!['stage', 'stream'].includes(diagnosticWorkerKind)) throw new Error('DIAG_WORKER must be stage or stream');
-const diagnosticWorker = `/build/macs3-webkit-diagnostics/worker${diagnosticWorkerKind === 'stage' ? '-stage' : ''}.mjs`;
+if (!['stage', 'stream', 'load'].includes(diagnosticWorkerKind)) throw new Error('DIAG_WORKER must be stage, stream or load');
+const diagnosticWorker = `/build/macs3-webkit-diagnostics/worker${diagnosticWorkerKind === 'stream' ? '' : `-${diagnosticWorkerKind}`}.mjs`;
 const diagnosticExecutor = diagnosticWorker.replace('/worker', '/execute');
 const datasets = options.dataset === 'all' ? plan.datasets : [options.dataset];
 const runId = randomUUID();

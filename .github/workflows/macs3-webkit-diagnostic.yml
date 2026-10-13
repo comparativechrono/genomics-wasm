@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode: [production, no-omg, stage]
+        sample: [1, 2, 3]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -33,20 +33,17 @@ jobs:
       - run: tar -xzf build/macs3-compiled.tar.gz
       - name: Run diagnostic probes against the existing compiled build
         env:
-          DIAG_MODE: ${{ matrix.mode }}
+          DIAG_PRODUCTION: '0'
+          DIAG_WORKER: load
         run: |
-          if [ "$DIAG_MODE" = stage ]; then
-            export DIAG_PRODUCTION=0
-          else
-            export DIAG_PRODUCTION=1
-          fi
-          if [ "$DIAG_MODE" = no-omg ]; then
-            export JSC_useOMGJIT=false
-          fi
-          node scripts/diagnose-macs3.mjs --engine webkit
+          set +e
+          for attempt in 1 2; do
+            node scripts/diagnose-macs3.mjs --engine webkit
+          done
+          exit 0
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: macs3-webkit-diagnostic-${{ matrix.mode }}
+          name: macs3-webkit-load-${{ matrix.sample }}
           path: build/macs3-validator-diagnostics/
           if-no-files-found: warn
