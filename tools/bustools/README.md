@@ -32,6 +32,11 @@ in `dist/bustools`. All targets compile the same pinned zlib sources.
 - The size-rounding helper omits a shift by 32 on 32-bit `size_t` targets.
 - BUSZ block lengths are widened to `uint64_t` before shifting by 30, preserving
   the original native file format on wasm32.
+- For per-cell histogram summaries with zero counted reads and zero UMIs, the
+  undefined counts-per-UMI mean is written as the native Linux reference's
+  `-nan` token. WebAssembly engines may choose either sign for the original
+  `0/0` NaN. This formatting guard makes that spelling deterministic; all
+  counts and every finite ratio calculation remain unchanged.
 
 The ABI check asserts 32-byte BUS records, all six field offsets, little-endian
 serialization, and 64-bit BUSZ index fields. Native/WASM validation additionally

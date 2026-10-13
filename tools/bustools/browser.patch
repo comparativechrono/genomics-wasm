@@ -34,6 +34,23 @@
  			block_header |= row_count;
  
  			outf.write((char *)&block_header, sizeof(block_header));
+--- a/src/bustools_count.cpp
++++ b/src/bustools_count.cpp
+@@ -791,6 +791,14 @@
+ 	cupcof << "barcode\tCU\tUMIs\n"; 
+ 
+ 	for (size_t bc = 0; bc < barcodes.size(); ++bc) {
++#ifdef BUSTOOLS_WASM_PORT
++		// WebAssembly permits either NaN sign for 0/0. Match the native
++		// reference's spelling of this undefined mean; counts are unchanged.
++		if (cellCounts[bc] == 0 && cellUMIs[bc] == 0) {
++			cupcof << binaryToString(barcodes[bc], bclen) << "\t-nan\t" << cellUMIs[bc] << '\n';
++			continue;
++		}
++#endif
+ 		cupcof << binaryToString(barcodes[bc], bclen) << '\t' << double(cellCounts[bc]) / double(cellUMIs[bc]) << '\t' << cellUMIs[bc] << '\n';
+ 	}
+ 	cupcof.close();
 --- a/src/bustools_main.cpp
 +++ b/src/bustools_main.cpp
 @@ -1,4 +1,5 @@
