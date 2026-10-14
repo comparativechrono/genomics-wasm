@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>seqtk · Browser container lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="masthead">
+      <a class="wordmark" href="https://github.com/comparativechrono/genomics-wasm">GENOMICS<span>/</span>WASM</a>
+      <span class="prototype-badge">Container experiment <span aria-hidden="true">↗</span></span>
+    </header>
+
+    <main>
+      <section class="introduction" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">BROWSER CONTAINER LAB / 001</p>
+          <h1 id="page-title">Small reads.<br><span>Real Linux tools.</span></h1>
+          <p class="intro-copy">Run seqtk in a Linux container converted with container2wasm. Choose a local sequence file, run an operation, and take the result with you.</p>
+        </div>
+        <div class="execution-note">
+          <span class="local-icon" aria-hidden="true">⌘</span>
+          <div><strong>Runs on your computer</strong><p>Once served, the app processes files in this browser tab. No Docker or WSL installation for the person using it.</p></div>
+        </div>
+      </section>
+
+      <div id="environment-notice" class="notice" hidden></div>
+      <p class="memory-note"><strong>Runtime footprint.</strong> The upstream runtime requests 3,000 MiB of WebAssembly memory, with 256 MiB assigned to Linux. These are configuration values, not measured peak usage.</p>
+
+      <div class="workbench">
+        <form id="command-form" class="panel setup-panel">
+          <div class="panel-header"><h2>Set up a run</h2><span class="small-label">SEQTK</span></div>
+          <fieldset id="controls">
+            <legend class="visually-hidden">Input and command</legend>
+            <section class="setup-section" aria-labelledby="input-heading">
+              <h3 id="input-heading"><span class="step-number">01</span>Sequence file</h3>
+              <label class="file-zone" for="input-file">
+                <span class="upload-icon" aria-hidden="true">↑</span>
+                <strong>Choose FASTA or FASTQ</strong>
+                <span>Plain text or gzip · up to 20 MiB</span>
+                <input id="input-file" name="input-file" type="file" accept=".fa,.fasta,.fna,.fq,.fastq,.gz,.txt" aria-describedby="input-error">
+              </label>
+              <div id="selected-file" class="selected-file" hidden><span class="file-symbol" aria-hidden="true">▤</span><div><strong id="file-name"></strong><span id="file-info"></span></div></div>
+              <button id="load-demo" class="text-button" type="button">Try the example reads <span aria-hidden="true">→</span></button>
+              <p id="input-error" class="field-error" role="alert" hidden></p>
+            </section>
+
+            <section class="setup-section" aria-labelledby="operation-heading">
+              <h3 id="operation-heading"><span class="step-number">02</span>Operation</h3>
+              <label class="visually-hidden" for="operation">Choose a seqtk operation</label>
+              <select id="operation" name="operation">
+                <option value="fasta">Convert FASTQ to FASTA</option>
+                <option value="reverse">Reverse complement</option>
+                <option value="trim">Trim bases from both ends</option>
+                <option value="fqchk">Summarize FASTQ quality</option>
+                <option value="custom">Custom seqtk arguments</option>
+              </select>
+              <p id="operation-description" class="hint">Keep read names and sequences; omit quality scores.</p>
+              <div id="trim-options" class="paired-fields" hidden>
+                <label for="trim-left">From the start<input id="trim-left" type="number" min="0" max="1000000" step="1" value="2"></label>
+                <label for="trim-right">From the end<input id="trim-right" type="number" min="0" max="1000000" step="1" value="2"></label>
+              </div>
+              <div id="custom-options" hidden>
+                <label for="arguments">Arguments as a JSON array</label>
+                <textarea id="arguments" rows="4" spellcheck="false" aria-describedby="command-error">["seq", "-A", "/work/reads.fq"]</textarea>
+                <p class="hint">Omit <code>seqtk</code>. Each string is one argument. Shell pipes and redirection are not supported. Output is captured from stdout.</p>
+              </div>
+              <div class="command-preview"><span>COMMAND</span><code id="command-preview">seqtk seq -A /work/reads.fq</code></div>
+              <p id="command-error" class="field-error" role="alert" hidden></p>
+            </section>
+
+            <section class="setup-section run-settings" aria-labelledby="limits-heading">
+              <h3 id="limits-heading"><span class="step-number">03</span>Time limit</h3>
+              <label class="timeout-label" for="timeout"><input id="timeout" type="number" min="10" max="1800" step="1" value="180" required><span>seconds, including startup</span></label>
+              <p class="hint">The first run downloads the runtime. This is a small-file feasibility prototype.</p>
+            </section>
+            <button id="run" class="primary-button" type="submit" disabled><span>Run seqtk</span><span aria-hidden="true">→</span></button>
+          </fieldset>
+        </form>
+
+        <section class="panel results-panel" aria-labelledby="results-heading">
+          <div class="panel-header"><h2 id="results-heading">Run &amp; results</h2><span id="run-indicator" class="status-pill" data-state="idle">Ready</span></div>
+          <div class="results-content">
+            <div class="run-status">
+              <div><p class="small-label">STATUS</p><p id="status" role="status" aria-live="polite">Choose a file or load the example to begin.</p></div>
+              <button id="cancel" class="secondary-button" type="button" hidden>Cancel</button>
+            </div>
+            <div id="activity" class="activity" aria-hidden="true" hidden><span></span></div>
+
+            <div id="empty-state" class="empty-state">
+              <div class="sequence-mark" aria-hidden="true"><span>A</span><span>C</span><span>G</span><span>T</span></div>
+              <h3>A familiar tool, a different runtime.</h3>
+              <p>The original Linux seqtk binary runs inside an emulated Linux environment. Your results appear here.</p>
+              <div class="runtime-flow" aria-label="Container to WebAssembly to browser"><span>Linux container</span><span aria-hidden="true">→</span><span>WebAssembly</span><span aria-hidden="true">→</span><span>This tab</span></div>
+            </div>
+
+            <div id="result" hidden>
+              <div class="result-toolbar"><div><p class="small-label">STANDARD OUTPUT</p><p id="result-summary"></p></div><div class="download-actions"><a id="download-stderr" class="download-button" href="#" download hidden>Download stderr <span aria-hidden="true">↓</span></a><a id="download" class="download-button" href="#" download>Download output <span aria-hidden="true">↓</span></a></div></div>
+              <pre id="stdout" class="output-preview" tabindex="0" aria-label="Standard output preview"></pre>
+              <p id="preview-note" class="hint" hidden>Preview truncated. The download contains the complete standard output.</p>
+              <dl id="metrics" class="metrics"></dl>
+            </div>
+
+            <details id="log-details" class="log-details">
+              <summary>Runtime log <span id="log-count">0 entries</span></summary>
+              <pre id="logs" tabindex="0" aria-label="Runtime log">No run started.</pre>
+            </details>
+          </div>
+          <div class="panel-footnote"><span class="privacy-dot" aria-hidden="true"></span>Selected files are passed to the local runtime, with no upload endpoint. Reload to discard tab state.</div>
+        </section>
+      </div>
+
+      <footer><p>seqtk × container2wasm <span>·</span> Experimental browser execution</p><a href="../../docs/seqtk-container.md">Build &amp; run guide <span aria-hidden="true">↗</span></a></footer>
+    </main>
+  </div>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
