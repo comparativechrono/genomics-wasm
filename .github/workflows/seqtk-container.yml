@@ -1,0 +1,64 @@
+name: Build and validate seqtk container prototype
+on:
+  push:
+    paths:
+      - 'tools/seqtk-container/**'
+      - 'runtime/container2wasm-seqtk*'
+      - 'examples/seqtk-container/**'
+      - 'scripts/*seqtk-container*'
+      - 'tests/seqtk-container.test.mjs'
+      - '.github/workflows/seqtk-container.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: seqtk-container-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  prototype:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Check runtime boundaries
+        run: node --test tests/seqtk-container.test.mjs
+      - name: Build original native and direct WebAssembly baselines
+        run: |
+          bash scripts/setup-emsdk.sh
+          source toolchain/emsdk/emsdk_env.sh
+          bash scripts/build-seqtk.sh all
+      - name: Build native seqtk container and browser emulator
+        env:
+          DOCKER_BUILDKIT: '1'
+        run: bash scripts/build-seqtk-container.sh
+      - name: Compare real browser execution with native and direct WASM
+        env:
+          BROWSER: chromium
+        run: node scripts/validate-seqtk-container.mjs
+      - name: Package the working static prototype
+        run: python3 scripts/package-seqtk-container.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seqtk-container-validation
+          path: reports/seqtk-container/
+          if-no-files-found: ignore
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: seqtk-container-prototype
+          path: releases/seqtk-container/
+          if-no-files-found: error
+          retention-days: 14
