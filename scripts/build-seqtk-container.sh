@@ -53,7 +53,10 @@ if [[ "$MODE" != image ]]; then
     C2W="$WORK/bin/c2w"
     test -s "$C2W"
     chmod u+x "$C2W"
+    # The released Dockerfile still names the author's old fork. Supply the
+    # current repository at an immutable commit through its supported context.
     "$C2W" --to-js --target-arch amd64 \
+        --assets "https://github.com/container2wasm/container2wasm.git#$(value "$LOCK" container2wasm.revision)" \
         --build-arg "VM_MEMORY_SIZE_MB=$(value "$LOCK" guestMemoryMiB)" \
         --build-arg VM_CORE_NUMS=1 \
         "$IMAGE" "$OUT/runtime/"

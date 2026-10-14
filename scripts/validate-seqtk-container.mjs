@@ -97,11 +97,17 @@ async function browserRun(kind, args, files) {
     const input = files.map(file => ({path: file.path, data: Uint8Array.from(atob(file.base64), c => c.charCodeAt(0))}));
     const progress = [], logs = [];
     const started = performance.now();
-    const result = await window.seqtkValidation[kind].run(args, {
+    let result;
+    try {
+      result = await window.seqtkValidation[kind].run(args, {
       files: input, timeoutMs,
       onProgress: event => progress.push({...event, atMs: performance.now() - started}),
       onLog: event => logs.push(event),
-    });
+      });
+    } catch (error) {
+      return {failure: {name: error.name, message: error.message}, progress, logs,
+        browserRunMs: performance.now() - started};
+    }
     const encode = bytes => {
       let binary = '';
       for (let offset = 0; offset < bytes.length; offset += 32768) {
@@ -112,6 +118,10 @@ async function browserRun(kind, args, files) {
     return {exitCode: result.exitCode, stdout: encode(result.stdout), stderr: encode(result.stderr),
       metrics: result.metrics ?? null, browserRunMs: performance.now() - started, progress, logs};
   }, {kind, args, files: encodeFiles(files), timeoutMs});
+  if (result.failure) {
+    summary.lastBrowserFailure = {kind, args, ...result};
+    throw new Error(`${kind}: ${result.failure.name}: ${result.failure.message}`);
+  }
   return {...result, stdout: Buffer.from(result.stdout, 'base64'), stderr: Buffer.from(result.stderr, 'base64'), wallMs: performance.now() - started};
 }
 
