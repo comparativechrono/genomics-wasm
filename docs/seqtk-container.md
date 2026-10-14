@@ -62,6 +62,10 @@ The **Build and validate seqtk container prototype** workflow builds:
 2. The native Docker image and container2wasm browser assets.
 3. Actual browser comparisons on the repository's human and yeast fixtures.
 
+CI caches the compiled runtimes and native image using the source locks, build
+scripts and container files as its key. Interface/runtime changes reuse those
+builds and rerun browser validation; a cache hit does not imply a test pass.
+
 The validator compares complete stdout bytes and process exit status for
 conversion, reverse complement, trimming and quality statistics, including gzip,
 missing-input, usage and repeated-run cases. It also checks cancellation,

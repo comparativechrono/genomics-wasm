@@ -70,30 +70,41 @@ export class SeqtkContainerRunner {
       let worker;
       let timer;
       let cleanupTimer;
+      let completeCleanup;
       let settled = false;
-      const stopWorker = () => {
-        if (!worker) return;
+      const stopWorker = done => {
+        if (!worker) { done(); return; }
         // QEMU owns nested pthread workers. Let the responsive outer worker stop
         // them explicitly before terminating it; also bound cleanup if loading
         // a classic script or a browser/runtime fault blocks that event loop.
-        try { worker.postMessage({type: 'stop'}); } catch { worker.terminate(); return; }
-        cleanupTimer = setTimeout(() => worker.terminate(), 250);
+        completeCleanup = () => {
+          if (!completeCleanup) return;
+          completeCleanup = null;
+          clearTimeout(cleanupTimer);
+          worker.terminate();
+          done();
+        };
+        cleanupTimer = setTimeout(() => completeCleanup?.(), 250);
+        try { worker.postMessage({type: 'stop'}); } catch { completeCleanup?.(); }
       };
       const finish = (error, result) => {
         if (settled) return;
         settled = true;
         clearTimeout(timer);
         signal?.removeEventListener('abort', abort);
-        stopWorker();
-        this.active = null;
-        if (error) reject(error); else resolve(result);
+        // Settle after cleanup so an awaited cancellation/retry cannot overlap
+        // two live QEMU instances and their large shared-memory reservations.
+        stopWorker(() => {
+          this.active = null;
+          if (error) reject(error); else resolve(result);
+        });
       };
       const abort = () => finish(namedError('AbortError', 'Run cancelled.'));
       this.active = {cancel: abort};
       try {
         worker = new Worker(new URL('./container2wasm-seqtk-worker.js', import.meta.url), {name: 'seqtk-container'});
         worker.onmessage = ({data}) => {
-          if (data?.type === 'stopped') { clearTimeout(cleanupTimer); worker.terminate(); return; }
+          if (data?.type === 'stopped') { completeCleanup?.(); return; }
           if (settled || !data) return;
           try {
             if (data.type === 'log') { onLog?.(data.value); return; }

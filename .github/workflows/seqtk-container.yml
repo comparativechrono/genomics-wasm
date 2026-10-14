@@ -33,15 +33,46 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Check runtime boundaries
         run: node --test tests/seqtk-container.test.mjs
+      - name: Restore compiled runtimes for unchanged build inputs
+        id: compiled
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            dist/seqtk
+            dist/seqtk-container
+            build/native/seqtk
+            build/patched-native/seqtk
+            build/seqtk-container/native-image.tar
+          key: seqtk-container-v1-${{ runner.os }}-${{ hashFiles('tools/seqtk/**', 'tools/seqtk-container/**', 'scripts/build-seqtk.sh', 'scripts/build-seqtk-container.sh', 'scripts/setup-emsdk.sh') }}
       - name: Build original native and direct WebAssembly baselines
+        if: steps.compiled.outputs.cache-hit != 'true'
         run: |
           bash scripts/setup-emsdk.sh
           source toolchain/emsdk/emsdk_env.sh
           bash scripts/build-seqtk.sh all
       - name: Build native seqtk container and browser emulator
+        if: steps.compiled.outputs.cache-hit != 'true'
         env:
           DOCKER_BUILDKIT: '1'
-        run: bash scripts/build-seqtk-container.sh
+        run: |
+          bash scripts/build-seqtk-container.sh
+          docker save genomics-wasm-seqtk-container:1.5 -o build/seqtk-container/native-image.tar
+      - name: Cache compiled runtimes before browser validation
+        if: steps.compiled.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            dist/seqtk
+            dist/seqtk-container
+            build/native/seqtk
+            build/patched-native/seqtk
+            build/seqtk-container/native-image.tar
+          key: ${{ steps.compiled.outputs.cache-primary-key }}
+      - name: Load cached native Docker image
+        if: steps.compiled.outputs.cache-hit == 'true'
+        run: |
+          docker load -i build/seqtk-container/native-image.tar
+          chmod u+x build/native/seqtk build/patched-native/seqtk
       - name: Compare real browser execution with native and direct WASM
         env:
           BROWSER: chromium
