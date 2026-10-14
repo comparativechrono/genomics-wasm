@@ -155,6 +155,15 @@ these files instead of parsing terminal escape sequences or relying on QEMU's
 exit status. A nonzero seqtk status is returned along with its output; a worker,
 asset-loading, timeout or cancellation failure rejects the promise.
 
+The bridge files are precreated in browser memory. The pinned upstream QEMU
+9p backend passes Emscripten's missing-file error number to Linux without
+translation, which prevents reliable creation of new files from the guest.
+An empty status file means pending; the wrapper atomically replaces it on
+completion. The prototype supports reading supplied inputs and downloading
+stdout/stderr, not arbitrary guest-created output paths. Guest startup timing
+detects the wrapper truncating a one-byte sentinel in the precreated `started`
+file.
+
 Measurements separate runtime initialization, guest startup and observed
 execution. File polling is every 100 ms, so very short commands have coarse
 timings. Every invocation boots a fresh VM; HTTP and WebAssembly compilation

@@ -93,7 +93,9 @@ function inspectFiles() {
   if (finished || !moduleInstance?.FS) return false;
   const FS = moduleInstance.FS;
   const now = performance.now();
-  if (!guestStartedAt && sizeOf(FS, '/work/started') !== null) {
+  // The bridge files already exist to avoid upstream's Emscripten-to-Linux
+  // ENOENT mismatch. The wrapper truncates the one-byte startup sentinel.
+  if (!guestStartedAt && sizeOf(FS, '/work/started') === 0) {
     guestStartedAt = now;
     progress('running', 'Linux container started; seqtk is running.', {inputBytes: request.inputBytes});
   }
@@ -104,7 +106,7 @@ function inspectFiles() {
   }
   appendStderr(FS, stderrSize);
   const statusSize = sizeOf(FS, '/work/status.json');
-  if (statusSize === null) return false;
+  if (statusSize === null || statusSize === 0) return false;
   if (statusSize > 1024) throw new Error('Container returned an invalid completion record.');
   const status = JSON.parse(FS.readFile('/work/status.json', {encoding: 'utf8'}));
   if (!Number.isInteger(status.exitCode) || status.exitCode < 0 || status.exitCode > 255) {
@@ -184,6 +186,14 @@ async function start(message) {
     // MEMFS now owns its copy; release the worker's cloned input buffers.
     message.files = [];
     FS.writeFile('/work/argv.txt', message.args.length ? `${message.args.join('\n')}\n` : '');
+    // QEMU's pinned 9p backend passes Emscripten ENOENT (44) to Linux unchanged
+    // (Linux expects 2), so the guest cannot reliably create a missing file.
+    // Existing files can be opened/truncated; rename replaces the empty status
+    // file atomically. Keep every bridge path present before the guest boots.
+    for (const name of ['stdout', 'stderr', 'started', 'status.json.tmp', 'status.json']) {
+      FS.writeFile(`/work/${name}`, new Uint8Array());
+    }
+    FS.writeFile('/work/started', new Uint8Array([1]));
     FS.mkdirTree('/pack');
     FS.writeFile('/pack/info', `t: ${Math.floor(Date.now() / 1000)}\nm: /work\ne: /usr/local/bin/run-seqtk\n`);
     // QEMU's asynchronous poll extension passes a notification callback. There
