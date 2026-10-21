@@ -1,0 +1,237 @@
+name: Build and validate repeat analysis
+on:
+  push:
+    branches: [main]
+    paths: &repeat-paths
+      - '.gitattributes'
+      - '.github/workflows/repeats.yml'
+      - 'tools/expansionhunter/**'
+      - 'tools/reviewer/**'
+      - 'tools/hts/**'
+      - 'datasets/repeats/**'
+      - 'validation/repeats/**'
+      - 'examples/repeats/**'
+      - 'runtime/repeats.mjs'
+      - 'runtime/REPEATS.md'
+      - 'runtime/hts.mjs'
+      - 'runtime/index.mjs'
+      - 'runtime/worker.mjs'
+      - 'runtime/execute.mjs'
+      - 'scripts/*repeat*'
+      - 'scripts/build-expansionhunter.py'
+      - 'scripts/build-reviewer.py'
+      - 'scripts/build-hts.py'
+      - 'scripts/package-hts.py'
+      - 'scripts/setup-emsdk.sh'
+      - 'tests/*repeat*'
+      - 'tests/runtime.test.mjs'
+      - 'tests/fixtures/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'LICENSE'
+  pull_request:
+    paths: *repeat-paths
+  workflow_dispatch:
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+permissions:
+  contents: read
+concurrency:
+  group: repeats-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        tool: [expansionhunter, reviewer, hts-1.21]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang cmake make git curl gzip xz-utils bzip2 patch autoconf automake libtool pkg-config
+      - name: Install pinned WebAssembly compiler
+        run: bash scripts/setup-emsdk.sh
+      - name: Build original native, patched native and WebAssembly programs
+        env:
+          REPEAT_BUILD_TOOL: ${{ matrix.tool }}
+        run: |
+          source toolchain/emsdk/emsdk_env.sh
+          case "$REPEAT_BUILD_TOOL" in
+            expansionhunter) python3 scripts/build-expansionhunter.py all ;;
+            reviewer) python3 scripts/build-reviewer.py all ;;
+            hts-1.21) python3 scripts/build-hts.py all --version 1.21 ;;
+          esac
+      - name: Preserve compiled programs and native references
+        env:
+          REPEAT_BUILD_TOOL: ${{ matrix.tool }}
+        run: |
+          tar -czf "build/repeats-$REPEAT_BUILD_TOOL-compiled.tar.gz" \
+            "dist/$REPEAT_BUILD_TOOL" \
+            "build/native/$REPEAT_BUILD_TOOL" \
+            "build/patched-native/$REPEAT_BUILD_TOOL"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repeats-${{ matrix.tool }}-compiled
+          path: build/repeats-${{ matrix.tool }}-compiled.tar.gz
+          if-no-files-found: error
+          retention-days: 14
+  validation:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [node, chromium, firefox, webkit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - name: Install the selected browser
+        if: matrix.engine != 'node'
+        run: npx playwright install --with-deps ${{ matrix.engine }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: repeats-*-compiled
+          path: build/compiled-artifacts
+          merge-multiple: true
+      - name: Restore all three compiled tools
+        run: |
+          for unit in expansionhunter reviewer hts-1.21; do
+            tar -xzf "build/compiled-artifacts/repeats-$unit-compiled.tar.gz"
+          done
+      - name: Materialize and verify pinned scientific fixtures
+        run: |
+          python3 scripts/fetch-repeat-test-data.py --fetch-sources --regenerate
+          python3 scripts/fetch-repeat-test-data.py --verify
+          git diff --exit-code -- datasets/repeats
+      - name: Test comparison, package checks and runtime
+        if: matrix.engine == 'node'
+        run: |
+          python3 -m unittest discover -s tests -p 'test_repeats_*.py'
+          node --test tests/runtime.test.mjs
+      - name: Compare scientific results with original native tools
+        run: node scripts/validate-repeats.mjs --engine ${{ matrix.engine }}
+      - name: Exercise the browser workflow and SVG outputs
+        if: matrix.engine != 'node'
+        env:
+          BROWSER: ${{ matrix.engine }}
+          REPEATS_DEMO_REPORT: reports/repeats/${{ matrix.engine }}/demo
+        run: node scripts/test-repeats-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repeats-validation-${{ matrix.engine }}
+          path: reports/repeats/${{ matrix.engine }}/
+          if-no-files-found: ignore
+  release-gate:
+    needs: [build, validation]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Require all builds and scientific/browser comparisons
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          VALIDATION_RESULT: ${{ needs.validation.result }}
+        run: test "$BUILD_RESULT" = success && test "$VALIDATION_RESULT" = success
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: repeats-*-compiled
+          path: build/compiled-artifacts
+          merge-multiple: true
+      - name: Restore all three compiled tools
+        run: |
+          for unit in expansionhunter reviewer hts-1.21; do
+            tar -xzf "build/compiled-artifacts/repeats-$unit-compiled.tar.gz"
+          done
+      - name: Materialize and verify pinned scientific fixtures
+        run: |
+          python3 scripts/fetch-repeat-test-data.py --fetch-sources --regenerate
+          python3 scripts/fetch-repeat-test-data.py --verify
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: repeats-validation-*
+          path: build/repeats-validation-artifacts
+      - name: Collect complete native comparison evidence
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          for engine in ('node', 'chromium', 'firefox', 'webkit'):
+              base = Path('build/repeats-validation-artifacts') / f'repeats-validation-{engine}'
+              matches = list(base.rglob('summary-all.json'))
+              if len(matches) != 1:
+                  raise RuntimeError(f'Expected one {engine} report, found {len(matches)}')
+              shutil.copytree(matches[0].parent, Path('reports/repeats') / engine, dirs_exist_ok=True)
+          PY
+      - name: Assemble the tested package
+        run: |
+          reports=()
+          for engine in node chromium firefox webkit; do
+            reports+=(--validation-report "reports/repeats/$engine/summary-all.json")
+          done
+          python3 scripts/package-repeats.py --output releases "${reports[@]}"
+      - name: Install browsers for independent package tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Verify and exercise the extracted ZIP independently
+        run: |
+          set -euo pipefail
+          task_root="$PWD"
+          (cd releases && sha256sum -c repeats-wasm.zip.sha256)
+          package_root="$(mktemp -d)"
+          python3 -m zipfile -e releases/repeats-wasm.zip "$package_root"
+          (
+            cd "$package_root/repeats-wasm"
+            sha256sum -c SHA256SUMS
+            npm ci
+            npm test
+            REPEATS_PACKAGE_REPORT="$task_root/reports/repeats/packages/node" \
+              node scripts/test-repeats-package.mjs
+            for engine in chromium firefox webkit; do
+              BROWSER="$engine" \
+                REPEATS_DEMO_REPORT="$task_root/reports/repeats/packages/$engine" \
+                node scripts/test-repeats-demo.mjs
+            done
+          )
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repeats-package-validation
+          path: reports/repeats/packages/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repeats-package
+          path: |
+            releases/repeats-wasm.zip
+            releases/repeats-wasm.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

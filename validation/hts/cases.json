@@ -2485,6 +2485,138 @@
       ]
     },
     {
+      "id": "samtools-disordered-bam-sort-index",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/sort-disordered.sam",
+          "as": "disordered.sam"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-b",
+            "-o",
+            "reads.bam",
+            "disordered.sam"
+          ],
+          "outputs": [
+            "reads.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "sort",
+            "--no-PG",
+            "-o",
+            "sorted.bam",
+            "reads.bam"
+          ],
+          "outputs": [
+            "sorted.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "index",
+            "sorted.bam"
+          ],
+          "outputs": [
+            "sorted.bam.bai"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "sorted.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "sorted.bam",
+            "chr1:1-500"
+          ],
+          "outputs": [],
+          "stdoutFile": "region.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "oracle-sorted.sam",
+          "oracle": true
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "sorted.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 7,
+            "readNames": [
+              "chr1-forward",
+              "chr1-unmapped-low",
+              "chr1-reverse",
+              "chr1-unmapped-high",
+              "chr2-mapped",
+              "chr2-unmapped",
+              "unplaced"
+            ]
+          }
+        },
+        {
+          "path": "oracle-sorted.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 7,
+            "readNames": [
+              "chr1-forward",
+              "chr1-unmapped-low",
+              "chr1-reverse",
+              "chr1-unmapped-high",
+              "chr2-mapped",
+              "chr2-unmapped",
+              "unplaced"
+            ]
+          }
+        },
+        {
+          "path": "region.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 4,
+            "readNames": [
+              "chr1-forward",
+              "chr1-unmapped-low",
+              "chr1-reverse",
+              "chr1-unmapped-high"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "id": "samtools-bam-cram-roundtrip",
       "kind": "success",
       "plugins": [],

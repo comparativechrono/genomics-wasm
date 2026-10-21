@@ -1,0 +1,142 @@
+--- a/ehunter/sample/HtsSeekingSampleAnalysis.cpp
++++ b/ehunter/sample/HtsSeekingSampleAnalysis.cpp
+@@ -19,6 +19,9 @@
+ // limitations under the License.
+ //
+ //
++
++// Modified for genomics-wasm: run the original one-worker callbacks synchronously.
++#include "core/GenomicsSerialThread.hh"
+ 
+ #include "sample/HtsSeekingSampleAnalysis.hh"
+ 
+@@ -341,7 +343,7 @@
+     SampleFindings sampleFindings(locusCount);
+ 
+     // Start all locus worker threads
+-    std::vector<std::thread> locusThreads;
++    std::vector<GenomicsSerialThread> locusThreads;
+     for (int threadIndex(0); threadIndex < threadCount; ++threadIndex)
+     {
+         locusThreads.emplace_back(
+--- a/ehunter/sample/HtsStreamingSampleAnalysis.cpp
++++ b/ehunter/sample/HtsStreamingSampleAnalysis.cpp
+@@ -19,6 +19,9 @@
+ // limitations under the License.
+ //
+ //
++
++// Modified for genomics-wasm: run the original one-worker callbacks synchronously.
++#include "core/GenomicsSerialThread.hh"
+ 
+ #include "sample/HtsStreamingSampleAnalysis.hh"
+ 
+@@ -327,7 +329,7 @@
+     SampleFindings sampleFindings(locusCount);
+ 
+     // Start all sampleFindings worker threads
+-    std::vector<std::thread> sampleFindingsThreads;
++    std::vector<GenomicsSerialThread> sampleFindingsThreads;
+     for (int threadIndex(0); threadIndex < threadCount; ++threadIndex)
+     {
+         sampleFindingsThreads.emplace_back(
+--- a/ehunter/locus/LocusAnalyzerUtil.cpp
++++ b/ehunter/locus/LocusAnalyzerUtil.cpp
+@@ -19,6 +19,9 @@
+ // limitations under the License.
+ //
+ //
++
++// Modified for genomics-wasm: run the original one-worker callbacks synchronously.
++#include "core/GenomicsSerialThread.hh"
+ 
+ #include "locus/LocusAnalyzerUtil.hh"
+ 
+@@ -121,7 +123,7 @@
+     LocusInitThreadSharedData locusInitThreadSharedData;
+     std::vector<LocusThreadLocalData> locusInitThreadLocalDataPool(threadCount);
+ 
+-    std::vector<std::thread> initThreads;
++    std::vector<GenomicsSerialThread> initThreads;
+     for (int threadIndex(0); threadIndex < threadCount; threadIndex++)
+     {
+         initThreads.emplace_back(
+--- a/ehunter/core/ThreadPool.hh
++++ b/ehunter/core/ThreadPool.hh
+@@ -1,3 +1,4 @@
+ #pragma once
+ 
+-#include "ctpl_stl.h"
++// Modified for genomics-wasm: run the original one-worker callbacks synchronously.
++#include "core/GenomicsSerialThread.hh"
+--- a/ehunter/io/ParameterLoading.cpp
++++ b/ehunter/io/ParameterLoading.cpp
+@@ -227,9 +227,10 @@
+         throw std::invalid_argument(message);
+     }
+ 
+-    if (userParameters.threadCount < 1)
+-    {
+-        const string message = "Thread count cannot be less than 1";
++    // Modified for genomics-wasm: reject unsupported parallel execution.
++    if (userParameters.threadCount != 1)
++    {
++        const string message = "This serial build supports exactly one thread (--threads 1)";
+         throw std::invalid_argument(message);
+     }
+ }
+--- a/ehunter/io/BamletWriter.hh
++++ b/ehunter/io/BamletWriter.hh
+@@ -79,7 +79,7 @@
+     std::unordered_map<std::string, graphtools::GraphReferenceMapping> graphReferenceMappings_;
+ 
+     ConcurrentQueue<bam1_t*> writeQueue_;
+-    std::thread writeThread_;
++    // Modified for genomics-wasm: the caller drains the write queue synchronously.
+ };
+ 
+ }
+--- a/ehunter/io/BamletWriter.cpp
++++ b/ehunter/io/BamletWriter.cpp
+@@ -68,7 +68,7 @@
+     : filePtr_(hts_open(bamletPath.c_str(), "wb"), hts_close)
+     , bamHeader_(bam_hdr_init(), bam_hdr_destroy)
+     , contigInfo_(contigInfo)
+-    , writeThread_(&BamletWriter::writeHtsAlignments, this)
++    // Modified for genomics-wasm: no background writer is started.
+ {
+     for (const auto& locusSpec : regionCatalog)
+     {
+@@ -80,8 +80,7 @@
+ 
+ BamletWriter::~BamletWriter()
+ {
+-    writeQueue_.push(nullptr);
+-    writeThread_.join();
++    // Modified for genomics-wasm: each write has already drained its queue.
+ }
+ 
+ void BamletWriter::writeHeader()
+@@ -225,7 +224,10 @@
+         htsAlignmentPtr, graphAlignmentBamTag.c_str(), 'Z', alignmentEncoding.length() + 1,
+         reinterpret_cast<uint8_t*>(&alignmentEncoding[0]));
+ 
++    // Modified for genomics-wasm: invoke the unchanged writer callback synchronously.
+     writeQueue_.push(htsAlignmentPtr);
++    writeQueue_.push(nullptr);
++    writeHtsAlignments();
+ }
+ 
+ void BamletWriter::writeHtsAlignments()
+--- a/ehunter/thirdparty/graph-tools-master-f421f4c/external/sparsepp/sparsepp-e40d7a0/sparsepp/spp_utils.h
++++ b/ehunter/thirdparty/graph-tools-master-f421f4c/external/sparsepp/sparsepp-e40d7a0/sparsepp/spp_utils.h
+@@ -354,7 +354,8 @@
+     return (x * h01)>>56;           // returns left 8 bits of x + (x<<8) + (x<<16) + (x<<24)+...
+ }
+ 
+-#ifdef __APPLE__
++// Modified for genomics-wasm: use upstream width-explicit overloads on wasm32.
++#if defined(__APPLE__) || defined(__EMSCRIPTEN__)
+     static inline uint32_t count_trailing_zeroes(size_t v) SPP_NOEXCEPT
+     {
+         size_t x = (v & -v) - 1;

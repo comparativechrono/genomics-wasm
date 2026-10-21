@@ -1,0 +1,14 @@
+[
+  {
+    "LocusId": "NORMAL_CAG",
+    "LocusStructure": "(CAG)*",
+    "ReferenceRegion": "chr1:4000-4036",
+    "VariantType": "Repeat"
+  },
+  {
+    "LocusId": "EXPANDED_CAG",
+    "LocusStructure": "(CAG)*",
+    "ReferenceRegion": "chr2:4000-4036",
+    "VariantType": "Repeat"
+  }
+]

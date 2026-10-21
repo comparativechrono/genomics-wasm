@@ -428,3 +428,23 @@
              if (tmp && *tmp == '.') {
                  settings.subsam_frac = strtod(tmp, &tmp);
                  if (*tmp) ret = 1;
+--- a/bam_sort.c
++++ b/bam_sort.c
+@@ -3119,10 +3119,15 @@
+         in_mem[i].from = pos;
+         in_mem[i].to = pos + w[i].buf_len;
+         pos += w[i].buf_len; rest -= w[i].buf_len;
+-        pthread_create(&tid[i], &attr, worker, &w[i]);
++        // Modified for genomics-wasm, 2026-10-21: a single worker runs
++        // synchronously, including in non-pthread WebAssembly builds.
++        if (n_threads == 1)
++            worker(&w[i]);
++        else
++            pthread_create(&tid[i], &attr, worker, &w[i]);
+     }
+     for (i = 0; i < n_threads; ++i) {
+-        pthread_join(tid[i], 0);
++        if (n_threads > 1) pthread_join(tid[i], 0);
+         if (w[i].error != 0) {
+             errno = w[i].error;
+             print_error_errno("sort", "failed to sort block %d", i);

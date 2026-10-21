@@ -1,0 +1,37 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #172a3a; background: #f5f7f9; line-height: 1.5; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+header { background: #17354d; color: white; padding: 1.5rem max(1rem, calc((100vw - 960px) / 2)); }
+header h1 { margin: 0; font-size: 1.8rem; }
+header p { margin: .3rem 0 0; }
+main { max-width: 992px; padding: 1rem; margin: auto; }
+fieldset, section { background: white; border: 1px solid #c9d3dc; border-radius: 4px; padding: 1.2rem; margin: 1.2rem 0; min-width: 0; }
+legend { font-size: 1.2rem; font-weight: 650; padding: 0 .4rem; }
+label { display: block; margin-bottom: .4rem; font-weight: 600; }
+textarea, select, input[type="number"] { width: 100%; border: 1px solid #869bac; border-radius: 3px; padding: .65rem; font: inherit; color: inherit; background: white; }
+textarea { font-family: ui-monospace, monospace; resize: vertical; }
+input[type="text"] { width: 100%; border: 1px solid #869bac; border-radius: 3px; padding: .65rem; font: inherit; color: inherit; background: white; }
+details { border: 1px solid #c9d3dc; padding: .8rem; margin: 1rem 0; }
+summary { cursor: pointer; font-weight: 600; }
+details[open] summary { margin-bottom: .8rem; }
+input[type="file"] { max-width: 100%; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+.row button { justify-self: start; margin-bottom: .4rem; }
+.hint { font-size: .9rem; color: #485e6f; margin: .35rem 0 1rem; }
+.timeout { max-width: 14rem; margin-bottom: 1rem; }
+button, .download { display: inline-block; padding: .6rem .9rem; border: 1px solid #23647c; border-radius: 3px; background: #23647c; color: white; font: inherit; cursor: pointer; text-decoration: none; }
+button:disabled { opacity: .55; cursor: default; }
+button:focus-visible, a:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #e5a72c; outline-offset: 3px; }
+#cancel, #clear { background: white; color: #234e66; }
+h2 { font-size: 1.2rem; margin-top: 0; }
+h3 { font-size: 1rem; }
+pre { background: #13212d; color: #e8eff4; padding: 1rem; overflow: auto; max-height: 22rem; white-space: pre; border-radius: 3px; font-size: .82rem; }
+.download { margin: 0 .5rem .5rem 0; }
+#files { overflow-wrap: anywhere; max-height: 15rem; overflow: auto; }
+#status { overflow-wrap: anywhere; }
+.plot-scroll { max-height: 40rem; overflow: auto; border: 1px solid #c9d3dc; background: white; }
+#plot { display: block; max-width: none; height: auto; }
+.plot-scale { max-width: 12rem; }
+a { color: #1b617e; }
+@media (max-width: 560px) { .row { grid-template-columns: 1fr; } fieldset, section { padding: .8rem; } }

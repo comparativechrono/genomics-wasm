@@ -1,0 +1,1452 @@
+{
+  "schema": 1,
+  "tool": "repeats",
+  "versions": {
+    "expansionhunter": "5.0.0",
+    "reviewer": "0.2.7",
+    "samtools": "1.21"
+  },
+  "runtime": [
+    "runtime/index.mjs",
+    "runtime/worker.mjs",
+    "runtime/execute.mjs",
+    "runtime/repeats.mjs"
+  ],
+  "cases": [
+    {
+      "id": "upstream-seeking",
+      "kind": "success",
+      "description": "Pinned upstream compound SNP and repeat: independent 0/1 and 2/10 genotypes, seeking input.",
+      "inputs": [
+        {
+          "source": "upstream/expansionhunter/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "upstream/expansionhunter/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.bam",
+          "as": "variants.bam"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.bam.bai",
+          "as": "variants.bam.bai"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.json",
+          "as": "variants.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "variants.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "variants.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "jsonPaths": {
+              "/LocusResults/SNV_AND_STR/AlleleCount": 2,
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2000-2001/Genotype": "0/1",
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2005-2008/Genotype": "2/10"
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "vcfGenotypes": {
+              "SNV_AND_STR_chr1:2000-2001": {
+                "GT": "0/1"
+              },
+              "SNV_AND_STR_chr1:2005-2008": {
+                "REPCN": "2/10"
+              }
+            }
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "SNV_AND_STR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "upstream-streaming",
+      "kind": "success",
+      "description": "Unindexed upstream BAM in streaming mode, same independent genotype truth.",
+      "inputs": [
+        {
+          "source": "upstream/expansionhunter/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "upstream/expansionhunter/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.bam",
+          "as": "variants.bam"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.json",
+          "as": "variants.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "variants.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "variants.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "streaming",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "jsonPaths": {
+              "/LocusResults/SNV_AND_STR/AlleleCount": 2,
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2000-2001/Genotype": "0/1",
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2005-2008/Genotype": "2/10"
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "vcfGenotypes": {
+              "SNV_AND_STR_chr1:2000-2001": {
+                "GT": "0/1"
+              },
+              "SNV_AND_STR_chr1:2005-2008": {
+                "REPCN": "2/10"
+              }
+            }
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "SNV_AND_STR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "upstream-path-aligner",
+      "kind": "success",
+      "description": "Official compound SNP/STR truth through the alternate path aligner and KmerIndex sparsepp path.",
+      "inputs": [
+        {
+          "source": "upstream/expansionhunter/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "upstream/expansionhunter/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.bam",
+          "as": "variants.bam"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.bam.bai",
+          "as": "variants.bam.bai"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.json",
+          "as": "variants.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "variants.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "variants.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male",
+            "--aligner",
+            "path-aligner"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "jsonPaths": {
+              "/LocusResults/SNV_AND_STR/AlleleCount": 2,
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2000-2001/Genotype": "0/1",
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2005-2008/Genotype": "2/10"
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "vcfGenotypes": {
+              "SNV_AND_STR_chr1:2000-2001": {
+                "GT": "0/1"
+              },
+              "SNV_AND_STR_chr1:2005-2008": {
+                "REPCN": "2/10"
+              }
+            }
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "SNV_AND_STR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "upstream-cram",
+      "kind": "success",
+      "description": "SAMtools-generated CRAM with mounted local reference, then EH seeking.",
+      "inputs": [
+        {
+          "source": "upstream/expansionhunter/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "upstream/expansionhunter/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.bam",
+          "as": "variants.bam"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.bam.bai",
+          "as": "variants.bam.bai"
+        },
+        {
+          "source": "upstream/expansionhunter/variants.json",
+          "as": "variants.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-C",
+            "-T",
+            "reference.fa",
+            "-o",
+            "variants.cram",
+            "variants.bam"
+          ],
+          "outputs": [
+            "variants.cram"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "index",
+            "variants.cram"
+          ],
+          "outputs": [
+            "variants.cram.crai"
+          ]
+        },
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "variants.cram",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "variants.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "jsonPaths": {
+              "/LocusResults/SNV_AND_STR/AlleleCount": 2,
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2000-2001/Genotype": "0/1",
+              "/LocusResults/SNV_AND_STR/Variants/SNV_AND_STR_chr1:2005-2008/Genotype": "2/10"
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "vcfGenotypes": {
+              "SNV_AND_STR_chr1:2000-2001": {
+                "GT": "0/1"
+              },
+              "SNV_AND_STR_chr1:2005-2008": {
+                "REPCN": "2/10"
+              }
+            }
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "SNV_AND_STR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-male-chain",
+      "kind": "success",
+      "description": "Known diploid normal and expanded repeats plus male haploid X; complete calling, indexed BAMlet and visualization chain.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/reads.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/reads.bam.bai",
+          "as": "reads.bam.bai"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "sort",
+            "--no-PG",
+            "-o",
+            "eh.sorted.bam",
+            "eh_realigned.bam"
+          ],
+          "outputs": [
+            "eh.sorted.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "index",
+            "eh.sorted.bam"
+          ],
+          "outputs": [
+            "eh.sorted.bam.bai"
+          ]
+        },
+        {
+          "tool": "reviewer",
+          "args": [
+            "--reads",
+            "eh.sorted.bam",
+            "--vcf",
+            "eh.vcf",
+            "--reference",
+            "reference.fa",
+            "--catalog",
+            "catalog.json",
+            "--locus",
+            "NORMAL_CAG,EXPANDED_CAG,X_CAG",
+            "--output-prefix",
+            "review"
+          ],
+          "outputs": [
+            "review.NORMAL_CAG.svg",
+            "review.EXPANDED_CAG.svg",
+            "review.X_CAG.svg",
+            "review.metrics.tsv",
+            "review.phasing.tsv"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "repeatTruth": {
+              "source": "truth.json",
+              "loci": [
+                "NORMAL_CAG",
+                "EXPANDED_CAG",
+                "X_CAG"
+              ]
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minimumRecords": 3
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "NORMAL_CAG",
+              "EXPANDED_CAG",
+              "X_CAG"
+            ]
+          }
+        },
+        {
+          "path": "eh.sorted.bam",
+          "kind": "bam",
+          "contract": {
+            "coordinateSorted": true,
+            "graphLoci": [
+              "NORMAL_CAG",
+              "EXPANDED_CAG",
+              "X_CAG"
+            ]
+          }
+        },
+        {
+          "path": "review.NORMAL_CAG.svg",
+          "kind": "svg",
+          "contract": {
+            "svgMinimumElements": 50
+          }
+        },
+        {
+          "path": "review.EXPANDED_CAG.svg",
+          "kind": "svg",
+          "contract": {
+            "svgMinimumElements": 50
+          }
+        },
+        {
+          "path": "review.X_CAG.svg",
+          "kind": "svg",
+          "contract": {
+            "svgMinimumElements": 50
+          }
+        },
+        {
+          "path": "review.metrics.tsv",
+          "kind": "tsv",
+          "contract": {
+            "tsvHeader": [
+              "VariantId",
+              "Genotype",
+              "AlleleDepth"
+            ],
+            "tsvMinimumRows": 3
+          }
+        },
+        {
+          "path": "review.phasing.tsv",
+          "kind": "tsv",
+          "contract": {
+            "tsvHeader": [
+              "LocusId",
+              "Diplotype",
+              "Score"
+            ],
+            "tsvMinimumRows": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-female",
+      "kind": "success",
+      "description": "Female ploidy changes X call from haploid18 to diploid18/18.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/reads.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/reads.bam.bai",
+          "as": "reads.bam.bai"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "female"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "repeatTruth": {
+              "source": "truth.json",
+              "loci": [
+                "NORMAL_CAG",
+                "EXPANDED_CAG",
+                "X_CAG"
+              ],
+              "overrides": {
+                "X_CAG": [
+                  18,
+                  18
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minimumRecords": 3
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "NORMAL_CAG",
+              "EXPANDED_CAG",
+              "X_CAG"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-streaming",
+      "kind": "success",
+      "description": "Synthetic expanded and X-haploid loci through serial streaming dispatch.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/reads.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "streaming",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "repeatTruth": {
+              "source": "truth.json",
+              "loci": [
+                "NORMAL_CAG",
+                "EXPANDED_CAG",
+                "X_CAG"
+              ]
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minimumRecords": 3
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "NORMAL_CAG",
+              "EXPANDED_CAG",
+              "X_CAG"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "compound-snv",
+      "kind": "success",
+      "description": "Unlinked heterozygous SNP and STR within one graph, EH-only because REViewer does not support SmallVariant.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/reads.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/reads.bam.bai",
+          "as": "reads.bam.bai"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.compound.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "jsonPaths": {
+              "/LocusResults/COMPOUND_CAG/Variants/COMPOUND_CAG_chr1:3500-3501/Genotype": "0/1",
+              "/LocusResults/COMPOUND_CAG/Variants/COMPOUND_CAG_chr1:4000-4036/Genotype": "12/18"
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minimumRecords": 2
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "COMPOUND_CAG"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "compound-str-chain",
+      "kind": "success",
+      "description": "Two unlinked heterozygous STRs with equal-score phasing candidates; preserves exact diplotype order, score and rendered assignment.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/reads.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/reads.bam.bai",
+          "as": "reads.bam.bai"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.twostr.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "sort",
+            "--no-PG",
+            "-o",
+            "eh.sorted.bam",
+            "eh_realigned.bam"
+          ],
+          "outputs": [
+            "eh.sorted.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "index",
+            "eh.sorted.bam"
+          ],
+          "outputs": [
+            "eh.sorted.bam.bai"
+          ]
+        },
+        {
+          "tool": "reviewer",
+          "args": [
+            "--reads",
+            "eh.sorted.bam",
+            "--vcf",
+            "eh.vcf",
+            "--reference",
+            "reference.fa",
+            "--catalog",
+            "catalog.json",
+            "--locus",
+            "TWO_STRS",
+            "--output-prefix",
+            "review"
+          ],
+          "outputs": [
+            "review.TWO_STRS.svg",
+            "review.metrics.tsv",
+            "review.phasing.tsv"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "jsonPaths": {
+              "/LocusResults/TWO_STRS/Variants/FIRST_GAA/Genotype": "8/14",
+              "/LocusResults/TWO_STRS/Variants/SECOND_CAG/Genotype": "12/18"
+            }
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "vcfGenotypes": {
+              "FIRST_GAA": {
+                "REPCN": "8/14"
+              },
+              "SECOND_CAG": {
+                "REPCN": "12/18"
+              }
+            }
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "minimumRecords": 1,
+            "graphLoci": [
+              "TWO_STRS"
+            ]
+          }
+        },
+        {
+          "path": "eh.sorted.bam",
+          "kind": "bam",
+          "contract": {
+            "coordinateSorted": true
+          }
+        },
+        {
+          "path": "review.TWO_STRS.svg",
+          "kind": "svg",
+          "contract": {
+            "svgMinimumElements": 50
+          }
+        },
+        {
+          "path": "review.metrics.tsv",
+          "kind": "tsv",
+          "contract": {
+            "tsvHeader": [
+              "VariantId",
+              "Genotype",
+              "AlleleDepth"
+            ],
+            "metricsAlleles": {
+              "FIRST_GAA": [
+                8,
+                14
+              ],
+              "SECOND_CAG": [
+                12,
+                18
+              ]
+            }
+          }
+        },
+        {
+          "path": "review.phasing.tsv",
+          "kind": "tsv",
+          "contract": {
+            "tsvHeader": [
+              "LocusId",
+              "Diplotype",
+              "Score"
+            ],
+            "tsvMinimumRows": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "public-reviewer-bean1",
+      "kind": "success",
+      "description": "Pinned public HG00684 BEAN1 BAMlet/VCF, native-proven masked full-coordinate reference, homozygous random assignment regression.",
+      "inputs": [
+        {
+          "source": "upstream/reviewer/reference.fa.gz",
+          "as": "reference.fa.gz"
+        },
+        {
+          "source": "upstream/reviewer/reference.fa.gz.fai",
+          "as": "reference.fa.gz.fai"
+        },
+        {
+          "source": "upstream/reviewer/reference.fa.gz.gzi",
+          "as": "reference.fa.gz.gzi"
+        },
+        {
+          "source": "upstream/reviewer/BEAN1_HG00684.bam",
+          "as": "BEAN1_HG00684.bam"
+        },
+        {
+          "source": "upstream/reviewer/BEAN1_HG00684.bam.bai",
+          "as": "BEAN1_HG00684.bam.bai"
+        },
+        {
+          "source": "upstream/reviewer/HG00684.vcf",
+          "as": "HG00684.vcf"
+        },
+        {
+          "source": "upstream/reviewer/catalog.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "reviewer",
+          "args": [
+            "--reads",
+            "BEAN1_HG00684.bam",
+            "--vcf",
+            "HG00684.vcf",
+            "--reference",
+            "reference.fa.gz",
+            "--catalog",
+            "catalog.json",
+            "--locus",
+            "BEAN1",
+            "--output-prefix",
+            "review"
+          ],
+          "outputs": [
+            "review.BEAN1.svg",
+            "review.metrics.tsv",
+            "review.phasing.tsv"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "review.BEAN1.svg",
+          "kind": "svg",
+          "contract": {
+            "svgMinimumElements": 50
+          }
+        },
+        {
+          "path": "review.metrics.tsv",
+          "kind": "tsv",
+          "contract": {
+            "tsvHeader": [
+              "VariantId",
+              "Genotype",
+              "AlleleDepth"
+            ],
+            "metricsGenotypes": {
+              "BEAN1": "17/17"
+            }
+          }
+        },
+        {
+          "path": "review.phasing.tsv",
+          "kind": "tsv",
+          "contract": {
+            "tsvHeader": [
+              "LocusId",
+              "Diplotype",
+              "Score"
+            ],
+            "tsvMinimumRows": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "empty-readset-no-call",
+      "kind": "success",
+      "description": "No reads returns explicit uncalled loci rather than invented repeat alleles.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.json",
+          "as": "catalog.json"
+        },
+        {
+          "source": "common/empty.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/empty.bam.bai",
+          "as": "reads.bam.bai"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": [
+            "eh.json",
+            "eh.vcf",
+            "eh_realigned.bam"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "eh.json",
+          "kind": "json",
+          "contract": {
+            "jsonNoCalls": [
+              "NORMAL_CAG",
+              "EXPANDED_CAG",
+              "X_CAG"
+            ]
+          }
+        },
+        {
+          "path": "eh.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minimumRecords": 3
+          }
+        },
+        {
+          "path": "eh_realigned.bam",
+          "kind": "bam",
+          "contract": {
+            "recordCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "eh-missing-index",
+      "kind": "failure",
+      "description": "Seeking requires a BAM index.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/reads.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": []
+        }
+      ],
+      "artifacts": [],
+      "diagnosticRegex": "index",
+      "expectedExitCode": 1
+    },
+    {
+      "id": "eh-invalid-catalog",
+      "kind": "failure",
+      "description": "Unknown reference contig fails with a diagnostic.",
+      "inputs": [
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        },
+        {
+          "source": "common/reference.fa.fai",
+          "as": "reference.fa.fai"
+        },
+        {
+          "source": "common/reads.bam",
+          "as": "reads.bam"
+        },
+        {
+          "source": "common/reads.bam.bai",
+          "as": "reads.bam.bai"
+        },
+        {
+          "source": "common/truth.json",
+          "as": "truth.json"
+        },
+        {
+          "source": "common/catalog.invalid.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "expansionhunter",
+          "args": [
+            "--reads",
+            "reads.bam",
+            "--reference",
+            "reference.fa",
+            "--variant-catalog",
+            "catalog.json",
+            "--output-prefix",
+            "eh",
+            "--threads",
+            "1",
+            "--analysis-mode",
+            "seeking",
+            "--sex",
+            "male"
+          ],
+          "outputs": []
+        }
+      ],
+      "artifacts": [],
+      "diagnosticRegex": "absent|contig|chromosome",
+      "expectedExitCode": 1
+    },
+    {
+      "id": "reviewer-unknown-locus",
+      "kind": "failure",
+      "description": "Requested locus must occur in the catalog.",
+      "inputs": [
+        {
+          "source": "upstream/reviewer/reference.fa.gz",
+          "as": "reference.fa.gz"
+        },
+        {
+          "source": "upstream/reviewer/reference.fa.gz.fai",
+          "as": "reference.fa.gz.fai"
+        },
+        {
+          "source": "upstream/reviewer/reference.fa.gz.gzi",
+          "as": "reference.fa.gz.gzi"
+        },
+        {
+          "source": "upstream/reviewer/BEAN1_HG00684.bam",
+          "as": "BEAN1_HG00684.bam"
+        },
+        {
+          "source": "upstream/reviewer/BEAN1_HG00684.bam.bai",
+          "as": "BEAN1_HG00684.bam.bai"
+        },
+        {
+          "source": "upstream/reviewer/HG00684.vcf",
+          "as": "HG00684.vcf"
+        },
+        {
+          "source": "upstream/reviewer/catalog.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "reviewer",
+          "args": [
+            "--reads",
+            "BEAN1_HG00684.bam",
+            "--vcf",
+            "HG00684.vcf",
+            "--reference",
+            "reference.fa.gz",
+            "--catalog",
+            "catalog.json",
+            "--locus",
+            "UNKNOWN",
+            "--output-prefix",
+            "review"
+          ],
+          "outputs": []
+        }
+      ],
+      "artifacts": [],
+      "diagnosticRegex": "UNKNOWN|locus",
+      "expectedExitCode": 1
+    },
+    {
+      "id": "reviewer-missing-index",
+      "kind": "failure",
+      "description": "REViewer requires an indexed BAMlet.",
+      "inputs": [
+        {
+          "source": "upstream/reviewer/reference.fa.gz",
+          "as": "reference.fa.gz"
+        },
+        {
+          "source": "upstream/reviewer/reference.fa.gz.fai",
+          "as": "reference.fa.gz.fai"
+        },
+        {
+          "source": "upstream/reviewer/reference.fa.gz.gzi",
+          "as": "reference.fa.gz.gzi"
+        },
+        {
+          "source": "upstream/reviewer/BEAN1_HG00684.bam",
+          "as": "BEAN1_HG00684.bam"
+        },
+        {
+          "source": "upstream/reviewer/HG00684.vcf",
+          "as": "HG00684.vcf"
+        },
+        {
+          "source": "upstream/reviewer/catalog.json",
+          "as": "catalog.json"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "reviewer",
+          "args": [
+            "--reads",
+            "BEAN1_HG00684.bam",
+            "--vcf",
+            "HG00684.vcf",
+            "--reference",
+            "reference.fa.gz",
+            "--catalog",
+            "catalog.json",
+            "--locus",
+            "BEAN1",
+            "--output-prefix",
+            "review"
+          ],
+          "outputs": []
+        }
+      ],
+      "artifacts": [],
+      "diagnosticRegex": "index",
+      "expectedExitCode": 1
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "tool": "reviewer",
+  "version": "0.2.7",
+  "emscripten": "3.1.64",
+  "source": {
+    "version": "0.2.7",
+    "archive": "REViewer-v0.2.7.tar.gz",
+    "url": "https://codeload.github.com/Illumina/REViewer/tar.gz/refs/tags/v0.2.7",
+    "sha256": "8411c40028907b0294b1899cd20af6934325796da160511b649044ecf9a5169f",
+    "bytes": 34122818,
+    "license": "GPL-3.0-or-later"
+  },
+  "dependencies": {
+    "boost": {
+      "archive": "boost_1_73_0.tar.bz2",
+      "url": "https://archives.boost.io/release/1.73.0/source/boost_1_73_0.tar.bz2",
+      "sha256": "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402",
+      "bytes": 109247910,
+      "version": "1.73.0",
+      "license": "BSL-1.0"
+    },
+    "htslib": {
+      "archive": "htslib-1.10.2.tar.bz2",
+      "url": "https://github.com/samtools/htslib/releases/download/1.10.2/htslib-1.10.2.tar.bz2",
+      "sha256": "e3b543de2f71723830a1e0472cf5489ec27d0fbeb46b1103e14a11b7177d1939",
+      "bytes": 1306320,
+      "version": "1.10.2",
+      "license": "MIT/BSD"
+    },
+    "spdlog": {
+      "archive": "spdlog-1.6.1.tar.gz",
+      "url": "https://codeload.github.com/gabime/spdlog/tar.gz/refs/tags/v1.6.1",
+      "sha256": "378a040d91f787aec96d269b0c39189f58a6b852e4cbf9150ccfacbe85ebbbfc",
+      "bytes": 285531,
+      "version": "1.6.1",
+      "license": "MIT"
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "archive": "zlib-1.3.1.tar.gz",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+      "bytes": 1512791,
+      "license": "Zlib"
+    },
+    "bzip2": {
+      "version": "1.0.8",
+      "archive": "bzip2-1.0.8.tar.gz",
+      "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+      "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+      "bytes": 810029,
+      "license": "bzip2-1.0.6"
+    },
+    "xz": {
+      "version": "5.4.6",
+      "archive": "xz-5.4.6.tar.bz2",
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.4.6/xz-5.4.6.tar.bz2",
+      "sha256": "913851b274e8e1d31781ec949f1c23e8dbcf0ecf6e73a2436dc21769dd3e6f49",
+      "bytes": 2181925,
+      "license": "0BSD AND LGPL-2.1-or-later"
+    }
+  },
+  "runtime": {
+    "module": "reviewer.mjs",
+    "wasm": "reviewer.wasm",
+    "exportName": "createREViewer",
+    "threads": false,
+    "requiresCrossOriginIsolation": false,
+    "initialMemory": 67108864,
+    "maximumMemory": 2147483648,
+    "stackSize": 8388608
+  },
+  "requiredNotices": [
+    "notices/Boost-LICENSE_1_0.txt",
+    "notices/HTSlib-LICENSE",
+    "notices/LICENSE.emscripten",
+    "notices/REViewer-COPYRIGHT.txt",
+    "notices/REViewer-LICENSE.txt",
+    "notices/bzip2-LICENSE",
+    "notices/fmt-LICENSE.rst",
+    "notices/graph-tools-LICENSE.txt",
+    "notices/spdlog-LICENSE",
+    "notices/xz-COPYING",
+    "notices/xz-COPYING.GPLv2",
+    "notices/xz-COPYING.GPLv3",
+    "notices/xz-COPYING.LGPLv2.1",
+    "notices/zlib-LICENSE"
+  ]
+}

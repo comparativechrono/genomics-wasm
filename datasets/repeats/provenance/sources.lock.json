@@ -1,0 +1,197 @@
+{
+  "derived": [
+    {
+      "description": "Reference chr16 retains original length/coordinates and sequence within 2000 bases of each of the four upstream catalog loci; every other base becomes N. Deterministic BGZF with FAI/GZI. This is a targeted regression reference, not a complete human reference.",
+      "path": "upstream/reviewer/reference.fa.gz"
+    },
+    {
+      "description": "FAI generated for the unchanged upstream reference bytes.",
+      "path": "upstream/expansionhunter/reference.fa.fai"
+    }
+  ],
+  "files": [
+    {
+      "bytes": 4016,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/reference.fa",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "c912c2aa0987117d8fa612c0748c44cba570da97189c2b8a9929381086f5d7ea",
+      "sourcePath": "example/input/reference.fa",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/example/input/reference.fa"
+    },
+    {
+      "bytes": 158779,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/variants.bam",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "b7d18464c06daff9078c14a149551463c7c8a47844d3462154f8f51e20ef3cc5",
+      "sourcePath": "example/input/variants.bam",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/example/input/variants.bam"
+    },
+    {
+      "bytes": 96,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/variants.bam.bai",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "1fb6325de9b13329d7b57f8b36fdb66c3ad4227e79186a80d295d7d08f93d559",
+      "sourcePath": "example/input/variants.bam.bai",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/example/input/variants.bam.bai"
+    },
+    {
+      "bytes": 277,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/variants.json",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "b65b49bf98b14d0abfb11382444e43d64ea38faa70a9bf585b7675bd4445343f",
+      "sourcePath": "example/input/variants.json",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/example/input/variants.json"
+    },
+    {
+      "bytes": 1341,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/expected.json",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "da513e21889fcb160eeacc4eb59aa0b80972072d1aa97ceb9e9ca7afe390865e",
+      "sourcePath": "example/output/repeats.json",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/example/output/repeats.json"
+    },
+    {
+      "bytes": 2139,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/expected.vcf",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "1a074981f03589a5a4ff4de6cc27d6792be644699a66778335f47193b72ca8bd",
+      "sourcePath": "example/output/repeats.vcf",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/example/output/repeats.vcf"
+    },
+    {
+      "bytes": 11358,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/LICENSE.txt",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "sourcePath": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/LICENSE.txt"
+    },
+    {
+      "bytes": 12045,
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "outputPath": "upstream/expansionhunter/COPYRIGHT.txt",
+      "project": "expansionhunter",
+      "repository": "Illumina/ExpansionHunter",
+      "sha256": "6296e077b2d5374dc3ffcdcce99c93f78d0ba9f6ccf0da9a9aea5f6671074de5",
+      "sourcePath": "COPYRIGHT.txt",
+      "url": "https://raw.githubusercontent.com/Illumina/ExpansionHunter/9f5db1d4ab72016b2d93330b9792842d71582622/COPYRIGHT.txt"
+    },
+    {
+      "bytes": 92145119,
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "project": "reviewer",
+      "repository": "Illumina/REViewer",
+      "sha256": "3b5cb8d62fc9d7f256799e2daca37bcd4edc9f462fa607c5847043504593c551",
+      "sourcePath": "reviewer/tests/inputs/genomes/HG38_chr16.fa",
+      "url": "https://raw.githubusercontent.com/Illumina/REViewer/7cd3be55cd67566d23d9272600e484edc72edbf8/reviewer/tests/inputs/genomes/HG38_chr16.fa"
+    },
+    {
+      "bytes": 51112,
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "outputPath": "upstream/reviewer/BEAN1_HG00684.bam",
+      "project": "reviewer",
+      "repository": "Illumina/REViewer",
+      "sha256": "81402677ac9bfea01507e37b03b7f80f78466ea9c3d01653a1ffed8b27e23f4c",
+      "sourcePath": "reviewer/tests/inputs/bamlets/BEAN1_HG00684.bam",
+      "url": "https://raw.githubusercontent.com/Illumina/REViewer/7cd3be55cd67566d23d9272600e484edc72edbf8/reviewer/tests/inputs/bamlets/BEAN1_HG00684.bam"
+    },
+    {
+      "bytes": 27008,
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "outputPath": "upstream/reviewer/BEAN1_HG00684.bam.bai",
+      "project": "reviewer",
+      "repository": "Illumina/REViewer",
+      "sha256": "5859bddfbabb680ca0650daae717c27b6c2d0264ecd176f81cd9406e39596eba",
+      "sourcePath": "reviewer/tests/inputs/bamlets/BEAN1_HG00684.bam.bai",
+      "url": "https://raw.githubusercontent.com/Illumina/REViewer/7cd3be55cd67566d23d9272600e484edc72edbf8/reviewer/tests/inputs/bamlets/BEAN1_HG00684.bam.bai"
+    },
+    {
+      "bytes": 2757,
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "outputPath": "upstream/reviewer/HG00684.vcf",
+      "project": "reviewer",
+      "repository": "Illumina/REViewer",
+      "sha256": "09f8cf949d919e3bc941ef02c0c93cab95e64446ae7d2cf4019ba23c55564155",
+      "sourcePath": "reviewer/tests/inputs/vcfs/HG00684.vcf",
+      "url": "https://raw.githubusercontent.com/Illumina/REViewer/7cd3be55cd67566d23d9272600e484edc72edbf8/reviewer/tests/inputs/vcfs/HG00684.vcf"
+    },
+    {
+      "bytes": 2086,
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "outputPath": "upstream/reviewer/catalog.json",
+      "project": "reviewer",
+      "repository": "Illumina/REViewer",
+      "sha256": "0816b073f57fdf35665e0301695591dcd054619f95f0d3be55ea01e11299d851",
+      "sourcePath": "reviewer/tests/inputs/catalogs/stranger_variant_catalog_hg38_chr16.json",
+      "url": "https://raw.githubusercontent.com/Illumina/REViewer/7cd3be55cd67566d23d9272600e484edc72edbf8/reviewer/tests/inputs/catalogs/stranger_variant_catalog_hg38_chr16.json"
+    },
+    {
+      "bytes": 35149,
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "outputPath": "upstream/reviewer/LICENSE.txt",
+      "project": "reviewer",
+      "repository": "Illumina/REViewer",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "sourcePath": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/Illumina/REViewer/7cd3be55cd67566d23d9272600e484edc72edbf8/LICENSE.txt"
+    },
+    {
+      "bytes": 12028,
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "outputPath": "upstream/reviewer/COPYRIGHT.txt",
+      "project": "reviewer",
+      "repository": "Illumina/REViewer",
+      "sha256": "56c7fc9d082f5b7ddb4a5c5f33e7df68eda9af586a29d550c1ebcd82c7721f12",
+      "sourcePath": "COPYRIGHT.txt",
+      "url": "https://raw.githubusercontent.com/Illumina/REViewer/7cd3be55cd67566d23d9272600e484edc72edbf8/COPYRIGHT.txt"
+    }
+  ],
+  "projects": {
+    "expansionhunter": {
+      "commit": "9f5db1d4ab72016b2d93330b9792842d71582622",
+      "license": "Pinned release LICENSE.txt is Apache-2.0; its historical COPYRIGHT.txt also contains GPL-3.0-or-later wording. Both original notices are preserved.",
+      "repository": "Illumina/ExpansionHunter",
+      "version": "5.0.0"
+    },
+    "reviewer": {
+      "commit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+      "license": "GPL-3.0-or-later; see original pinned-release LICENSE.txt and COPYRIGHT.txt.",
+      "repository": "Illumina/REViewer",
+      "version": "0.2.7"
+    }
+  },
+  "schema": 1,
+  "synthetic": {
+    "description": "Deterministic artificial sequences and paired reads generated in fetch-repeat-test-data.py; no human-derived reads. Repeat counts are specified before running ExpansionHunter.",
+    "paths": "common/*"
+  }
+}

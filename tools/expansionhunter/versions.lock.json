@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "tool": "expansionhunter",
+  "version": "5.0.0",
+  "emscripten": "3.1.64",
+  "source": {
+    "version": "5.0.0",
+    "archive": "ExpansionHunter-5.0.0.tar.gz",
+    "url": "https://codeload.github.com/Illumina/ExpansionHunter/tar.gz/refs/tags/v5.0.0",
+    "sha256": "921d1f8be658f2bdd144150278210bb921d605af921816e94a7508c0b9b9dfff",
+    "bytes": 2590883,
+    "license": "Apache-2.0"
+  },
+  "dependencies": {
+    "boost": {
+      "archive": "boost_1_73_0.tar.bz2",
+      "url": "https://archives.boost.io/release/1.73.0/source/boost_1_73_0.tar.bz2",
+      "sha256": "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402",
+      "bytes": 109247910,
+      "version": "1.73.0",
+      "license": "BSL-1.0"
+    },
+    "htslib": {
+      "archive": "htslib-1.10.2.tar.bz2",
+      "url": "https://github.com/samtools/htslib/releases/download/1.10.2/htslib-1.10.2.tar.bz2",
+      "sha256": "e3b543de2f71723830a1e0472cf5489ec27d0fbeb46b1103e14a11b7177d1939",
+      "bytes": 1306320,
+      "version": "1.10.2",
+      "license": "MIT/BSD-3-Clause"
+    },
+    "spdlog": {
+      "archive": "spdlog-1.6.1.tar.gz",
+      "url": "https://codeload.github.com/gabime/spdlog/tar.gz/refs/tags/v1.6.1",
+      "sha256": "378a040d91f787aec96d269b0c39189f58a6b852e4cbf9150ccfacbe85ebbbfc",
+      "bytes": 285531,
+      "version": "1.6.1",
+      "license": "MIT"
+    },
+    "abseil": {
+      "archive": "abseil-cpp-20210324.2.tar.gz",
+      "url": "https://codeload.github.com/abseil/abseil-cpp/tar.gz/refs/tags/20210324.2",
+      "sha256": "59b862f50e710277f8ede96f083a5bb8d7c9595376146838b9580be90374ee1f",
+      "bytes": 1774172,
+      "version": "20210324.2",
+      "license": "Apache-2.0"
+    },
+    "zlib": {
+      "version": "1.3.1",
+      "archive": "zlib-1.3.1.tar.gz",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+      "bytes": 1512791,
+      "license": "Zlib"
+    },
+    "bzip2": {
+      "version": "1.0.8",
+      "archive": "bzip2-1.0.8.tar.gz",
+      "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+      "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+      "bytes": 810029,
+      "license": "bzip2-1.0.6"
+    },
+    "xz": {
+      "version": "5.4.6",
+      "archive": "xz-5.4.6.tar.bz2",
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.4.6/xz-5.4.6.tar.bz2",
+      "sha256": "913851b274e8e1d31781ec949f1c23e8dbcf0ecf6e73a2436dc21769dd3e6f49",
+      "bytes": 2181925,
+      "license": "0BSD AND LGPL-2.1-or-later"
+    }
+  },
+  "requiredNotices": [
+    "notices/ExpansionHunter-COPYRIGHT.txt",
+    "notices/ExpansionHunter-LICENSE.txt",
+    "notices/LICENSE.emscripten",
+    "notices/abseil-LICENSE",
+    "notices/boost-LICENSE_1_0.txt",
+    "notices/bzip2-LICENSE",
+    "notices/ctpl-LICENSE",
+    "notices/graph-tools-LICENSE.txt",
+    "notices/htslib-LICENSE",
+    "notices/sparsepp-LICENSE",
+    "notices/spdlog-LICENSE",
+    "notices/xz-COPYING",
+    "notices/xz-COPYING.GPLv2",
+    "notices/xz-COPYING.GPLv3",
+    "notices/xz-COPYING.LGPLv2.1",
+    "notices/zlib-LICENSE"
+  ],
+  "runtime": {
+    "threads": false,
+    "requiresCrossOriginIsolation": false,
+    "maximumMemoryBytes": 2147483648,
+    "formats": [
+      "BAM",
+      "CRAM",
+      "FASTA",
+      "JSON",
+      "VCF"
+    ],
+    "localFilesOnly": true,
+    "exceptions": true
+  }
+}

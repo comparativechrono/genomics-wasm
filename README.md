@@ -2,7 +2,8 @@
 
 Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
 quantification, single-cell preprocessing, coverage, variant calling, metagenomics,
-genotype analysis, peak calling, primer design and differential expression tools
+genotype analysis, repeat sizing and visualization, peak calling, primer design
+and differential expression tools
 for web browsers and Node.js. Each tool has an independent
 package, a JavaScript API, and tests against the corresponding native program.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
@@ -25,6 +26,8 @@ DESeq2 session retains its R objects until the session is closed.
 | [BCFtools](tools/hts/README.md) | 1.16 and 1.21, separate builds | VCF/BCF processing with built-in plugins, including `+split-vep`, `+fill-tags` and trio analysis |
 | [SAMtools](tools/hts/README.md) | 1.16 and 1.21, separate builds | Local SAM/BAM/CRAM processing using the matching HTSlib |
 | [HTSlib](tools/hts/README.md) | 1.16 and 1.21, separate builds | `bgzip`, `tabix`, `htsfile`, headers and a static WebAssembly library |
+| [ExpansionHunter](tools/expansionhunter/README.md) | 5.0.0 | Targeted repeat genotyping with VCF, JSON and BAMlet output; one thread |
+| [REViewer](tools/reviewer/README.md) | 0.2.7 | Repeat-alignment SVGs, allele metrics and phasing from ExpansionHunter outputs |
 | [Strelka2](tools/strelka2/README.md) | 2.9.10 | Serial somatic workflow, depth estimation, scoring and indexed SNV/indel VCFs |
 | [Kraken2](tools/kraken2/README.md) | 2.17.2 | Taxonomic classification, database building and inspection, one thread |
 | [Bracken](tools/bracken/README.md) | 3.1 | Abundance estimation and read-length distributions, one thread |
@@ -57,6 +60,14 @@ BCFtools plugins are compiled into each executable and use the upstream
 release; each toolchain is validated against its matching native programs.
 The example supports file uploads, output chaining and binary downloads on
 ordinary static hosting.
+
+ExpansionHunter and REViewer share a [repeat-analysis example](examples/repeats/README.md)
+and [JavaScript API](runtime/REPEATS.md). The example carries ExpansionHunter's
+outputs through SAMtools 1.21 sorting and indexing into REViewer, displays the
+resulting SVG plots, and provides downloads of the calls, alignments and metrics.
+The programs run locally in disposable workers on ordinary static hosting.
+REViewer 0.2.7 retains its upstream limitation for compound loci containing
+small variants; the example uses repeat-only loci.
 
 DESeq2 has a separate build, browser example and validation workflow. It uses
 existing upstream WebAssembly packages, with a compiler configuration fix for
@@ -158,6 +169,9 @@ bash scripts/build-seqtk.sh all
 bash scripts/build-adapterremoval.sh all
 bash scripts/build-hisat2.sh all
 bash scripts/build-minimap2.sh all
+python3 scripts/build-expansionhunter.py all
+python3 scripts/build-reviewer.py all
+python3 scripts/build-hts.py all --version 1.21
 ```
 
 Each script builds the original native program, a native build with the
