@@ -62,9 +62,9 @@ bytes; binary previews show a download prompt.
 
 Each invocation uses a fresh worker and memory filesystem. Files persist in the
 page between commands and version changes, and are passed into the next worker.
-Explicit output paths must be newly generated; existing files with those exact
-paths are not supplied as inputs. Use a different filename for a transformation's
-input and output. Folder collection can include existing files within that folder.
+Explicit output paths and collected folder contents must be newly generated;
+existing files at those paths or within those folders are not supplied as inputs.
+Use different paths for a transformation's inputs and outputs.
 Failed, cancelled or incomplete commands preserve prior successful outputs.
 Cancel terminates the worker; the editable time limit provides the same cleanup
 for a timeout. Clearing files or reloading the page removes the page's workspace.
