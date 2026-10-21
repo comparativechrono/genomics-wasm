@@ -1,0 +1,217 @@
+{
+  "schema": 1,
+  "tool": "hts",
+  "emscripten": "3.1.64",
+  "programs": [
+    "bcftools",
+    "samtools",
+    "bgzip",
+    "tabix",
+    "htsfile"
+  ],
+  "versions": {
+    "1.16": {
+      "version": "1.16",
+      "components": {
+        "bcftools": {
+          "version": "1.16",
+          "archive": "bcftools-1.16.tar.bz2",
+          "url": "https://github.com/samtools/bcftools/releases/download/1.16/bcftools-1.16.tar.bz2",
+          "sha256": "90bf647c9ad79e10a243b8058c873de057fd7012e250d5ae6574839787a2ecd6",
+          "bytes": 7325862,
+          "license": "MIT"
+        },
+        "samtools": {
+          "version": "1.16",
+          "archive": "samtools-1.16.tar.bz2",
+          "url": "https://github.com/samtools/samtools/releases/download/1.16/samtools-1.16.tar.bz2",
+          "sha256": "6106b27fea5a6962cf5f257d68219e20235cce46039572afeff2c6cf11554764",
+          "bytes": 8216729,
+          "license": "MIT"
+        },
+        "htslib": {
+          "version": "1.16",
+          "archive": "htslib-1.16.tar.bz2",
+          "url": "https://github.com/samtools/htslib/releases/download/1.16/htslib-1.16.tar.bz2",
+          "sha256": "606b7c7aff73734cf033ecd156f40529fa5792f54524952a28938ca0890d7924",
+          "bytes": 4466776,
+          "license": "MIT"
+        }
+      },
+      "plugins": [
+        "GTisec",
+        "GTsubset",
+        "ad-bias",
+        "add-variantkey",
+        "af-dist",
+        "allele-length",
+        "check-ploidy",
+        "check-sparsity",
+        "color-chrs",
+        "contrast",
+        "counts",
+        "dosage",
+        "fill-AN-AC",
+        "fill-from-fasta",
+        "fill-tags",
+        "fixploidy",
+        "fixref",
+        "frameshifts",
+        "guess-ploidy",
+        "gvcfz",
+        "impute-info",
+        "indel-stats",
+        "isecGT",
+        "mendelian",
+        "missing2ref",
+        "parental-origin",
+        "prune",
+        "remove-overlaps",
+        "scatter",
+        "setGT",
+        "smpl-stats",
+        "split",
+        "split-vep",
+        "tag2tag",
+        "trio-dnm2",
+        "trio-stats",
+        "trio-switch-rate",
+        "variant-distance",
+        "variantkey-hex"
+      ],
+      "requiredNotices": [
+        "notices/1.16/LICENSE.bcftools",
+        "notices/1.16/LICENSE.samtools",
+        "notices/1.16/LICENSE.htslib",
+        "notices/1.16/LICENSE.htscodecs.md",
+        "notices/shared/zlib-LICENSE",
+        "notices/shared/bzip2-LICENSE",
+        "notices/shared/xz-COPYING.GPLv3",
+        "notices/shared/xz-COPYING.LGPLv2.1",
+        "notices/shared/xz-COPYING",
+        "notices/shared/xz-COPYING.GPLv2",
+        "notices/shared/LICENSE.emscripten"
+      ]
+    },
+    "1.21": {
+      "version": "1.21",
+      "components": {
+        "bcftools": {
+          "version": "1.21",
+          "archive": "bcftools-1.21.tar.bz2",
+          "url": "https://github.com/samtools/bcftools/releases/download/1.21/bcftools-1.21.tar.bz2",
+          "sha256": "528a4cc1d3555368db75a700b22a3c95da893fd1827f6d304716dfd45ea4e282",
+          "bytes": 7982173,
+          "license": "MIT"
+        },
+        "samtools": {
+          "version": "1.21",
+          "archive": "samtools-1.21.tar.bz2",
+          "url": "https://github.com/samtools/samtools/releases/download/1.21/samtools-1.21.tar.bz2",
+          "sha256": "05724b083a6b6f0305fcae5243a056cc36cf826309c3cb9347a6b89ee3fc5ada",
+          "bytes": 9149284,
+          "license": "MIT"
+        },
+        "htslib": {
+          "version": "1.21",
+          "archive": "htslib-1.21.tar.bz2",
+          "url": "https://github.com/samtools/htslib/releases/download/1.21/htslib-1.21.tar.bz2",
+          "sha256": "84b510e735f4963641f26fd88c8abdee81ff4cb62168310ae716636aac0f1823",
+          "bytes": 4781943,
+          "license": "MIT"
+        }
+      },
+      "plugins": [
+        "GTisec",
+        "GTsubset",
+        "ad-bias",
+        "add-variantkey",
+        "af-dist",
+        "allele-length",
+        "check-ploidy",
+        "check-sparsity",
+        "color-chrs",
+        "contrast",
+        "counts",
+        "dosage",
+        "fill-AN-AC",
+        "fill-from-fasta",
+        "fill-tags",
+        "fixploidy",
+        "fixref",
+        "frameshifts",
+        "guess-ploidy",
+        "gvcfz",
+        "impute-info",
+        "indel-stats",
+        "isecGT",
+        "mendelian2",
+        "missing2ref",
+        "parental-origin",
+        "prune",
+        "remove-overlaps",
+        "scatter",
+        "setGT",
+        "smpl-stats",
+        "split",
+        "split-vep",
+        "tag2tag",
+        "trio-dnm2",
+        "trio-stats",
+        "trio-switch-rate",
+        "variant-distance",
+        "variantkey-hex"
+      ],
+      "requiredNotices": [
+        "notices/1.21/LICENSE.bcftools",
+        "notices/1.21/LICENSE.samtools",
+        "notices/1.21/LICENSE.htslib",
+        "notices/1.21/LICENSE.htscodecs.md",
+        "notices/shared/zlib-LICENSE",
+        "notices/shared/bzip2-LICENSE",
+        "notices/shared/xz-COPYING.GPLv3",
+        "notices/shared/xz-COPYING.LGPLv2.1",
+        "notices/shared/xz-COPYING",
+        "notices/shared/xz-COPYING.GPLv2",
+        "notices/shared/LICENSE.emscripten"
+      ]
+    }
+  },
+  "dependencies": {
+    "zlib": {
+      "version": "1.3.1",
+      "archive": "zlib-1.3.1.tar.gz",
+      "url": "https://zlib.net/fossils/zlib-1.3.1.tar.gz",
+      "sha256": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
+      "bytes": 1512791,
+      "license": "Zlib"
+    },
+    "bzip2": {
+      "version": "1.0.8",
+      "archive": "bzip2-1.0.8.tar.gz",
+      "url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+      "sha256": "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269",
+      "bytes": 810029,
+      "license": "bzip2-1.0.6"
+    },
+    "xz": {
+      "version": "5.4.6",
+      "archive": "xz-5.4.6.tar.bz2",
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.4.6/xz-5.4.6.tar.bz2",
+      "sha256": "913851b274e8e1d31781ec949f1c23e8dbcf0ecf6e73a2436dc21769dd3e6f49",
+      "bytes": 2181925,
+      "license": "0BSD AND LGPL-2.1-or-later"
+    }
+  },
+  "runtime": {
+    "pthread": false,
+    "crossOriginIsolated": false,
+    "pointerWidth": 32,
+    "maximumMemory": 2147483648,
+    "exportName": "createHTS",
+    "pluginLoader": "builtin",
+    "remoteProtocols": false,
+    "interactiveCurses": false,
+    "optionalPolysomy": false
+  }
+}

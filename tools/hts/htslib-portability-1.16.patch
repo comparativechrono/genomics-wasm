@@ -1,0 +1,40 @@
+--- a/bgzip.c
++++ b/bgzip.c
+@@ -130,7 +130,7 @@
+     int c, compress, compress_level = -1, pstdout, is_forced, test, index = 0, rebgzip = 0, reindex = 0, keep;
+     BGZF *fp;
+     void *buffer;
+-    long start, end, size;
++    int64_t start, end, size;
+     char *index_fname = NULL;
+     int threads = 1;
+ 
+@@ -159,8 +159,8 @@
+         switch(c){
+         case 'd': compress = 0; break;
+         case 'c': pstdout = 1; break;
+-        case 'b': start = atol(optarg); compress = 0; pstdout = 1; break;
+-        case 's': size = atol(optarg); pstdout = 1; break;
++        case 'b': start = atoll(optarg); compress = 0; pstdout = 1; break;
++        case 's': size = atoll(optarg); pstdout = 1; break;
+         case 'f': is_forced++; break;
+         case 'i': index = 1; break;
+         case 'I': index_fname = optarg; break;
+@@ -181,7 +181,7 @@
+     }
+     if (size >= 0) end = start + size;
+     if (end >= 0 && end < start) {
+-        fprintf(stderr, "[bgzip] Illegal region: [%ld, %ld]\n", start, end);
++        fprintf(stderr, "[bgzip] Illegal region: [%" PRId64 ", %" PRId64 "]\n", start, end);
+         return 1;
+     }
+     if (compress == 1) {
+@@ -393,7 +393,7 @@
+                 if ( bgzf_index_load(fp, argv[optind], ".gzi") < 0 )
+                     error("Could not load index: %s.gzi\n", argv[optind]);
+             }
+-            if ( bgzf_useek(fp, start, SEEK_SET) < 0 ) error("Could not seek to %d-th (uncompressd) byte\n", start);
++            if ( bgzf_useek(fp, start, SEEK_SET) < 0 ) error("Could not seek to %" PRId64 "-th (uncompressd) byte\n", start);
+         }
+ 
+         if (threads > 1)

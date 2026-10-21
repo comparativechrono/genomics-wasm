@@ -22,6 +22,9 @@ DESeq2 session retains its R objects until the session is closed.
 | [FreeBayes](tools/freebayes/README.md) | 1.3.6 | Local BAM/SAM variant calling, one process |
 | [SomaticSniper](tools/somaticsniper/README.md) | 1.0.5.0 | Somatic SNVs from matched tumour/normal BAMs, one thread |
 | [LoFreq](tools/lofreq/README.md) | 2.1.5 | Variant calling, indel preparation and the serial somatic workflow |
+| [BCFtools](tools/hts/README.md) | 1.16 and 1.21, separate builds | VCF/BCF processing with built-in plugins, including `+split-vep`, `+fill-tags` and trio analysis |
+| [SAMtools](tools/hts/README.md) | 1.16 and 1.21, separate builds | Local SAM/BAM/CRAM processing using the matching HTSlib |
+| [HTSlib](tools/hts/README.md) | 1.16 and 1.21, separate builds | `bgzip`, `tabix`, `htsfile`, headers and a static WebAssembly library |
 | [Strelka2](tools/strelka2/README.md) | 2.9.10 | Serial somatic workflow, depth estimation, scoring and indexed SNV/indel VCFs |
 | [Kraken2](tools/kraken2/README.md) | 2.17.2 | Taxonomic classification, database building and inspection, one thread |
 | [Bracken](tools/bracken/README.md) | 3.1 | Abundance estimation and read-length distributions, one thread |
@@ -46,6 +49,14 @@ DESeq2 session retains its R objects until the session is closed.
 See the individual tool documentation for supported features, build changes,
 licences and limitations. Whole-genome performance is not established by the
 small validation fixtures.
+
+BCFtools, SAMtools and HTSlib have a shared [browser example](examples/hts/README.md)
+and [JavaScript API](runtime/HTS.md), with separate 1.16 and 1.21 bundles.
+BCFtools plugins are compiled into each executable and use the upstream
+`+plugin-name` syntax. Plugin versions, names and behavior follow their own
+release; each toolchain is validated against its matching native programs.
+The example supports file uploads, output chaining and binary downloads on
+ordinary static hosting.
 
 DESeq2 has a separate build, browser example and validation workflow. It uses
 existing upstream WebAssembly packages, with a compiler configuration fix for

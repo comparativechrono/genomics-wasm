@@ -7,3 +7,5 @@
 __pycache__/
 *.pyc
 .DS_Store
+/datasets/hts/common/logical-offset.bgz
+/datasets/hts/common/logical-offset.bgz.gzi
