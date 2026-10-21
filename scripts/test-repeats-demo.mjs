@@ -279,7 +279,8 @@ try {
   const badThreads = [...config.commands.call.args]; badThreads[badThreads.indexOf('--threads') + 1] = '2';
   await edit(page, badThreads, { tool: 'expansionhunter' }); await page.locator('#run').click();
   assert.match(await finished(page), /^Exited with status -?[1-9]\d* /);
-  assert.match((await downloadBytes(page, 'standard error', 'expansionhunter')).toString(), /exactly one thread/);
+  // ExpansionHunter's upstream logger writes this diagnostic to standard output.
+  assert.match((await downloadBytes(page, 'standard output', 'expansionhunter')).toString(), /exactly one thread/);
   passed('invalid-arguments-failure-diagnostics-and-fresh-output-requirement'); passed('parallel-thread-request-is-rejected');
   await edit(page, ['--version']);
   for (const mode of ['cancel', 'timeout']) {
