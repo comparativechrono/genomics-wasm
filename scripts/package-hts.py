@@ -520,7 +520,8 @@ def collect(version: str, reports: list[Path]) -> tuple[dict[str, tuple[bytes, i
     config['versions'] = [version]
     # This documented projection is the only changed demo input: one ZIP ships
     # exactly one build, so the selector must never offer an absent version.
-    config_bytes = json_bytes(config)
+    # Presets execute in insertion order; sorting would index before sorting BAM.
+    config_bytes = (json.dumps(config, indent=2) + '\n').encode()
     entries[f'{EXAMPLE}/config.json'] = (config_bytes, 0o644)
     sources[f'{EXAMPLE}/config.json'] = digest(config_bytes)
     playwright = read_json('package.json')['devDependencies']['playwright']

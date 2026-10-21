@@ -42,7 +42,11 @@ class PackageTests(unittest.TestCase):
         for name in names:
             self.write(name, f'Labelled synthetic source fixture: {name}\n'.encode())
         self.write('validation/hts/compare.py', COMPARATOR)
-        self.write_json('examples/hts/config.json', {'versions': ['1.21', '1.16']})
+        self.demo_config = {'versions': ['1.21', '1.16'], 'commands': {
+            'samtools-sort': {'args': ['sort', '-o', 'sorted.bam', 'input.bam']},
+            'samtools-index': {'args': ['index', 'sorted.bam']},
+        }}
+        self.write('examples/hts/config.json', (json.dumps(self.demo_config, indent=2) + '\n').encode())
         self.write_json('package.json', {'devDependencies': {'playwright': '1.64.0'}})
         self.write_json('package-lock.json', {'name': 'fixture', 'version': '0.1.0', 'lockfileVersion': 3,
             'packages': {'': {'name': 'fixture', 'version': '0.1.0', 'devDependencies': {'playwright': '1.64.0'}}}})
@@ -199,7 +203,9 @@ class PackageTests(unittest.TestCase):
                 checks = dict(line.split('  ', 1)[::-1] for line in contents['SHA256SUMS'].decode().splitlines())
                 self.assertEqual(set(checks), set(contents) - {'SHA256SUMS'})
                 for name, checksum in checks.items(): self.assertEqual(checksum, pkg.digest(contents[name]))
-                self.assertEqual(json.loads(contents['examples/hts/config.json'])['versions'], [version])
+                demo_config = json.loads(contents['examples/hts/config.json'])
+                self.assertEqual(demo_config, {**self.demo_config, 'versions': [version]})
+                self.assertEqual(list(demo_config['commands']), ['samtools-sort', 'samtools-index'])
                 self.assertEqual(json.loads(contents['release.json'])['upstreamVersion'], version)
                 other = '1.16' if version == '1.21' else '1.21'
                 self.assertFalse(any(name.startswith(f'dist/hts-{other}/') for name in contents))
