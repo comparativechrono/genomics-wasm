@@ -18,6 +18,14 @@ directory under `tools/`.
   Its package includes HTSlib, zlib and OpenLibm sources and their individual
   notices. The browser somatic coordinator is derived from the upstream Python
   workflow; variant calculations remain in the upstream C implementation.
+- BCFtools, SAMtools and HTSlib 1.16 and 1.21: the SAMtools/BCFtools/HTSlib
+  contributors. Sources: https://github.com/samtools/bcftools,
+  https://github.com/samtools/samtools and https://github.com/samtools/htslib.
+  Each versioned package retains the original release archives, component
+  licences, compression-library sources and Emscripten notices. BCFtools
+  plugins retain their upstream algorithms and licences; the port links them
+  into the executable using a generated symbol registry. See `tools/hts/`
+  for the exact dependency versions, build options and portability patches.
 - Strelka2 2.9.10: Illumina and contributors; GPL-3.0-or-later in the pinned
   source release. Source: https://github.com/Illumina/strelka/tree/v2.9.10
   Its package retains the release's bundled dependencies, scoring models,

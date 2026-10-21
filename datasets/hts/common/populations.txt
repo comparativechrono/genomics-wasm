@@ -1,0 +1,4 @@
+child	FAMILY
+father	FAMILY
+mother	FAMILY
+unrelated	OTHER

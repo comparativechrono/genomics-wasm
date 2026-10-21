@@ -1,0 +1,278 @@
+name: Build and validate HTS toolchains
+on:
+  push:
+    branches: [main]
+    paths: &hts-paths
+      - '.github/workflows/hts.yml'
+      - 'tools/hts/**'
+      - 'datasets/hts/**'
+      - 'validation/hts/**'
+      - 'examples/hts/**'
+      - 'runtime/hts*.mjs'
+      - 'runtime/HTS.md'
+      - 'runtime/index.mjs'
+      - 'runtime/worker.mjs'
+      - 'runtime/execute.mjs'
+      - 'scripts/*hts*'
+      - 'scripts/setup-emsdk.sh'
+      - 'tests/*hts*'
+      - 'tests/runtime.test.mjs'
+      - 'tests/fixtures/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'LICENSE'
+  pull_request:
+    paths: *hts-paths
+  workflow_dispatch:
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+permissions:
+  contents: read
+concurrency:
+  group: hts-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['1.16', '1.21']
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang cmake make git curl gzip xz-utils bzip2 patch autoconf automake libtool pkg-config
+      - run: npm ci
+      - name: Test runtime and release checks
+        run: |
+          python3 -m unittest discover -s tests -p 'test_hts_*.py'
+          node --test tests/runtime.test.mjs
+      - name: Verify pinned scientific inputs
+        run: |
+          python3 scripts/fetch-hts-test-data.py --fetch-sources --regenerate
+          python3 scripts/fetch-hts-test-data.py --verify
+          git diff --exit-code -- datasets/hts
+      - name: Install pinned WebAssembly compiler
+        run: bash scripts/setup-emsdk.sh
+      - name: Build original native, static native and WebAssembly tools
+        run: |
+          source toolchain/emsdk/emsdk_env.sh
+          python3 scripts/build-hts.py all --version ${{ matrix.version }}
+      - name: Compare Node with original native tools and plugins
+        run: node scripts/validate-hts.mjs --version ${{ matrix.version }} --engine node
+      - name: Link and run a separate HTSlib SDK consumer
+        run: |
+          source toolchain/emsdk/emsdk_env.sh
+          python3 scripts/test-hts-sdk.py --version ${{ matrix.version }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hts-${{ matrix.version }}-sdk-validation
+          path: build/hts-sdk-smoke/${{ matrix.version }}/report.json
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hts-${{ matrix.version }}-validation-node
+          path: reports/hts-${{ matrix.version }}/node/
+          if-no-files-found: ignore
+      - name: Preserve native programs and plugin libraries
+        run: |
+          tar -czf build/hts-${{ matrix.version }}-compiled.tar.gz \
+            dist/hts-${{ matrix.version }} \
+            build/native/hts-${{ matrix.version }} \
+            build/patched-native/hts-${{ matrix.version }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hts-${{ matrix.version }}-compiled
+          path: build/hts-${{ matrix.version }}-compiled.tar.gz
+          if-no-files-found: error
+          retention-days: 14
+  browsers:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['1.16', '1.21']
+        browser: [chromium, firefox, webkit]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: hts-${{ matrix.version }}-compiled
+          path: build
+      - run: tar -xzf build/hts-${{ matrix.version }}-compiled.tar.gz
+      - name: Materialize and verify pinned scientific fixtures
+        run: |
+          python3 scripts/fetch-hts-test-data.py --fetch-sources --regenerate
+          python3 scripts/fetch-hts-test-data.py --verify
+      - name: Compare browser results with original native tools and plugins
+        run: node scripts/validate-hts.mjs --version ${{ matrix.version }} --engine ${{ matrix.browser }}
+      - name: Exercise browser workflows and file operations
+        env:
+          BROWSER: ${{ matrix.browser }}
+          HTS_VERSION: ${{ matrix.version }}
+          HTS_DEMO_REPORT: reports/hts-${{ matrix.version }}/${{ matrix.browser }}/demo
+        run: node scripts/test-hts-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hts-${{ matrix.version }}-validation-${{ matrix.browser }}
+          path: reports/hts-${{ matrix.version }}/${{ matrix.browser }}/
+          if-no-files-found: ignore
+  version-switching:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: hts-*-compiled
+          path: build/compiled-artifacts
+          merge-multiple: true
+      - run: |
+          tar -xzf build/compiled-artifacts/hts-1.16-compiled.tar.gz
+          tar -xzf build/compiled-artifacts/hts-1.21-compiled.tar.gz
+      - name: Exercise both versions in the same browser workspace
+        env:
+          BROWSER: chromium
+          HTS_VERSION: all
+          HTS_DEMO_REPORT: reports/hts-version-switching
+        run: node scripts/test-hts-demo.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hts-version-switching
+          path: reports/hts-version-switching/
+          if-no-files-found: ignore
+  release-gate:
+    needs: [build, browsers, version-switching]
+    if: always()
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['1.16', '1.21']
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Require both builds and all browser comparisons
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+          BROWSER_RESULT: ${{ needs.browsers.result }}
+          VERSION_SWITCHING_RESULT: ${{ needs.version-switching.result }}
+        run: test "$BUILD_RESULT" = success && test "$BROWSER_RESULT" = success && test "$VERSION_SWITCHING_RESULT" = success
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: hts-${{ matrix.version }}-compiled
+          path: build
+      - run: tar -xzf build/hts-${{ matrix.version }}-compiled.tar.gz
+      - name: Materialize and verify pinned scientific fixtures
+        run: |
+          python3 scripts/fetch-hts-test-data.py --fetch-sources --regenerate
+          python3 scripts/fetch-hts-test-data.py --verify
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: hts-${{ matrix.version }}-validation-*
+          path: build/hts-${{ matrix.version }}-validation-artifacts
+      - name: Collect exact native comparison reports
+        env:
+          HTS_VERSION: ${{ matrix.version }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import shutil
+          version = os.environ['HTS_VERSION']
+          base = Path(f'build/hts-{version}-validation-artifacts')
+          for engine in ('node', 'chromium', 'firefox', 'webkit'):
+              matches = list((base / f'hts-{version}-validation-{engine}').rglob('summary-all.json'))
+              if len(matches) != 1:
+                  raise RuntimeError(f'Expected one {version}/{engine} report, found {len(matches)}')
+              target = Path(f'reports/hts-{version}') / engine
+              shutil.copytree(matches[0].parent, target, dirs_exist_ok=True)
+          PY
+      - name: Assemble the tested versioned package
+        run: |
+          reports=()
+          for engine in node chromium firefox webkit; do
+            reports+=(--validation-report "reports/hts-${{ matrix.version }}/$engine/summary-all.json")
+          done
+          python3 scripts/package-hts.py --version ${{ matrix.version }} --output releases "${reports[@]}"
+      - name: Install browsers for independent package tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Verify and exercise the extracted ZIP independently
+        env:
+          HTS_VERSION: ${{ matrix.version }}
+        run: |
+          set -euo pipefail
+          task_root="$PWD"
+          filename="hts-$HTS_VERSION-wasm.zip"
+          stem="${filename%.zip}"
+          (cd releases && sha256sum -c "$filename.sha256")
+          package_root="$(mktemp -d)"
+          python3 -m zipfile -e "releases/$filename" "$package_root"
+          (
+            cd "$package_root/$stem"
+            sha256sum -c SHA256SUMS
+            npm ci
+            npm test
+            HTS_PACKAGE_REPORT="$task_root/reports/hts-$HTS_VERSION/packages/node" \
+              node scripts/test-hts-package.mjs --version "$HTS_VERSION"
+            for engine in chromium firefox webkit; do
+              BROWSER="$engine" \
+                HTS_DEMO_REPORT="$task_root/reports/hts-$HTS_VERSION/packages/$engine" \
+                node scripts/test-hts-demo.mjs
+            done
+          )
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hts-${{ matrix.version }}-package-validation
+          path: reports/hts-${{ matrix.version }}/packages/
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hts-${{ matrix.version }}-package
+          path: |
+            releases/hts-${{ matrix.version }}-wasm.zip
+            releases/hts-${{ matrix.version }}-wasm.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

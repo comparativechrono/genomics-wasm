@@ -1,0 +1,10 @@
+##fileformat=VCFv4.2
+##source=genomics-wasm-explicit-synthetic-fixture
+##contig=<ID=chr1,length=1000>
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	child	father	mother
+chr1	101	.	A	G	60	PASS	.	GT	0/1	0/0	0/0
+chr1	121	.	A	G	60	PASS	.	GT	0/1	0/1	0/0
+chr1	141	.	A	G	60	PASS	.	GT	0/0	0/1	0/0
+chr1	161	.	A	G	60	PASS	.	GT	0/0	0/0	0/0
+chr1	181	.	A	G	60	PASS	.	GT	0/1	0/0	1/1

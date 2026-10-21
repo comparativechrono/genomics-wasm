@@ -1,0 +1,827 @@
+{
+  "classification": "Upstream regression fixtures; no claim that samples represent real people.",
+  "files": [
+    {
+      "bytes": 39829,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/LICENSE",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "1adba5dba093a5605b33e887619eb1b977ba01f008394f11e699d0d8a75126c1",
+      "sourcePath": "LICENSE",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/LICENSE"
+    },
+    {
+      "bytes": 5482,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/view.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "574831b4e57ce5d35a9e6387c4019c040304afe62c63519becbf3c91fc9a8d65",
+      "sourcePath": "test/view.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/view.vcf"
+    },
+    {
+      "bytes": 1923,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/view.GL.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "8fbc19d1d4a68b97d11c6d1a1e813324a56d7d63fc9719bffc67823ec3925cdd",
+      "sourcePath": "test/view.GL.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/view.GL.vcf"
+    },
+    {
+      "bytes": 1777,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/view.PL.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "248f45a4fcd4a41a5dfc8599600a2e03167dc7ae591cf75819e96728821b35c2",
+      "sourcePath": "test/view.PL.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/view.PL.vcf"
+    },
+    {
+      "bytes": 2391,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/view.GP.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "5460a52a16f872629ebb1b20dd5587076c149528cb58b2a60dc97596c8aa8ee8",
+      "sourcePath": "test/view.GP.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/view.GP.vcf"
+    },
+    {
+      "bytes": 699,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/dosage.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "9dcfc2564ee5f9beca79ae242a4e2e2bdaaa459e53266b6462bf20ae9f8674f4",
+      "sourcePath": "test/dosage.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/dosage.vcf"
+    },
+    {
+      "bytes": 412,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fill-tags-hemi.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "5abcef698f21fea1688880c5718d6669399ce25dc819f4acffce96b55a68eeaf",
+      "sourcePath": "test/fill-tags-hemi.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fill-tags-hemi.vcf"
+    },
+    {
+      "bytes": 571,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fill-tags-hwe.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "6fb297e382b69b019fad9355400f8ab91d3ee38baa3da8ad41004ab7d52e2f6f",
+      "sourcePath": "test/fill-tags-hwe.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fill-tags-hwe.vcf"
+    },
+    {
+      "bytes": 835,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fill-tags-AN0.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0c23563dfb1b0539cb69d7235fe92ffd184040ed97a25e6f0aaff2cbb7cac81d",
+      "sourcePath": "test/fill-tags-AN0.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fill-tags-AN0.vcf"
+    },
+    {
+      "bytes": 263,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fill-tags-VAF.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "1f38eb2b848ef360854e57e6818fec8cf11aa663977285e5d39521d71bdc7920",
+      "sourcePath": "test/fill-tags-VAF.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fill-tags-VAF.vcf"
+    },
+    {
+      "bytes": 343,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fill-tags-AD.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "982d5d8e98a58ffb9ce5bff210376e8d144f820e0672f156ce71dbaba700feb7",
+      "sourcePath": "test/fill-tags-AD.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fill-tags-AD.vcf"
+    },
+    {
+      "bytes": 632295,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/split-vep.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "cbb9f5c5ec36d1fe5b69ffd0f1dda45edaa32330337ae146f539c5a9601d7b8e",
+      "sourcePath": "test/split-vep.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/split-vep.vcf"
+    },
+    {
+      "bytes": 6289,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/split-vep.2.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "2446c5ebd452d97340c1caa1ba56b10039324d77b2d00c02c1c7951ee76a32d4",
+      "sourcePath": "test/split-vep.2.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/split-vep.2.vcf"
+    },
+    {
+      "bytes": 1004,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/split-vep.8.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "c51c12f9a198b2f47551ab18a208118a8a094c1ce4b48929080db98e552167f5",
+      "sourcePath": "test/split-vep.8.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/split-vep.8.vcf"
+    },
+    {
+      "bytes": 798,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/trio.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0309c54431817182c58927dc9b9c74cd991288447405d737850ac18c66452435",
+      "sourcePath": "test/trio.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/trio.vcf"
+    },
+    {
+      "bytes": 192,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/trio.ped",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0d6f5fde17c278337867aff266091e2cf106405f69020fa6aa608c32f18b0941",
+      "sourcePath": "test/trio.ped",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/trio.ped"
+    },
+    {
+      "bytes": 918,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/trio-stats.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "3dd73ae1cfbf1e27032e83751351bb3da016ec2ca173c20669a35c0b85b9f939",
+      "sourcePath": "test/trio-stats.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/trio-stats.vcf"
+    },
+    {
+      "bytes": 190,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/trio-stats.ped",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "8badf7cdaf661a6535b1914b226a176f5e1c87b2c75615ddeb8ffb34d74dee62",
+      "sourcePath": "test/trio-stats.ped",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/trio-stats.ped"
+    },
+    {
+      "bytes": 1369,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/mendelian.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "21f0b0e7dc70e9abff6bdde3528890987a121a5659ef23820f8e9852a05f7091",
+      "sourcePath": "test/mendelian.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/mendelian.vcf"
+    },
+    {
+      "bytes": 767,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/parental-origin.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "9a196a36b6a06caeef57af56c321fef0db4fe19f0cb3cb101d7343a6d087bb0e",
+      "sourcePath": "test/parental-origin.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/parental-origin.vcf"
+    },
+    {
+      "bytes": 2591,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/ad-bias.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "96be326f320d4058126cc40f4f225d641d9a56d65a98a40273e3e0b8d3937971",
+      "sourcePath": "test/ad-bias.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/ad-bias.vcf"
+    },
+    {
+      "bytes": 32,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/ad-bias.samples",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "167605e8de34267ff3c955ab505bf27449f5b323e57032742b9175cb54ba86e0",
+      "sourcePath": "test/ad-bias.samples",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/ad-bias.samples"
+    },
+    {
+      "bytes": 1111,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/af-dist.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "e763918f587143735740b2f541bd83def86238185b6762ca6f3f1ab24b4a7da7",
+      "sourcePath": "test/af-dist.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/af-dist.vcf"
+    },
+    {
+      "bytes": 282,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/contrast.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "7239b8230cb6c1842fb41da2977cf91a0bcb50406691e8dd30a8b1c9dd3b9e77",
+      "sourcePath": "test/contrast.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/contrast.vcf"
+    },
+    {
+      "bytes": 180194,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/gvcfz.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "2a40340d6997fddc5ee9ba36130569eda155f9358122b524c58d0d23de2e6d38",
+      "sourcePath": "test/gvcfz.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/gvcfz.vcf"
+    },
+    {
+      "bytes": 590,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/prune.1.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "cebcef37d30e9e3c363e0725a0d6f7b0d7b681c792d75307d45ded6c41f8238a",
+      "sourcePath": "test/prune.1.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/prune.1.vcf"
+    },
+    {
+      "bytes": 269,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/variant-distance.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "b825d15d09c1130de3dd64f6316100882886f771d0a58c742b5392fed6af396c",
+      "sourcePath": "test/variant-distance.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/variant-distance.vcf"
+    },
+    {
+      "bytes": 18711,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/query.variantkey.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "eab4fedd08d51834b69db2e69d36c5d4c6ea06be3b23cc50404b268e125deaf6",
+      "sourcePath": "test/query.variantkey.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/query.variantkey.vcf"
+    },
+    {
+      "bytes": 18711,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/query.nucleotide.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "adf69d1b27c13b4b4b30a3551ed0b8d8e8e95074db9374ee65f3b08721c4b1af",
+      "sourcePath": "test/query.nucleotide.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/query.nucleotide.vcf"
+    },
+    {
+      "bytes": 949,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/indel-stats.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "839d052296a3f6e89435f3f5b135428f0e1cf5f8e49719dce8c8cdb8d7c25bfa",
+      "sourcePath": "test/indel-stats.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/indel-stats.vcf"
+    },
+    {
+      "bytes": 1131,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fixploidy.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "2b7a068b78e59a2279d42d8012c10121f3e266cb4794df132c716aee707b1d71",
+      "sourcePath": "test/fixploidy.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fixploidy.vcf"
+    },
+    {
+      "bytes": 12,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fixploidy.samples",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "64b3e7ee6e04a583bfbeddf765f0b9a1d3f0b544bd691cf82f8807038901f9d9",
+      "sourcePath": "test/fixploidy.samples",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fixploidy.samples"
+    },
+    {
+      "bytes": 216,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fixploidy.ploidy",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "ec20167ce330c2a0fd8619f8e9e3138213de6eaf103bb5755ae11674e1301d43",
+      "sourcePath": "test/fixploidy.ploidy",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fixploidy.ploidy"
+    },
+    {
+      "bytes": 380,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/fixref.2a.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0d964bc228009c88664f744b29d31f31758a4975ee16d7a07548e632fafe8ceb",
+      "sourcePath": "test/fixref.2a.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/fixref.2a.vcf"
+    },
+    {
+      "bytes": 1202,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/norm.fa",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "da20982fbeb50362b580d8d2e06c492bfe221cb92020729a3e3071147764b060",
+      "sourcePath": "test/norm.fa",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/norm.fa"
+    },
+    {
+      "bytes": 1190,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/aa.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "b0f535ceec8220eeae02d6cb6f99dc8966a3424bfd45b09dc7b5225368d9799b",
+      "sourcePath": "test/aa.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/aa.vcf"
+    },
+    {
+      "bytes": 1124,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/aa.fa",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "b06ed9a68de1dac796ea54840b52b4073e02b8e6fe34bd711e76be516a4fbba9",
+      "sourcePath": "test/aa.fa",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/aa.fa"
+    },
+    {
+      "bytes": 67,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/aa.hdr",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "e85eb24030e6aa1006eac40b825559f20912bb0f9d8ed69fd73d6119a69046df",
+      "sourcePath": "test/aa.hdr",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/aa.hdr"
+    },
+    {
+      "bytes": 2484,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/trio-dnm/trio-dnm.1.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "efcf6020abd5d9cbc0fa9aa0f30e46ebd151aa0f057bad3d792e477dc6b85d44",
+      "sourcePath": "test/trio-dnm/trio-dnm.1.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/trio-dnm/trio-dnm.1.vcf"
+    },
+    {
+      "bytes": 797,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/trio-dnm/trio-dnm.4.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "8bdbccafb74f3c5065e29028b828c4b874362d3c09c2b6435704c106de88fd28",
+      "sourcePath": "test/trio-dnm/trio-dnm.4.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/trio-dnm/trio-dnm.4.vcf"
+    },
+    {
+      "bytes": 801,
+      "commit": "e7f638bb0374c11cdc7b4c51285541d65e3976cb",
+      "path": "upstream/1.16/trio-dnm/trio-dnm.9.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "181f0e2a58ee635a2086bd9c2e27793ce20b2866eadb50b3d70fafc7098fe36d",
+      "sourcePath": "test/trio-dnm/trio-dnm.9.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/e7f638bb0374c11cdc7b4c51285541d65e3976cb/test/trio-dnm/trio-dnm.9.vcf"
+    },
+    {
+      "bytes": 41065,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/LICENSE",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "100dc370e44ccfecd7644d74f983e7cdf1c527bb99a5f8b6c1e0be1a6fcc78f7",
+      "sourcePath": "LICENSE",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/LICENSE"
+    },
+    {
+      "bytes": 5482,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/view.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "574831b4e57ce5d35a9e6387c4019c040304afe62c63519becbf3c91fc9a8d65",
+      "sourcePath": "test/view.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/view.vcf"
+    },
+    {
+      "bytes": 1923,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/view.GL.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "8fbc19d1d4a68b97d11c6d1a1e813324a56d7d63fc9719bffc67823ec3925cdd",
+      "sourcePath": "test/view.GL.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/view.GL.vcf"
+    },
+    {
+      "bytes": 1777,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/view.PL.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "248f45a4fcd4a41a5dfc8599600a2e03167dc7ae591cf75819e96728821b35c2",
+      "sourcePath": "test/view.PL.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/view.PL.vcf"
+    },
+    {
+      "bytes": 2391,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/view.GP.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "5460a52a16f872629ebb1b20dd5587076c149528cb58b2a60dc97596c8aa8ee8",
+      "sourcePath": "test/view.GP.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/view.GP.vcf"
+    },
+    {
+      "bytes": 699,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/dosage.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "9dcfc2564ee5f9beca79ae242a4e2e2bdaaa459e53266b6462bf20ae9f8674f4",
+      "sourcePath": "test/dosage.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/dosage.vcf"
+    },
+    {
+      "bytes": 412,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fill-tags-hemi.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "5abcef698f21fea1688880c5718d6669399ce25dc819f4acffce96b55a68eeaf",
+      "sourcePath": "test/fill-tags-hemi.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fill-tags-hemi.vcf"
+    },
+    {
+      "bytes": 571,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fill-tags-hwe.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "6fb297e382b69b019fad9355400f8ab91d3ee38baa3da8ad41004ab7d52e2f6f",
+      "sourcePath": "test/fill-tags-hwe.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fill-tags-hwe.vcf"
+    },
+    {
+      "bytes": 835,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fill-tags-AN0.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0c23563dfb1b0539cb69d7235fe92ffd184040ed97a25e6f0aaff2cbb7cac81d",
+      "sourcePath": "test/fill-tags-AN0.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fill-tags-AN0.vcf"
+    },
+    {
+      "bytes": 263,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fill-tags-VAF.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "1f38eb2b848ef360854e57e6818fec8cf11aa663977285e5d39521d71bdc7920",
+      "sourcePath": "test/fill-tags-VAF.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fill-tags-VAF.vcf"
+    },
+    {
+      "bytes": 343,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fill-tags-AD.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "982d5d8e98a58ffb9ce5bff210376e8d144f820e0672f156ce71dbaba700feb7",
+      "sourcePath": "test/fill-tags-AD.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fill-tags-AD.vcf"
+    },
+    {
+      "bytes": 632295,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/split-vep.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "cbb9f5c5ec36d1fe5b69ffd0f1dda45edaa32330337ae146f539c5a9601d7b8e",
+      "sourcePath": "test/split-vep.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/split-vep.vcf"
+    },
+    {
+      "bytes": 6748,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/split-vep.2.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "c286d2360a71514615452c0be752773de9a15a4621157600d30a21c8f75359db",
+      "sourcePath": "test/split-vep.2.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/split-vep.2.vcf"
+    },
+    {
+      "bytes": 1004,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/split-vep.8.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "c51c12f9a198b2f47551ab18a208118a8a094c1ce4b48929080db98e552167f5",
+      "sourcePath": "test/split-vep.8.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/split-vep.8.vcf"
+    },
+    {
+      "bytes": 798,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/trio.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0309c54431817182c58927dc9b9c74cd991288447405d737850ac18c66452435",
+      "sourcePath": "test/trio.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/trio.vcf"
+    },
+    {
+      "bytes": 192,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/trio.ped",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0d6f5fde17c278337867aff266091e2cf106405f69020fa6aa608c32f18b0941",
+      "sourcePath": "test/trio.ped",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/trio.ped"
+    },
+    {
+      "bytes": 918,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/trio-stats.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "3dd73ae1cfbf1e27032e83751351bb3da016ec2ca173c20669a35c0b85b9f939",
+      "sourcePath": "test/trio-stats.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/trio-stats.vcf"
+    },
+    {
+      "bytes": 190,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/trio-stats.ped",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "8badf7cdaf661a6535b1914b226a176f5e1c87b2c75615ddeb8ffb34d74dee62",
+      "sourcePath": "test/trio-stats.ped",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/trio-stats.ped"
+    },
+    {
+      "bytes": 1369,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/mendelian.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "21f0b0e7dc70e9abff6bdde3528890987a121a5659ef23820f8e9852a05f7091",
+      "sourcePath": "test/mendelian.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/mendelian.vcf"
+    },
+    {
+      "bytes": 767,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/parental-origin.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "9a196a36b6a06caeef57af56c321fef0db4fe19f0cb3cb101d7343a6d087bb0e",
+      "sourcePath": "test/parental-origin.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/parental-origin.vcf"
+    },
+    {
+      "bytes": 2591,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/ad-bias.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "96be326f320d4058126cc40f4f225d641d9a56d65a98a40273e3e0b8d3937971",
+      "sourcePath": "test/ad-bias.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/ad-bias.vcf"
+    },
+    {
+      "bytes": 32,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/ad-bias.samples",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "167605e8de34267ff3c955ab505bf27449f5b323e57032742b9175cb54ba86e0",
+      "sourcePath": "test/ad-bias.samples",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/ad-bias.samples"
+    },
+    {
+      "bytes": 1111,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/af-dist.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "e763918f587143735740b2f541bd83def86238185b6762ca6f3f1ab24b4a7da7",
+      "sourcePath": "test/af-dist.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/af-dist.vcf"
+    },
+    {
+      "bytes": 282,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/contrast.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "7239b8230cb6c1842fb41da2977cf91a0bcb50406691e8dd30a8b1c9dd3b9e77",
+      "sourcePath": "test/contrast.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/contrast.vcf"
+    },
+    {
+      "bytes": 180194,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/gvcfz.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "2a40340d6997fddc5ee9ba36130569eda155f9358122b524c58d0d23de2e6d38",
+      "sourcePath": "test/gvcfz.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/gvcfz.vcf"
+    },
+    {
+      "bytes": 590,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/prune.1.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "cebcef37d30e9e3c363e0725a0d6f7b0d7b681c792d75307d45ded6c41f8238a",
+      "sourcePath": "test/prune.1.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/prune.1.vcf"
+    },
+    {
+      "bytes": 339,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/variant-distance.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "942498386bfab065b7c3743e73fba80cd175d9fb42c03253923b5a41b73dc702",
+      "sourcePath": "test/variant-distance.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/variant-distance.vcf"
+    },
+    {
+      "bytes": 18711,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/query.variantkey.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "eab4fedd08d51834b69db2e69d36c5d4c6ea06be3b23cc50404b268e125deaf6",
+      "sourcePath": "test/query.variantkey.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/query.variantkey.vcf"
+    },
+    {
+      "bytes": 22140,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/query.nucleotide.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "609655cd342885d8270827194504b381e502ef7c6909218d07584a1c0c9393e1",
+      "sourcePath": "test/query.nucleotide.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/query.nucleotide.vcf"
+    },
+    {
+      "bytes": 949,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/indel-stats.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "839d052296a3f6e89435f3f5b135428f0e1cf5f8e49719dce8c8cdb8d7c25bfa",
+      "sourcePath": "test/indel-stats.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/indel-stats.vcf"
+    },
+    {
+      "bytes": 1131,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fixploidy.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "2b7a068b78e59a2279d42d8012c10121f3e266cb4794df132c716aee707b1d71",
+      "sourcePath": "test/fixploidy.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fixploidy.vcf"
+    },
+    {
+      "bytes": 12,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fixploidy.samples",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "64b3e7ee6e04a583bfbeddf765f0b9a1d3f0b544bd691cf82f8807038901f9d9",
+      "sourcePath": "test/fixploidy.samples",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fixploidy.samples"
+    },
+    {
+      "bytes": 216,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fixploidy.ploidy",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "ec20167ce330c2a0fd8619f8e9e3138213de6eaf103bb5755ae11674e1301d43",
+      "sourcePath": "test/fixploidy.ploidy",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fixploidy.ploidy"
+    },
+    {
+      "bytes": 380,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/fixref.2a.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "0d964bc228009c88664f744b29d31f31758a4975ee16d7a07548e632fafe8ceb",
+      "sourcePath": "test/fixref.2a.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/fixref.2a.vcf"
+    },
+    {
+      "bytes": 1202,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/norm.fa",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "da20982fbeb50362b580d8d2e06c492bfe221cb92020729a3e3071147764b060",
+      "sourcePath": "test/norm.fa",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/norm.fa"
+    },
+    {
+      "bytes": 1190,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/aa.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "b0f535ceec8220eeae02d6cb6f99dc8966a3424bfd45b09dc7b5225368d9799b",
+      "sourcePath": "test/aa.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/aa.vcf"
+    },
+    {
+      "bytes": 1124,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/aa.fa",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "b06ed9a68de1dac796ea54840b52b4073e02b8e6fe34bd711e76be516a4fbba9",
+      "sourcePath": "test/aa.fa",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/aa.fa"
+    },
+    {
+      "bytes": 67,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/aa.hdr",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "e85eb24030e6aa1006eac40b825559f20912bb0f9d8ed69fd73d6119a69046df",
+      "sourcePath": "test/aa.hdr",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/aa.hdr"
+    },
+    {
+      "bytes": 2484,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/trio-dnm/trio-dnm.1.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "efcf6020abd5d9cbc0fa9aa0f30e46ebd151aa0f057bad3d792e477dc6b85d44",
+      "sourcePath": "test/trio-dnm/trio-dnm.1.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/trio-dnm/trio-dnm.1.vcf"
+    },
+    {
+      "bytes": 797,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/trio-dnm/trio-dnm.4.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "8bdbccafb74f3c5065e29028b828c4b874362d3c09c2b6435704c106de88fd28",
+      "sourcePath": "test/trio-dnm/trio-dnm.4.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/trio-dnm/trio-dnm.4.vcf"
+    },
+    {
+      "bytes": 801,
+      "commit": "bcf6c624342d0819e418169e7e5cd1277aefe7f8",
+      "path": "upstream/1.21/trio-dnm/trio-dnm.9.vcf",
+      "repository": "https://github.com/samtools/bcftools",
+      "sha256": "181f0e2a58ee635a2086bd9c2e27793ce20b2866eadb50b3d70fafc7098fe36d",
+      "sourcePath": "test/trio-dnm/trio-dnm.9.vcf",
+      "transformation": "Unchanged upstream regression fixture or licence bytes.",
+      "url": "https://raw.githubusercontent.com/samtools/bcftools/bcf6c624342d0819e418169e7e5cd1277aefe7f8/test/trio-dnm/trio-dnm.9.vcf"
+    }
+  ],
+  "licence": "MIT/Expat; licence copied per pinned version.",
+  "schema": 1
+}

@@ -1,0 +1,367 @@
+--- a/bam_markdup.c
++++ b/bam_markdup.c
+@@ -30,6 +30,7 @@
+ #include <config.h>
+ 
+ #include <stdlib.h>
++#include <inttypes.h>
+ #include <string.h>
+ #include <stdio.h>
+ #include <unistd.h>
+@@ -109,8 +110,8 @@
+     bam1_t *b;
+     int64_t score;
+     int64_t mate_score;
+-    long x;
+-    long y;
++    int64_t x;
++    int64_t y;
+     int opt;
+     int beg;
+     int end;
+@@ -265,13 +266,13 @@
+    read is leftmost of the pair. */
+ 
+ 
+-static int make_pair_key(md_param_t *param, key_data_t *key, bam1_t *bam, long *warnings) {
++static int make_pair_key(md_param_t *param, key_data_t *key, bam1_t *bam, int64_t *warnings) {
+      hts_pos_t this_coord, this_end, other_coord, other_end, leftmost;
+     int32_t this_ref, other_ref, barcode = 0;
+     int8_t orientation, left_read;
+     uint8_t *data;
+     char *cig, *bar;
+-    long incoming_warnings = *warnings;
++    int64_t incoming_warnings = *warnings;
+ 
+     this_ref    = bam->core.tid + 1; // avoid a 0 being put into the hash
+     other_ref   = bam->core.mtid + 1;
+@@ -504,7 +505,7 @@
+     }
+ 
+     if ((*warnings == BMD_WARNING_MAX) && (incoming_warnings != *warnings)) {
+-        fprintf(stderr, "[markdup] warning: %ld barcode read warnings.  New warnings will not be reported.\n",
++        fprintf(stderr, "[markdup] warning: %" PRId64 " barcode read warnings.  New warnings will not be reported.\n",
+                         *warnings);
+     }
+ 
+@@ -525,13 +526,13 @@
+    Uses unclipped start (or end depending on orientation), reference id,
+    and orientation. */
+ 
+-static void make_single_key(md_param_t *param, key_data_t *key, bam1_t *bam, long *warnings) {
++static void make_single_key(md_param_t *param, key_data_t *key, bam1_t *bam, int64_t *warnings) {
+     hts_pos_t this_coord;
+     int32_t this_ref, barcode = 0;
+     int8_t orientation;
+     uint8_t *data;
+     char *bar;
+-    long incoming_warnings = *warnings;
++    int64_t incoming_warnings = *warnings;
+ 
+     this_ref = bam->core.tid + 1; // avoid a 0 being put into the hash
+ 
+@@ -589,7 +590,7 @@
+     }
+ 
+     if ((*warnings == BMD_WARNING_MAX) && (incoming_warnings != *warnings)) {
+-        fprintf(stderr, "[markdup] warning: %ld barcode read warnings.  New warnings will not be reported.\n",
++        fprintf(stderr, "[markdup] warning: %" PRId64 " barcode read warnings.  New warnings will not be reported.\n",
+                         *warnings);
+     }
+ 
+@@ -651,7 +652,7 @@
+    Returned values are of the x and y coordinates and a section of
+    the read name to test (t) for string equality e.g. lane and tile part. */
+ 
+-static int get_coordinates_colons(md_param_t *param, const char *qname, int *t_beg, int *t_end, long *x_coord, long *y_coord, long *warnings) {
++static int get_coordinates_colons(md_param_t *param, const char *qname, int *t_beg, int *t_end, int64_t *x_coord, int64_t *y_coord, int64_t *warnings) {
+     int sep = 0;
+     int pos = 0;
+     int xpos = 0, ypos = 0;
+@@ -695,7 +696,7 @@
+ 
+         return 1;
+     } else {
+-        *x_coord = strtol(qname + xpos, &end, 10);
++        *x_coord = strtoll(qname + xpos, &end, 10);
+ 
+         if ((qname + xpos) == end) {
+             (*warnings)++;
+@@ -707,7 +708,7 @@
+             return 1;
+         }
+ 
+-        *y_coord = strtol(qname + ypos, &end, 10);
++        *y_coord = strtoll(qname + ypos, &end, 10);
+ 
+         if ((qname + ypos) == end) {
+             (*warnings)++;
+@@ -730,7 +731,7 @@
+    Returned values are of the x and y coordinates and an optional section of
+    the read name to test (t) for string equality e.g. lane and tile part. */
+ 
+-static inline int get_coordinates_regex(md_param_t *param, const char *qname, int *t_beg, int *t_end, long *x_coord, long *y_coord, long *warnings) {
++static inline int get_coordinates_regex(md_param_t *param, const char *qname, int *t_beg, int *t_end, int64_t *x_coord, int64_t *y_coord, int64_t *warnings) {
+     regmatch_t matches[5];
+     size_t max_matches = 5;
+     int xpos, ypos, xend, yend, xlen, ylen;
+@@ -771,7 +772,7 @@
+ 
+     strncpy(coord, qname + xpos, xlen);
+     coord[xlen] = '\0';
+-    *x_coord = strtol(coord, &end, 10);
++    *x_coord = strtoll(coord, &end, 10);
+ 
+     if (coord == end) {
+         (*warnings)++;
+@@ -795,7 +796,7 @@
+ 
+     strncpy(coord, qname + ypos, ylen);
+     coord[ylen] = '\0';
+-    *y_coord = strtol(coord, &end, 10);
++    *y_coord = strtoll(coord, &end, 10);
+ 
+     if (coord == end) {
+         (*warnings)++;
+@@ -811,7 +812,7 @@
+ }
+ 
+ 
+-static int get_coordinates(md_param_t *param, const char *name, int *t_beg, int *t_end, long *x_coord, long *y_coord, long *warnings) {
++static int get_coordinates(md_param_t *param, const char *name, int *t_beg, int *t_end, int64_t *x_coord, int64_t *y_coord, int64_t *warnings) {
+     int ret = 1;
+ 
+     if (param->rgx == NULL) {
+@@ -827,10 +828,10 @@
+ /* Using the coordinates from the read name, see whether the duplicated read is
+    close enough (set by max_dist) to the original to be counted as optical.*/
+ 
+-static int is_optical_duplicate(md_param_t *param, bam1_t *ori, bam1_t *dup, long max_dist, long *warnings) {
++static int is_optical_duplicate(md_param_t *param, bam1_t *ori, bam1_t *dup, int64_t max_dist, int64_t *warnings) {
+     int ret = 0;
+     char *original, *duplicate;
+-    long ox, oy, dx, dy;
++    int64_t ox, oy, dx, dy;
+     int o_beg = 0, o_end = 0, d_beg = 0, d_end = 0;
+ 
+     original  = bam_get_qname(ori);
+@@ -845,7 +846,7 @@
+     }
+ 
+     if (strncmp(original + o_beg, duplicate + d_beg, o_end - o_beg) == 0) {
+-        long xdiff, ydiff;
++        int64_t xdiff, ydiff;
+ 
+         if (ox > dx) {
+             xdiff = ox - dx;
+@@ -875,11 +876,11 @@
+ 
+    This function needs the values from the first read to be already calculated. */
+ 
+-static int optical_duplicate_partial(md_param_t *param, const char *name, const int o_beg, const int o_end, const long ox, const long oy, bam1_t *dup, check_t *c, long max_dist, long *warnings) {
++static int optical_duplicate_partial(md_param_t *param, const char *name, const int o_beg, const int o_end, const int64_t ox, const int64_t oy, bam1_t *dup, check_t *c, int64_t max_dist, int64_t *warnings) {
+     int ret = 0;
+     char *duplicate;
+     int d_beg = 0, d_end = 0;
+-    long dx, dy;
++    int64_t dx, dy;
+ 
+     duplicate = bam_get_qname(dup);
+ 
+@@ -889,7 +890,7 @@
+ 
+     if (strncmp(name + o_beg, duplicate + d_beg, o_end - o_beg) == 0) {
+         // the initial parts match, look at the numbers
+-        long xdiff, ydiff;
++        int64_t xdiff, ydiff;
+ 
+         if (ox > dx) {
+             xdiff = ox - dx;
+@@ -921,9 +922,9 @@
+ 
+ /* Mark the read as a duplicate and update the duplicate hash (if needed) */
+ static int mark_duplicates(md_param_t *param, khash_t(duplicates) *dup_hash, bam1_t *ori, bam1_t *dup,
+-                           long *optical, long *warn) {
++                           int64_t *optical, int64_t *warn) {
+     char dup_type = 0;
+-    long incoming_warnings = *warn;
++    int64_t incoming_warnings = *warn;
+ 
+     dup->core.flag |= BAM_FDUP;
+ 
+@@ -946,7 +947,7 @@
+     }
+ 
+     if ((*warn == BMD_WARNING_MAX) && (incoming_warnings != *warn)) {
+-        fprintf(stderr, "[markdup] warning: %ld decipher read name warnings.  New warnings will not be reported.\n",
++        fprintf(stderr, "[markdup] warning: %" PRId64 " decipher read name warnings.  New warnings will not be reported.\n",
+                         *warn);
+     }
+ 
+@@ -968,7 +969,7 @@
+ 
+ 
+ /* If the duplicate type has changed to optical then retag and duplicate hash. */
+-static inline int optical_retag(md_param_t *param, khash_t(duplicates) *dup_hash, bam1_t *b, int paired, long *optical_single, long *optical_pair) {
++static inline int optical_retag(md_param_t *param, khash_t(duplicates) *dup_hash, bam1_t *b, int paired, int64_t *optical_single, int64_t *optical_pair) {
+     int ret = 0;
+ 
+     if (bam_aux_update_str(b, "dt", 3, "SQ")) {
+@@ -1011,13 +1012,13 @@
+    Returns 0 on success, >0 on coordinate reading error (program can continue) or
+    <0 on an error (program should not continue. */
+ static int check_chain_against_original(md_param_t *param, khash_t(duplicates) *dup_hash, read_queue_t *ori,
+-             check_list_t *list, long *warn, long *optical_single, long *optical_pair) {
++             check_list_t *list, int64_t *warn, int64_t *optical_single, int64_t *optical_pair) {
+ 
+     int ret = 0, coord_fail = 0;
+     char *ori_name = bam_get_qname(ori->b);
+     read_queue_t *current = ori->duplicate;
+     int t_beg = 0, t_end = 0;
+-    long x, y;
++    int64_t x, y;
+ 
+     if (param->opt_dist) {
+         coord_fail = get_coordinates(param, ori_name, &t_beg, &t_end, &x, &y, warn);
+@@ -1133,7 +1134,7 @@
+ 
+ /* Check all the duplicates against each other to see if they are optical duplicates. */
+ static int check_duplicate_chain(md_param_t *param, khash_t(duplicates) *dup_hash, check_list_t *list,
+-             long *warn, long *optical_single, long *optical_pair) {
++             int64_t *warn, int64_t *optical_single, int64_t *optical_pair) {
+     int ret = 0;
+     size_t curr = 0;
+ 
+@@ -1154,7 +1155,7 @@
+ 
+             // if both are already optical duplicates there is no need to check again, otherwise...
+ 
+-            long ydiff;
++            int64_t ydiff;
+ 
+             if (current->y > chk->y) {
+                 ydiff = current->y - chk->y;
+@@ -1247,8 +1248,8 @@
+ /* Where there is more than one duplicate go down the list and check for optical duplicates and change
+    do tags (where used) to point to original (non-duplicate) read. */
+ static int find_duplicate_chains(md_param_t *param, klist_t(read_queue) *read_buffer, khash_t(duplicates) *dup_hash, check_list_t *dup_list,
+-                                const hts_pos_t prev_coord, const int32_t prev_tid, long *warn, long *optical_single,
+-                                long *optical_pair, const int check_range) {
++                                const hts_pos_t prev_coord, const int32_t prev_tid, int64_t *warn, int64_t *optical_single,
++                                int64_t *optical_pair, const int check_range) {
+     int ret = 0;
+     kliter_t(read_queue) *rq;
+ 
+@@ -1327,11 +1328,11 @@
+ 
+ 
+ /* estimate the library size, based on the Picard code in DuplicationMetrics.java*/
+-static unsigned long estimate_library_size(unsigned long paired_reads, unsigned long paired_duplicate_reads, unsigned long optical) {
+-    unsigned long estimated_size = 0;
+-    unsigned long non_optical_pairs = (paired_reads - optical) / 2;
+-    unsigned long unique_pairs = (paired_reads - paired_duplicate_reads) / 2;
+-    unsigned long duplicate_pairs = (paired_duplicate_reads - optical) / 2;
++static uint64_t estimate_library_size(uint64_t paired_reads, uint64_t paired_duplicate_reads, uint64_t optical) {
++    uint64_t estimated_size = 0;
++    uint64_t non_optical_pairs = (paired_reads - optical) / 2;
++    uint64_t unique_pairs = (paired_reads - paired_duplicate_reads) / 2;
++    uint64_t duplicate_pairs = (paired_duplicate_reads - optical) / 2;
+ 
+     if ((non_optical_pairs && duplicate_pairs && unique_pairs) && (non_optical_pairs > duplicate_pairs)) {
+         double m = 1;
+@@ -1360,10 +1361,10 @@
+             }
+         }
+ 
+-        estimated_size = (unsigned long)(unique_pairs * (m + M) / 2);
++        estimated_size = (uint64_t)(unique_pairs * (m + M) / 2);
+     } else {
+         fprintf(stderr, "[markdup] warning: unable to calculate estimated library size."
+-                        " Read pairs %ld should be greater than duplicate pairs %ld,"
++                        " Read pairs %" PRIu64 " should be greater than duplicate pairs %" PRIu64 ","
+                         " which should both be non zero.\n",
+                         non_optical_pairs, duplicate_pairs);
+     }
+@@ -1393,9 +1394,9 @@
+     hts_pos_t prev_coord;
+     read_queue_t *in_read;
+     int ret;
+-    long reading, writing, excluded, duplicate, single, pair, single_dup, examined, optical, single_optical;
+-    long np_duplicate, np_opt_duplicate;
+-    long opt_warnings = 0, bc_warnings = 0;
++    int64_t reading, writing, excluded, duplicate, single, pair, single_dup, examined, optical, single_optical;
++    int64_t np_duplicate, np_opt_duplicate;
++    int64_t opt_warnings = 0, bc_warnings = 0;
+     tmp_file_t temp;
+     char *idx_fn = NULL;
+     int exclude = 0;
+@@ -1929,18 +1930,18 @@
+     }
+ 
+     if (opt_warnings) {
+-        fprintf(stderr, "[markdup] warning: number of failed attempts to get coordinates from read names = %ld\n",
++        fprintf(stderr, "[markdup] warning: number of failed attempts to get coordinates from read names = %" PRId64 "\n",
+                         opt_warnings);
+     }
+ 
+     if (bc_warnings) {
+-        fprintf(stderr, "[markdup] warning: number of failed attempts to get barcodes = %ld\n", bc_warnings);
++        fprintf(stderr, "[markdup] warning: number of failed attempts to get barcodes = %" PRId64 "\n", bc_warnings);
+     }
+ 
+     if (param->do_stats) {
+         FILE *fp;
+         int file_open = 0;
+-        unsigned long els;
++        uint64_t els;
+ 
+         if (param->stats_file) {
+             if (NULL == (fp = fopen(param->stats_file, "w"))) {
+@@ -1957,21 +1958,21 @@
+ 
+         fprintf(fp,
+                 "COMMAND: %s\n"
+-                "READ: %ld\n"
+-                "WRITTEN: %ld\n"
+-                "EXCLUDED: %ld\n"
+-                "EXAMINED: %ld\n"
+-                "PAIRED: %ld\n"
+-                "SINGLE: %ld\n"
+-                "DUPLICATE PAIR: %ld\n"
+-                "DUPLICATE SINGLE: %ld\n"
+-                "DUPLICATE PAIR OPTICAL: %ld\n"
+-                "DUPLICATE SINGLE OPTICAL: %ld\n"
+-                "DUPLICATE NON PRIMARY: %ld\n"
+-                "DUPLICATE NON PRIMARY OPTICAL: %ld\n"
+-                "DUPLICATE PRIMARY TOTAL: %ld\n"
+-                "DUPLICATE TOTAL: %ld\n"
+-                "ESTIMATED_LIBRARY_SIZE: %ld\n", param->arg_list, reading, writing, excluded, examined, pair, single,
++                "READ: %" PRId64 "\n"
++                "WRITTEN: %" PRId64 "\n"
++                "EXCLUDED: %" PRId64 "\n"
++                "EXAMINED: %" PRId64 "\n"
++                "PAIRED: %" PRId64 "\n"
++                "SINGLE: %" PRId64 "\n"
++                "DUPLICATE PAIR: %" PRId64 "\n"
++                "DUPLICATE SINGLE: %" PRId64 "\n"
++                "DUPLICATE PAIR OPTICAL: %" PRId64 "\n"
++                "DUPLICATE SINGLE OPTICAL: %" PRId64 "\n"
++                "DUPLICATE NON PRIMARY: %" PRId64 "\n"
++                "DUPLICATE NON PRIMARY OPTICAL: %" PRId64 "\n"
++                "DUPLICATE PRIMARY TOTAL: %" PRId64 "\n"
++                "DUPLICATE TOTAL: %" PRId64 "\n"
++                "ESTIMATED_LIBRARY_SIZE: %" PRIu64 "\n", param->arg_list, reading, writing, excluded, examined, pair, single,
+                                 duplicate, single_dup, optical, single_optical, np_duplicate, np_opt_duplicate,
+                                 single_dup + duplicate, single_dup + duplicate + np_duplicate, els);
+ 
+--- a/sam_view.c
++++ b/sam_view.c
+@@ -871,7 +871,7 @@
+                             lopts, NULL)) >= 0) {
+         switch (c) {
+         case 's':
+-            settings.subsam_seed = strtol(optarg, &tmp, 10);
++            settings.subsam_seed = strtoll(optarg, &tmp, 10);
+             if (tmp && *tmp == '.') {
+                 settings.subsam_frac = strtod(tmp, &tmp);
+                 if (*tmp) ret = 1;

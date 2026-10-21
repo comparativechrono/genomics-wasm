@@ -1,0 +1,3346 @@
+{
+  "schema": 1,
+  "tool": "hts",
+  "versions": [
+    "1.16",
+    "1.21"
+  ],
+  "runtime": [
+    "runtime/hts.mjs",
+    "runtime/index.mjs",
+    "runtime/worker.mjs",
+    "runtime/execute.mjs"
+  ],
+  "cases": [
+    {
+      "id": "split-vep-transcripts",
+      "kind": "success",
+      "plugins": [
+        "split-vep"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+split-vep",
+            "trio-csq.vcf",
+            "-d",
+            "-f",
+            "%CHROM\t%POS\t%Consequence\t%SYMBOL\t%Feature\n"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "lines": 24,
+            "contains": [
+              "chr1\t101\tmissense_variant\tGENE1\tENST000001",
+              "chr1\t101\tsynonymous_variant\tGENE1\tENST000002"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "split-vep-primary",
+      "kind": "success",
+      "plugins": [
+        "split-vep"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+split-vep",
+            "trio-csq.vcf",
+            "--no-version",
+            "-s",
+            "primary",
+            "-c",
+            "Consequence,SYMBOL,AF"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "info": [
+              "Consequence",
+              "SYMBOL"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "split-vep-bcsq",
+      "kind": "success",
+      "plugins": [
+        "split-vep"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/split-vep.8.vcf",
+          "as": "split-vep.8.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+split-vep",
+            "split-vep.8.vcf",
+            "--no-version",
+            "-a",
+            "BCSQ",
+            "-s",
+            "worst",
+            "-c",
+            "Consequence,amino_acid_change,BCSQ"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "fill-tags-trio",
+      "kind": "success",
+      "plugins": [
+        "fill-tags"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-tags",
+            "trio-csq.vcf",
+            "--no-version",
+            "--",
+            "-t",
+            "AN,AC,AF,NS,AC_Het,AC_Hom,AC_Hemi,F_MISSING"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "firstInfo": {
+              "AN": "6",
+              "AC": "2",
+              "NS": "3",
+              "AF": "0.333333"
+            },
+            "info": [
+              "AN",
+              "AC",
+              "NS",
+              "AC_Het",
+              "AC_Hom",
+              "AC_Hemi",
+              "F_MISSING"
+            ],
+            "alleleCountsFrom": "trio-csq.vcf"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fill-tags-hemi",
+      "kind": "success",
+      "plugins": [
+        "fill-tags"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/fill-tags-hemi.vcf",
+          "as": "fill-tags-hemi.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-tags",
+            "fill-tags-hemi.vcf",
+            "--no-version",
+            "--",
+            "-t",
+            "all"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "fill-tags-hwe",
+      "kind": "success",
+      "plugins": [
+        "fill-tags"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/fill-tags-hwe.vcf",
+          "as": "fill-tags-hwe.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-tags",
+            "fill-tags-hwe.vcf",
+            "--no-version",
+            "--",
+            "-t",
+            "all"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "fill-tags-AN0",
+      "kind": "success",
+      "plugins": [
+        "fill-tags"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/fill-tags-AN0.vcf",
+          "as": "fill-tags-AN0.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-tags",
+            "fill-tags-AN0.vcf",
+            "--no-version",
+            "--",
+            "-t",
+            "all"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "fill-tags-drop-half-missing",
+      "kind": "success",
+      "plugins": [
+        "fill-tags"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/fill-tags-hemi.vcf",
+          "as": "fill-tags-hemi.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-tags",
+            "fill-tags-hemi.vcf",
+            "--no-version",
+            "--",
+            "-d",
+            "-t",
+            "AN,AC,AC_Hemi"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "fill-tags-populations",
+      "kind": "success",
+      "plugins": [
+        "fill-tags"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        },
+        {
+          "source": "common/populations.txt",
+          "as": "populations.txt"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-tags",
+            "trio-csq.vcf",
+            "--no-version",
+            "--",
+            "-t",
+            "AN,AC",
+            "-S",
+            "populations.txt"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "info": [
+              "AN_FAMILY",
+              "AC_FAMILY"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-GTisec",
+      "kind": "success",
+      "plugins": [
+        "GTisec"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+GTisec",
+            "trio-csq.vcf",
+            "--",
+            "-H",
+            "-v"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true,
+            "minDataLines": 15
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-GTsubset",
+      "kind": "success",
+      "plugins": [
+        "GTsubset"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+GTsubset",
+            "trio-csq.vcf",
+            "--no-version",
+            "--",
+            "-s",
+            "father,mother"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-counts",
+      "kind": "success",
+      "plugins": [
+        "counts"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+counts",
+            "trio-csq.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "exact": "Number of samples: 4\nNumber of SNPs:    10\nNumber of INDELs:  2\nNumber of MNPs:    0\nNumber of others:  0\nNumber of sites:   12\n"
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-check-ploidy",
+      "kind": "success",
+      "plugins": [
+        "check-ploidy"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+check-ploidy",
+            "trio-csq.vcf",
+            "--",
+            "-m"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-fill-AN-AC",
+      "kind": "success",
+      "plugins": [
+        "fill-AN-AC"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-AN-AC",
+            "trio-csq.vcf",
+            "--no-version"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "firstInfo": {
+              "AN": "6",
+              "AC": "2"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-missing2ref",
+      "kind": "success",
+      "plugins": [
+        "missing2ref"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+missing2ref",
+            "trio-csq.vcf",
+            "--no-version"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "noMissingGT": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-setGT",
+      "kind": "success",
+      "plugins": [
+        "setGT"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+setGT",
+            "trio-csq.vcf",
+            "--no-version",
+            "--",
+            "-t",
+            ".",
+            "-n",
+            "0"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "noMissingGT": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-frameshifts",
+      "kind": "success",
+      "plugins": [
+        "frameshifts"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        },
+        {
+          "source": "common/exons.bed",
+          "as": "exons.bed"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+frameshifts",
+            "trio-csq.vcf",
+            "--no-version",
+            "--",
+            "-e",
+            "exons.bed"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "info": [
+              "OOF"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-dosage",
+      "kind": "success",
+      "plugins": [
+        "dosage"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/dosage.vcf",
+          "as": "dosage.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+dosage",
+            "dosage.vcf",
+            "--",
+            "-t",
+            "PL"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-tag2tag",
+      "kind": "success",
+      "plugins": [
+        "tag2tag"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/view.GL.vcf",
+          "as": "view.GL.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+tag2tag",
+            "view.GL.vcf",
+            "--no-version",
+            "--",
+            "-r",
+            "--gl-to-pl"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "format": [
+              "PL"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-fixploidy",
+      "kind": "success",
+      "plugins": [
+        "fixploidy"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/fixploidy.vcf",
+          "as": "fixploidy.vcf"
+        },
+        {
+          "source": "upstream/{version}/fixploidy.samples",
+          "as": "fixploidy.samples"
+        },
+        {
+          "source": "upstream/{version}/fixploidy.ploidy",
+          "as": "fixploidy.ploidy"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fixploidy",
+            "fixploidy.vcf",
+            "--no-version",
+            "--",
+            "-s",
+            "fixploidy.samples",
+            "-p",
+            "fixploidy.ploidy"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-add-variantkey",
+      "kind": "success",
+      "plugins": [
+        "add-variantkey"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/query.variantkey.vcf",
+          "as": "query.variantkey.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+add-variantkey",
+            "query.variantkey.vcf",
+            "--no-version"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "info": [
+              "VKX",
+              "RSX"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-allele-length",
+      "kind": "success",
+      "plugins": [
+        "allele-length"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/query.nucleotide.vcf",
+          "as": "query.nucleotide.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+allele-length",
+            "query.nucleotide.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-ad-bias",
+      "kind": "success",
+      "plugins": [
+        "ad-bias"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/ad-bias.vcf",
+          "as": "ad-bias.vcf"
+        },
+        {
+          "source": "upstream/{version}/ad-bias.samples",
+          "as": "ad-bias.samples"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+ad-bias",
+            "ad-bias.vcf",
+            "--",
+            "-s",
+            "ad-bias.samples"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-af-dist",
+      "kind": "success",
+      "plugins": [
+        "af-dist"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/af-dist.vcf",
+          "as": "af-dist.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+af-dist",
+            "af-dist.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-impute-info",
+      "kind": "success",
+      "plugins": [
+        "impute-info"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/view.GP.vcf",
+          "as": "view.GP.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+impute-info",
+            "view.GP.vcf",
+            "--no-version"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "info": [
+              "INFO"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-fixref",
+      "kind": "success",
+      "plugins": [
+        "fixref"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/fixref.2a.vcf",
+          "as": "fixref.2a.vcf"
+        },
+        {
+          "source": "upstream/{version}/norm.fa",
+          "as": "norm.fa"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fixref",
+            "fixref.2a.vcf",
+            "--no-version",
+            "--",
+            "-f",
+            "norm.fa",
+            "-m",
+            "flip-all"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-fill-from-fasta",
+      "kind": "success",
+      "plugins": [
+        "fill-from-fasta"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/aa.vcf",
+          "as": "aa.vcf"
+        },
+        {
+          "source": "upstream/{version}/aa.fa",
+          "as": "aa.fa"
+        },
+        {
+          "source": "upstream/{version}/aa.hdr",
+          "as": "aa.hdr"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+fill-from-fasta",
+            "aa.vcf",
+            "--no-version",
+            "--",
+            "-f",
+            "aa.fa",
+            "-c",
+            "AA",
+            "-h",
+            "aa.hdr",
+            "-i",
+            "TYPE=\"snp\""
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "info": [
+              "AA"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-trio-stats",
+      "kind": "success",
+      "plugins": [
+        "trio-stats"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/trio-stats.vcf",
+          "as": "trio-stats.vcf"
+        },
+        {
+          "source": "upstream/{version}/trio-stats.ped",
+          "as": "trio-stats.ped"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+trio-stats",
+            "trio-stats.vcf",
+            "-a",
+            "1",
+            "-p",
+            "trio-stats.ped",
+            "-d",
+            "mendel-errors,transmitted"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              "FLT0\tchild1\tfather1\tmother1\t14\t12\t4\t2\t2\t1\t3\t9\t0.33\t2\t2",
+              "FLT0\tchild2\tfather2\tmother2\t14\t11\t0\t0\t1\t2\t3\t9\t0.33\t0\t0",
+              "MERR\t20\t305\tchild1\tfather1\tmother1\tHOM\t-"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-trio-switch-rate",
+      "kind": "success",
+      "plugins": [
+        "trio-switch-rate"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/trio.vcf",
+          "as": "trio.vcf"
+        },
+        {
+          "source": "upstream/{version}/trio.ped",
+          "as": "trio.ped"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+trio-switch-rate",
+            "trio.vcf",
+            "--",
+            "-p",
+            "trio.ped"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-smpl-stats",
+      "kind": "success",
+      "plugins": [
+        "smpl-stats"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/indel-stats.vcf",
+          "as": "indel-stats.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+smpl-stats",
+            "indel-stats.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-indel-stats",
+      "kind": "success",
+      "plugins": [
+        "indel-stats"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/indel-stats.vcf",
+          "as": "indel-stats.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+indel-stats",
+            "indel-stats.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-contrast",
+      "kind": "success",
+      "plugins": [
+        "contrast"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/contrast.vcf",
+          "as": "contrast.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+contrast",
+            "contrast.vcf",
+            "-a",
+            "PASSOC,FASSOC,NOVELAL,NOVELGT",
+            "-0",
+            "a,b",
+            "-1",
+            "c"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "info": [
+              "PASSOC",
+              "FASSOC"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-prune",
+      "kind": "success",
+      "plugins": [
+        "prune"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/prune.1.vcf",
+          "as": "prune.1.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+prune",
+            "prune.1.vcf",
+            "-w",
+            "1",
+            "-a",
+            "r2,LD,HD"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-variant-distance",
+      "kind": "success",
+      "plugins": [
+        "variant-distance"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/variant-distance.vcf",
+          "as": "variant-distance.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+variant-distance",
+            "variant-distance.vcf",
+            "-d",
+            "both"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ],
+      "versions": [
+        "1.21"
+      ]
+    },
+    {
+      "id": "plugin-gvcfz",
+      "kind": "success",
+      "plugins": [
+        "gvcfz"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/gvcfz.vcf",
+          "as": "gvcfz.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+gvcfz",
+            "gvcfz.vcf",
+            "-g",
+            "PASS:GT!=\"alt\"",
+            "-a"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-remove-overlaps",
+      "kind": "success",
+      "plugins": [
+        "remove-overlaps"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+remove-overlaps",
+            "trio-csq.vcf",
+            "-m",
+            "overlap"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12
+          }
+        }
+      ],
+      "versions": [
+        "1.21"
+      ]
+    },
+    {
+      "id": "plugin-mendelian",
+      "kind": "success",
+      "plugins": [
+        "mendelian"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        },
+        {
+          "source": "common/family.ped",
+          "as": "family.ped"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+mendelian",
+            "trio-csq.vcf",
+            "-p",
+            "family.ped",
+            "-m",
+            "a"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "info": [
+              "MERR"
+            ],
+            "mendelianErrors": [
+              121,
+              281
+            ]
+          }
+        }
+      ],
+      "versions": [
+        "1.16"
+      ]
+    },
+    {
+      "id": "plugin-mendelian2",
+      "kind": "success",
+      "plugins": [
+        "mendelian2"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        },
+        {
+          "source": "common/family.ped",
+          "as": "family.ped"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+mendelian2",
+            "trio-csq.vcf",
+            "-P",
+            "family.ped",
+            "-m",
+            "a"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "info": [
+              "MERR"
+            ],
+            "mendelianErrors": [
+              121,
+              281
+            ]
+          }
+        }
+      ],
+      "versions": [
+        "1.21"
+      ]
+    },
+    {
+      "id": "trio-dnm2-1",
+      "kind": "success",
+      "plugins": [
+        "trio-dnm2"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/trio-dnm/trio-dnm.1.vcf",
+          "as": "trio-dnm/trio-dnm.1.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+trio-dnm2",
+            "trio-dnm/trio-dnm.1.vcf",
+            "-p",
+            "proband,father,mother",
+            "--ppl",
+            "--dnm-tag",
+            "DNM:log"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "format": [
+              "DNM"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "trio-dnm2-4",
+      "kind": "success",
+      "plugins": [
+        "trio-dnm2"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/trio-dnm/trio-dnm.4.vcf",
+          "as": "trio-dnm/trio-dnm.4.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+trio-dnm2",
+            "trio-dnm/trio-dnm.4.vcf",
+            "-p",
+            "proband,father,mother",
+            "--use-DNG",
+            "--dnm-tag",
+            "DNM:log"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "format": [
+              "DNM"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "trio-dnm2-9",
+      "kind": "success",
+      "plugins": [
+        "trio-dnm2"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/trio-dnm/trio-dnm.9.vcf",
+          "as": "trio-dnm/trio-dnm.9.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+trio-dnm2",
+            "trio-dnm/trio-dnm.9.vcf",
+            "-p",
+            "1X:proband,father,mother",
+            "--use-NAIVE"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "minRecords": 1,
+            "format": [
+              "DNM"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-variantkey-hex",
+      "kind": "success",
+      "plugins": [
+        "variantkey-hex"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/query.variantkey.vcf",
+          "as": "query.variantkey.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+variantkey-hex",
+            "query.variantkey.vcf"
+          ],
+          "outputs": [
+            "vkrs.unsorted.hex",
+            "rsvk.unsorted.hex",
+            "nrvk.unsorted.tsv"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "vkrs.unsorted.hex",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        },
+        {
+          "path": "rsvk.unsorted.hex",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        },
+        {
+          "path": "nrvk.unsorted.tsv",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-color-chrs",
+      "kind": "success",
+      "plugins": [
+        "color-chrs"
+      ],
+      "inputs": [
+        {
+          "source": "common/phased.vcf",
+          "as": "phased.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+color-chrs",
+            "phased.vcf",
+            "--",
+            "-p",
+            "colors",
+            "-t",
+            "mother,father,child"
+          ],
+          "outputs": [
+            "colors.dat"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "colors.dat",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              "SG\t",
+              "SW\t"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-split",
+      "kind": "success",
+      "plugins": [
+        "split"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+split",
+            "trio-csq.vcf",
+            "-o",
+            "split",
+            "-Ov"
+          ],
+          "outputs": [
+            "split/child.vcf",
+            "split/father.vcf",
+            "split/mother.vcf",
+            "split/unrelated.vcf"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "split/child.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "samples": [
+              "child"
+            ]
+          }
+        },
+        {
+          "path": "split/father.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "samples": [
+              "father"
+            ]
+          }
+        },
+        {
+          "path": "split/mother.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "samples": [
+              "mother"
+            ]
+          }
+        },
+        {
+          "path": "split/unrelated.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "samples": [
+              "unrelated"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-scatter",
+      "kind": "success",
+      "plugins": [
+        "scatter"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+scatter",
+            "trio-csq.vcf",
+            "-o",
+            "chunks",
+            "-Ov",
+            "-n",
+            "3"
+          ],
+          "outputs": [
+            "chunks/0.vcf",
+            "chunks/1.vcf",
+            "chunks/2.vcf",
+            "chunks/3.vcf"
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "chunks/0.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 3
+          }
+        },
+        {
+          "path": "chunks/1.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 3
+          }
+        },
+        {
+          "path": "chunks/2.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 3
+          }
+        },
+        {
+          "path": "chunks/3.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-check-sparsity",
+      "kind": "success",
+      "plugins": [
+        "check-sparsity"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Oz",
+            "-o",
+            "indexed.vcf.gz",
+            "trio-csq.vcf"
+          ],
+          "outputs": [
+            "indexed.vcf.gz"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "index",
+            "-t",
+            "indexed.vcf.gz"
+          ],
+          "outputs": [
+            "indexed.vcf.gz.tbi"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "+check-sparsity",
+            "indexed.vcf.gz",
+            "-n",
+            "20"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              "child",
+              "father",
+              "mother",
+              "unrelated"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-guess-ploidy",
+      "kind": "success",
+      "plugins": [
+        "guess-ploidy"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/view.PL.vcf",
+          "as": "view.PL.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Oz",
+            "-o",
+            "indexed.vcf.gz",
+            "view.PL.vcf"
+          ],
+          "outputs": [
+            "indexed.vcf.gz"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "index",
+            "-t",
+            "indexed.vcf.gz"
+          ],
+          "outputs": [
+            "indexed.vcf.gz.tbi"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "+guess-ploidy",
+            "indexed.vcf.gz",
+            "-v",
+            "-r",
+            "X"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-parental-origin",
+      "kind": "success",
+      "plugins": [
+        "parental-origin"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/parental-origin.vcf",
+          "as": "parental-origin.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Oz",
+            "-o",
+            "indexed.vcf.gz",
+            "parental-origin.vcf"
+          ],
+          "outputs": [
+            "indexed.vcf.gz"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "index",
+            "-t",
+            "indexed.vcf.gz"
+          ],
+          "outputs": [
+            "indexed.vcf.gz.tbi"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "+parental-origin",
+            "indexed.vcf.gz",
+            "-r",
+            "20:100",
+            "-p",
+            "proband,father,mother",
+            "-t",
+            "del"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.txt",
+          "kind": "text",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-isecGT",
+      "kind": "success",
+      "plugins": [
+        "isecGT"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Ob",
+            "-o",
+            "A.bcf",
+            "trio-csq.vcf"
+          ],
+          "outputs": [
+            "A.bcf"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "index",
+            "A.bcf"
+          ],
+          "outputs": [
+            "A.bcf.csi"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "+setGT",
+            "trio-csq.vcf",
+            "--no-version",
+            "-Ob",
+            "-o",
+            "B.bcf",
+            "--",
+            "-t",
+            "a",
+            "-n",
+            "0"
+          ],
+          "outputs": [
+            "B.bcf"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "index",
+            "B.bcf"
+          ],
+          "outputs": [
+            "B.bcf.csi"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "+isecGT",
+            "A.bcf",
+            "B.bcf",
+            "-Ov"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "hasMissingGT": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "bcf-roundtrip-index",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Ob",
+            "-o",
+            "records.bcf",
+            "trio-csq.vcf"
+          ],
+          "outputs": [
+            "records.bcf"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "index",
+            "records.bcf"
+          ],
+          "outputs": [
+            "records.bcf.csi"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Ov",
+            "records.bcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "roundtrip.vcf"
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Ov",
+            "-r",
+            "chr1:141-201",
+            "records.bcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "region.vcf"
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Ov",
+            "records.bcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "oracle.vcf",
+          "oracle": true
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "roundtrip.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12,
+            "sameRecordsAs": "trio-csq.vcf"
+          }
+        },
+        {
+          "path": "oracle.vcf",
+          "kind": "vcf",
+          "contract": {
+            "sameRecordsAs": "trio-csq.vcf"
+          }
+        },
+        {
+          "path": "region.vcf",
+          "kind": "vcf",
+          "contract": {
+            "positions": [
+              141,
+              161,
+              181,
+              201
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "bgzip-tabix-wide-offset",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/wide-offset.vcf",
+          "as": "wide-offset.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bgzip",
+          "args": [
+            "-c",
+            "wide-offset.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "wide.vcf.gz"
+        },
+        {
+          "tool": "tabix",
+          "args": [
+            "-p",
+            "vcf",
+            "wide.vcf.gz"
+          ],
+          "outputs": [
+            "wide.vcf.gz.tbi"
+          ]
+        },
+        {
+          "tool": "tabix",
+          "args": [
+            "wide.vcf.gz",
+            "chr1:59980-60000"
+          ],
+          "outputs": [],
+          "stdoutFile": "region.txt"
+        },
+        {
+          "tool": "bgzip",
+          "args": [
+            "-d",
+            "-c",
+            "wide.vcf.gz"
+          ],
+          "outputs": [],
+          "stdoutFile": "roundtrip.vcf"
+        },
+        {
+          "tool": "htsfile",
+          "args": [
+            "wide.vcf.gz"
+          ],
+          "outputs": [],
+          "stdoutFile": "type.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "wide.vcf.gz",
+          "kind": "bgzf",
+          "contract": {
+            "minMaxBlockOffset": 65536,
+            "sameBytesAs": "wide-offset.vcf"
+          }
+        },
+        {
+          "path": "roundtrip.vcf",
+          "kind": "vcf",
+          "contract": {
+            "sameRecordsAs": "wide-offset.vcf",
+            "records": 6000
+          }
+        },
+        {
+          "path": "region.txt",
+          "kind": "text",
+          "contract": {
+            "lines": 3,
+            "contains": [
+              "w05997",
+              "w05998",
+              "w05999"
+            ]
+          }
+        },
+        {
+          "path": "type.txt",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              "VCF",
+              "BGZF"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "stats-wide-depth",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/wide-depth.vcf",
+          "as": "wide-depth.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "stats",
+            "-s",
+            "-",
+            "wide-depth.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "stats.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "stats.txt",
+          "kind": "text",
+          "contract": {
+            "pscMeanDepth": 2000000000.0
+          }
+        }
+      ]
+    },
+    {
+      "id": "bcftools-norm-multiallelic",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "norm",
+            "--no-version",
+            "-m",
+            "-any",
+            "trio-csq.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "norm.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "norm.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 13,
+            "biallelic": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "bcftools-auto-index-121",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-Oz",
+            "-W=tbi",
+            "-o",
+            "auto.vcf.gz",
+            "trio-csq.vcf"
+          ],
+          "outputs": [
+            "auto.vcf.gz",
+            "auto.vcf.gz.tbi"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "view",
+            "--no-version",
+            "-r",
+            "chr1:101-121",
+            "auto.vcf.gz"
+          ],
+          "outputs": [],
+          "stdoutFile": "region.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "region.vcf",
+          "kind": "vcf",
+          "contract": {
+            "positions": [
+              101,
+              121
+            ]
+          }
+        }
+      ],
+      "versions": [
+        "1.21"
+      ]
+    },
+    {
+      "id": "samtools-bam-cram-roundtrip",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/alignments.sam",
+          "as": "alignments.sam"
+        },
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-b",
+            "-o",
+            "reads.bam",
+            "alignments.sam"
+          ],
+          "outputs": [
+            "reads.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "sort",
+            "--no-PG",
+            "-o",
+            "sorted.bam",
+            "reads.bam"
+          ],
+          "outputs": [
+            "sorted.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "index",
+            "sorted.bam"
+          ],
+          "outputs": [
+            "sorted.bam.bai"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "roundtrip.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-c",
+            "-F",
+            "4",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "count.txt"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "sorted.bam",
+            "chr1:80-130"
+          ],
+          "outputs": [],
+          "stdoutFile": "region.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "faidx",
+            "reference.fa"
+          ],
+          "outputs": [
+            "reference.fa.fai"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-C",
+            "-T",
+            "reference.fa",
+            "-o",
+            "reads.cram",
+            "sorted.bam"
+          ],
+          "outputs": [
+            "reads.cram"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "index",
+            "reads.cram"
+          ],
+          "outputs": [
+            "reads.cram.crai"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "-T",
+            "reference.fa",
+            "reads.cram"
+          ],
+          "outputs": [],
+          "stdoutFile": "cram.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "-T",
+            "reference.fa",
+            "reads.cram"
+          ],
+          "outputs": [],
+          "stdoutFile": "oracle-cram.sam",
+          "oracle": true
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "oracle-bam.sam",
+          "oracle": true
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "flagstat",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "flagstat.txt"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "depth",
+            "-a",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "depth.txt"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "mpileup",
+            "-B",
+            "-f",
+            "reference.fa",
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "pileup.txt"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "faidx",
+            "reference.fa",
+            "chr1:90-120"
+          ],
+          "outputs": [],
+          "stdoutFile": "region.fa"
+        },
+        {
+          "tool": "htsfile",
+          "args": [
+            "sorted.bam"
+          ],
+          "outputs": [],
+          "stdoutFile": "type.txt"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-h",
+            "-T",
+            "reference.fa",
+            "reads.cram",
+            "chr1:80-130"
+          ],
+          "outputs": [],
+          "stdoutFile": "cram-region.sam"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "roundtrip.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 17,
+            "sameRecordsAs": "alignments.sam"
+          }
+        },
+        {
+          "path": "oracle-bam.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 17,
+            "sameRecordsAs": "alignments.sam"
+          }
+        },
+        {
+          "path": "cram.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 17,
+            "sameAlignmentFieldsAs": "alignments.sam"
+          }
+        },
+        {
+          "path": "oracle-cram.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 17,
+            "sameAlignmentFieldsAs": "alignments.sam"
+          }
+        },
+        {
+          "path": "region.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 3
+          }
+        },
+        {
+          "path": "count.txt",
+          "kind": "text",
+          "contract": {
+            "exact": "16\n"
+          }
+        },
+        {
+          "path": "flagstat.txt",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              "17 + 0 in total",
+              "16 + 0 mapped"
+            ]
+          }
+        },
+        {
+          "path": "depth.txt",
+          "kind": "text",
+          "contract": {
+            "minDataLines": 300
+          }
+        },
+        {
+          "path": "pileup.txt",
+          "kind": "text",
+          "contract": {
+            "minDataLines": 250
+          }
+        },
+        {
+          "path": "region.fa",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              ">chr1:90-120"
+            ]
+          }
+        },
+        {
+          "path": "type.txt",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              "BAM"
+            ]
+          }
+        },
+        {
+          "path": "cram-region.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "bcftools-unknown-plugin",
+      "kind": "failure",
+      "plugins": [],
+      "inputs": [],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+definitely-not-a-plugin"
+          ],
+          "outputs": []
+        }
+      ],
+      "artifacts": [],
+      "diagnosticRegex": "not found|No functional|unknown|plugin",
+      "expectedExitCode": 255
+    },
+    {
+      "id": "bgzip-logical-offset-64bit",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/logical-offset.bgz",
+          "as": "logical-offset.bgz"
+        },
+        {
+          "source": "common/logical-offset.bgz.gzi",
+          "as": "logical-offset.bgz.gzi"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bgzip",
+          "args": [
+            "-b",
+            "4295032834",
+            "-s",
+            "4",
+            "logical-offset.bgz"
+          ],
+          "outputs": [],
+          "stdoutFile": "seek.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "seek.txt",
+          "kind": "text",
+          "contract": {
+            "exact": "ILMA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "samtools-markdup-optical-64bit",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/optical-width.sam",
+          "as": "optical-width.sam"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "samtools",
+          "args": [
+            "markdup",
+            "--no-PG",
+            "-s",
+            "-d",
+            "100",
+            "-O",
+            "SAM",
+            "optical-width.sam",
+            "marked.sam"
+          ],
+          "outputs": [
+            "marked.sam"
+          ],
+          "stderrFile": "stats.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "marked.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 4,
+            "opticalDuplicates": true
+          }
+        },
+        {
+          "path": "stats.txt",
+          "kind": "text",
+          "contract": {
+            "contains": [
+              "DUPLICATE SINGLE: 2",
+              "DUPLICATE SINGLE OPTICAL: 1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-variant-distance-116",
+      "kind": "success",
+      "plugins": [
+        "variant-distance"
+      ],
+      "inputs": [
+        {
+          "source": "upstream/{version}/variant-distance.vcf",
+          "as": "variant-distance.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+variant-distance",
+            "variant-distance.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "nonempty": true
+          }
+        }
+      ],
+      "versions": [
+        "1.16"
+      ]
+    },
+    {
+      "id": "plugin-remove-overlaps-116",
+      "kind": "success",
+      "plugins": [
+        "remove-overlaps"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-csq.vcf",
+          "as": "trio-csq.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+remove-overlaps",
+            "trio-csq.vcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "result.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "result.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 12
+          }
+        }
+      ],
+      "versions": [
+        "1.16"
+      ]
+    },
+    {
+      "id": "bcftools-mpileup-both-callers",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/calling.sam",
+          "as": "calling.sam"
+        },
+        {
+          "source": "common/reference.fa",
+          "as": "reference.fa"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "--no-PG",
+            "-b",
+            "-o",
+            "calling.bam",
+            "calling.sam"
+          ],
+          "outputs": [
+            "calling.bam"
+          ]
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "faidx",
+            "reference.fa"
+          ],
+          "outputs": [
+            "reference.fa.fai"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "mpileup",
+            "--no-version",
+            "-B",
+            "-q",
+            "0",
+            "-Q",
+            "0",
+            "-a",
+            "FORMAT/DP,FORMAT/AD",
+            "-Ob",
+            "-f",
+            "reference.fa",
+            "-o",
+            "likelihood.bcf",
+            "calling.bam"
+          ],
+          "outputs": [
+            "likelihood.bcf"
+          ]
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "call",
+            "--no-version",
+            "-m",
+            "-v",
+            "-Ov",
+            "likelihood.bcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "call-m.vcf"
+        },
+        {
+          "tool": "bcftools",
+          "args": [
+            "call",
+            "--no-version",
+            "-c",
+            "-v",
+            "-Ov",
+            "likelihood.bcf"
+          ],
+          "outputs": [],
+          "stdoutFile": "call-c.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "call-m.vcf",
+          "kind": "vcf",
+          "contract": {
+            "positions": [
+              121
+            ],
+            "calledAlleles": {
+              "121": {
+                "ref": "A",
+                "alt": [
+                  "G"
+                ],
+                "GT": [
+                  "0/1"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "path": "call-c.vcf",
+          "kind": "vcf",
+          "contract": {
+            "positions": [
+              121
+            ],
+            "calledAlleles": {
+              "121": {
+                "ref": "A",
+                "alt": [
+                  "G"
+                ],
+                "GT": [
+                  "0/1"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "trio-stats-independent-truth",
+      "kind": "success",
+      "plugins": [
+        "trio-stats"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-truth.vcf",
+          "as": "trio-truth.vcf"
+        },
+        {
+          "source": "common/family.ped",
+          "as": "family.ped"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+trio-stats",
+            "trio-truth.vcf",
+            "-p",
+            "family.ped",
+            "-d",
+            "mendel-errors,transmitted"
+          ],
+          "outputs": [],
+          "stdoutFile": "trio.txt"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "trio.txt",
+          "kind": "text",
+          "contract": {
+            "trioTruth": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "samtools-subsample-seed-width",
+      "kind": "success",
+      "plugins": [],
+      "inputs": [
+        {
+          "source": "common/alignments.sam",
+          "as": "alignments.sam"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "-h",
+            "--no-PG",
+            "-s",
+            "0.5",
+            "alignments.sam"
+          ],
+          "outputs": [],
+          "stdoutFile": "sample-0.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "-h",
+            "--no-PG",
+            "-s",
+            "4294967296.5",
+            "alignments.sam"
+          ],
+          "outputs": [],
+          "stdoutFile": "sample-1.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "-h",
+            "--no-PG",
+            "-s",
+            "8589934592.5",
+            "alignments.sam"
+          ],
+          "outputs": [],
+          "stdoutFile": "sample-2.sam"
+        },
+        {
+          "tool": "samtools",
+          "args": [
+            "view",
+            "-h",
+            "--no-PG",
+            "-s",
+            "-4294967296.5",
+            "alignments.sam"
+          ],
+          "outputs": [],
+          "stdoutFile": "sample-3.sam"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "sample-0.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 8,
+            "readNames": [
+              "read01",
+              "read03",
+              "read07",
+              "read11",
+              "read13",
+              "pair",
+              "pair",
+              "unmapped"
+            ]
+          }
+        },
+        {
+          "path": "sample-1.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 8,
+            "readNames": [
+              "read01",
+              "read03",
+              "read07",
+              "read11",
+              "read13",
+              "pair",
+              "pair",
+              "unmapped"
+            ]
+          }
+        },
+        {
+          "path": "sample-2.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 8,
+            "readNames": [
+              "read01",
+              "read03",
+              "read07",
+              "read11",
+              "read13",
+              "pair",
+              "pair",
+              "unmapped"
+            ]
+          }
+        },
+        {
+          "path": "sample-3.sam",
+          "kind": "sam",
+          "contract": {
+            "records": 8,
+            "readNames": [
+              "read01",
+              "read03",
+              "read07",
+              "read11",
+              "read13",
+              "pair",
+              "pair",
+              "unmapped"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "plugin-setGT-seeded",
+      "kind": "success",
+      "plugins": [
+        "setGT"
+      ],
+      "inputs": [
+        {
+          "source": "common/trio-truth.vcf",
+          "as": "trio-truth.vcf"
+        }
+      ],
+      "steps": [
+        {
+          "tool": "bcftools",
+          "args": [
+            "+setGT",
+            "--no-version",
+            "-Ov",
+            "trio-truth.vcf",
+            "--",
+            "-t",
+            "r:0.5",
+            "-n",
+            ".",
+            "-s",
+            "42"
+          ],
+          "outputs": [],
+          "stdoutFile": "sampled.vcf"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "sampled.vcf",
+          "kind": "vcf",
+          "contract": {
+            "records": 5,
+            "hasMissingGT": true
+          }
+        }
+      ],
+      "versions": [
+        "1.21"
+      ]
+    }
+  ]
+}

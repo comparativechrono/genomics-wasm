@@ -1,0 +1,319 @@
+{
+  "versions": [
+    "1.21",
+    "1.16"
+  ],
+  "tools": {
+    "bcftools": "BCFtools (including built-in plugins)",
+    "samtools": "SAMtools",
+    "bgzip": "HTSlib bgzip",
+    "tabix": "HTSlib tabix",
+    "htsfile": "HTSlib htsfile"
+  },
+  "commands": {
+    "split-vep": {
+      "label": "Extract VEP consequences (+split-vep)",
+      "description": "Extract one row per synthetic VEP consequence, including its position, consequence and gene symbol.",
+      "tool": "bcftools",
+      "args": [
+        "+split-vep",
+        "trio-csq.vcf",
+        "-d",
+        "-f",
+        "%CHROM\t%POS\t%Consequence\t%SYMBOL\n"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "consequences.tsv"
+    },
+    "fill-tags": {
+      "label": "Calculate allele counts and frequencies (+fill-tags)",
+      "description": "Calculate AN, AC, AF and NS from the example genotypes. Missing, haploid and multiallelic calls exercise different counting rules.",
+      "tool": "bcftools",
+      "args": [
+        "+fill-tags",
+        "trio-csq.vcf",
+        "-Ov",
+        "-o",
+        "filled.vcf",
+        "--",
+        "-t",
+        "AN,AC,AF,NS"
+      ],
+      "outputs": [
+        "filled.vcf"
+      ],
+      "outputDirectories": []
+    },
+    "trio-stats": {
+      "label": "Summarize trio transmission (+trio-stats)",
+      "description": "Read the synthetic family pedigree and report trio transmission statistics.",
+      "tool": "bcftools",
+      "args": [
+        "+trio-stats",
+        "trio-csq.vcf",
+        "-p",
+        "family.ped"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "trio-stats.txt"
+    },
+    "mendelian": {
+      "label": "Count Mendelian inconsistencies",
+      "description": "Count consistency and missingness in the synthetic trio. The preset uses the corresponding upstream Mendelian plugin for each version.",
+      "tool": "bcftools",
+      "args": [
+        "+mendelian2",
+        "trio-csq.vcf",
+        "-P",
+        "family.ped",
+        "-m",
+        "c"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "mendelian.txt",
+      "byVersion": {
+        "1.16": {
+          "args": [
+            "+mendelian",
+            "trio-csq.vcf",
+            "-p",
+            "family.ped",
+            "-m",
+            "c"
+          ]
+        }
+      }
+    },
+    "trio-dnm": {
+      "label": "Annotate possible de novo genotypes (+trio-dnm2)",
+      "description": "Demonstrate the genotype-only NAIVE model on the synthetic trio. This flags genotype patterns, not confirmed de novo variants.",
+      "tool": "bcftools",
+      "args": [
+        "+trio-dnm2",
+        "-p",
+        "child,father,mother",
+        "--use-NAIVE",
+        "--dnm-tag",
+        "DNM:flag",
+        "-Ov",
+        "-o",
+        "dnm.vcf",
+        "trio-csq.vcf"
+      ],
+      "outputs": [
+        "dnm.vcf"
+      ],
+      "outputDirectories": []
+    },
+    "trio-switch-rate": {
+      "label": "Inspect trio phase switches (+trio-switch-rate)",
+      "description": "Calculate the phase-switch summary for the phased calls in the synthetic trio.",
+      "tool": "bcftools",
+      "args": [
+        "+trio-switch-rate",
+        "phased.vcf",
+        "--",
+        "-p",
+        "family.ped"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "switch-rate.txt"
+    },
+    "plugins": {
+      "label": "List built-in BCFtools plugins",
+      "description": "List the plugins compiled into this version of BCFtools. Edit the arguments to run any listed plugin.",
+      "tool": "bcftools",
+      "args": [
+        "plugin",
+        "-l"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "plugins.txt"
+    },
+    "bcf": {
+      "label": "Convert VCF to BCF",
+      "description": "Encode the example variants in compressed BCF. Retain variants.bcf for further BCFtools commands.",
+      "tool": "bcftools",
+      "args": [
+        "view",
+        "-Ob",
+        "-o",
+        "variants.bcf",
+        "trio-csq.vcf"
+      ],
+      "outputs": [
+        "variants.bcf"
+      ],
+      "outputDirectories": []
+    },
+    "query": {
+      "label": "Query variant genotypes",
+      "description": "Print positions, alleles and genotypes as a tab-separated table.",
+      "tool": "bcftools",
+      "args": [
+        "query",
+        "-f",
+        "%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n",
+        "trio-csq.vcf"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "genotypes.tsv"
+    },
+    "samtools-sort": {
+      "label": "Sort alignments to BAM",
+      "description": "Sort the synthetic alignments by coordinate and retain a BAM file for indexing or inspection.",
+      "tool": "samtools",
+      "args": [
+        "sort",
+        "-o",
+        "sorted.bam",
+        "alignments.sam"
+      ],
+      "outputs": [
+        "sorted.bam"
+      ],
+      "outputDirectories": []
+    },
+    "samtools-index": {
+      "label": "Index the generated BAM",
+      "description": "Run Sort alignments to BAM first. Create a BAI index for sorted.bam.",
+      "tool": "samtools",
+      "args": [
+        "index",
+        "sorted.bam"
+      ],
+      "outputs": [
+        "sorted.bam.bai"
+      ],
+      "outputDirectories": []
+    },
+    "samtools-count": {
+      "label": "Count alignments",
+      "description": "Count records in the example SAM file.",
+      "tool": "samtools",
+      "args": [
+        "view",
+        "-c",
+        "alignments.sam"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "alignment-count.txt"
+    },
+    "samtools-cram": {
+      "label": "Encode alignments as CRAM",
+      "description": "Encode the example alignments using the supplied synthetic reference. Keep the reference with the CRAM file for later decoding.",
+      "tool": "samtools",
+      "args": [
+        "view",
+        "-C",
+        "-T",
+        "reference.fa",
+        "-o",
+        "reads.cram",
+        "alignments.sam"
+      ],
+      "outputs": [
+        "reads.cram"
+      ],
+      "outputDirectories": []
+    },
+    "samtools-faidx": {
+      "label": "Extract a reference interval",
+      "description": "Index the synthetic reference and extract chr1:95-135 as FASTA.",
+      "tool": "samtools",
+      "args": [
+        "faidx",
+        "reference.fa",
+        "chr1:95-135"
+      ],
+      "outputs": [
+        "reference.fa.fai"
+      ],
+      "outputDirectories": [],
+      "stdoutPath": "region.fa"
+    },
+    "bgzip": {
+      "label": "BGZF-compress the VCF",
+      "description": "Compress the VCF to BGZF through binary standard output. The result can be indexed with tabix.",
+      "tool": "bgzip",
+      "args": [
+        "-c",
+        "trio-csq.vcf"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "variants.vcf.gz"
+    },
+    "tabix-index": {
+      "label": "Index the compressed VCF",
+      "description": "Run BGZF-compress the VCF first. Create a tabix index for variants.vcf.gz.",
+      "tool": "tabix",
+      "args": [
+        "-p",
+        "vcf",
+        "variants.vcf.gz"
+      ],
+      "outputs": [
+        "variants.vcf.gz.tbi"
+      ],
+      "outputDirectories": []
+    },
+    "tabix-query": {
+      "label": "Query the indexed VCF",
+      "description": "Run the compression and tabix-index presets first. Retrieve records at chr1:90-150 through the index.",
+      "tool": "tabix",
+      "args": [
+        "variants.vcf.gz",
+        "chr1:90-150"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "region.vcf.txt"
+    },
+    "htsfile": {
+      "label": "Identify an input format",
+      "description": "Inspect the example SAM input with the HTSlib format-identification utility.",
+      "tool": "htsfile",
+      "args": [
+        "alignments.sam"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "format.txt"
+    },
+    "version": {
+      "label": "Show BCFtools and HTSlib versions",
+      "description": "Print the versions of BCFtools and its linked HTSlib.",
+      "tool": "bcftools",
+      "args": [
+        "--version"
+      ],
+      "outputs": [],
+      "outputDirectories": [],
+      "stdoutPath": "version.txt"
+    }
+  },
+  "datasets": {
+    "synthetic": {
+      "label": "Synthetic trio, VEP annotations and alignments",
+      "description": "Small deterministic controls with a four-sample VCF, structured CSQ annotations, family pedigree, synthetic SAM reads and matching reference. These examples include missing, haploid and multiallelic genotypes; they contain no individual\u2019s data.",
+      "path": "../../datasets/hts/common/",
+      "files": [
+        "trio-csq.vcf",
+        "phased.vcf",
+        "family.ped",
+        "reference.fa",
+        "alignments.sam",
+        "targets.bed",
+        "populations.txt"
+      ]
+    }
+  }
+}
