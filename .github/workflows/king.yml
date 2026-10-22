@@ -1,0 +1,85 @@
+name: Validate local KING build
+
+on:
+  push:
+    branches: [main]
+    paths: &king-paths
+      - '.github/workflows/king.yml'
+      - 'tools/king/**'
+      - 'datasets/king/**'
+      - 'validation/king/**'
+      - 'examples/king/**'
+      - 'runtime/king.mjs'
+      - 'runtime/KING.md'
+      - 'runtime/index.mjs'
+      - 'runtime/worker.mjs'
+      - 'runtime/execute.mjs'
+      - 'scripts/*king*'
+      - 'scripts/setup-emsdk.sh'
+      - 'tests/*king*'
+      - 'package.json'
+      - 'package-lock.json'
+  pull_request:
+    paths: *king-paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: king-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  local-build-validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      JOBS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Install pinned WebAssembly compiler
+        run: bash scripts/setup-emsdk.sh
+      - name: Compile original native, patched native and WebAssembly locally
+        run: python3 scripts/build-king.py all
+      - name: Verify synthetic fixtures reproduce exactly
+        run: |
+          python3 scripts/generate-king-fixtures.py
+          git diff --exit-code -- datasets/king
+      - name: Run comparator and runtime checks
+        run: |
+          python3 -m unittest discover -s tests -p 'test_king_*.py'
+          node --test tests/king.test.mjs
+      - name: Compare native and WebAssembly science in four engines
+        run: |
+          for engine in node chromium firefox webkit; do
+            node scripts/validate-king.mjs --engine "$engine"
+          done
+      - name: Exercise local browser interface
+        run: |
+          for engine in chromium firefox webkit; do
+            node scripts/test-king-demo.mjs --engine "$engine"
+          done
+      - name: Preserve synthetic validation evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: king-validation-evidence
+          path: reports/king/
+          if-no-files-found: ignore
+          retention-days: 14
+      # KING's source headers restrict redistribution. Do not upload or cache
+      # downloaded source, modified source, compiled assets, or release bundles.
+      # All execution stays in this one ephemeral job. The evidence artifact
+      # contains synthetic analysis outputs, reports and UI screenshots only.

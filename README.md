@@ -4,8 +4,8 @@ Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
 quantification, single-cell preprocessing, coverage, variant calling, metagenomics,
 genotype analysis, repeat sizing and visualization, peak calling, primer design
 and differential expression tools
-for web browsers and Node.js. Each tool has an independent
-package, a JavaScript API, and tests against the corresponding native program.
+for web browsers and Node.js. The repository includes independent packages,
+JavaScript APIs, and tests against the corresponding native programs.
 The sequence tools accept ordinary command-line arguments. DESeq2 runs R code
 using webR.
 
@@ -35,6 +35,7 @@ DESeq2 session retains its R objects until the session is closed.
 | [HMMER](tools/hmmer/README.md) | 3.4 | Thirteen offline profile-HMM, protein and nucleotide programs, one thread |
 | [bustools](tools/bustools/README.md) | 0.45.1 | BUS processing, barcode correction, UMI handling and count matrices, one thread |
 | [PLINK 2](tools/plink2/README.md) | 2.0.0-b.1-dev, 12 Oct 2026 | Genotype conversion, QC, LD, relationships, scoring and regression; real worker threads; no PCA |
+| [KING](tools/king/README.md) | 2.3.2 | Local personal-use build for relationship inference and genotype analysis; redistribution permission unresolved |
 | [MACS3](tools/macs3/README.md) | 3.0.5 | Fourteen peak, coverage, HMM and variant commands in Python/WebAssembly; serial execution |
 | [Primer3](tools/primer3/README.md) | 2.6.1 | Seven original programs for primer design, thermodynamics, alignment and masking |
 | [seqtk](tools/seqtk/README.md) | 1.5 | FASTA/FASTQ processing, including quality trimming with `trimfq` |
@@ -133,6 +134,14 @@ regression. PCA and phenotype SVD are unavailable in this build. PLINK 2 uses
 real background reader threads even with one compute thread, so hosting needs
 cross-origin isolation. Its minimum working arena is 640 MiB, in addition to
 file copies, thread stacks and other allocations. Start with small datasets.
+
+KING 2.3.2 has a [local browser example](examples/king/README.md) and
+[JavaScript API](runtime/KING.md). The build downloads the pinned upstream
+source and compiles the original C++ algorithms into a serial worker.
+KING's source headers restrict redistribution, including modified versions.
+This integration provides build instructions and original integration code;
+it does not publish KING source, compiled assets, or a release bundle.
+See the [licensing and build details](tools/king/README.md) before use.
 
 Primer3 has a [primer-design example](examples/primer3/README.md) and
 [JavaScript API](runtime/PRIMER3.md), including the upstream thermodynamic

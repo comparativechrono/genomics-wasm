@@ -31,7 +31,10 @@
     "validate:primer3": "node scripts/validate-primer3.mjs",
     "package:primer3": "python3 scripts/package-primer3.py",
     "validate:macs3": "node scripts/validate-macs3.mjs",
-    "package:macs3": "python3 scripts/package-macs3.py"
+    "package:macs3": "python3 scripts/package-macs3.py",
+    "build:king": "python3 scripts/build-king.py all",
+    "validate:king": "node scripts/validate-king.mjs",
+    "test:king:demo": "node scripts/test-king-demo.mjs"
   },
   "devDependencies": {
     "playwright": "1.64.0"

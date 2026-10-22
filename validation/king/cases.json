@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "tool": "king",
+  "version": "2.3.2",
+  "cases": [
+    {"id":"kinship","args":["--kinship"],"outputs":["result.kin","result.kin0"],"contract":"kinship"},
+    {"id":"kinship-degree1","args":["--kinship","--degree","1"],"outputs":["result.kin","result.kin0"],"contract":"kinship-filtered"},
+    {"id":"kinship-gzip-fam","args":["--kinship","--fam","cohort.fam.gz"],"outputs":["result.kin","result.kin0"],"contract":"kinship"},
+    {"id":"related-default","args":["--related"],"outputs":["result.kin","result.kin0","resultallsegs.txt"],"contract":"related"},
+    {"id":"related-noscreen","args":["--related","--noscreen","1"],"outputs":["result.kin","result.kin0","resultallsegs.txt"],"contract":"related"},
+    {"id":"related-degree3","args":["--related","--degree","3"],"outputs":["result.kin","result.kin0","resultallsegs.txt"],"contract":"related"},
+    {"id":"small-related-noscreen","dataset":"small","args":["--related","--noscreen","1"],"outputs":["result.kin","result.kin0","resultallsegs.txt"],"contract":"related"},
+    {"id":"small-related-noscreen-toggle","dataset":"small","args":["--related","--noscreen","1"],"patchedArgs":["--related","--noscreen"],"outputs":["result.kin","result.kin0","resultallsegs.txt"],"contract":"related","purpose":"Patched bare flag must equal the pristine reference's explicit integer option"},
+    {"id":"duplicate","args":["--duplicate"],"outputs":["result.con"],"contract":"duplicate"},
+    {"id":"ibs","args":["--ibs"],"outputs":["result.ibs","result.ibs0","resultallsegs.txt"],"contract":"ibs"},
+    {"id":"sample-qc","args":["--bysample"],"outputs":["resultbySample.txt","resultallsegs.txt"],"contract":"sample-qc"},
+    {"id":"snp-qc","args":["--bySNP"],"outputs":["resultbySNP.txt","resultallsegs.txt"],"contract":"snp-qc"},
+    {"id":"pca","args":["--pca","--pcs","3"],"outputs":["resultpc.txt"],"contract":"pcs"},
+    {"id":"mds","args":["--mds","--pcs","3"],"outputs":["resultpc.txt","result_Dist.txt"],"contract":"pcs"},
+    {"id":"unrelated-degree3","args":["--unrelated","--degree","3"],"outputs":["resultunrelated.txt","resultunrelated_toberemoved.txt","result.seg","result.segments.gz","resultallsegs.txt"],"contract":"unrelated"},
+    {"id":"unrelated-default","args":["--unrelated"],"outputs":["resultunrelated.txt","resultunrelated_toberemoved.txt","resultallsegs.txt"],"contract":"unrelated"},
+    {"id":"cluster-degree3","args":["--cluster","--degree","3"],"outputs":["resultupdateids.txt","resultcluster.kin","result.seg","result.segments.gz","resultallsegs.txt"],"contract":"cluster"},
+    {"id":"cluster-default","args":["--cluster"],"outputs":["resultupdateids.txt","resultcluster.kin","resultallsegs.txt"],"contract":"cluster"},
+    {"id":"ibdseg","args":["--ibdseg"],"outputs":["result.seg","result.segments.gz","resultsplitped.txt","resultallsegs.txt"],"contract":"ibdseg"},
+    {"id":"missing-input","command":["-b","absent.bed","--kinship","--prefix","result"],"outputs":[],"contract":"failure","diagnostic":"Genotype file absent\\.bed cannot be opened"}
+  ]
+}
