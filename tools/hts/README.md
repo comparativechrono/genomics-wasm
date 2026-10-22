@@ -80,6 +80,12 @@ Explicit thread requests preserve upstream error handling: tested bcftools
 caller does not treat pool creation failure as fatal. No command should be
 assumed to run in parallel in these bundles.
 
+SAMtools sorting invokes its original sorting worker directly for a single
+worker. Upstream otherwise starts a pthread even for that case, which cannot
+run in these builds. The serial dispatch preserves the original sort keys,
+algorithms, temporary-file handling and output records; the unsorted-read
+regression verifies ordering and successful indexing in both pinned versions.
+
 Remote HTTP/FTP/S3/GCS access, HTSlib external protocol plugins, libdeflate,
 interactive curses display, optional GSL-dependent `polysomy`, and optional
 Perl filtering are disabled or not enabled. SAMtools text/HTML `tview` remains

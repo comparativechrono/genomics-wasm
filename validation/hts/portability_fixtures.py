@@ -1,4 +1,4 @@
-"""Small, deterministic fixtures for LP64 -> wasm32 portability regressions.
+"""Small, deterministic fixtures for native -> wasm32 portability regressions.
 
 The BGZF stream represents 4 GiB + 64 KiB of zeros followed by TAILMARKER\n,
 but occupies less than 7 MiB. Its GZI index permits a four-byte seek without
@@ -18,6 +18,14 @@ must report DUPLICATE SINGLE=2, DUPLICATE SINGLE OPTICAL=1. The record with
 x=2147483900 must receive flag 1024 and dt:Z:LB; x=2147483698 receives flag
 1024 and dt:Z:SQ. The other two records remain unmarked. Qualities select a
 unique representative, so this truth does not depend on sorting ties.
+
+sort-disordered.sam places the unplaced read first and interleaves two contigs
+and decreasing positions. Two paired unmapped reads retain their reference
+coordinates, as ExpansionHunter BAMlets do. Sorting must reorder every record
+by reference then position, retaining those coordinates and placing the fully
+unplaced record last. All positions are unique, so there is no tie-order
+assumption. A stubbed pthread callback must not pass this regression simply by
+rewriting the header to SO:coordinate.
 """
 from __future__ import annotations
 
@@ -72,5 +80,19 @@ def synthetic() -> dict[str, bytes]:
         fields = [name, "0", "chr1", str(pos), "60", "10M", "*", "0", "0",
                   "ACGTACGTAC", quality * 10]
         lines.append("\t".join(fields))
+    disordered = ["@HD\tVN:1.6\tSO:unsorted", "@SQ\tSN:chr1\tLN:1000",
+                  "@SQ\tSN:chr2\tLN:1000"]
+    for name, flag, chrom, pos in [
+            ("unplaced", 4, "*", 0),
+            ("chr1-unmapped-high", 77, "chr1", 401),
+            ("chr2-mapped", 0, "chr2", 11),
+            ("chr1-reverse", 16, "chr1", 301),
+            ("chr1-unmapped-low", 189, "chr1", 201),
+            ("chr1-forward", 0, "chr1", 101),
+            ("chr2-unmapped", 4, "chr2", 21)]:
+        cigar, mapq = ("*", "0") if flag & 4 else ("10M", "60")
+        disordered.append("\t".join([name, str(flag), chrom, str(pos), mapq,
+                                       cigar, "*", "0", "0", "ACGTACGTAC", "I" * 10]))
     return {"logical-offset.bgz": bgzf, "logical-offset.bgz.gzi": gzi,
-            "optical-width.sam": ("\n".join(lines) + "\n").encode()}
+            "optical-width.sam": ("\n".join(lines) + "\n").encode(),
+            "sort-disordered.sam": ("\n".join(disordered) + "\n").encode()}

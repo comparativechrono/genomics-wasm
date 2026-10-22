@@ -1,0 +1,82 @@
+{
+  "compound": {
+    "locus": "COMPOUND_CAG",
+    "phase": "No 350bp input fragment connects the SNP and STR separated by 499bp; phase is deliberately ambiguous.",
+    "repeat": {
+      "alleles": [
+        12,
+        18
+      ],
+      "region": "chr1:4000-4036"
+    },
+    "snp": {
+      "alternate": "T",
+      "genotype": "0/1",
+      "reference": "A",
+      "region": "chr1:3500-3501"
+    }
+  },
+  "construction": {
+    "baseQuality": 40,
+    "fragmentLength": 350,
+    "fragmentStartInterval": [
+      2500,
+      5500
+    ],
+    "fragmentStartStep": 10,
+    "linearAlignment": "Reference-coordinate projection of inserted CAG bases; wholly inserted reads are soft-clipped at the repeat boundary.",
+    "mappingQuality": 60,
+    "pairsPerHaplotype": 301,
+    "readLength": 150,
+    "referenceRepeatCount": 12,
+    "sequenceSeed": "SHA256(repeats-v1/<chrom>/<counter>), each byte maps via ACGT[byte & 3]",
+    "totalReadPairs": 2107
+  },
+  "loci": {
+    "EXPANDED_CAG": {
+      "alleles": [
+        12,
+        75
+      ],
+      "assertion": "confidenceIntervalContains",
+      "ploidy": 2
+    },
+    "NORMAL_CAG": {
+      "alleles": [
+        12,
+        18
+      ],
+      "assertion": "exact",
+      "ploidy": 2
+    },
+    "X_CAG": {
+      "alleles": [
+        18
+      ],
+      "assertion": "exact",
+      "ploidy": 1
+    }
+  },
+  "origin": "explicitly synthetic; no human-derived reads",
+  "schema": 1,
+  "twoStr": {
+    "locus": "TWO_STRS",
+    "phase": "No 350bp input fragment connects the two STRs separated by 476bp; phase is deliberately ambiguous.",
+    "variants": {
+      "FIRST_GAA": {
+        "alleles": [
+          8,
+          14
+        ],
+        "region": "chr3:3500-3524"
+      },
+      "SECOND_CAG": {
+        "alleles": [
+          12,
+          18
+        ],
+        "region": "chr3:4000-4036"
+      }
+    }
+  }
+}

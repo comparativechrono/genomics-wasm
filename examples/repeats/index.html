@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repeat analysis with ExpansionHunter and REViewer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>Repeat analysis in the browser</h1><p>Call repeat genotypes with ExpansionHunter and inspect the supporting reads with REViewer.</p></header>
+<main>
+  <p>ExpansionHunter 5.0.0, SAMtools 1.21 and REViewer 0.2.7 run locally in this browser. Run the example presets in order: call repeats, sort and index the generated alignments, then draw the read evidence. Reloading clears this tab's files.</p>
+  <section aria-labelledby="files-heading">
+    <h2 id="files-heading">Files</h2>
+    <div class="row"><label>Example data<select id="dataset" disabled></select></label><button id="load-data" type="button" disabled>Load example data</button></div>
+    <p id="data-description" class="hint"></p>
+    <p class="hint"><a href="../../datasets/repeats/README.md">Data sources and selection</a></p>
+    <label for="upload">Add BAM/CRAM, reference, catalog, VCF or index files</label><input id="upload" type="file" multiple disabled>
+    <label for="upload-folder">Add a folder</label><input id="upload-folder" type="file" webkitdirectory multiple disabled>
+    <p class="hint">Folder paths are retained. Include indexes and the matching reference sequence. ExpansionHunter and REViewer must use the same catalog and region extension length.</p>
+    <ul id="files"><li>No files loaded.</li></ul><button id="clear" type="button" disabled>Clear files</button>
+  </section>
+  <form id="command-form"><fieldset id="controls" disabled>
+    <legend>Command</legend>
+    <label>Program<select id="tool"></select></label>
+    <label>Preset<select id="command"></select></label><p id="command-description" class="hint"></p>
+    <label for="arguments">Arguments (JSON array, without the program name)</label><textarea id="arguments" rows="8" spellcheck="false">[]</textarea>
+    <p class="hint">Each array entry is one argument. Pipes and shell redirection are not interpreted. These builds run one command at a time without parallel threads.</p>
+    <details><summary>Standard input and output</summary>
+      <label>Standard input source<select id="stdin-mode"><option value="none">None</option><option value="file">A loaded file</option><option value="text">Text entered below</option></select></label>
+      <label id="stdin-file-label" hidden>Input filename<input id="stdin-file" type="text" spellcheck="false"></label>
+      <label id="stdin-text-label" hidden>Input text<textarea id="stdin-text" rows="7" spellcheck="false"></textarea></label>
+      <label>Save standard output as a workspace file (optional)<input id="stdout-path" type="text" spellcheck="false"></label>
+      <p class="hint">Standard output retains its exact bytes, including BAM. Use a different output filename when transforming an input file.</p>
+    </details>
+    <label for="outputs">Files to keep (one path per line)</label><textarea id="outputs" rows="4" spellcheck="false"></textarea>
+    <p class="hint">Successful outputs stay available to later commands. Requested output files must be newly generated; previous files at those paths are excluded from the next command's inputs.</p>
+    <label class="timeout">Time limit (seconds)<input id="timeout" type="number" min="1" max="3600" value="300" required></label>
+    <button id="run" type="submit">Run</button>
+  </fieldset></form>
+  <button id="cancel" type="button" disabled>Cancel</button><p id="status" role="status" aria-live="polite">Loading controls…</p>
+  <section aria-labelledby="results-heading">
+    <h2 id="results-heading">Results</h2>
+    <label>File to view<select id="result-file" disabled><option>No output files yet</option></select></label>
+    <div id="plot-panel" hidden><p class="hint">REViewer alignment plot. Scroll to inspect reads, or change the scale to see the full figure.</p><label class="plot-scale">Plot scale<select id="plot-scale"><option value="fit">Fit width</option><option value="50">50%</option><option value="100" selected>100%</option><option value="150">150%</option><option value="200">200%</option></select></label><div class="plot-scroll"><img id="plot" alt="REViewer read alignment plot"></div><p id="plot-status" role="status"></p></div>
+    <p class="hint">Text previews show at most 100,000 bytes. Downloads contain complete original files.</p>
+    <pre id="preview">No output yet.</pre><div id="downloads"></div>
+    <h3>Standard output from the last command</h3><pre id="stdout">No output yet.</pre>
+    <h3>Standard error from the last command</h3><pre id="stderr">No output yet.</pre><div id="stream-downloads"></div>
+  </section>
+  <p class="hint">Inputs, outputs and program memory share your browser's resources. Start with small regions and samples; these examples do not establish whole-genome capacity or clinical validity.</p>
+  <p><a href="README.md">Running this example</a> · <a href="../../runtime/REPEATS.md">JavaScript API</a> · <a href="../../tools/expansionhunter/README.md">ExpansionHunter build</a> · <a href="../../tools/reviewer/README.md">REViewer build</a></p>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>

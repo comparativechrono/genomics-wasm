@@ -14,6 +14,13 @@ eight supporting G and four supporting A at chr1:121; both bcftools callers
 must call A>G, genotype 0/1. The general SAM has seventeen records, sixteen
 mapped, with paired, unpaired, duplicate-marked and unmapped examples.
 
+`sort-disordered.sam` has seven deliberately unsorted records spanning two
+contigs, including mapped reads, unmapped reads that retain reference
+coordinates, and one fully unplaced read. The sorting regression requires the
+independently specified record order, a usable BAM index, and the expected
+four-record chromosome-1 query. This prevents a skipped sort callback from
+passing on input that was already ordered.
+
 `upstream/1.16/` and `upstream/1.21/` are unchanged regression fixtures from
 the official samtools/bcftools repository. `provenance/sources.lock.json`
 records the exact upstream commit, raw URL, source path, SHA-256, byte length,
@@ -21,7 +28,7 @@ and licence for every copied file. Each directory includes its upstream
 MIT/Expat licence. Tests with upstream sample identifiers are regression
 fixtures; no provenance of an actual person's genome is asserted.
 
-`manifest.json` binds all 97 fixture/licence files and the source lock. The
+`manifest.json` binds all 98 fixture/licence files and the source lock. The
 validation reports additionally bind the generator and its portability helper.
 
 ```sh

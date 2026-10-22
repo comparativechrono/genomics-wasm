@@ -1,0 +1,75 @@
+{
+  "contig": "chr16",
+  "derivedReferenceSha256": "a30ae9f3495443c6785be087146e0c1ee50db6e4143a01cd47c7fb3591d81975",
+  "length": 90338345,
+  "nativeEquivalenceProof": {
+    "argv": [
+      "--reads",
+      "BEAN1_HG00684.bam",
+      "--vcf",
+      "HG00684.vcf",
+      "--catalog",
+      "catalog.json",
+      "--locus",
+      "BEAN1",
+      "--reference",
+      "{fullOrMaskedReference}",
+      "--output-prefix",
+      "{prefix}"
+    ],
+    "locus": "BEAN1",
+    "nativeBinarySha256": "0b24fdb4d95bca77903598e1aeb8d188de4e7d2fd730cdcde4b9c56280a9b539",
+    "outputs": {
+      "BEAN1.svg": {
+        "bytes": 609711,
+        "sha256": "0d3c4d9cd9095d2db38971169a02ee2fc452c830ef6e90697a1a4b77bf68ee7d"
+      },
+      "metrics.tsv": {
+        "bytes": 54,
+        "sha256": "60e503bc92a23ad15c9cd524c3ac2a6d28f812c2cedcdd42310a6c1e63edec6e"
+      },
+      "phasing.tsv": {
+        "bytes": 77,
+        "sha256": "645a6855fe64bad0fb1eb2e61531c0a6250e54e7489d683d7017955525a6b4a3"
+      }
+    },
+    "procedure": "Run pristine native REViewer twice with the unchanged public BAMlet, VCF and catalog, using the full pinned source FASTA then reference.fa.gz; compare all three output files byte for byte. Commands are in datasets/repeats/README.md.",
+    "status": "historical diagnostic; exact full-source versus masked-reference comparison",
+    "tool": "REViewer",
+    "upstreamCommit": "7cd3be55cd67566d23d9272600e484edc72edbf8",
+    "version": "0.2.7"
+  },
+  "retainedRegions": [
+    {
+      "chrom": "chr16",
+      "end": 66492466,
+      "locus": "BEAN1",
+      "sequenceSha256": "c855e9a2565d6a81e5763d18d94906a79b412d0726c290c92b8debf5a1b644b8",
+      "start": 66488399
+    },
+    {
+      "chrom": "chr16",
+      "end": 87606329,
+      "locus": "JPH3",
+      "sequenceSha256": "ccf71ecd299d00d25840414302a77632724056221ab56d34d001418e56fb489c",
+      "start": 87602287
+    },
+    {
+      "chrom": "chr16",
+      "end": 24615532,
+      "locus": "TNRC6A",
+      "sequenceSha256": "4416f65b9df7c487015e61ccf42bda12d6322e559d14c34c260c6c0ab9def22e",
+      "start": 24611438
+    },
+    {
+      "chrom": "chr16",
+      "end": 17472921,
+      "locus": "XYLT1",
+      "sequenceSha256": "002915454e96574c0177e67867dfe3e4c39f04e9467aeb79779311b6584a592e",
+      "start": 17468908
+    }
+  ],
+  "schema": 1,
+  "sourceSha256": "3b5cb8d62fc9d7f256799e2daca37bcd4edc9f462fa607c5847043504593c551",
+  "transformation": "Preserve these reference intervals exactly; replace every other base by N; preserve coordinates and contig length; deterministic BGZF encoding."
+}

@@ -40,6 +40,10 @@
       "bytes": 1023,
       "sha256": "077bc3750fdfe294e78672b9d4f3142610945a343dcf854dab1d3d2dcd28973d"
     },
+    "common/sort-disordered.sam": {
+      "bytes": 468,
+      "sha256": "17f5fca94453e3f1b6f5c91af15c21b67b626091b0dd021d176a00f5e97bca55"
+    },
     "common/targets.bed": {
       "bytes": 25,
       "sha256": "c4f8b12a8920289e9db954352e9fe1d9b679371694e28144b69ca16ead6854ef"

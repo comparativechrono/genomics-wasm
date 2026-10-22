@@ -9,3 +9,6 @@
 # Licence provenance records bind the exact bytes from upstream archives.
 tools/macs3/runtime-notices/** -text
 tools/macs3/scientific-notices/** -text
+tools/expansionhunter/notices/** -text
+tools/reviewer/notices/** -text
+datasets/repeats/** -text
