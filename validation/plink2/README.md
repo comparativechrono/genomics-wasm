@@ -9,7 +9,7 @@ Every command specifies `--memory 640 require`, `--threads 1` (or explicitly 2)
 and seed 42. The 640 MiB working arena does not include input/output copies or
 other runtime overhead.
 
-The plan executes 41 cases per engine against unchanged pinned native
+The plan executes 86 cases per engine against unchanged pinned native
 `NOLAPACK` source, native source with the portability patch, and the actual
 WebAssembly program. All three consume the same frozen source inputs. Pipeline
 steps consume each target's actual preceding outputs; explicit interchange
@@ -28,15 +28,38 @@ fileset exchange. BED loses phase by definition; its roundtrip is checked with
 reimport, since these A2 alleles came from the authentic source REF columns.
 Full-sample frequency outputs must also agree after both roundtrips.
 
-KING and GRM tests use the first 48 authentic sample IDs to bound browser output
+The original KING and GRM tests use the first 48 authentic sample IDs to bound browser output
 size. GRM explicitly loads the frequency estimates from all 2,504 samples;
 upstream rejects frequency imputation from fewer than 50 samples. KING must
 return all 1,128 unordered pairs, and the GRM list all 1,176 lower-triangular
 entries including the diagonal. Arbitrary scoring weights are labelled
 synthetic and are not published genetic-risk estimates.
 
-The separately labelled synthetic fixtures derive from pinned upstream test
-recipes. They cover the 603-sample alternating dense/missing genotype regression
+A separate original synthetic cohort covers the non-SSE2 paired-row transpose
+regression. It has 105 fictional samples and 4,097 complete biallelic markers;
+the first sample is a father, followed by a mother, two children, a duplicate
+of the father and 100 unrelated founders. Keep files select 25, 48, 63, 64, 65,
+103, 104 and 105 samples without duplicating genotype matrices. For each count,
+five commands exercise `--make-king-table`, `--make-king square`,
+`--king-cutoff 0.245`, `--distance square ibs flat-missing` and
+`--king-table-subset`. The subset path requests every pair containing the first
+sample, so it directly exercises the separate subset allocation. Five additional
+105-sample WASM runs check repeatability against the original native results.
+The 4,097-marker count crosses transpose batches and leaves a partial word.
+
+These cases decode the input BED directly and independently calculate every
+pair's observed-marker, heterozygote and opposite-homozygote counts, robust
+kinship and IBS similarity. All pairs, matrix entries, diagonals and sample IDs
+are checked, including the first sample. Cutoff selections must match the
+independent relationship graph and the pinned upstream selection order. The
+threshold lies between the fixture's true father–child kinship and its observed
+pre-fix corrupted value, so the retained-ID regression detects the bug as well.
+This oracle validates both the native reference and WASM outputs: agreement
+between two incorrect outputs does not pass. These original fixtures contain
+no donor genotypes or generated tool-result goldens.
+
+The separately labelled synthetic fixtures adapted from pinned upstream test
+recipes cover the 603-sample alternating dense/missing genotype regression
 that previously exposed SIMD-padding errors, linear, logistic and Firth models,
 one/two-thread regression equivalence, missing hardcall and dosage scoring,
 haploid phased dosage, and phased multiallelic genotypes. The fixture provenance

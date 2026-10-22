@@ -372,6 +372,56 @@ def check_comparison_files(case_id: str, spec: dict, comparison: dict, native: d
                 raise RuntimeError(f'{case_id}: exact comparison output bytes differ: {path}')
 
 
+def check_independent_truth(case_id: str, spec: dict, comparison: dict, manifest: dict) -> None:
+    """Require the odd-sample oracle evidence bound to the shipped genotypes."""
+    if 'oddSampleTruth' not in spec:
+        return
+    config = spec['oddSampleTruth']
+    mode = config.get('mode')
+    if mode not in {'king-table', 'king-subset', 'king-matrix', 'distance-ibs', 'king-cutoff'}:
+        raise RuntimeError(f'{case_id}: unknown independent truth mode')
+    keys = ['bed', 'bim', 'fam', 'keep'] + (['subset'] if mode == 'king-subset' else [])
+    inputs, raw = {}, {}
+    for key in keys:
+        name = relative_name(config[key])
+        dataset_name = spec['_dataset'] + '/' + name
+        record = manifest['files'].get(dataset_name)
+        if not record:
+            raise RuntimeError(f'{case_id}: independent truth input is not manifested')
+        raw[key] = verify(local_path(f'{DATA}/{dataset_name}'), record['sha256'])
+        inputs[name] = record['sha256']
+    fam = [row.split() for row in raw['fam'].decode().splitlines()]
+    keep = [row.split() for row in raw['keep'].decode().splitlines()]
+    if (not fam or any(len(row) != 6 for row in fam) or not keep
+            or keep.pop(0) != ['#FID', 'IID'] or any(len(row) != 2 for row in keep)):
+        raise RuntimeError(f'{case_id}: invalid independent truth sample fixture')
+    keep_ids = {tuple(row) for row in keep}
+    ids = [row[:2] for row in fam if tuple(row[:2]) in keep_ids]
+    if len(ids) < 2 or len(ids) != len(keep) or len(keep_ids) != len(keep):
+        raise RuntimeError(f'{case_id}: invalid independent truth sample coverage')
+    samples, variants = len(ids), len(raw['bim'].splitlines())
+    if not variants:
+        raise RuntimeError(f'{case_id}: empty independent truth variant fixture')
+    checked = samples * samples if mode in ('king-matrix', 'distance-ibs') else samples * (samples - 1) // 2
+    if mode == 'king-subset':
+        subset = raw['subset'].decode().splitlines()
+        if not subset or subset[0].split() != ['#FID1', 'IID1', 'FID2', 'IID2']:
+            raise RuntimeError(f'{case_id}: invalid independent truth subset fixture')
+        checked = len(subset) - 1
+    expected = {'method': 'direct SNP-major BED genotype intersections', 'mode': mode,
+                'samples': samples, 'variants': variants, 'checkedValues': checked,
+                'firstSamplePairs': samples - 1, 'firstSample': ids[0],
+                'inputs': inputs, 'passed': True}
+    evidence = comparison.get('independentTruth')
+    if (not isinstance(evidence, dict) or set(evidence) != {'expected', 'actual'}
+            or any(not isinstance(evidence[side], dict) or evidence[side] != expected
+                   or evidence[side].get('passed') is not True
+                   or any(type(evidence[side].get(key)) is not int
+                          for key in ('samples', 'variants', 'checkedValues', 'firstSamplePairs'))
+                   for side in ('expected', 'actual'))):
+        raise RuntimeError(f'{case_id}: missing or inconsistent independent genotype truth evidence')
+
+
 def check_execution_inputs(case_id: str, tool: str, target: str, spec: dict, execution: dict, manifest: dict) -> None:
     plan = read_json('validation/plink2/cases.json')
     inputs = {name: dict(manifest['files'][spec['_dataset'] + '/' + name])
@@ -530,6 +580,7 @@ def check_reports(tool: str, reports: list[Path], builds: dict) -> dict:
                             or comparison['biologicalDigest'] != native_contract['biologicalDigest']):
                         raise RuntimeError(f'{case_id}: exact comparison differs from its unchanged native baseline')
                 check_invariants(case_id, spec, comparison)
+                check_independent_truth(case_id, spec, comparison, manifest)
                 check_comparison_files(case_id, spec, comparison, by_id[baseline_id]['executions']['native'],
                                        executions['native' if target == 'native-contract' else target])
             if spec.get('effect') or spec.get('equivalentTo'):

@@ -468,6 +468,65 @@ class PackageTests(unittest.TestCase):
             packager.normalised_artifacts({'id': 'fixture', 'artifacts': [
                 {'kind': 'table', 'path': 'out.tsv', 'normalizeIdentifiers': True}]})
 
+    def independent_truth_fixture(self, mode='king-table'):
+        # These labelled miniature bytes exercise the evidence gate only;
+        # they are never presented as executed PLINK scientific validation.
+        data = {'bed': b'\x6c\x1b\x01\x38\x2c',
+                'bim': b'1 v1 0 1 A G\n1 v2 0 2 A G\n',
+                'fam': b'F dad 0 0 1 -9\nF child dad mom 1 -9\nX other 0 0 2 -9\n',
+                'keep': b'#FID IID\nF dad\nF child\nX other\n',
+                'subset': b'#FID1 IID1 FID2 IID2\nF dad F child\nF dad X other\n'}
+        names = {key: 'synthetic/gate/cohort.' + key for key in data}
+        for key, value in data.items():
+            name = 'plink2/' + names[key]
+            self.write('datasets/plink2/' + name, value)
+            self.manifest['files'][name] = {'sha256': packager.digest(value), 'bytes': len(value)}
+        self.write_json('datasets/plink2/manifest.json', self.manifest)
+        keys = ['bed', 'bim', 'fam', 'keep'] + (['subset'] if mode == 'king-subset' else [])
+        config = {'mode': mode, **{key: names[key] for key in keys}}
+        expected = {'method': 'direct SNP-major BED genotype intersections', 'mode': mode,
+                    'samples': 3, 'variants': 2,
+                    'checkedValues': 9 if mode in ('king-matrix', 'distance-ibs') else 2 if mode == 'king-subset' else 3,
+                    'firstSamplePairs': 2, 'firstSample': ['F', 'dad'],
+                    'inputs': {names[key]: packager.digest(data[key]) for key in keys}, 'passed': True}
+        return {'_dataset': 'plink2', 'oddSampleTruth': config}, {'independentTruth': {
+            'expected': copy.deepcopy(expected), 'actual': copy.deepcopy(expected)}}
+
+    def test_independent_genotype_truth_requires_both_sides_and_exact_coverage(self):
+        for mode in ('king-table', 'king-subset', 'king-matrix', 'distance-ibs', 'king-cutoff'):
+            spec, comparison = self.independent_truth_fixture(mode)
+            packager.check_independent_truth('fixture', spec, comparison, self.manifest)
+            for side in ('expected', 'actual'):
+                for field, value in [('passed', False), ('passed', 1), ('samples', 4),
+                                     ('variants', 1), ('checkedValues', 0), ('checkedValues', float(comparison['independentTruth'][side]['checkedValues'])),
+                                     ('firstSamplePairs', 1), ('firstSample', ['F', 'child']),
+                                     ('mode', 'other'), ('inputs', {}), ('method', 'parity only')]:
+                    with self.subTest(mode=mode, side=side, field=field):
+                        changed = copy.deepcopy(comparison)
+                        changed['independentTruth'][side][field] = value
+                        with self.assertRaisesRegex(RuntimeError, 'independent genotype truth evidence'):
+                            packager.check_independent_truth('fixture', spec, changed, self.manifest)
+            for value in ({}, {'independentTruth': {'actual': comparison['independentTruth']['actual']}}):
+                with self.assertRaisesRegex(RuntimeError, 'independent genotype truth evidence'):
+                    packager.check_independent_truth('fixture', spec, value, self.manifest)
+
+    def test_passing_parity_report_cannot_omit_independent_truth(self):
+        spec, evidence = self.independent_truth_fixture()
+        self.plan['tools']['plink2']['cases'][0]['oddSampleTruth'] = spec['oddSampleTruth']
+        self.write_json('validation/plink2/cases.json', self.plan)
+        self.reports['plink2'] = self.make_reports('plink2')
+        with self.assertRaisesRegex(RuntimeError, 'independent genotype truth evidence'):
+            packager.check_reports('plink2', self.reports['plink2'], self.builds)
+        for path in self.reports['plink2']:
+            report = json.loads(path.read_text())
+            for comparison in report['cases'][0]['comparisons'].values():
+                comparison.update(copy.deepcopy(evidence))
+            self.write_json(str(path.relative_to(self.root)), report)
+        packager.check_reports('plink2', self.reports['plink2'], self.builds)
+        self.change_report(lambda r: r['cases'][0]['comparisons']['wasm']['independentTruth']['actual'].update(firstSamplePairs=1))
+        with self.assertRaisesRegex(RuntimeError, 'independent genotype truth evidence'):
+            packager.check_reports('plink2', self.reports['plink2'], self.builds)
+
     def test_table_dimensions_and_vcf_call_coverage_are_required(self):
         spec, comparison = self.table_comparison()
         for field, value in [('columnNames', []), ('columns', 1), ('exactCells', 0), ('numericValues', -1)]:

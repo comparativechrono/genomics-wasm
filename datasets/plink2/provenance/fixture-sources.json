@@ -35,6 +35,82 @@
       "source": "2.0/Tests/TEST_BCF_HAPLOID_HDS/run_tests.sh",
       "transformation": "Unchanged bytes of the named literal VCF here-document; synthetic upstream regression input."
     },
+    "plink2/synthetic/king-padding/cohort.bed": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/cohort.bim": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/cohort.fam": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep103.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep104.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep105.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep25.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep48.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep63.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep64.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/keep65.txt": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs103.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs104.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs105.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs25.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs48.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs63.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs64.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
+    "plink2/synthetic/king-padding/pairs65.kin0": {
+      "source": "scripts/fetch-plink2-test-data.py",
+      "transformation": "Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data."
+    },
     "plink2/synthetic/multiallelic.vcf": {
       "source": "2.0/Tests/TEST_VCF_MULTIALLELIC_DS_FIELDS/run_tests.sh",
       "transformation": "Unchanged bytes of the named literal VCF here-document; synthetic upstream regression input."

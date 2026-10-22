@@ -19,8 +19,17 @@ The native baseline retains upstream source and floating-point setup. The
 patched-native and wasm builds use `PLINK2_WASM_PORT`: the floating-point setup
 preserves the host's default subnormal behavior instead of enabling flush-to-zero,
 and CPU detection defaults to one compute thread instead of Linux affinity calls.
-Neither change replaces statistical algorithms. Numeric validation must compare
-both baselines; successful compilation alone does not establish equivalence.
+The patched profiles also round the KING/distance transpose buffer row counts
+up to an even number in `CalcKing`, `CalcKingTableSubset`, and `CalcDistance`.
+The non-SSE2 bit transpose writes rows in pairs; without the padding, an odd
+sample count overwrites the first row of the adjacent buffer and corrupts
+first-sample kinship, cutoff and distance results. The GRM path already uses
+this allocation rule. The fix changes buffer capacity only, preserving the
+sample count and statistical calculations. The original-source native baseline
+remains unpatched and uses the unaffected SSE2 path.
+
+Numeric validation must compare both baselines; successful compilation alone
+does not establish equivalence.
 
 WASM uses `-msimd128 -msse` for upstream's 32-bit SSE compatibility path,
 `-ffp-contract=off`, real pthreads, and `PROXY_TO_PTHREAD`. It requires SIMD128

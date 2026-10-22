@@ -34,6 +34,7 @@ All paths below start with `plink2/synthetic/`.
 
 | Input | Coverage and origin |
 |---|---|
+| `king-padding/` | Original fictional 105-sample, 4,097-marker BED cohort with parents, children, a duplicate and unrelated founders. Keep files select odd/even counts 25, 48, 63, 64, 65, 103, 104 and 105; subset tables name all pairs involving the first sample. Tests paired-row transpose buffer allocation. |
 | `glm-missing/input.vcf` | 603 fictional samples and 30 biallelic variants. Retains the upstream TEST_GLM_LOGISTIC_MISSING pattern: alternating no-missing and 1/2/6/9/14 missing calls, including non-vector-aligned sample counts. |
 | `glm-missing/covariates.tsv` | Two fictional quantitative covariates, C1 and C2. |
 | `glm-missing/phenotypes.tsv` | BINARY is independent case/control status, QUANT is an independent quantitative label, and FIRTH intentionally assigns case status to v1 ALT carriers to create separation. All are synthetic. |
@@ -44,7 +45,13 @@ All paths below start with `plink2/synthetic/`.
 | `phased-multiallelic.vcf` | Upstream TEST_MULTIALLELIC_PHASED_R first generator: 400 fictional samples, eight variants, two chromosomes, dense/sparse multiallelic phased patterns, and up to 20 alleles. Variant/genotype records follow the original generator exactly; contig length metadata is set to 100000000. |
 | `multinomial/` | Unchanged committed upstream TEST_GLM_MULTINOMIAL inputs: `mn.vcf.gz`, `mn_multi.vcf.gz`, `pheno.txt`, `covar.txt`, and `sex.txt`. These were generated upstream; they are not an authentic cohort. The original generator is retained for attribution. |
 
-The missingness and score adaptations use the explicit linear congruential
+The KING-padding fixture uses seed 20261022, founder allele frequency
+`0.15+0.35*U`, two founder allele draws, and random Mendelian transmission
+to each child. Sample 5 duplicates sample 1. Genotypes are complete; BED
+padding bits are zero. The comparator derives scientific expectations directly
+from the BED instead of storing native-program output as truth.
+
+The missingness, KING-padding and score generators use the explicit linear congruential
 generator already used by the upstream phased-multiallelic regression:
 `state = (1103515245*state + 12345) % 2147483648`, `U = state/2147483648`.
 This replaces implementation-dependent AWK `rand()` and PLINK `--dummy` in

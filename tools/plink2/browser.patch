@@ -29,3 +29,34 @@
    SYSTEM_INFO sysinfo;
    GetSystemInfo(&sysinfo);
    const int32_t known_procs = sysinfo.dwNumberOfProcessors;
+--- a/2.0/plink2_matrix_calc.cc
++++ b/2.0/plink2_matrix_calc.cc
+@@ -2065,7 +2065,8 @@
+     const uint32_t grei_ctaw = BitCtToAlignedWordCt(grand_row_end_idx);
+     const uint32_t grei_ctaw2 = NypCtToAlignedWordCt(grand_row_end_idx);
+     dense_ctx.homhom_needed = homhom_needed;
+-    const uint32_t king_bufsizew = kKingMultiplexWords * grand_row_end_idx;
++    // The non-SSE2 bit transpose writes rows in pairs, including the last pair.
++    const uint32_t king_bufsizew = kKingMultiplexWords * RoundUpPow2(grand_row_end_idx, 2);
+     const uint32_t homhom_needed_p4 = dense_ctx.homhom_needed + 4;
+     uintptr_t* cur_sample_include;
+     uint32_t* sample_include_cumulative_popcounts;
+@@ -3602,7 +3603,8 @@
+     // space bloat for now.
+     uint32_t sample_ctaw = BitCtToAlignedWordCt(orig_sample_ct);
+     uint32_t sample_ctaw2 = NypCtToAlignedWordCt(orig_sample_ct);
+-    uint32_t king_bufsizew = kKingMultiplexWords * orig_sample_ct;
++    // The non-SSE2 bit transpose writes rows in pairs, including the last pair.
++    uint32_t king_bufsizew = kKingMultiplexWords * RoundUpPow2(orig_sample_ct, 2);
+     uintptr_t* cur_sample_include;
+     uint32_t* sample_include_cumulative_popcounts;
+     uintptr_t* loadbuf;
+@@ -5318,6 +5320,7 @@
+     const uint32_t grei_ctaw = BitCtToAlignedWordCt(grand_row_end_idx);
+     const uint32_t grei_ctaw2 = NypCtToAlignedWordCt(grand_row_end_idx);
+-    const uint32_t king_bufsizew = kKingMultiplexWords * grand_row_end_idx;
++    // The non-SSE2 bit transpose writes rows in pairs, including the last pair.
++    const uint32_t king_bufsizew = kKingMultiplexWords * RoundUpPow2(grand_row_end_idx, 2);
+     const uint32_t sample_ctaw2 = NypCtToAlignedWordCt(sample_ct);
+     uintptr_t* loadbuf;
+     uintptr_t* rowbuf;
