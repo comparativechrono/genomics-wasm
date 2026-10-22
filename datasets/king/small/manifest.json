@@ -1,0 +1,31 @@
+{
+  "dataset": "king-synthetic-small-v1",
+  "files": {
+    "cohort.bed": {
+      "bytes": 229666,
+      "sha256": "b89774d6b282359d8f73f651a37a80235f6428fffda429b66940e7e19f5131a7"
+    },
+    "cohort.bim": {
+      "bytes": 848606,
+      "sha256": "9bd324bd469ab2a04f7ea525847e9622ea097b139d569fa6e94e029daabcdaff"
+    },
+    "cohort.fam": {
+      "bytes": 415,
+      "sha256": "77f92b4bf6914c50882ec9b80581424a4b681091da0eca9cd08102de32031be4"
+    },
+    "truth.json": {
+      "bytes": 129951,
+      "sha256": "edcbd4f3bd9084b370905e2a5c2258ea223ff9ab37e7e713cdee5f6c7010819e"
+    }
+  },
+  "inputFiles": [
+    "cohort.bed",
+    "cohort.bim",
+    "cohort.fam"
+  ],
+  "markerCount": 32809,
+  "provenance": "First 25 synthetic samples from the main cohort",
+  "sampleCount": 25,
+  "schema": 1,
+  "version": "2.3.2"
+}

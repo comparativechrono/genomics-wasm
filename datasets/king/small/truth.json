@@ -1,0 +1,5594 @@
+{
+  "chromosomes": 4,
+  "generator": "xorshift32",
+  "markerCount": 32809,
+  "origin": "Entirely synthetic; no human or public reference genotypes",
+  "pairStats": {
+    "CHILD1|CHILD2": {
+      "HetHet": 0.2454204638971014,
+      "IBS0": 0.021609924106190375,
+      "IDs": [
+        "CHILD1",
+        "CHILD2"
+      ],
+      "Kinship": 0.2505854800936768,
+      "KinshipWithin": 0.2505854800936768,
+      "NHetHet": 8052,
+      "N_Het1": 13219,
+      "N_Het2": 13255,
+      "N_IBS0": 709,
+      "N_IBS1": 10370,
+      "N_IBS2": 21730,
+      "N_SNP": 32809,
+      "withinFamily": true
+    },
+    "CHILD1|DAD": {
+      "HetHet": 0.198634521015575,
+      "IBS0": 0.0,
+      "IDs": [
+        "DAD",
+        "CHILD1"
+      ],
+      "Kinship": 0.2472681742297769,
+      "KinshipWithin": 0.2472681742297769,
+      "NHetHet": 6517,
+      "N_Het1": 13137,
+      "N_Het2": 13219,
+      "N_IBS0": 0,
+      "N_IBS1": 13322,
+      "N_IBS2": 19487,
+      "N_SNP": 32809,
+      "withinFamily": true
+    },
+    "CHILD1|DUP": {
+      "HetHet": 0.40290773873022645,
+      "IBS0": 0.0,
+      "IDs": [
+        "CHILD1",
+        "DUP"
+      ],
+      "Kinship": 0.5,
+      "KinshipWithin": 0.5,
+      "NHetHet": 13219,
+      "N_Het1": 13219,
+      "N_Het2": 13219,
+      "N_IBS0": 0,
+      "N_IBS1": 0,
+      "N_IBS2": 32809,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|MOM": {
+      "HetHet": 0.20125575299460513,
+      "IBS0": 0.0,
+      "IDs": [
+        "MOM",
+        "CHILD1"
+      ],
+      "Kinship": 0.24958421530087693,
+      "KinshipWithin": 0.24958421530087693,
+      "NHetHet": 6603,
+      "N_Het1": 13237,
+      "N_Het2": 13219,
+      "N_IBS0": 0,
+      "N_IBS1": 13250,
+      "N_IBS2": 19559,
+      "N_SNP": 32809,
+      "withinFamily": true
+    },
+    "CHILD1|U01": {
+      "HetHet": 0.16766740833307933,
+      "IBS0": 0.08436709439483069,
+      "IDs": [
+        "CHILD1",
+        "U01"
+      ],
+      "Kinship": -0.0017046745965603183,
+      "KinshipWithin": -0.0013248542660307366,
+      "NHetHet": 5501,
+      "N_Het1": 13219,
+      "N_Het2": 13199,
+      "N_IBS0": 2768,
+      "N_IBS1": 15416,
+      "N_IBS2": 14625,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U02": {
+      "HetHet": 0.16998384589594318,
+      "IBS0": 0.08281264287238257,
+      "IDs": [
+        "CHILD1",
+        "U02"
+      ],
+      "Kinship": 0.00414417154589003,
+      "KinshipWithin": 0.005422828972317027,
+      "NHetHet": 5577,
+      "N_Het1": 13219,
+      "N_Het2": 13151,
+      "N_IBS0": 2717,
+      "N_IBS1": 15216,
+      "N_IBS2": 14876,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U03": {
+      "HetHet": 0.16553384741991528,
+      "IBS0": 0.08451949160291383,
+      "IDs": [
+        "CHILD1",
+        "U03"
+      ],
+      "Kinship": -0.005664968443464424,
+      "KinshipWithin": -0.004361016306408798,
+      "NHetHet": 5431,
+      "N_Het1": 13219,
+      "N_Het2": 13151,
+      "N_IBS0": 2773,
+      "N_IBS1": 15508,
+      "N_IBS2": 14528,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U04": {
+      "HetHet": 0.16879514767289464,
+      "IBS0": 0.08424517662836417,
+      "IDs": [
+        "CHILD1",
+        "U04"
+      ],
+      "Kinship": -0.0007375747030788915,
+      "KinshipWithin": 0.00037740121523191305,
+      "NHetHet": 5538,
+      "N_Het1": 13219,
+      "N_Het2": 13278,
+      "N_IBS0": 2764,
+      "N_IBS1": 15421,
+      "N_IBS2": 14624,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U05": {
+      "HetHet": 0.16431466975525008,
+      "IBS0": 0.08522051876009631,
+      "IDs": [
+        "CHILD1",
+        "U05"
+      ],
+      "Kinship": -0.008404158445894705,
+      "KinshipWithin": -0.0076145016479145355,
+      "NHetHet": 5391,
+      "N_Het1": 13219,
+      "N_Het2": 13178,
+      "N_IBS0": 2796,
+      "N_IBS1": 15615,
+      "N_IBS2": 14398,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U06": {
+      "HetHet": 0.17077631137797555,
+      "IBS0": 0.08470236825261361,
+      "IDs": [
+        "CHILD1",
+        "U06"
+      ],
+      "Kinship": 5.673651562143611e-05,
+      "KinshipWithin": 0.0016965127238454288,
+      "NHetHet": 5603,
+      "N_Het1": 13219,
+      "N_Het2": 13306,
+      "N_IBS0": 2779,
+      "N_IBS1": 15319,
+      "N_IBS2": 14711,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U07": {
+      "HetHet": 0.1678198055411625,
+      "IBS0": 0.08415373830351427,
+      "IDs": [
+        "CHILD1",
+        "U07"
+      ],
+      "Kinship": -0.0014421252371916715,
+      "KinshipWithin": -0.0006061983784193377,
+      "NHetHet": 5506,
+      "N_Het1": 13219,
+      "N_Het2": 13175,
+      "N_IBS0": 2761,
+      "N_IBS1": 15382,
+      "N_IBS2": 14666,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U08": {
+      "HetHet": 0.166295833460331,
+      "IBS0": 0.08348319058794842,
+      "IDs": [
+        "CHILD1",
+        "U08"
+      ],
+      "Kinship": -0.0017020954686436385,
+      "KinshipWithin": -0.0008306902280622263,
+      "NHetHet": 5456,
+      "N_Het1": 13219,
+      "N_Het2": 13265,
+      "N_IBS0": 2739,
+      "N_IBS1": 15572,
+      "N_IBS2": 14498,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U09": {
+      "HetHet": 0.16565576518638178,
+      "IBS0": 0.08433661495321405,
+      "IDs": [
+        "CHILD1",
+        "U09"
+      ],
+      "Kinship": -0.004920960632314952,
+      "KinshipWithin": -0.00375326989422603,
+      "NHetHet": 5435,
+      "N_Het1": 13219,
+      "N_Het2": 13158,
+      "N_IBS0": 2767,
+      "N_IBS1": 15507,
+      "N_IBS2": 14535,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U10": {
+      "HetHet": 0.1670273400591301,
+      "IBS0": 0.08647017586637813,
+      "IDs": [
+        "CHILD1",
+        "U10"
+      ],
+      "Kinship": -0.009596306471306493,
+      "KinshipWithin": -0.007369980625308665,
+      "NHetHet": 5480,
+      "N_Het1": 13219,
+      "N_Het2": 13104,
+      "N_IBS0": 2837,
+      "N_IBS1": 15363,
+      "N_IBS2": 14609,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U11": {
+      "HetHet": 0.16894754488097777,
+      "IBS0": 0.08378798500411472,
+      "IDs": [
+        "CHILD1",
+        "U11"
+      ],
+      "Kinship": 0.0012860276874196441,
+      "KinshipWithin": 0.0017006802721088435,
+      "NHetHet": 5543,
+      "N_Het1": 13219,
+      "N_Het2": 13241,
+      "N_IBS0": 2749,
+      "N_IBS1": 15374,
+      "N_IBS2": 14686,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U12": {
+      "HetHet": 0.16717973726721327,
+      "IBS0": 0.08403182053704776,
+      "IDs": [
+        "CHILD1",
+        "U12"
+      ],
+      "Kinship": -0.0016871398240825286,
+      "KinshipWithin": -0.0010981936607717651,
+      "NHetHet": 5485,
+      "N_Het1": 13219,
+      "N_Het2": 13188,
+      "N_IBS0": 2757,
+      "N_IBS1": 15437,
+      "N_IBS2": 14615,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U13": {
+      "HetHet": 0.16964857203816025,
+      "IBS0": 0.08147154744125087,
+      "IDs": [
+        "CHILD1",
+        "U13"
+      ],
+      "Kinship": 0.00667599667145774,
+      "KinshipWithin": 0.008294062205466541,
+      "NHetHet": 5566,
+      "N_Het1": 13219,
+      "N_Het2": 13306,
+      "N_IBS0": 2673,
+      "N_IBS1": 15393,
+      "N_IBS2": 14743,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U14": {
+      "HetHet": 0.16498521747081593,
+      "IBS0": 0.08247736901459965,
+      "IDs": [
+        "CHILD1",
+        "U14"
+      ],
+      "Kinship": -0.0014458564797199536,
+      "KinshipWithin": 3.793626707132018e-05,
+      "NHetHet": 5413,
+      "N_Het1": 13219,
+      "N_Het2": 13141,
+      "N_IBS0": 2706,
+      "N_IBS1": 15534,
+      "N_IBS2": 14569,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U15": {
+      "HetHet": 0.16596055960254807,
+      "IBS0": 0.08540339540979609,
+      "IDs": [
+        "CHILD1",
+        "U15"
+      ],
+      "Kinship": -0.007337845030796153,
+      "KinshipWithin": -0.006029579067121729,
+      "NHetHet": 5445,
+      "N_Het1": 13219,
+      "N_Het2": 13151,
+      "N_IBS0": 2802,
+      "N_IBS1": 15480,
+      "N_IBS2": 14527,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U16": {
+      "HetHet": 0.16888658599774453,
+      "IBS0": 0.08110579414185132,
+      "IDs": [
+        "CHILD1",
+        "U16"
+      ],
+      "Kinship": 0.0070920644526817345,
+      "KinshipWithin": 0.008263839100411305,
+      "NHetHet": 5541,
+      "N_Het1": 13219,
+      "N_Het2": 13282,
+      "N_IBS0": 2661,
+      "N_IBS1": 15419,
+      "N_IBS2": 14729,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U17": {
+      "HetHet": 0.16705781950074675,
+      "IBS0": 0.08220305404004999,
+      "IDs": [
+        "CHILD1",
+        "U17"
+      ],
+      "Kinship": 0.0027422649217035966,
+      "KinshipWithin": 0.003287112252994295,
+      "NHetHet": 5481,
+      "N_Het1": 13219,
+      "N_Het2": 13248,
+      "N_IBS0": 2697,
+      "N_IBS1": 15505,
+      "N_IBS2": 14607,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U18": {
+      "HetHet": 0.16842939437349508,
+      "IBS0": 0.08320887561339876,
+      "IDs": [
+        "CHILD1",
+        "U18"
+      ],
+      "Kinship": 0.002269460624858166,
+      "KinshipWithin": 0.0024952741020793953,
+      "NHetHet": 5526,
+      "N_Het1": 13219,
+      "N_Het2": 13231,
+      "N_IBS0": 2730,
+      "N_IBS1": 15398,
+      "N_IBS2": 14681,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U19": {
+      "HetHet": 0.16333932762351794,
+      "IBS0": 0.08424517662836417,
+      "IDs": [
+        "CHILD1",
+        "U19"
+      ],
+      "Kinship": -0.008938803575521459,
+      "KinshipWithin": -0.006423901474836551,
+      "NHetHet": 5359,
+      "N_Het1": 13219,
+      "N_Het2": 13089,
+      "N_IBS0": 2764,
+      "N_IBS1": 15590,
+      "N_IBS2": 14455,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD1|U20": {
+      "HetHet": 0.1699014288989073,
+      "IBS0": 0.0852372583479789,
+      "IDs": [
+        "CHILD1",
+        "U20"
+      ],
+      "Kinship": -0.004280007608902459,
+      "KinshipWithin": -0.0007082821796203608,
+      "NHetHet": 4447,
+      "N_Het1": 10514,
+      "N_Het2": 10664,
+      "N_IBS0": 2231,
+      "N_IBS1": 12284,
+      "N_IBS2": 11659,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "CHILD2|DAD": {
+      "HetHet": 0.1983297265994087,
+      "IBS0": 0.0,
+      "IDs": [
+        "DAD",
+        "CHILD2"
+      ],
+      "Kinship": 0.2465519854501364,
+      "KinshipWithin": 0.2465519854501364,
+      "NHetHet": 6507,
+      "N_Het1": 13137,
+      "N_Het2": 13255,
+      "N_IBS0": 0,
+      "N_IBS1": 13378,
+      "N_IBS2": 19431,
+      "N_SNP": 32809,
+      "withinFamily": true
+    },
+    "CHILD2|DUP": {
+      "HetHet": 0.2454204638971014,
+      "IBS0": 0.021609924106190375,
+      "IDs": [
+        "CHILD2",
+        "DUP"
+      ],
+      "Kinship": 0.25024585823435963,
+      "KinshipWithin": 0.2505854800936768,
+      "NHetHet": 8052,
+      "N_Het1": 13255,
+      "N_Het2": 13219,
+      "N_IBS0": 709,
+      "N_IBS1": 10370,
+      "N_IBS2": 21730,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|MOM": {
+      "HetHet": 0.2032978755829193,
+      "IBS0": 0.0,
+      "IDs": [
+        "MOM",
+        "CHILD2"
+      ],
+      "Kinship": 0.2517741204892043,
+      "KinshipWithin": 0.2517741204892043,
+      "NHetHet": 6670,
+      "N_Het1": 13237,
+      "N_Het2": 13255,
+      "N_IBS0": 0,
+      "N_IBS1": 13152,
+      "N_IBS2": 19657,
+      "N_SNP": 32809,
+      "withinFamily": true
+    },
+    "CHILD2|U01": {
+      "HetHet": 0.16717973726721327,
+      "IBS0": 0.08421469718674754,
+      "IDs": [
+        "CHILD2",
+        "U01"
+      ],
+      "Kinship": -0.0026138343813925102,
+      "KinshipWithin": -0.0015498601345732214,
+      "NHetHet": 5485,
+      "N_Het1": 13255,
+      "N_Het2": 13199,
+      "N_IBS0": 2763,
+      "N_IBS1": 15484,
+      "N_IBS2": 14562,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U02": {
+      "HetHet": 0.1659910390441647,
+      "IBS0": 0.08205065683196684,
+      "IDs": [
+        "CHILD2",
+        "U02"
+      ],
+      "Kinship": 0.0003801992243935848,
+      "KinshipWithin": 0.002347951223206847,
+      "NHetHet": 5446,
+      "N_Het1": 13255,
+      "N_Het2": 13151,
+      "N_IBS0": 2692,
+      "N_IBS1": 15514,
+      "N_IBS2": 14603,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U03": {
+      "HetHet": 0.1673321344752964,
+      "IBS0": 0.08330031393824865,
+      "IDs": [
+        "CHILD2",
+        "U03"
+      ],
+      "Kinship": -0.0010645578283020596,
+      "KinshipWithin": 0.0009088843444671666,
+      "NHetHet": 5490,
+      "N_Het1": 13255,
+      "N_Het2": 13151,
+      "N_IBS0": 2733,
+      "N_IBS1": 15426,
+      "N_IBS2": 14650,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U04": {
+      "HetHet": 0.16964857203816025,
+      "IBS0": 0.08421469718674754,
+      "IDs": [
+        "CHILD2",
+        "U04"
+      ],
+      "Kinship": 0.0010750660128253653,
+      "KinshipWithin": 0.001507556627595824,
+      "NHetHet": 5566,
+      "N_Het1": 13255,
+      "N_Het2": 13278,
+      "N_IBS0": 2763,
+      "N_IBS1": 15401,
+      "N_IBS2": 14645,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U05": {
+      "HetHet": 0.16684446340943035,
+      "IBS0": 0.08412325886189766,
+      "IDs": [
+        "CHILD2",
+        "U05"
+      ],
+      "Kinship": -0.0032061010775534804,
+      "KinshipWithin": -0.0017402489312601673,
+      "NHetHet": 5474,
+      "N_Het1": 13255,
+      "N_Het2": 13178,
+      "N_IBS0": 2760,
+      "N_IBS1": 15485,
+      "N_IBS2": 14564,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U06": {
+      "HetHet": 0.17263555731658997,
+      "IBS0": 0.08442805327806395,
+      "IDs": [
+        "CHILD2",
+        "U06"
+      ],
+      "Kinship": 0.003715579026782323,
+      "KinshipWithin": 0.004668498926998231,
+      "NHetHet": 5664,
+      "N_Het1": 13255,
+      "N_Het2": 13306,
+      "N_IBS0": 2770,
+      "N_IBS1": 15233,
+      "N_IBS2": 14806,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U07": {
+      "HetHet": 0.16931329818037733,
+      "IBS0": 0.08537291596817946,
+      "IDs": [
+        "CHILD2",
+        "U07"
+      ],
+      "Kinship": -0.0033017077798861427,
+      "KinshipWithin": -0.0017782822550132425,
+      "NHetHet": 5555,
+      "N_Het1": 13255,
+      "N_Het2": 13175,
+      "N_IBS0": 2801,
+      "N_IBS1": 15320,
+      "N_IBS2": 14688,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U08": {
+      "HetHet": 0.1690694626474443,
+      "IBS0": 0.08421469718674754,
+      "IDs": [
+        "CHILD2",
+        "U08"
+      ],
+      "Kinship": 0.0006035458317615872,
+      "KinshipWithin": 0.0007918552036199095,
+      "NHetHet": 5547,
+      "N_Het1": 13255,
+      "N_Het2": 13265,
+      "N_IBS0": 2763,
+      "N_IBS1": 15426,
+      "N_IBS2": 14620,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U09": {
+      "HetHet": 0.16775884665792923,
+      "IBS0": 0.08226401292328324,
+      "IDs": [
+        "CHILD2",
+        "U09"
+      ],
+      "Kinship": 0.002184982520139822,
+      "KinshipWithin": 0.004013175330329762,
+      "NHetHet": 5504,
+      "N_Het1": 13255,
+      "N_Het2": 13158,
+      "N_IBS0": 2699,
+      "N_IBS1": 15405,
+      "N_IBS2": 14705,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U10": {
+      "HetHet": 0.1673321344752964,
+      "IBS0": 0.08570818982596239,
+      "IDs": [
+        "CHILD2",
+        "U10"
+      ],
+      "Kinship": -0.007993742368742396,
+      "KinshipWithin": -0.0050836526423612425,
+      "NHetHet": 5490,
+      "N_Het1": 13255,
+      "N_Het2": 13104,
+      "N_IBS0": 2812,
+      "N_IBS1": 15379,
+      "N_IBS2": 14618,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U11": {
+      "HetHet": 0.16909994208906093,
+      "IBS0": 0.08473284769423024,
+      "IDs": [
+        "CHILD2",
+        "U11"
+      ],
+      "Kinship": -0.0007174684691488853,
+      "KinshipWithin": -0.0004528985507246377,
+      "NHetHet": 5548,
+      "N_Het1": 13255,
+      "N_Het2": 13241,
+      "N_IBS0": 2780,
+      "N_IBS1": 15400,
+      "N_IBS2": 14629,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U12": {
+      "HetHet": 0.16879514767289464,
+      "IBS0": 0.08372702612088147,
+      "IDs": [
+        "CHILD2",
+        "U12"
+      ],
+      "Kinship": 0.0003980891719745361,
+      "KinshipWithin": 0.001663956434595167,
+      "NHetHet": 5538,
+      "N_Het1": 13255,
+      "N_Het2": 13188,
+      "N_IBS0": 2747,
+      "N_IBS1": 15367,
+      "N_IBS2": 14695,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U13": {
+      "HetHet": 0.16809412051571215,
+      "IBS0": 0.08220305404004999,
+      "IDs": [
+        "CHILD2",
+        "U13"
+      ],
+      "Kinship": 0.003602414183327074,
+      "KinshipWithin": 0.00455555137231279,
+      "NHetHet": 5515,
+      "N_Het1": 13255,
+      "N_Het2": 13306,
+      "N_IBS0": 2697,
+      "N_IBS1": 15531,
+      "N_IBS2": 14581,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U14": {
+      "HetHet": 0.1688561065561279,
+      "IBS0": 0.0844890121612972,
+      "IDs": [
+        "CHILD2",
+        "U14"
+      ],
+      "Kinship": -0.002320980138497797,
+      "KinshipWithin": -0.00015153811183512653,
+      "NHetHet": 5540,
+      "N_Het1": 13255,
+      "N_Het2": 13141,
+      "N_IBS0": 2772,
+      "N_IBS1": 15316,
+      "N_IBS2": 14721,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U15": {
+      "HetHet": 0.16458898472979974,
+      "IBS0": 0.08326983449663203,
+      "IDs": [
+        "CHILD2",
+        "U15"
+      ],
+      "Kinship": -0.004410311002965517,
+      "KinshipWithin": -0.0024236915852457776,
+      "NHetHet": 5400,
+      "N_Het1": 13255,
+      "N_Het2": 13151,
+      "N_IBS0": 2732,
+      "N_IBS1": 15606,
+      "N_IBS2": 14471,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U16": {
+      "HetHet": 0.17108110579414185,
+      "IBS0": 0.08275168398914932,
+      "IDs": [
+        "CHILD2",
+        "U16"
+      ],
+      "Kinship": 0.006393813655224456,
+      "KinshipWithin": 0.00689603195538305,
+      "NHetHet": 5613,
+      "N_Het1": 13255,
+      "N_Het2": 13282,
+      "N_IBS0": 2715,
+      "N_IBS1": 15311,
+      "N_IBS2": 14783,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U17": {
+      "HetHet": 0.16769788777469596,
+      "IBS0": 0.0831479167301655,
+      "IDs": [
+        "CHILD2",
+        "U17"
+      ],
+      "Kinship": 0.0016040157004830746,
+      "KinshipWithin": 0.0017356525676338528,
+      "NHetHet": 5502,
+      "N_Het1": 13255,
+      "N_Het2": 13248,
+      "N_IBS0": 2728,
+      "N_IBS1": 15499,
+      "N_IBS2": 14582,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U18": {
+      "HetHet": 0.16922185985552746,
+      "IBS0": 0.08430613551159742,
+      "IDs": [
+        "CHILD2",
+        "U18"
+      ],
+      "Kinship": 0.0003023203083666881,
+      "KinshipWithin": 0.0007551159102922298,
+      "NHetHet": 5552,
+      "N_Het1": 13255,
+      "N_Het2": 13231,
+      "N_IBS0": 2766,
+      "N_IBS1": 15382,
+      "N_IBS2": 14661,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U19": {
+      "HetHet": 0.1660824773690146,
+      "IBS0": 0.08723216190679386,
+      "IDs": [
+        "CHILD2",
+        "U19"
+      ],
+      "Kinship": -0.013675605470242158,
+      "KinshipWithin": -0.010438809596112967,
+      "NHetHet": 5449,
+      "N_Het1": 13255,
+      "N_Het2": 13089,
+      "N_IBS0": 2862,
+      "N_IBS1": 15446,
+      "N_IBS2": 14501,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "CHILD2|U20": {
+      "HetHet": 0.17120042790555512,
+      "IBS0": 0.0842439061664247,
+      "IDs": [
+        "CHILD2",
+        "U20"
+      ],
+      "Kinship": 0.002190296749882248,
+      "KinshipWithin": 0.003336622961605339,
+      "NHetHet": 4481,
+      "N_Het1": 10615,
+      "N_Het2": 10664,
+      "N_IBS0": 2205,
+      "N_IBS1": 12317,
+      "N_IBS2": 11652,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "DAD|DUP": {
+      "HetHet": 0.198634521015575,
+      "IBS0": 0.0,
+      "IDs": [
+        "DAD",
+        "DUP"
+      ],
+      "Kinship": 0.24647940930197154,
+      "KinshipWithin": 0.2472681742297769,
+      "NHetHet": 6517,
+      "N_Het1": 13137,
+      "N_Het2": 13219,
+      "N_IBS0": 0,
+      "N_IBS1": 13322,
+      "N_IBS2": 19487,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|MOM": {
+      "HetHet": 0.1674235728001463,
+      "IBS0": 0.08570818982596239,
+      "IDs": [
+        "DAD",
+        "MOM"
+      ],
+      "Kinship": -0.004967012967316296,
+      "KinshipWithin": -0.004967012967316296,
+      "NHetHet": 5493,
+      "N_Het1": 13137,
+      "N_Het2": 13237,
+      "N_IBS0": 2812,
+      "N_IBS1": 15388,
+      "N_IBS2": 14609,
+      "N_SNP": 32809,
+      "withinFamily": true
+    },
+    "DAD|U01": {
+      "HetHet": 0.16501569691243256,
+      "IBS0": 0.08342223170471517,
+      "IDs": [
+        "DAD",
+        "U01"
+      ],
+      "Kinship": -0.0034635000380603964,
+      "KinshipWithin": -0.002278250303766707,
+      "NHetHet": 5414,
+      "N_Het1": 13137,
+      "N_Het2": 13199,
+      "N_IBS0": 2737,
+      "N_IBS1": 15508,
+      "N_IBS2": 14564,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U02": {
+      "HetHet": 0.16711877838398,
+      "IBS0": 0.0836660672376482,
+      "IDs": [
+        "DAD",
+        "U02"
+      ],
+      "Kinship": -0.0005328461597016165,
+      "KinshipWithin": -0.00026628119293974436,
+      "NHetHet": 5483,
+      "N_Het1": 13137,
+      "N_Het2": 13151,
+      "N_IBS0": 2745,
+      "N_IBS1": 15322,
+      "N_IBS2": 14742,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U03": {
+      "HetHet": 0.16468042305464964,
+      "IBS0": 0.08409277942028102,
+      "IDs": [
+        "DAD",
+        "U03"
+      ],
+      "Kinship": -0.004643373677399754,
+      "KinshipWithin": -0.004374619598295801,
+      "NHetHet": 5403,
+      "N_Het1": 13137,
+      "N_Het2": 13151,
+      "N_IBS0": 2759,
+      "N_IBS1": 15482,
+      "N_IBS2": 14568,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U04": {
+      "HetHet": 0.16806364107409552,
+      "IBS0": 0.08515955987686305,
+      "IDs": [
+        "DAD",
+        "U04"
+      ],
+      "Kinship": -0.005499733576920129,
+      "KinshipWithin": -0.002801438576566345,
+      "NHetHet": 5514,
+      "N_Het1": 13137,
+      "N_Het2": 13278,
+      "N_IBS0": 2794,
+      "N_IBS1": 15387,
+      "N_IBS2": 14628,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U05": {
+      "HetHet": 0.1648328202627328,
+      "IBS0": 0.0847938065774635,
+      "IDs": [
+        "DAD",
+        "U05"
+      ],
+      "Kinship": -0.006717667656238158,
+      "KinshipWithin": -0.0059281778453353605,
+      "NHetHet": 5408,
+      "N_Het1": 13137,
+      "N_Het2": 13178,
+      "N_IBS0": 2782,
+      "N_IBS1": 15499,
+      "N_IBS2": 14528,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U06": {
+      "HetHet": 0.169587613154927,
+      "IBS0": 0.08415373830351427,
+      "IDs": [
+        "DAD",
+        "U06"
+      ],
+      "Kinship": -0.0016175686990941296,
+      "KinshipWithin": 0.0015883220512044776,
+      "NHetHet": 5564,
+      "N_Het1": 13137,
+      "N_Het2": 13306,
+      "N_IBS0": 2761,
+      "N_IBS1": 15315,
+      "N_IBS2": 14733,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U07": {
+      "HetHet": 0.16501569691243256,
+      "IBS0": 0.08339175226309854,
+      "IDs": [
+        "DAD",
+        "U07"
+      ],
+      "Kinship": -0.00293065387835878,
+      "KinshipWithin": -0.002204317421708726,
+      "NHetHet": 5414,
+      "N_Het1": 13137,
+      "N_Het2": 13175,
+      "N_IBS0": 2736,
+      "N_IBS1": 15484,
+      "N_IBS2": 14589,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U08": {
+      "HetHet": 0.16690542229266359,
+      "IBS0": 0.0850986009936298,
+      "IDs": [
+        "DAD",
+        "U08"
+      ],
+      "Kinship": -0.0065463956763339715,
+      "KinshipWithin": -0.004090599197030528,
+      "NHetHet": 5476,
+      "N_Het1": 13137,
+      "N_Het2": 13265,
+      "N_IBS0": 2792,
+      "N_IBS1": 15450,
+      "N_IBS2": 14567,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U09": {
+      "HetHet": 0.16529001188698222,
+      "IBS0": 0.08250784845621628,
+      "IDs": [
+        "DAD",
+        "U09"
+      ],
+      "Kinship": -5.709065996806206e-05,
+      "KinshipWithin": 0.00034227039361095263,
+      "NHetHet": 5423,
+      "N_Het1": 13137,
+      "N_Het2": 13158,
+      "N_IBS0": 2707,
+      "N_IBS1": 15449,
+      "N_IBS2": 14653,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U10": {
+      "HetHet": 0.16663110731811392,
+      "IBS0": 0.08796366850559298,
+      "IDs": [
+        "DAD",
+        "U10"
+      ],
+      "Kinship": -0.012267246642246654,
+      "KinshipWithin": -0.011623032658816356,
+      "NHetHet": 5467,
+      "N_Het1": 13137,
+      "N_Het2": 13104,
+      "N_IBS0": 2886,
+      "N_IBS1": 15307,
+      "N_IBS2": 14616,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U11": {
+      "HetHet": 0.1657776829528483,
+      "IBS0": 0.08467188881099698,
+      "IDs": [
+        "DAD",
+        "U11"
+      ],
+      "Kinship": -0.006432214356397958,
+      "KinshipWithin": -0.004435514443854727,
+      "NHetHet": 5439,
+      "N_Het1": 13137,
+      "N_Het2": 13241,
+      "N_IBS0": 2778,
+      "N_IBS1": 15500,
+      "N_IBS2": 14531,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U12": {
+      "HetHet": 0.16949617483007712,
+      "IBS0": 0.08607394312536194,
+      "IDs": [
+        "DAD",
+        "U12"
+      ],
+      "Kinship": -0.004281799497602212,
+      "KinshipWithin": -0.0033048433048433047,
+      "NHetHet": 5561,
+      "N_Het1": 13137,
+      "N_Het2": 13188,
+      "N_IBS0": 2824,
+      "N_IBS1": 15203,
+      "N_IBS2": 14782,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U13": {
+      "HetHet": 0.1689780243225944,
+      "IBS0": 0.08299551952208235,
+      "IDs": [
+        "DAD",
+        "U13"
+      ],
+      "Kinship": 0.000513815939712281,
+      "KinshipWithin": 0.003706084786143781,
+      "NHetHet": 5544,
+      "N_Het1": 13137,
+      "N_Het2": 13306,
+      "N_IBS0": 2723,
+      "N_IBS1": 15355,
+      "N_IBS2": 14731,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U14": {
+      "HetHet": 0.16446706696333324,
+      "IBS0": 0.08546435429302936,
+      "IDs": [
+        "DAD",
+        "U14"
+      ],
+      "Kinship": -0.008144934155438821,
+      "KinshipWithin": -0.008067585052134866,
+      "NHetHet": 5396,
+      "N_Het1": 13137,
+      "N_Het2": 13141,
+      "N_IBS0": 2804,
+      "N_IBS1": 15486,
+      "N_IBS2": 14519,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U15": {
+      "HetHet": 0.16550336797829865,
+      "IBS0": 0.0856167515011125,
+      "IDs": [
+        "DAD",
+        "U15"
+      ],
+      "Kinship": -0.007421785795843849,
+      "KinshipWithin": -0.007151552038953134,
+      "NHetHet": 5430,
+      "N_Het1": 13137,
+      "N_Het2": 13151,
+      "N_IBS0": 2809,
+      "N_IBS1": 15428,
+      "N_IBS2": 14572,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U16": {
+      "HetHet": 0.16922185985552746,
+      "IBS0": 0.08281264287238257,
+      "IDs": [
+        "DAD",
+        "U16"
+      ],
+      "Kinship": 0.0017317500190301982,
+      "KinshipWithin": 0.00446648245580832,
+      "NHetHet": 5552,
+      "N_Het1": 13137,
+      "N_Het2": 13282,
+      "N_IBS0": 2717,
+      "N_IBS1": 15315,
+      "N_IBS2": 14777,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U17": {
+      "HetHet": 0.1691609009722942,
+      "IBS0": 0.08253832789783291,
+      "IDs": [
+        "DAD",
+        "U17"
+      ],
+      "Kinship": 0.002987744538326842,
+      "KinshipWithin": 0.005078643168466932,
+      "NHetHet": 5550,
+      "N_Het1": 13137,
+      "N_Het2": 13248,
+      "N_IBS0": 2708,
+      "N_IBS1": 15285,
+      "N_IBS2": 14816,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U18": {
+      "HetHet": 0.16888658599774453,
+      "IBS0": 0.08378798500411472,
+      "IDs": [
+        "DAD",
+        "U18"
+      ],
+      "Kinship": -0.00015224175991479516,
+      "KinshipWithin": 0.001630764563106796,
+      "NHetHet": 5541,
+      "N_Het1": 13137,
+      "N_Het2": 13231,
+      "N_IBS0": 2749,
+      "N_IBS1": 15286,
+      "N_IBS2": 14774,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U19": {
+      "HetHet": 0.1661739156938645,
+      "IBS0": 0.08747599743972691,
+      "IDs": [
+        "DAD",
+        "U19"
+      ],
+      "Kinship": -0.011918404767361945,
+      "KinshipWithin": -0.01098146877144818,
+      "NHetHet": 5452,
+      "N_Het1": 13137,
+      "N_Het2": 13089,
+      "N_IBS0": 2870,
+      "N_IBS1": 15322,
+      "N_IBS2": 14617,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DAD|U20": {
+      "HetHet": 0.1685642240391228,
+      "IBS0": 0.0843967295789715,
+      "IDs": [
+        "DAD",
+        "U20"
+      ],
+      "Kinship": -0.004870129870129913,
+      "KinshipWithin": -0.0002838758516275549,
+      "NHetHet": 4412,
+      "N_Het1": 10472,
+      "N_Het2": 10664,
+      "N_IBS0": 2209,
+      "N_IBS1": 12312,
+      "N_IBS2": 11653,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "DUP|MOM": {
+      "HetHet": 0.20125575299460513,
+      "IBS0": 0.0,
+      "IDs": [
+        "MOM",
+        "DUP"
+      ],
+      "Kinship": 0.24941372267191164,
+      "KinshipWithin": 0.24958421530087693,
+      "NHetHet": 6603,
+      "N_Het1": 13237,
+      "N_Het2": 13219,
+      "N_IBS0": 0,
+      "N_IBS1": 13250,
+      "N_IBS2": 19559,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U01": {
+      "HetHet": 0.16766740833307933,
+      "IBS0": 0.08436709439483069,
+      "IDs": [
+        "DUP",
+        "U01"
+      ],
+      "Kinship": -0.0017046745965603183,
+      "KinshipWithin": -0.0013248542660307366,
+      "NHetHet": 5501,
+      "N_Het1": 13219,
+      "N_Het2": 13199,
+      "N_IBS0": 2768,
+      "N_IBS1": 15416,
+      "N_IBS2": 14625,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U02": {
+      "HetHet": 0.16998384589594318,
+      "IBS0": 0.08281264287238257,
+      "IDs": [
+        "DUP",
+        "U02"
+      ],
+      "Kinship": 0.00414417154589003,
+      "KinshipWithin": 0.005422828972317027,
+      "NHetHet": 5577,
+      "N_Het1": 13219,
+      "N_Het2": 13151,
+      "N_IBS0": 2717,
+      "N_IBS1": 15216,
+      "N_IBS2": 14876,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U03": {
+      "HetHet": 0.16553384741991528,
+      "IBS0": 0.08451949160291383,
+      "IDs": [
+        "DUP",
+        "U03"
+      ],
+      "Kinship": -0.005664968443464424,
+      "KinshipWithin": -0.004361016306408798,
+      "NHetHet": 5431,
+      "N_Het1": 13219,
+      "N_Het2": 13151,
+      "N_IBS0": 2773,
+      "N_IBS1": 15508,
+      "N_IBS2": 14528,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U04": {
+      "HetHet": 0.16879514767289464,
+      "IBS0": 0.08424517662836417,
+      "IDs": [
+        "DUP",
+        "U04"
+      ],
+      "Kinship": -0.0007375747030788915,
+      "KinshipWithin": 0.00037740121523191305,
+      "NHetHet": 5538,
+      "N_Het1": 13219,
+      "N_Het2": 13278,
+      "N_IBS0": 2764,
+      "N_IBS1": 15421,
+      "N_IBS2": 14624,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U05": {
+      "HetHet": 0.16431466975525008,
+      "IBS0": 0.08522051876009631,
+      "IDs": [
+        "DUP",
+        "U05"
+      ],
+      "Kinship": -0.008404158445894705,
+      "KinshipWithin": -0.0076145016479145355,
+      "NHetHet": 5391,
+      "N_Het1": 13219,
+      "N_Het2": 13178,
+      "N_IBS0": 2796,
+      "N_IBS1": 15615,
+      "N_IBS2": 14398,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U06": {
+      "HetHet": 0.17077631137797555,
+      "IBS0": 0.08470236825261361,
+      "IDs": [
+        "DUP",
+        "U06"
+      ],
+      "Kinship": 5.673651562143611e-05,
+      "KinshipWithin": 0.0016965127238454288,
+      "NHetHet": 5603,
+      "N_Het1": 13219,
+      "N_Het2": 13306,
+      "N_IBS0": 2779,
+      "N_IBS1": 15319,
+      "N_IBS2": 14711,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U07": {
+      "HetHet": 0.1678198055411625,
+      "IBS0": 0.08415373830351427,
+      "IDs": [
+        "DUP",
+        "U07"
+      ],
+      "Kinship": -0.0014421252371916715,
+      "KinshipWithin": -0.0006061983784193377,
+      "NHetHet": 5506,
+      "N_Het1": 13219,
+      "N_Het2": 13175,
+      "N_IBS0": 2761,
+      "N_IBS1": 15382,
+      "N_IBS2": 14666,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U08": {
+      "HetHet": 0.166295833460331,
+      "IBS0": 0.08348319058794842,
+      "IDs": [
+        "DUP",
+        "U08"
+      ],
+      "Kinship": -0.0017020954686436385,
+      "KinshipWithin": -0.0008306902280622263,
+      "NHetHet": 5456,
+      "N_Het1": 13219,
+      "N_Het2": 13265,
+      "N_IBS0": 2739,
+      "N_IBS1": 15572,
+      "N_IBS2": 14498,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U09": {
+      "HetHet": 0.16565576518638178,
+      "IBS0": 0.08433661495321405,
+      "IDs": [
+        "DUP",
+        "U09"
+      ],
+      "Kinship": -0.004920960632314952,
+      "KinshipWithin": -0.00375326989422603,
+      "NHetHet": 5435,
+      "N_Het1": 13219,
+      "N_Het2": 13158,
+      "N_IBS0": 2767,
+      "N_IBS1": 15507,
+      "N_IBS2": 14535,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U10": {
+      "HetHet": 0.1670273400591301,
+      "IBS0": 0.08647017586637813,
+      "IDs": [
+        "DUP",
+        "U10"
+      ],
+      "Kinship": -0.009596306471306493,
+      "KinshipWithin": -0.007369980625308665,
+      "NHetHet": 5480,
+      "N_Het1": 13219,
+      "N_Het2": 13104,
+      "N_IBS0": 2837,
+      "N_IBS1": 15363,
+      "N_IBS2": 14609,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U11": {
+      "HetHet": 0.16894754488097777,
+      "IBS0": 0.08378798500411472,
+      "IDs": [
+        "DUP",
+        "U11"
+      ],
+      "Kinship": 0.0012860276874196441,
+      "KinshipWithin": 0.0017006802721088435,
+      "NHetHet": 5543,
+      "N_Het1": 13219,
+      "N_Het2": 13241,
+      "N_IBS0": 2749,
+      "N_IBS1": 15374,
+      "N_IBS2": 14686,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U12": {
+      "HetHet": 0.16717973726721327,
+      "IBS0": 0.08403182053704776,
+      "IDs": [
+        "DUP",
+        "U12"
+      ],
+      "Kinship": -0.0016871398240825286,
+      "KinshipWithin": -0.0010981936607717651,
+      "NHetHet": 5485,
+      "N_Het1": 13219,
+      "N_Het2": 13188,
+      "N_IBS0": 2757,
+      "N_IBS1": 15437,
+      "N_IBS2": 14615,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U13": {
+      "HetHet": 0.16964857203816025,
+      "IBS0": 0.08147154744125087,
+      "IDs": [
+        "DUP",
+        "U13"
+      ],
+      "Kinship": 0.00667599667145774,
+      "KinshipWithin": 0.008294062205466541,
+      "NHetHet": 5566,
+      "N_Het1": 13219,
+      "N_Het2": 13306,
+      "N_IBS0": 2673,
+      "N_IBS1": 15393,
+      "N_IBS2": 14743,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U14": {
+      "HetHet": 0.16498521747081593,
+      "IBS0": 0.08247736901459965,
+      "IDs": [
+        "DUP",
+        "U14"
+      ],
+      "Kinship": -0.0014458564797199536,
+      "KinshipWithin": 3.793626707132018e-05,
+      "NHetHet": 5413,
+      "N_Het1": 13219,
+      "N_Het2": 13141,
+      "N_IBS0": 2706,
+      "N_IBS1": 15534,
+      "N_IBS2": 14569,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U15": {
+      "HetHet": 0.16596055960254807,
+      "IBS0": 0.08540339540979609,
+      "IDs": [
+        "DUP",
+        "U15"
+      ],
+      "Kinship": -0.007337845030796153,
+      "KinshipWithin": -0.006029579067121729,
+      "NHetHet": 5445,
+      "N_Het1": 13219,
+      "N_Het2": 13151,
+      "N_IBS0": 2802,
+      "N_IBS1": 15480,
+      "N_IBS2": 14527,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U16": {
+      "HetHet": 0.16888658599774453,
+      "IBS0": 0.08110579414185132,
+      "IDs": [
+        "DUP",
+        "U16"
+      ],
+      "Kinship": 0.0070920644526817345,
+      "KinshipWithin": 0.008263839100411305,
+      "NHetHet": 5541,
+      "N_Het1": 13219,
+      "N_Het2": 13282,
+      "N_IBS0": 2661,
+      "N_IBS1": 15419,
+      "N_IBS2": 14729,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U17": {
+      "HetHet": 0.16705781950074675,
+      "IBS0": 0.08220305404004999,
+      "IDs": [
+        "DUP",
+        "U17"
+      ],
+      "Kinship": 0.0027422649217035966,
+      "KinshipWithin": 0.003287112252994295,
+      "NHetHet": 5481,
+      "N_Het1": 13219,
+      "N_Het2": 13248,
+      "N_IBS0": 2697,
+      "N_IBS1": 15505,
+      "N_IBS2": 14607,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U18": {
+      "HetHet": 0.16842939437349508,
+      "IBS0": 0.08320887561339876,
+      "IDs": [
+        "DUP",
+        "U18"
+      ],
+      "Kinship": 0.002269460624858166,
+      "KinshipWithin": 0.0024952741020793953,
+      "NHetHet": 5526,
+      "N_Het1": 13219,
+      "N_Het2": 13231,
+      "N_IBS0": 2730,
+      "N_IBS1": 15398,
+      "N_IBS2": 14681,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U19": {
+      "HetHet": 0.16333932762351794,
+      "IBS0": 0.08424517662836417,
+      "IDs": [
+        "DUP",
+        "U19"
+      ],
+      "Kinship": -0.008938803575521459,
+      "KinshipWithin": -0.006423901474836551,
+      "NHetHet": 5359,
+      "N_Het1": 13219,
+      "N_Het2": 13089,
+      "N_IBS0": 2764,
+      "N_IBS1": 15590,
+      "N_IBS2": 14455,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "DUP|U20": {
+      "HetHet": 0.1699014288989073,
+      "IBS0": 0.0852372583479789,
+      "IDs": [
+        "DUP",
+        "U20"
+      ],
+      "Kinship": -0.004280007608902459,
+      "KinshipWithin": -0.0007082821796203608,
+      "NHetHet": 4447,
+      "N_Het1": 10514,
+      "N_Het2": 10664,
+      "N_IBS0": 2231,
+      "N_IBS1": 12284,
+      "N_IBS2": 11659,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "MOM|U01": {
+      "HetHet": 0.16788076442439576,
+      "IBS0": 0.08418421774513091,
+      "IDs": [
+        "MOM",
+        "U01"
+      ],
+      "Kinship": -0.0013258580195469882,
+      "KinshipWithin": -0.0006052352852171282,
+      "NHetHet": 5508,
+      "N_Het1": 13237,
+      "N_Het2": 13199,
+      "N_IBS0": 2762,
+      "N_IBS1": 15420,
+      "N_IBS2": 14627,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U02": {
+      "HetHet": 0.167941723307629,
+      "IBS0": 0.08238593068974977,
+      "IDs": [
+        "MOM",
+        "U02"
+      ],
+      "Kinship": 0.002319215268800856,
+      "KinshipWithin": 0.003941185387297257,
+      "NHetHet": 5510,
+      "N_Het1": 13237,
+      "N_Het2": 13151,
+      "N_IBS0": 2703,
+      "N_IBS1": 15368,
+      "N_IBS2": 14738,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U03": {
+      "HetHet": 0.16900850376421103,
+      "IBS0": 0.08506812155201317,
+      "IDs": [
+        "MOM",
+        "U03"
+      ],
+      "Kinship": -0.0030415937951486782,
+      "KinshipWithin": -0.0014021524935576776,
+      "NHetHet": 5545,
+      "N_Het1": 13237,
+      "N_Het2": 13151,
+      "N_IBS0": 2791,
+      "N_IBS1": 15298,
+      "N_IBS2": 14720,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U04": {
+      "HetHet": 0.16882562711451127,
+      "IBS0": 0.08394038221219788,
+      "IDs": [
+        "MOM",
+        "U04"
+      ],
+      "Kinship": 0.0003966155473294486,
+      "KinshipWithin": 0.00116914953799736,
+      "NHetHet": 5539,
+      "N_Het1": 13237,
+      "N_Het2": 13278,
+      "N_IBS0": 2754,
+      "N_IBS1": 15437,
+      "N_IBS2": 14618,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U05": {
+      "HetHet": 0.1685513121399616,
+      "IBS0": 0.08528147764332958,
+      "IDs": [
+        "MOM",
+        "U05"
+      ],
+      "Kinship": -0.00362346334800423,
+      "KinshipWithin": -0.002498580352072686,
+      "NHetHet": 5530,
+      "N_Het1": 13237,
+      "N_Het2": 13178,
+      "N_IBS0": 2798,
+      "N_IBS1": 15355,
+      "N_IBS2": 14656,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U06": {
+      "HetHet": 0.16891706543936116,
+      "IBS0": 0.08372702612088147,
+      "IDs": [
+        "MOM",
+        "U06"
+      ],
+      "Kinship": 0.0005099342751378466,
+      "KinshipWithin": 0.001808386391892401,
+      "NHetHet": 5542,
+      "N_Het1": 13237,
+      "N_Het2": 13306,
+      "N_IBS0": 2747,
+      "N_IBS1": 15459,
+      "N_IBS2": 14603,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U07": {
+      "HetHet": 0.16778932609954586,
+      "IBS0": 0.08494620378554665,
+      "IDs": [
+        "MOM",
+        "U07"
+      ],
+      "Kinship": -0.003795066413662229,
+      "KinshipWithin": -0.0026124488868696045,
+      "NHetHet": 5505,
+      "N_Het1": 13237,
+      "N_Het2": 13175,
+      "N_IBS0": 2787,
+      "N_IBS1": 15402,
+      "N_IBS2": 14620,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U08": {
+      "HetHet": 0.16949617483007712,
+      "IBS0": 0.08287360175561584,
+      "IDs": [
+        "MOM",
+        "U08"
+      ],
+      "Kinship": 0.004117247110372424,
+      "KinshipWithin": 0.004641159157799411,
+      "NHetHet": 5561,
+      "N_Het1": 13237,
+      "N_Het2": 13265,
+      "N_IBS0": 2719,
+      "N_IBS1": 15380,
+      "N_IBS2": 14710,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U09": {
+      "HetHet": 0.1675150111249962,
+      "IBS0": 0.08494620378554665,
+      "IDs": [
+        "MOM",
+        "U09"
+      ],
+      "Kinship": -0.004464964280285755,
+      "KinshipWithin": -0.0029551051335480203,
+      "NHetHet": 5496,
+      "N_Het1": 13237,
+      "N_Het2": 13158,
+      "N_IBS0": 2787,
+      "N_IBS1": 15403,
+      "N_IBS2": 14619,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U10": {
+      "HetHet": 0.16806364107409552,
+      "IBS0": 0.08604346368374531,
+      "IDs": [
+        "MOM",
+        "U10"
+      ],
+      "Kinship": -0.007574023199023228,
+      "KinshipWithin": -0.005011199271098288,
+      "NHetHet": 5514,
+      "N_Het1": 13237,
+      "N_Het2": 13104,
+      "N_IBS0": 2823,
+      "N_IBS1": 15313,
+      "N_IBS2": 14673,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U11": {
+      "HetHet": 0.16766740833307933,
+      "IBS0": 0.08418421774513091,
+      "IDs": [
+        "MOM",
+        "U11"
+      ],
+      "Kinship": -0.0009443227317368352,
+      "KinshipWithin": -0.0008686456681018204,
+      "NHetHet": 5501,
+      "N_Het1": 13237,
+      "N_Het2": 13241,
+      "N_IBS0": 2762,
+      "N_IBS1": 15476,
+      "N_IBS2": 14571,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U12": {
+      "HetHet": 0.1653509707702155,
+      "IBS0": 0.08141058855801761,
+      "IDs": [
+        "MOM",
+        "U12"
+      ],
+      "Kinship": 0.0022179253867151694,
+      "KinshipWithin": 0.003140964995269631,
+      "NHetHet": 5425,
+      "N_Het1": 13237,
+      "N_Het2": 13188,
+      "N_IBS0": 2671,
+      "N_IBS1": 15575,
+      "N_IBS2": 14563,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U13": {
+      "HetHet": 0.16903898320582766,
+      "IBS0": 0.08162394464933402,
+      "IDs": [
+        "MOM",
+        "U13"
+      ],
+      "Kinship": 0.005873687391402871,
+      "KinshipWithin": 0.0071581961345740875,
+      "NHetHet": 5546,
+      "N_Het1": 13237,
+      "N_Het2": 13306,
+      "N_IBS0": 2678,
+      "N_IBS1": 15451,
+      "N_IBS2": 14680,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U14": {
+      "HetHet": 0.16593008016093144,
+      "IBS0": 0.08141058855801761,
+      "IDs": [
+        "MOM",
+        "U14"
+      ],
+      "Kinship": 0.0020546381553915305,
+      "KinshipWithin": 0.003866858745924634,
+      "NHetHet": 5444,
+      "N_Het1": 13237,
+      "N_Het2": 13141,
+      "N_IBS0": 2671,
+      "N_IBS1": 15490,
+      "N_IBS2": 14648,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U15": {
+      "HetHet": 0.16858179158157824,
+      "IBS0": 0.08564723094272914,
+      "IDs": [
+        "MOM",
+        "U15"
+      ],
+      "Kinship": -0.005018629761995297,
+      "KinshipWithin": -0.003372745187206306,
+      "NHetHet": 5531,
+      "N_Het1": 13237,
+      "N_Het2": 13151,
+      "N_IBS0": 2810,
+      "N_IBS1": 15326,
+      "N_IBS2": 14673,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U16": {
+      "HetHet": 0.16888658599774453,
+      "IBS0": 0.08061812307598525,
+      "IDs": [
+        "MOM",
+        "U16"
+      ],
+      "Kinship": 0.008631109768074352,
+      "KinshipWithin": 0.009464911949922697,
+      "NHetHet": 5541,
+      "N_Het1": 13237,
+      "N_Het2": 13282,
+      "N_IBS0": 2645,
+      "N_IBS1": 15437,
+      "N_IBS2": 14727,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U17": {
+      "HetHet": 0.1679112438660124,
+      "IBS0": 0.08555579261787924,
+      "IDs": [
+        "MOM",
+        "U17"
+      ],
+      "Kinship": -0.004173906474276623,
+      "KinshipWithin": -0.0039645082121955826,
+      "NHetHet": 5509,
+      "N_Het1": 13237,
+      "N_Het2": 13248,
+      "N_IBS0": 2807,
+      "N_IBS1": 15467,
+      "N_IBS2": 14535,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U18": {
+      "HetHet": 0.1690694626474443,
+      "IBS0": 0.08378798500411472,
+      "IDs": [
+        "MOM",
+        "U18"
+      ],
+      "Kinship": 0.0017383417731086093,
+      "KinshipWithin": 0.0018512921263412422,
+      "NHetHet": 5547,
+      "N_Het1": 13237,
+      "N_Het2": 13231,
+      "N_IBS0": 2749,
+      "N_IBS1": 15374,
+      "N_IBS2": 14686,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U19": {
+      "HetHet": 0.16574720351123168,
+      "IBS0": 0.08372702612088147,
+      "IDs": [
+        "MOM",
+        "U19"
+      ],
+      "Kinship": -0.0049660019864008476,
+      "KinshipWithin": -0.0021271746562333813,
+      "NHetHet": 5438,
+      "N_Het1": 13237,
+      "N_Het2": 13089,
+      "N_IBS0": 2747,
+      "N_IBS1": 15450,
+      "N_IBS2": 14612,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "MOM|U20": {
+      "HetHet": 0.1694047528081302,
+      "IBS0": 0.08325055398487048,
+      "IDs": [
+        "MOM",
+        "U20"
+      ],
+      "Kinship": 0.000640478223740415,
+      "KinshipWithin": 0.003584398434183842,
+      "NHetHet": 4434,
+      "N_Het1": 10539,
+      "N_Het2": 10664,
+      "N_IBS0": 2179,
+      "N_IBS1": 12335,
+      "N_IBS2": 11660,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U01|U02": {
+      "HetHet": 0.1658996007193148,
+      "IBS0": 0.08192873906550031,
+      "IDs": [
+        "U01",
+        "U02"
+      ],
+      "Kinship": 0.0016348566648923812,
+      "KinshipWithin": 0.0025426944971537,
+      "NHetHet": 5443,
+      "N_Het1": 13199,
+      "N_Het2": 13151,
+      "N_IBS0": 2688,
+      "N_IBS1": 15464,
+      "N_IBS2": 14657,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U03": {
+      "HetHet": 0.16693590173428022,
+      "IBS0": 0.08403182053704776,
+      "IDs": [
+        "U01",
+        "U03"
+      ],
+      "Kinship": -0.002319215268800856,
+      "KinshipWithin": -0.0014041745730550286,
+      "NHetHet": 5477,
+      "N_Het1": 13199,
+      "N_Het2": 13151,
+      "N_IBS0": 2757,
+      "N_IBS1": 15396,
+      "N_IBS2": 14656,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U04": {
+      "HetHet": 0.1689780243225944,
+      "IBS0": 0.0847938065774635,
+      "IDs": [
+        "U01",
+        "U04"
+      ],
+      "Kinship": -0.0022539586332297468,
+      "KinshipWithin": -0.0007553725875287985,
+      "NHetHet": 5544,
+      "N_Het1": 13199,
+      "N_Het2": 13278,
+      "N_IBS0": 2782,
+      "N_IBS1": 15389,
+      "N_IBS2": 14638,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U05": {
+      "HetHet": 0.16769788777469596,
+      "IBS0": 0.0829345606388491,
+      "IDs": [
+        "U01",
+        "U05"
+      ],
+      "Kinship": 0.0018781302170283731,
+      "KinshipWithin": 0.0022747090268036545,
+      "NHetHet": 5502,
+      "N_Het1": 13199,
+      "N_Het2": 13178,
+      "N_IBS0": 2721,
+      "N_IBS1": 15373,
+      "N_IBS2": 14715,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U06": {
+      "HetHet": 0.16769788777469596,
+      "IBS0": 0.08287360175561584,
+      "IDs": [
+        "U01",
+        "U06"
+      ],
+      "Kinship": 0.00039775740586406316,
+      "KinshipWithin": 0.0024146387474061498,
+      "NHetHet": 5502,
+      "N_Het1": 13199,
+      "N_Het2": 13306,
+      "N_IBS0": 2719,
+      "N_IBS1": 15501,
+      "N_IBS2": 14589,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U07": {
+      "HetHet": 0.16559480630314852,
+      "IBS0": 0.0844890121612972,
+      "IDs": [
+        "U01",
+        "U07"
+      ],
+      "Kinship": -0.0046679316888045275,
+      "KinshipWithin": -0.004208690376886328,
+      "NHetHet": 5433,
+      "N_Het1": 13199,
+      "N_Het2": 13175,
+      "N_IBS0": 2772,
+      "N_IBS1": 15508,
+      "N_IBS2": 14529,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U08": {
+      "HetHet": 0.1698924075710933,
+      "IBS0": 0.08482428601908013,
+      "IDs": [
+        "U01",
+        "U08"
+      ],
+      "Kinship": -0.0009470414425335472,
+      "KinshipWithin": 0.0003022974607013301,
+      "NHetHet": 5574,
+      "N_Het1": 13199,
+      "N_Het2": 13265,
+      "N_IBS0": 2783,
+      "N_IBS1": 15316,
+      "N_IBS2": 14710,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U09": {
+      "HetHet": 0.16623487457709774,
+      "IBS0": 0.08485476546069676,
+      "IDs": [
+        "U01",
+        "U09"
+      ],
+      "Kinship": -0.005110959112327063,
+      "KinshipWithin": -0.004325226694995637,
+      "NHetHet": 5454,
+      "N_Het1": 13199,
+      "N_Het2": 13158,
+      "N_IBS0": 2784,
+      "N_IBS1": 15449,
+      "N_IBS2": 14576,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U10": {
+      "HetHet": 0.16522905300374896,
+      "IBS0": 0.08467188881099698,
+      "IDs": [
+        "U01",
+        "U10"
+      ],
+      "Kinship": -0.006963522588522619,
+      "KinshipWithin": -0.0051324943922746455,
+      "NHetHet": 5421,
+      "N_Het1": 13199,
+      "N_Het2": 13104,
+      "N_IBS0": 2778,
+      "N_IBS1": 15461,
+      "N_IBS2": 14570,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U11": {
+      "HetHet": 0.16708829894236338,
+      "IBS0": 0.08144106799963424,
+      "IDs": [
+        "U01",
+        "U11"
+      ],
+      "Kinship": 0.004432153951056894,
+      "KinshipWithin": 0.005219364599092284,
+      "NHetHet": 5482,
+      "N_Het1": 13199,
+      "N_Het2": 13241,
+      "N_IBS0": 2672,
+      "N_IBS1": 15476,
+      "N_IBS2": 14661,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U12": {
+      "HetHet": 0.16556432686153189,
+      "IBS0": 0.08229449236489987,
+      "IDs": [
+        "U01",
+        "U12"
+      ],
+      "Kinship": 0.0010047012435547287,
+      "KinshipWithin": 0.0012127183840527534,
+      "NHetHet": 5432,
+      "N_Het1": 13199,
+      "N_Het2": 13188,
+      "N_IBS0": 2700,
+      "N_IBS1": 15523,
+      "N_IBS2": 14586,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U13": {
+      "HetHet": 0.1670273400591301,
+      "IBS0": 0.08357462891279832,
+      "IDs": [
+        "U01",
+        "U13"
+      ],
+      "Kinship": -0.0021781953178271474,
+      "KinshipWithin": -0.00015091492171288436,
+      "NHetHet": 5480,
+      "N_Het1": 13199,
+      "N_Het2": 13306,
+      "N_IBS0": 2742,
+      "N_IBS1": 15545,
+      "N_IBS2": 14522,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U14": {
+      "HetHet": 0.1650461763540492,
+      "IBS0": 0.08354414947118169,
+      "IDs": [
+        "U01",
+        "U14"
+      ],
+      "Kinship": -0.0036526900540293505,
+      "KinshipWithin": -0.002543659832953683,
+      "NHetHet": 5415,
+      "N_Het1": 13199,
+      "N_Het2": 13141,
+      "N_IBS0": 2741,
+      "N_IBS1": 15510,
+      "N_IBS2": 14558,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U15": {
+      "HetHet": 0.16717973726721327,
+      "IBS0": 0.08387942332896461,
+      "IDs": [
+        "U01",
+        "U15"
+      ],
+      "Kinship": -0.0016348566648923812,
+      "KinshipWithin": -0.0007210626185958255,
+      "NHetHet": 5485,
+      "N_Het1": 13199,
+      "N_Het2": 13151,
+      "N_IBS0": 2752,
+      "N_IBS1": 15380,
+      "N_IBS2": 14677,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U16": {
+      "HetHet": 0.16827699716541192,
+      "IBS0": 0.08357462891279832,
+      "IDs": [
+        "U01",
+        "U16"
+      ],
+      "Kinship": -0.00017046745965598742,
+      "KinshipWithin": 0.0013972282013519127,
+      "NHetHet": 5521,
+      "N_Het1": 13199,
+      "N_Het2": 13282,
+      "N_IBS0": 2742,
+      "N_IBS1": 15439,
+      "N_IBS2": 14628,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U17": {
+      "HetHet": 0.1678198055411625,
+      "IBS0": 0.08247736901459965,
+      "IDs": [
+        "U01",
+        "U17"
+      ],
+      "Kinship": 0.002632775210243188,
+      "KinshipWithin": 0.0035542783680568685,
+      "NHetHet": 5506,
+      "N_Het1": 13199,
+      "N_Het2": 13248,
+      "N_IBS0": 2706,
+      "N_IBS1": 15435,
+      "N_IBS2": 14668,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U18": {
+      "HetHet": 0.16754549056661283,
+      "IBS0": 0.0844890121612972,
+      "IDs": [
+        "U01",
+        "U18"
+      ],
+      "Kinship": -0.00238654443518449,
+      "KinshipWithin": -0.0017782822550132425,
+      "NHetHet": 5497,
+      "N_Het1": 13199,
+      "N_Het2": 13231,
+      "N_IBS0": 2772,
+      "N_IBS1": 15436,
+      "N_IBS2": 14601,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U19": {
+      "HetHet": 0.1658691212776982,
+      "IBS0": 0.08320887561339876,
+      "IDs": [
+        "U01",
+        "U19"
+      ],
+      "Kinship": -0.0027886011154404367,
+      "KinshipWithin": -0.0006847230675593427,
+      "NHetHet": 5442,
+      "N_Het1": 13199,
+      "N_Het2": 13089,
+      "N_IBS0": 2730,
+      "N_IBS1": 15404,
+      "N_IBS2": 14675,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U01|U20": {
+      "HetHet": 0.1694429586612669,
+      "IBS0": 0.08363261251623749,
+      "IDs": [
+        "U01",
+        "U20"
+      ],
+      "Kinship": -0.0010231274388502465,
+      "KinshipWithin": 0.0026923621935666716,
+      "NHetHet": 4435,
+      "N_Het1": 10507,
+      "N_Het2": 10664,
+      "N_IBS0": 2189,
+      "N_IBS1": 12301,
+      "N_IBS2": 11684,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U02|U03": {
+      "HetHet": 0.1645585052881831,
+      "IBS0": 0.08205065683196684,
+      "IDs": [
+        "U02",
+        "U03"
+      ],
+      "Kinship": 0.0005702988365903772,
+      "KinshipWithin": 0.0005702988365903734,
+      "NHetHet": 5399,
+      "N_Het1": 13151,
+      "N_Het2": 13151,
+      "N_IBS0": 2692,
+      "N_IBS1": 15504,
+      "N_IBS2": 14613,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U04": {
+      "HetHet": 0.16693590173428022,
+      "IBS0": 0.08211161571520009,
+      "IDs": [
+        "U02",
+        "U04"
+      ],
+      "Kinship": 0.0009695080222036356,
+      "KinshipWithin": 0.0033675129592493093,
+      "NHetHet": 5477,
+      "N_Het1": 13151,
+      "N_Het2": 13278,
+      "N_IBS0": 2694,
+      "N_IBS1": 15475,
+      "N_IBS2": 14640,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U05": {
+      "HetHet": 0.1679112438660124,
+      "IBS0": 0.08266024566429943,
+      "IDs": [
+        "U02",
+        "U05"
+      ],
+      "Kinship": 0.0027184244544141145,
+      "KinshipWithin": 0.0032283793535645105,
+      "NHetHet": 5509,
+      "N_Het1": 13151,
+      "N_Het2": 13178,
+      "N_IBS0": 2712,
+      "N_IBS1": 15311,
+      "N_IBS2": 14786,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U06": {
+      "HetHet": 0.16815507939894542,
+      "IBS0": 0.08259928678106616,
+      "IDs": [
+        "U02",
+        "U06"
+      ],
+      "Kinship": 0.0007413884875674959,
+      "KinshipWithin": 0.0036663264920436937,
+      "NHetHet": 5517,
+      "N_Het1": 13151,
+      "N_Het2": 13306,
+      "N_IBS0": 2710,
+      "N_IBS1": 15423,
+      "N_IBS2": 14676,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U07": {
+      "HetHet": 0.1679112438660124,
+      "IBS0": 0.08552531317626261,
+      "IDs": [
+        "U02",
+        "U07"
+      ],
+      "Kinship": -0.0043722910805261694,
+      "KinshipWithin": -0.003912481957000683,
+      "NHetHet": 5509,
+      "N_Het1": 13151,
+      "N_Het2": 13175,
+      "N_IBS0": 2806,
+      "N_IBS1": 15308,
+      "N_IBS2": 14695,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U08": {
+      "HetHet": 0.16736261391691304,
+      "IBS0": 0.08387942332896461,
+      "IDs": [
+        "U02",
+        "U08"
+      ],
+      "Kinship": -0.0026613945707550934,
+      "KinshipWithin": -0.0004921259842519685,
+      "NHetHet": 5491,
+      "N_Het1": 13151,
+      "N_Het2": 13265,
+      "N_IBS0": 2752,
+      "N_IBS1": 15434,
+      "N_IBS2": 14623,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U09": {
+      "HetHet": 0.16693590173428022,
+      "IBS0": 0.08330031393824865,
+      "IDs": [
+        "U02",
+        "U09"
+      ],
+      "Kinship": 0.00028514941829516083,
+      "KinshipWithin": 0.0004181078718309324,
+      "NHetHet": 5477,
+      "N_Het1": 13151,
+      "N_Het2": 13158,
+      "N_IBS0": 2733,
+      "N_IBS1": 15355,
+      "N_IBS2": 14721,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U10": {
+      "HetHet": 0.16358316315645097,
+      "IBS0": 0.08598250480051206,
+      "IDs": [
+        "U02",
+        "U10"
+      ],
+      "Kinship": -0.01138965201465203,
+      "KinshipWithin": -0.010474195391354028,
+      "NHetHet": 5367,
+      "N_Het1": 13151,
+      "N_Het2": 13104,
+      "N_IBS0": 2821,
+      "N_IBS1": 15521,
+      "N_IBS2": 14467,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U11": {
+      "HetHet": 0.16553384741991528,
+      "IBS0": 0.08326983449663203,
+      "IDs": [
+        "U02",
+        "U11"
+      ],
+      "Kinship": -0.0029655539502699835,
+      "KinshipWithin": -0.0012503789026977873,
+      "NHetHet": 5431,
+      "N_Het1": 13151,
+      "N_Het2": 13241,
+      "N_IBS0": 2732,
+      "N_IBS1": 15530,
+      "N_IBS2": 14547,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U12": {
+      "HetHet": 0.16663110731811392,
+      "IBS0": 0.08290408119723247,
+      "IDs": [
+        "U02",
+        "U12"
+      ],
+      "Kinship": 0.0003231693407345637,
+      "KinshipWithin": 0.001025095865446676,
+      "NHetHet": 5467,
+      "N_Het1": 13151,
+      "N_Het2": 13188,
+      "N_IBS0": 2720,
+      "N_IBS1": 15405,
+      "N_IBS2": 14684,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U13": {
+      "HetHet": 0.16983144868786004,
+      "IBS0": 0.08345271114633179,
+      "IDs": [
+        "U02",
+        "U13"
+      ],
+      "Kinship": 0.0007033685651281485,
+      "KinshipWithin": 0.0036285293117133462,
+      "NHetHet": 5572,
+      "N_Het1": 13151,
+      "N_Het2": 13306,
+      "N_IBS0": 2738,
+      "N_IBS1": 15313,
+      "N_IBS2": 14758,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U14": {
+      "HetHet": 0.16650918955164742,
+      "IBS0": 0.08348319058794842,
+      "IDs": [
+        "U02",
+        "U14"
+      ],
+      "Kinship": -0.0007609770945894434,
+      "KinshipWithin": -0.0005705157462345961,
+      "NHetHet": 5463,
+      "N_Het1": 13151,
+      "N_Het2": 13141,
+      "N_IBS0": 2739,
+      "N_IBS1": 15366,
+      "N_IBS2": 14704,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U15": {
+      "HetHet": 0.16681398396781372,
+      "IBS0": 0.0845804504861471,
+      "IDs": [
+        "U02",
+        "U15"
+      ],
+      "Kinship": -0.002927534027830636,
+      "KinshipWithin": -0.002927534027830583,
+      "NHetHet": 5473,
+      "N_Het1": 13151,
+      "N_Het2": 13151,
+      "N_IBS0": 2775,
+      "N_IBS1": 15356,
+      "N_IBS2": 14678,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U16": {
+      "HetHet": 0.1698924075710933,
+      "IBS0": 0.0823249718065165,
+      "IDs": [
+        "U02",
+        "U16"
+      ],
+      "Kinship": 0.004049121739791661,
+      "KinshipWithin": 0.006507017742972799,
+      "NHetHet": 5574,
+      "N_Het1": 13151,
+      "N_Het2": 13282,
+      "N_IBS0": 2701,
+      "N_IBS1": 15285,
+      "N_IBS2": 14823,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U17": {
+      "HetHet": 0.16842939437349508,
+      "IBS0": 0.08275168398914932,
+      "IDs": [
+        "U02",
+        "U17"
+      ],
+      "Kinship": 0.0018059463158695,
+      "KinshipWithin": 0.00363650138262813,
+      "NHetHet": 5526,
+      "N_Het1": 13151,
+      "N_Het2": 13248,
+      "N_IBS0": 2715,
+      "N_IBS1": 15347,
+      "N_IBS2": 14747,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U18": {
+      "HetHet": 0.1686732299064281,
+      "IBS0": 0.08351367002956506,
+      "IDs": [
+        "U02",
+        "U18"
+      ],
+      "Kinship": 0.0005322789141510298,
+      "KinshipWithin": 0.0020468501250852852,
+      "NHetHet": 5534,
+      "N_Het1": 13151,
+      "N_Het2": 13231,
+      "N_IBS0": 2740,
+      "N_IBS1": 15314,
+      "N_IBS2": 14755,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U19": {
+      "HetHet": 0.163004053765735,
+      "IBS0": 0.08522051876009631,
+      "IDs": [
+        "U02",
+        "U19"
+      ],
+      "Kinship": -0.010505004202001733,
+      "KinshipWithin": -0.009298780487804878,
+      "NHetHet": 5348,
+      "N_Het1": 13151,
+      "N_Het2": 13089,
+      "N_IBS0": 2796,
+      "N_IBS1": 15544,
+      "N_IBS2": 14469,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U02|U20": {
+      "HetHet": 0.1692519293955834,
+      "IBS0": 0.08267746618781997,
+      "IDs": [
+        "U02",
+        "U20"
+      ],
+      "Kinship": -0.0008874604240621808,
+      "KinshipWithin": 0.004837103428652724,
+      "NHetHet": 4430,
+      "N_Het1": 10423,
+      "N_Het2": 10664,
+      "N_IBS0": 2164,
+      "N_IBS1": 12227,
+      "N_IBS2": 11783,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U03|U04": {
+      "HetHet": 0.16684446340943035,
+      "IBS0": 0.08485476546069676,
+      "IDs": [
+        "U03",
+        "U04"
+      ],
+      "Kinship": -0.0059881377841989325,
+      "KinshipWithin": -0.0035566990805554503,
+      "NHetHet": 5474,
+      "N_Het1": 13151,
+      "N_Het2": 13278,
+      "N_IBS0": 2784,
+      "N_IBS1": 15481,
+      "N_IBS2": 14544,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U05": {
+      "HetHet": 0.16705781950074675,
+      "IBS0": 0.08485476546069676,
+      "IDs": [
+        "U03",
+        "U05"
+      ],
+      "Kinship": -0.003821002205155466,
+      "KinshipWithin": -0.003304341220707205,
+      "NHetHet": 5481,
+      "N_Het1": 13151,
+      "N_Het2": 13178,
+      "N_IBS0": 2784,
+      "N_IBS1": 15367,
+      "N_IBS2": 14658,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U06": {
+      "HetHet": 0.168764668231278,
+      "IBS0": 0.08451949160291383,
+      "IDs": [
+        "U03",
+        "U06"
+      ],
+      "Kinship": -0.0032887232910044917,
+      "KinshipWithin": -0.0003401746229731262,
+      "NHetHet": 5537,
+      "N_Het1": 13151,
+      "N_Het2": 13306,
+      "N_IBS0": 2773,
+      "N_IBS1": 15383,
+      "N_IBS2": 14653,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U07": {
+      "HetHet": 0.16550336797829865,
+      "IBS0": 0.0842756560699808,
+      "IDs": [
+        "U03",
+        "U07"
+      ],
+      "Kinship": -0.004258231313208127,
+      "KinshipWithin": -0.003798526171845324,
+      "NHetHet": 5430,
+      "N_Het1": 13151,
+      "N_Het2": 13175,
+      "N_IBS0": 2765,
+      "N_IBS1": 15466,
+      "N_IBS2": 14578,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U08": {
+      "HetHet": 0.1679112438660124,
+      "IBS0": 0.08275168398914932,
+      "IDs": [
+        "U03",
+        "U08"
+      ],
+      "Kinship": 0.0008364382936658643,
+      "KinshipWithin": 0.00299061175045427,
+      "NHetHet": 5509,
+      "N_Het1": 13151,
+      "N_Het2": 13265,
+      "N_IBS0": 2715,
+      "N_IBS1": 15398,
+      "N_IBS2": 14696,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U09": {
+      "HetHet": 0.1645585052881831,
+      "IBS0": 0.08253832789783291,
+      "IDs": [
+        "U03",
+        "U09"
+      ],
+      "Kinship": -0.0007794084100068988,
+      "KinshipWithin": -0.0006461667110114409,
+      "NHetHet": 5399,
+      "N_Het1": 13151,
+      "N_Het2": 13158,
+      "N_IBS0": 2708,
+      "N_IBS1": 15511,
+      "N_IBS2": 14590,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U10": {
+      "HetHet": 0.16431466975525008,
+      "IBS0": 0.08336127282148191,
+      "IDs": [
+        "U03",
+        "U10"
+      ],
+      "Kinship": -0.003911019536019578,
+      "KinshipWithin": -0.0030089506760617025,
+      "NHetHet": 5391,
+      "N_Het1": 13151,
+      "N_Het2": 13104,
+      "N_IBS0": 2735,
+      "N_IBS1": 15473,
+      "N_IBS2": 14601,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U11": {
+      "HetHet": 0.1650461763540492,
+      "IBS0": 0.08247736901459965,
+      "IDs": [
+        "U03",
+        "U11"
+      ],
+      "Kinship": -0.0015968367424530339,
+      "KinshipWithin": 0.00011367080933616247,
+      "NHetHet": 5415,
+      "N_Het1": 13151,
+      "N_Het2": 13241,
+      "N_IBS0": 2706,
+      "N_IBS1": 15562,
+      "N_IBS2": 14541,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U12": {
+      "HetHet": 0.1648328202627328,
+      "IBS0": 0.08430613551159742,
+      "IDs": [
+        "U03",
+        "U12"
+      ],
+      "Kinship": -0.0054178389476085,
+      "KinshipWithin": -0.004707847678347698,
+      "NHetHet": 5408,
+      "N_Het1": 13151,
+      "N_Het2": 13188,
+      "N_IBS0": 2766,
+      "N_IBS1": 15523,
+      "N_IBS2": 14520,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U13": {
+      "HetHet": 0.16879514767289464,
+      "IBS0": 0.08278216343076594,
+      "IDs": [
+        "U03",
+        "U13"
+      ],
+      "Kinship": 0.0010835677895217333,
+      "KinshipWithin": 0.00400650111501682,
+      "NHetHet": 5538,
+      "N_Het1": 13151,
+      "N_Het2": 13306,
+      "N_IBS0": 2716,
+      "N_IBS1": 15381,
+      "N_IBS2": 14712,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U14": {
+      "HetHet": 0.16690542229266359,
+      "IBS0": 0.08439757383644732,
+      "IDs": [
+        "U03",
+        "U14"
+      ],
+      "Kinship": -0.0025492732668747076,
+      "KinshipWithin": -0.002358131751102997,
+      "NHetHet": 5476,
+      "N_Het1": 13151,
+      "N_Het2": 13141,
+      "N_IBS0": 2769,
+      "N_IBS1": 15340,
+      "N_IBS2": 14700,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U15": {
+      "HetHet": 0.16842939437349508,
+      "IBS0": 0.08576914870919565,
+      "IDs": [
+        "U03",
+        "U15"
+      ],
+      "Kinship": -0.0038780320888145425,
+      "KinshipWithin": -0.0038780320888145386,
+      "NHetHet": 5526,
+      "N_Het1": 13151,
+      "N_Het2": 13151,
+      "N_IBS0": 2814,
+      "N_IBS1": 15250,
+      "N_IBS2": 14745,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U16": {
+      "HetHet": 0.16806364107409552,
+      "IBS0": 0.08430613551159742,
+      "IDs": [
+        "U03",
+        "U16"
+      ],
+      "Kinship": -0.0031746635236864496,
+      "KinshipWithin": -0.0006809669731018045,
+      "NHetHet": 5514,
+      "N_Het1": 13151,
+      "N_Het2": 13282,
+      "N_IBS0": 2766,
+      "N_IBS1": 15405,
+      "N_IBS2": 14638,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U17": {
+      "HetHet": 0.16620439513548113,
+      "IBS0": 0.08320887561339876,
+      "IDs": [
+        "U03",
+        "U17"
+      ],
+      "Kinship": -0.00211010569538439,
+      "KinshipWithin": -0.0002651615591499678,
+      "NHetHet": 5453,
+      "N_Het1": 13151,
+      "N_Het2": 13248,
+      "N_IBS0": 2730,
+      "N_IBS1": 15493,
+      "N_IBS2": 14586,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U18": {
+      "HetHet": 0.1674235728001463,
+      "IBS0": 0.08473284769423024,
+      "IDs": [
+        "U03",
+        "U18"
+      ],
+      "Kinship": -0.004068131701011279,
+      "KinshipWithin": -0.002539610340383595,
+      "NHetHet": 5493,
+      "N_Het1": 13151,
+      "N_Het2": 13231,
+      "N_IBS0": 2780,
+      "N_IBS1": 15396,
+      "N_IBS2": 14633,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U19": {
+      "HetHet": 0.1643451491968667,
+      "IBS0": 0.08522051876009631,
+      "IDs": [
+        "U03",
+        "U19"
+      ],
+      "Kinship": -0.008824203529681385,
+      "KinshipWithin": -0.007621951219512195,
+      "NHetHet": 5392,
+      "N_Het1": 13151,
+      "N_Het2": 13089,
+      "N_IBS0": 2796,
+      "N_IBS1": 15456,
+      "N_IBS2": 14557,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U03|U20": {
+      "HetHet": 0.16955757622067702,
+      "IBS0": 0.08229540765645296,
+      "IDs": [
+        "U03",
+        "U20"
+      ],
+      "Kinship": 0.0023093038758213447,
+      "KinshipWithin": 0.006142215922513584,
+      "NHetHet": 4438,
+      "N_Het1": 10501,
+      "N_Het2": 10664,
+      "N_IBS0": 2154,
+      "N_IBS1": 12289,
+      "N_IBS2": 11731,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U04|U05": {
+      "HetHet": 0.16815507939894542,
+      "IBS0": 0.08433661495321405,
+      "IDs": [
+        "U04",
+        "U05"
+      ],
+      "Kinship": -0.002542115647290899,
+      "KinshipWithin": -0.0006425763531902026,
+      "NHetHet": 5517,
+      "N_Het1": 13278,
+      "N_Het2": 13178,
+      "N_IBS0": 2767,
+      "N_IBS1": 15422,
+      "N_IBS2": 14620,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U06": {
+      "HetHet": 0.16931329818037733,
+      "IBS0": 0.08470236825261361,
+      "IDs": [
+        "U04",
+        "U06"
+      ],
+      "Kinship": -0.0006401566500978673,
+      "KinshipWithin": -0.00011284983448690941,
+      "NHetHet": 5555,
+      "N_Het1": 13278,
+      "N_Het2": 13306,
+      "N_IBS0": 2779,
+      "N_IBS1": 15474,
+      "N_IBS2": 14556,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U07": {
+      "HetHet": 0.1666006278764973,
+      "IBS0": 0.08534243652656283,
+      "IDs": [
+        "U04",
+        "U07"
+      ],
+      "Kinship": -0.00703984819734349,
+      "KinshipWithin": -0.005065588024042641,
+      "NHetHet": 5466,
+      "N_Het1": 13278,
+      "N_Het2": 13175,
+      "N_IBS0": 2800,
+      "N_IBS1": 15521,
+      "N_IBS2": 14488,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U08": {
+      "HetHet": 0.16785028498277912,
+      "IBS0": 0.08424517662836417,
+      "IDs": [
+        "U04",
+        "U08"
+      ],
+      "Kinship": -0.0010365623822088388,
+      "KinshipWithin": -0.0007911690464529255,
+      "NHetHet": 5507,
+      "N_Het1": 13278,
+      "N_Het2": 13265,
+      "N_IBS0": 2764,
+      "N_IBS1": 15529,
+      "N_IBS2": 14516,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U09": {
+      "HetHet": 0.16690542229266359,
+      "IBS0": 0.08415373830351427,
+      "IDs": [
+        "U04",
+        "U09"
+      ],
+      "Kinship": -0.0040279677762578014,
+      "KinshipWithin": -0.0017400514449992435,
+      "NHetHet": 5476,
+      "N_Het1": 13278,
+      "N_Het2": 13158,
+      "N_IBS0": 2761,
+      "N_IBS1": 15484,
+      "N_IBS2": 14564,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U10": {
+      "HetHet": 0.16736261391691304,
+      "IBS0": 0.08531195708494621,
+      "IDs": [
+        "U04",
+        "U10"
+      ],
+      "Kinship": -0.007402319902319876,
+      "KinshipWithin": -0.004055795618224547,
+      "NHetHet": 5491,
+      "N_Het1": 13278,
+      "N_Het2": 13104,
+      "N_IBS0": 2799,
+      "N_IBS1": 15400,
+      "N_IBS2": 14610,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U11": {
+      "HetHet": 0.16644823066841416,
+      "IBS0": 0.08394038221219788,
+      "IDs": [
+        "U04",
+        "U11"
+      ],
+      "Kinship": -0.002473378143644789,
+      "KinshipWithin": -0.0017723141898261625,
+      "NHetHet": 5461,
+      "N_Het1": 13278,
+      "N_Het2": 13241,
+      "N_IBS0": 2754,
+      "N_IBS1": 15597,
+      "N_IBS2": 14458,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U12": {
+      "HetHet": 0.16940473650522722,
+      "IBS0": 0.08677497028254443,
+      "IDs": [
+        "U04",
+        "U12"
+      ],
+      "Kinship": -0.006862299059751331,
+      "KinshipWithin": -0.005138668480314365,
+      "NHetHet": 5558,
+      "N_Het1": 13278,
+      "N_Het2": 13188,
+      "N_IBS0": 2847,
+      "N_IBS1": 15350,
+      "N_IBS2": 14612,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U13": {
+      "HetHet": 0.16815507939894542,
+      "IBS0": 0.08302599896369899,
+      "IDs": [
+        "U04",
+        "U13"
+      ],
+      "Kinship": 0.0020710950444344234,
+      "KinshipWithin": 0.0025955461931989167,
+      "NHetHet": 5517,
+      "N_Het1": 13278,
+      "N_Het2": 13306,
+      "N_IBS0": 2724,
+      "N_IBS1": 15550,
+      "N_IBS2": 14535,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U14": {
+      "HetHet": 0.166295833460331,
+      "IBS0": 0.08464140936938035,
+      "IDs": [
+        "U04",
+        "U14"
+      ],
+      "Kinship": -0.006335134312457247,
+      "KinshipWithin": -0.0037094515310950454,
+      "NHetHet": 5456,
+      "N_Het1": 13278,
+      "N_Het2": 13141,
+      "N_IBS0": 2777,
+      "N_IBS1": 15507,
+      "N_IBS2": 14525,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U15": {
+      "HetHet": 0.16977048980462678,
+      "IBS0": 0.08445853271968058,
+      "IDs": [
+        "U04",
+        "U15"
+      ],
+      "Kinship": -0.0013497072465972204,
+      "KinshipWithin": 0.0010594422793143894,
+      "NHetHet": 5570,
+      "N_Het1": 13278,
+      "N_Het2": 13151,
+      "N_IBS0": 2771,
+      "N_IBS1": 15289,
+      "N_IBS2": 14749,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U16": {
+      "HetHet": 0.1700143253375598,
+      "IBS0": 0.08317839617178213,
+      "IDs": [
+        "U04",
+        "U16"
+      ],
+      "Kinship": 0.004443440277150157,
+      "KinshipWithin": 0.004518072289156626,
+      "NHetHet": 5578,
+      "N_Het1": 13278,
+      "N_Het2": 13282,
+      "N_IBS0": 2729,
+      "N_IBS1": 15404,
+      "N_IBS2": 14676,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U17": {
+      "HetHet": 0.16778932609954586,
+      "IBS0": 0.08238593068974977,
+      "IDs": [
+        "U04",
+        "U17"
+      ],
+      "Kinship": 0.00317028985507245,
+      "KinshipWithin": 0.003732187287943904,
+      "NHetHet": 5505,
+      "N_Het1": 13278,
+      "N_Het2": 13248,
+      "N_IBS0": 2703,
+      "N_IBS1": 15516,
+      "N_IBS2": 14590,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U18": {
+      "HetHet": 0.16626535401871437,
+      "IBS0": 0.08104483525861807,
+      "IDs": [
+        "U04",
+        "U18"
+      ],
+      "Kinship": 0.004289169374952773,
+      "KinshipWithin": 0.005168056131879739,
+      "NHetHet": 5455,
+      "N_Het1": 13278,
+      "N_Het2": 13231,
+      "N_IBS0": 2659,
+      "N_IBS1": 15599,
+      "N_IBS2": 14551,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U19": {
+      "HetHet": 0.16653966899326406,
+      "IBS0": 0.08442805327806395,
+      "IDs": [
+        "U04",
+        "U19"
+      ],
+      "Kinship": -0.006513102605241072,
+      "KinshipWithin": -0.0028823908673720937,
+      "NHetHet": 5464,
+      "N_Het1": 13278,
+      "N_Het2": 13089,
+      "N_IBS0": 2770,
+      "N_IBS1": 15439,
+      "N_IBS2": 14600,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U04|U20": {
+      "HetHet": 0.17253763276533965,
+      "IBS0": 0.08359440666310079,
+      "IDs": [
+        "U04",
+        "U20"
+      ],
+      "Kinship": 0.005348223541607744,
+      "KinshipWithin": 0.006580493537015276,
+      "NHetHet": 4516,
+      "N_Het1": 10611,
+      "N_Het2": 10664,
+      "N_IBS0": 2188,
+      "N_IBS1": 12243,
+      "N_IBS2": 11743,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U05|U06": {
+      "HetHet": 0.16977048980462678,
+      "IBS0": 0.08339175226309854,
+      "IDs": [
+        "U05",
+        "U06"
+      ],
+      "Kinship": 0.0012900288359387058,
+      "KinshipWithin": 0.0037003473795499168,
+      "NHetHet": 5570,
+      "N_Het1": 13178,
+      "N_Het2": 13306,
+      "N_IBS0": 2736,
+      "N_IBS1": 15344,
+      "N_IBS2": 14729,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U07": {
+      "HetHet": 0.16809412051571215,
+      "IBS0": 0.08406229997866439,
+      "IDs": [
+        "U05",
+        "U07"
+      ],
+      "Kinship": -9.487666034158071e-05,
+      "KinshipWithin": -3.794634386976815e-05,
+      "NHetHet": 5515,
+      "N_Het1": 13178,
+      "N_Het2": 13175,
+      "N_IBS0": 2758,
+      "N_IBS1": 15323,
+      "N_IBS2": 14728,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U08": {
+      "HetHet": 0.167941723307629,
+      "IBS0": 0.08333079337986528,
+      "IDs": [
+        "U05",
+        "U08"
+      ],
+      "Kinship": -5.691303687960225e-05,
+      "KinshipWithin": 0.0015883220512044776,
+      "NHetHet": 5510,
+      "N_Het1": 13178,
+      "N_Het2": 13265,
+      "N_IBS0": 2734,
+      "N_IBS1": 15423,
+      "N_IBS2": 14652,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U09": {
+      "HetHet": 0.16519857356213233,
+      "IBS0": 0.08494620378554665,
+      "IDs": [
+        "U05",
+        "U09"
+      ],
+      "Kinship": -0.006231950144398812,
+      "KinshipWithin": -0.005847509113001215,
+      "NHetHet": 5420,
+      "N_Het1": 13178,
+      "N_Het2": 13158,
+      "N_IBS0": 2787,
+      "N_IBS1": 15496,
+      "N_IBS2": 14526,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U10": {
+      "HetHet": 0.16422323143040019,
+      "IBS0": 0.08421469718674754,
+      "IDs": [
+        "U05",
+        "U10"
+      ],
+      "Kinship": -0.006677350427350404,
+      "KinshipWithin": -0.005250741952667224,
+      "NHetHet": 5388,
+      "N_Het1": 13178,
+      "N_Het2": 13104,
+      "N_IBS0": 2763,
+      "N_IBS1": 15506,
+      "N_IBS2": 14540,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U11": {
+      "HetHet": 0.16565576518638178,
+      "IBS0": 0.08671401139931116,
+      "IDs": [
+        "U05",
+        "U11"
+      ],
+      "Kinship": -0.010870390044012801,
+      "KinshipWithin": -0.00965214429009425,
+      "NHetHet": 5435,
+      "N_Het1": 13178,
+      "N_Het2": 13241,
+      "N_IBS0": 2845,
+      "N_IBS1": 15549,
+      "N_IBS2": 14415,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U12": {
+      "HetHet": 0.16833795604864518,
+      "IBS0": 0.08503764211039654,
+      "IDs": [
+        "U05",
+        "U12"
+      ],
+      "Kinship": -0.0023524055243587805,
+      "KinshipWithin": -0.002161875142228628,
+      "NHetHet": 5523,
+      "N_Het1": 13178,
+      "N_Het2": 13188,
+      "N_IBS0": 2790,
+      "N_IBS1": 15320,
+      "N_IBS2": 14699,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U13": {
+      "HetHet": 0.16964857203816025,
+      "IBS0": 0.08256880733944955,
+      "IDs": [
+        "U05",
+        "U13"
+      ],
+      "Kinship": 0.0031871300652602796,
+      "KinshipWithin": 0.005588279716054976,
+      "NHetHet": 5566,
+      "N_Het1": 13178,
+      "N_Het2": 13306,
+      "N_IBS0": 2709,
+      "N_IBS1": 15352,
+      "N_IBS2": 14748,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U14": {
+      "HetHet": 0.16699686061751348,
+      "IBS0": 0.08467188881099698,
+      "IDs": [
+        "U05",
+        "U14"
+      ],
+      "Kinship": -0.0036336656266646727,
+      "KinshipWithin": -0.0029256430715452714,
+      "NHetHet": 5479,
+      "N_Het1": 13178,
+      "N_Het2": 13141,
+      "N_IBS0": 2778,
+      "N_IBS1": 15361,
+      "N_IBS2": 14670,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U15": {
+      "HetHet": 0.1643451491968667,
+      "IBS0": 0.08704928525709409,
+      "IDs": [
+        "U05",
+        "U15"
+      ],
+      "Kinship": -0.012679644133525958,
+      "KinshipWithin": -0.012153898742831099,
+      "NHetHet": 5392,
+      "N_Het1": 13178,
+      "N_Het2": 13151,
+      "N_IBS0": 2856,
+      "N_IBS1": 15545,
+      "N_IBS2": 14408,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U16": {
+      "HetHet": 0.1675150111249962,
+      "IBS0": 0.08229449236489987,
+      "IDs": [
+        "U05",
+        "U16"
+      ],
+      "Kinship": 0.0016694490818029983,
+      "KinshipWithin": 0.0036281179138321997,
+      "NHetHet": 5496,
+      "N_Het1": 13178,
+      "N_Het2": 13282,
+      "N_IBS0": 2700,
+      "N_IBS1": 15468,
+      "N_IBS2": 14641,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U17": {
+      "HetHet": 0.1686732299064281,
+      "IBS0": 0.08494620378554665,
+      "IDs": [
+        "U05",
+        "U17"
+      ],
+      "Kinship": -0.002845651843982444,
+      "KinshipWithin": -0.0015136607886172709,
+      "NHetHet": 5534,
+      "N_Het1": 13178,
+      "N_Het2": 13248,
+      "N_IBS0": 2787,
+      "N_IBS1": 15358,
+      "N_IBS2": 14664,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U18": {
+      "HetHet": 0.16748453168337957,
+      "IBS0": 0.08302599896369899,
+      "IDs": [
+        "U05",
+        "U18"
+      ],
+      "Kinship": 0.0007778115040218414,
+      "KinshipWithin": 0.0017796963156499679,
+      "NHetHet": 5495,
+      "N_Het1": 13178,
+      "N_Het2": 13231,
+      "N_IBS0": 2724,
+      "N_IBS1": 15419,
+      "N_IBS2": 14666,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U19": {
+      "HetHet": 0.16593008016093144,
+      "IBS0": 0.08540339540979609,
+      "IDs": [
+        "U05",
+        "U19"
+      ],
+      "Kinship": -0.00781190312476121,
+      "KinshipWithin": -0.006091293257699776,
+      "NHetHet": 5444,
+      "N_Het1": 13178,
+      "N_Het2": 13089,
+      "N_IBS0": 2802,
+      "N_IBS1": 15379,
+      "N_IBS2": 14628,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U05|U20": {
+      "HetHet": 0.16764728356384198,
+      "IBS0": 0.08237181936272638,
+      "IDs": [
+        "U05",
+        "U20"
+      ],
+      "Kinship": 0.0003325099752992666,
+      "KinshipWithin": 0.0035865974516281264,
+      "NHetHet": 4388,
+      "N_Het1": 10526,
+      "N_Het2": 10664,
+      "N_IBS0": 2156,
+      "N_IBS1": 12414,
+      "N_IBS2": 11604,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U06|U07": {
+      "HetHet": 0.16602151848578134,
+      "IBS0": 0.08208113627358347,
+      "IDs": [
+        "U06",
+        "U07"
+      ],
+      "Kinship": -0.00017077798861475646,
+      "KinshipWithin": 0.002303538386012613,
+      "NHetHet": 5447,
+      "N_Het1": 13306,
+      "N_Het2": 13175,
+      "N_IBS0": 2693,
+      "N_IBS1": 15587,
+      "N_IBS2": 14529,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U08": {
+      "HetHet": 0.17013624310402634,
+      "IBS0": 0.0850986009936298,
+      "IDs": [
+        "U06",
+        "U08"
+      ],
+      "Kinship": -0.0008480964945344338,
+      "KinshipWithin": -7.527003123706296e-05,
+      "NHetHet": 5582,
+      "N_Het1": 13306,
+      "N_Het2": 13265,
+      "N_IBS0": 2792,
+      "N_IBS1": 15407,
+      "N_IBS2": 14610,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U09": {
+      "HetHet": 0.16800268219086226,
+      "IBS0": 0.08512908043524643,
+      "IDs": [
+        "U06",
+        "U09"
+      ],
+      "Kinship": -0.005623955008359882,
+      "KinshipWithin": -0.0027962515114873035,
+      "NHetHet": 5512,
+      "N_Het1": 13306,
+      "N_Het2": 13158,
+      "N_IBS0": 2793,
+      "N_IBS1": 15440,
+      "N_IBS2": 14576,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U10": {
+      "HetHet": 0.1657776829528483,
+      "IBS0": 0.08625681977506172,
+      "IDs": [
+        "U06",
+        "U10"
+      ],
+      "Kinship": -0.012286324786324743,
+      "KinshipWithin": -0.008368042408178721,
+      "NHetHet": 5439,
+      "N_Het1": 13306,
+      "N_Het2": 13104,
+      "N_IBS0": 2830,
+      "N_IBS1": 15532,
+      "N_IBS2": 14447,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U11": {
+      "HetHet": 0.17047151696180926,
+      "IBS0": 0.08656161419122801,
+      "IDs": [
+        "U06",
+        "U11"
+      ],
+      "Kinship": -0.0045124990559625155,
+      "KinshipWithin": -0.0032772064640072323,
+      "NHetHet": 5593,
+      "N_Het1": 13306,
+      "N_Het2": 13241,
+      "N_IBS0": 2840,
+      "N_IBS1": 15361,
+      "N_IBS2": 14608,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U12": {
+      "HetHet": 0.1680331616324789,
+      "IBS0": 0.08418421774513091,
+      "IDs": [
+        "U06",
+        "U12"
+      ],
+      "Kinship": -0.002653927813163537,
+      "KinshipWithin": -0.00041518834453083717,
+      "NHetHet": 5513,
+      "N_Het1": 13306,
+      "N_Het2": 13188,
+      "N_IBS0": 2762,
+      "N_IBS1": 15468,
+      "N_IBS2": 14579,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U13": {
+      "HetHet": 0.17208692736749062,
+      "IBS0": 0.0818982596238837,
+      "IDs": [
+        "U06",
+        "U13"
+      ],
+      "Kinship": 0.010220952953554796,
+      "KinshipWithin": 0.010220952953554787,
+      "NHetHet": 5646,
+      "N_Het1": 13306,
+      "N_Het2": 13306,
+      "N_IBS0": 2687,
+      "N_IBS1": 15320,
+      "N_IBS2": 14802,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U14": {
+      "HetHet": 0.16891706543936116,
+      "IBS0": 0.08442805327806395,
+      "IDs": [
+        "U06",
+        "U14"
+      ],
+      "Kinship": -0.0030629328057225624,
+      "KinshipWithin": 7.562294400120997e-05,
+      "NHetHet": 5542,
+      "N_Het1": 13306,
+      "N_Het2": 13141,
+      "N_IBS0": 2770,
+      "N_IBS1": 15363,
+      "N_IBS2": 14676,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U15": {
+      "HetHet": 0.16711877838398,
+      "IBS0": 0.08473284769423024,
+      "IDs": [
+        "U06",
+        "U15"
+      ],
+      "Kinship": -0.00587407801688089,
+      "KinshipWithin": -0.0029103828854367465,
+      "NHetHet": 5483,
+      "N_Het1": 13306,
+      "N_Het2": 13151,
+      "N_IBS0": 2780,
+      "N_IBS1": 15491,
+      "N_IBS2": 14538,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U16": {
+      "HetHet": 0.16931329818037733,
+      "IBS0": 0.0790331921119205,
+      "IDs": [
+        "U06",
+        "U16"
+      ],
+      "Kinship": 0.013439241078150865,
+      "KinshipWithin": 0.013878441402136302,
+      "NHetHet": 5555,
+      "N_Het1": 13306,
+      "N_Het2": 13282,
+      "N_IBS0": 2593,
+      "N_IBS1": 15478,
+      "N_IBS2": 14738,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U17": {
+      "HetHet": 0.16931329818037733,
+      "IBS0": 0.08125819134993446,
+      "IDs": [
+        "U06",
+        "U17"
+      ],
+      "Kinship": 0.007321859903381633,
+      "KinshipWithin": 0.008397981471718009,
+      "NHetHet": 5555,
+      "N_Het1": 13306,
+      "N_Het2": 13248,
+      "N_IBS0": 2666,
+      "N_IBS1": 15444,
+      "N_IBS2": 14699,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U18": {
+      "HetHet": 0.1698009692462434,
+      "IBS0": 0.08473284769423024,
+      "IDs": [
+        "U06",
+        "U18"
+      ],
+      "Kinship": -0.001001436021464741,
+      "KinshipWithin": 0.0004145155820175604,
+      "NHetHet": 5571,
+      "N_Het1": 13306,
+      "N_Het2": 13231,
+      "N_IBS0": 2780,
+      "N_IBS1": 15395,
+      "N_IBS2": 14634,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U19": {
+      "HetHet": 0.16605199792739797,
+      "IBS0": 0.08598250480051206,
+      "IDs": [
+        "U06",
+        "U19"
+      ],
+      "Kinship": -0.011555504622201895,
+      "KinshipWithin": -0.007349876870619436,
+      "NHetHet": 5448,
+      "N_Het1": 13306,
+      "N_Het2": 13089,
+      "N_IBS0": 2821,
+      "N_IBS1": 15499,
+      "N_IBS2": 14489,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U06|U20": {
+      "HetHet": 0.1685642240391228,
+      "IBS0": 0.08134026132803546,
+      "IDs": [
+        "U06",
+        "U20"
+      ],
+      "Kinship": 0.006122833458929944,
+      "KinshipWithin": 0.007236842105263158,
+      "NHetHet": 4412,
+      "N_Het1": 10616,
+      "N_Het2": 10664,
+      "N_IBS0": 2129,
+      "N_IBS1": 12456,
+      "N_IBS2": 11589,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U07|U08": {
+      "HetHet": 0.16644823066841416,
+      "IBS0": 0.08394038221219788,
+      "IDs": [
+        "U07",
+        "U08"
+      ],
+      "Kinship": -0.003491461100569304,
+      "KinshipWithin": -0.0017776096822995462,
+      "NHetHet": 5461,
+      "N_Het1": 13175,
+      "N_Het2": 13265,
+      "N_IBS0": 2754,
+      "N_IBS1": 15518,
+      "N_IBS2": 14537,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U09": {
+      "HetHet": 0.16501569691243256,
+      "IBS0": 0.08247736901459965,
+      "IDs": [
+        "U07",
+        "U09"
+      ],
+      "Kinship": -0.00024699802401584314,
+      "KinshipWithin": 7.59503284851707e-05,
+      "NHetHet": 5414,
+      "N_Het1": 13175,
+      "N_Het2": 13158,
+      "N_IBS0": 2706,
+      "N_IBS1": 15505,
+      "N_IBS2": 14598,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U10": {
+      "HetHet": 0.16583864183608157,
+      "IBS0": 0.08506812155201317,
+      "IDs": [
+        "U07",
+        "U10"
+      ],
+      "Kinship": -0.006734584859584891,
+      "KinshipWithin": -0.005365500970356559,
+      "NHetHet": 5441,
+      "N_Het1": 13175,
+      "N_Het2": 13104,
+      "N_IBS0": 2791,
+      "N_IBS1": 15397,
+      "N_IBS2": 14621,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U11": {
+      "HetHet": 0.16623487457709774,
+      "IBS0": 0.08290408119723247,
+      "IDs": [
+        "U07",
+        "U11"
+      ],
+      "Kinship": -0.0007210626185958358,
+      "KinshipWithin": 0.0005299818291944276,
+      "NHetHet": 5454,
+      "N_Het1": 13175,
+      "N_Het2": 13241,
+      "N_IBS0": 2720,
+      "N_IBS1": 15508,
+      "N_IBS2": 14581,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U12": {
+      "HetHet": 0.16614343625224787,
+      "IBS0": 0.08640921698314487,
+      "IDs": [
+        "U07",
+        "U12"
+      ],
+      "Kinship": -0.008557874762808337,
+      "KinshipWithin": -0.008307097067860258,
+      "NHetHet": 5451,
+      "N_Het1": 13175,
+      "N_Het2": 13188,
+      "N_IBS0": 2835,
+      "N_IBS1": 15461,
+      "N_IBS2": 14513,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U13": {
+      "HetHet": 0.16681398396781372,
+      "IBS0": 0.08138010911640099,
+      "IDs": [
+        "U07",
+        "U13"
+      ],
+      "Kinship": 0.002561669829222013,
+      "KinshipWithin": 0.0050224689399947136,
+      "NHetHet": 5473,
+      "N_Het1": 13175,
+      "N_Het2": 13306,
+      "N_IBS0": 2670,
+      "N_IBS1": 15535,
+      "N_IBS2": 14604,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U14": {
+      "HetHet": 0.1657776829528483,
+      "IBS0": 0.08357462891279832,
+      "IDs": [
+        "U07",
+        "U14"
+      ],
+      "Kinship": -0.0023590289932272634,
+      "KinshipWithin": -0.001709986320109439,
+      "NHetHet": 5439,
+      "N_Het1": 13175,
+      "N_Het2": 13141,
+      "N_IBS0": 2742,
+      "N_IBS1": 15438,
+      "N_IBS2": 14629,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U15": {
+      "HetHet": 0.16754549056661283,
+      "IBS0": 0.08491572434393002,
+      "IDs": [
+        "U07",
+        "U15"
+      ],
+      "Kinship": -0.003307733252224221,
+      "KinshipWithin": -0.002848894628883993,
+      "NHetHet": 5497,
+      "N_Het1": 13175,
+      "N_Het2": 13151,
+      "N_IBS0": 2786,
+      "N_IBS1": 15332,
+      "N_IBS2": 14691,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U16": {
+      "HetHet": 0.16620439513548113,
+      "IBS0": 0.080557164192752,
+      "IDs": [
+        "U07",
+        "U16"
+      ],
+      "Kinship": 0.004307400379506665,
+      "KinshipWithin": 0.0063121291151680085,
+      "NHetHet": 5453,
+      "N_Het1": 13175,
+      "N_Het2": 13282,
+      "N_IBS0": 2643,
+      "N_IBS1": 15551,
+      "N_IBS2": 14615,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U17": {
+      "HetHet": 0.16806364107409552,
+      "IBS0": 0.08326983449663203,
+      "IDs": [
+        "U07",
+        "U17"
+      ],
+      "Kinship": 0.0005123339658443804,
+      "KinshipWithin": 0.0018922908072512583,
+      "NHetHet": 5514,
+      "N_Het1": 13175,
+      "N_Het2": 13248,
+      "N_IBS0": 2732,
+      "N_IBS1": 15395,
+      "N_IBS2": 14682,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U18": {
+      "HetHet": 0.16690542229266359,
+      "IBS0": 0.08403182053704776,
+      "IDs": [
+        "U07",
+        "U18"
+      ],
+      "Kinship": -0.002504743833017131,
+      "KinshipWithin": -0.0014390668787396803,
+      "NHetHet": 5476,
+      "N_Het1": 13175,
+      "N_Het2": 13231,
+      "N_IBS0": 2757,
+      "N_IBS1": 15454,
+      "N_IBS2": 14598,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U19": {
+      "HetHet": 0.16678350452619708,
+      "IBS0": 0.08470236825261361,
+      "IDs": [
+        "U07",
+        "U19"
+      ],
+      "Kinship": -0.004927801971120749,
+      "KinshipWithin": -0.0032744441060006094,
+      "NHetHet": 5472,
+      "N_Het1": 13175,
+      "N_Het2": 13089,
+      "N_IBS0": 2779,
+      "N_IBS1": 15320,
+      "N_IBS2": 14710,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U07|U20": {
+      "HetHet": 0.17013066401772753,
+      "IBS0": 0.08325055398487048,
+      "IDs": [
+        "U07",
+        "U20"
+      ],
+      "Kinship": 0.0007377439314611989,
+      "KinshipWithin": 0.004487694269923001,
+      "NHetHet": 4453,
+      "N_Het1": 10505,
+      "N_Het2": 10664,
+      "N_IBS0": 2179,
+      "N_IBS1": 12263,
+      "N_IBS2": 11732,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U08|U09": {
+      "HetHet": 0.16705781950074675,
+      "IBS0": 0.08403182053704776,
+      "IDs": [
+        "U08",
+        "U09"
+      ],
+      "Kinship": -0.003286973704210383,
+      "KinshipWithin": -0.0012489119327858305,
+      "NHetHet": 5481,
+      "N_Het1": 13265,
+      "N_Het2": 13158,
+      "N_IBS0": 2757,
+      "N_IBS1": 15461,
+      "N_IBS2": 14591,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U10": {
+      "HetHet": 0.16894754488097777,
+      "IBS0": 0.08775031241427657,
+      "IDs": [
+        "U08",
+        "U10"
+      ],
+      "Kinship": -0.011275183150183166,
+      "KinshipWithin": -0.008153513595509879,
+      "NHetHet": 5543,
+      "N_Het1": 13265,
+      "N_Het2": 13104,
+      "N_IBS0": 2879,
+      "N_IBS1": 15283,
+      "N_IBS2": 14647,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U11": {
+      "HetHet": 0.16842939437349508,
+      "IBS0": 0.08296504008046572,
+      "IDs": [
+        "U08",
+        "U11"
+      ],
+      "Kinship": 0.002643304886337905,
+      "KinshipWithin": 0.0030936391760356145,
+      "NHetHet": 5526,
+      "N_Het1": 13265,
+      "N_Het2": 13241,
+      "N_IBS0": 2722,
+      "N_IBS1": 15454,
+      "N_IBS2": 14633,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U12": {
+      "HetHet": 0.16739309335852967,
+      "IBS0": 0.0829345606388491,
+      "IDs": [
+        "U08",
+        "U12"
+      ],
+      "Kinship": 0.000436002426448312,
+      "KinshipWithin": 0.001890144785090538,
+      "NHetHet": 5492,
+      "N_Het1": 13265,
+      "N_Het2": 13188,
+      "N_IBS0": 2721,
+      "N_IBS1": 15469,
+      "N_IBS2": 14619,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U13": {
+      "HetHet": 0.16922185985552746,
+      "IBS0": 0.08378798500411472,
+      "IDs": [
+        "U08",
+        "U13"
+      ],
+      "Kinship": 0.0012627214474180137,
+      "KinshipWithin": 0.0020322908434007,
+      "NHetHet": 5552,
+      "N_Het1": 13265,
+      "N_Het2": 13306,
+      "N_IBS0": 2749,
+      "N_IBS1": 15467,
+      "N_IBS2": 14593,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U14": {
+      "HetHet": 0.16736261391691304,
+      "IBS0": 0.08320887561339876,
+      "IDs": [
+        "U08",
+        "U14"
+      ],
+      "Kinship": -0.0011795144966136872,
+      "KinshipWithin": 0.0011739756116034236,
+      "NHetHet": 5491,
+      "N_Het1": 13265,
+      "N_Het2": 13141,
+      "N_IBS0": 2730,
+      "N_IBS1": 15424,
+      "N_IBS2": 14655,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U15": {
+      "HetHet": 0.16519857356213233,
+      "IBS0": 0.08464140936938035,
+      "IDs": [
+        "U08",
+        "U15"
+      ],
+      "Kinship": -0.007261805185917458,
+      "KinshipWithin": -0.0050726832222895216,
+      "NHetHet": 5420,
+      "N_Het1": 13265,
+      "N_Het2": 13151,
+      "N_IBS0": 2777,
+      "N_IBS1": 15576,
+      "N_IBS2": 14456,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U16": {
+      "HetHet": 0.16974001036301015,
+      "IBS0": 0.08406229997866439,
+      "IDs": [
+        "U08",
+        "U16"
+      ],
+      "Kinship": 0.0016773464003015381,
+      "KinshipWithin": 0.0019964591102572793,
+      "NHetHet": 5569,
+      "N_Het1": 13265,
+      "N_Het2": 13282,
+      "N_IBS0": 2758,
+      "N_IBS1": 15409,
+      "N_IBS2": 14642,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U17": {
+      "HetHet": 0.16983144868786004,
+      "IBS0": 0.0831479167301655,
+      "IDs": [
+        "U08",
+        "U17"
+      ],
+      "Kinship": 0.004057216183574852,
+      "KinshipWithin": 0.004375212160072417,
+      "NHetHet": 5572,
+      "N_Het1": 13265,
+      "N_Het2": 13248,
+      "N_IBS0": 2728,
+      "N_IBS1": 15369,
+      "N_IBS2": 14712,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U18": {
+      "HetHet": 0.17098966746929195,
+      "IBS0": 0.08491572434393002,
+      "IDs": [
+        "U08",
+        "U18"
+      ],
+      "Kinship": 0.0007935908094626187,
+      "KinshipWithin": 0.0014341787439613527,
+      "NHetHet": 5610,
+      "N_Het1": 13265,
+      "N_Het2": 13231,
+      "N_IBS0": 2786,
+      "N_IBS1": 15276,
+      "N_IBS2": 14747,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U19": {
+      "HetHet": 0.16730165503367977,
+      "IBS0": 0.08579962815081228,
+      "IDs": [
+        "U08",
+        "U19"
+      ],
+      "Kinship": -0.00874780349912141,
+      "KinshipWithin": -0.005350231463914396,
+      "NHetHet": 5489,
+      "N_Het1": 13265,
+      "N_Het2": 13089,
+      "N_IBS0": 2815,
+      "N_IBS1": 15376,
+      "N_IBS2": 14618,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U08|U20": {
+      "HetHet": 0.17173530984946894,
+      "IBS0": 0.08241002521586308,
+      "IDs": [
+        "U08",
+        "U20"
+      ],
+      "Kinship": 0.006798866855524055,
+      "KinshipWithin": 0.008516044038769172,
+      "NHetHet": 4495,
+      "N_Het1": 10590,
+      "N_Het2": 10664,
+      "N_IBS0": 2157,
+      "N_IBS1": 12264,
+      "N_IBS2": 11753,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U09|U10": {
+      "HetHet": 0.16431466975525008,
+      "IBS0": 0.08586058703404553,
+      "IDs": [
+        "U09",
+        "U10"
+      ],
+      "Kinship": -0.010302197802197766,
+      "KinshipWithin": -0.009252912954078136,
+      "NHetHet": 5391,
+      "N_Het1": 13158,
+      "N_Het2": 13104,
+      "N_IBS0": 2817,
+      "N_IBS1": 15480,
+      "N_IBS2": 14512,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U11": {
+      "HetHet": 0.16806364107409552,
+      "IBS0": 0.08296504008046572,
+      "IDs": [
+        "U09",
+        "U11"
+      ],
+      "Kinship": 0.0010829913360693166,
+      "KinshipWithin": 0.002651615591499678,
+      "NHetHet": 5514,
+      "N_Het1": 13158,
+      "N_Het2": 13241,
+      "N_IBS0": 2722,
+      "N_IBS1": 15371,
+      "N_IBS2": 14716,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U12": {
+      "HetHet": 0.16583864183608157,
+      "IBS0": 0.08631777865829499,
+      "IDs": [
+        "U09",
+        "U12"
+      ],
+      "Kinship": -0.009043927648578864,
+      "KinshipWithin": -0.008464283003112427,
+      "NHetHet": 5441,
+      "N_Het1": 13158,
+      "N_Het2": 13188,
+      "N_IBS0": 2832,
+      "N_IBS1": 15464,
+      "N_IBS2": 14513,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U13": {
+      "HetHet": 0.1670273400591301,
+      "IBS0": 0.08534243652656283,
+      "IDs": [
+        "U09",
+        "U13"
+      ],
+      "Kinship": -0.0073719410244718064,
+      "KinshipWithin": -0.004534461910519952,
+      "NHetHet": 5480,
+      "N_Het1": 13158,
+      "N_Het2": 13306,
+      "N_IBS0": 2800,
+      "N_IBS1": 15504,
+      "N_IBS2": 14505,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U14": {
+      "HetHet": 0.16778932609954586,
+      "IBS0": 0.08610442256697858,
+      "IDs": [
+        "U09",
+        "U14"
+      ],
+      "Kinship": -0.00584049920097407,
+      "KinshipWithin": -0.005513517624244268,
+      "NHetHet": 5505,
+      "N_Het1": 13158,
+      "N_Het2": 13141,
+      "N_IBS0": 2825,
+      "N_IBS1": 15289,
+      "N_IBS2": 14695,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U15": {
+      "HetHet": 0.16547288853668202,
+      "IBS0": 0.08598250480051206,
+      "IDs": [
+        "U09",
+        "U15"
+      ],
+      "Kinship": -0.008231313208121094,
+      "KinshipWithin": -0.008096088790908054,
+      "NHetHet": 5429,
+      "N_Het1": 13158,
+      "N_Het2": 13151,
+      "N_IBS0": 2821,
+      "N_IBS1": 15451,
+      "N_IBS2": 14537,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U16": {
+      "HetHet": 0.16632631290194763,
+      "IBS0": 0.08183730074065043,
+      "IDs": [
+        "U09",
+        "U16"
+      ],
+      "Kinship": 0.0009499924000607729,
+      "KinshipWithin": 0.0032904689863842663,
+      "NHetHet": 5457,
+      "N_Het1": 13158,
+      "N_Het2": 13282,
+      "N_IBS0": 2685,
+      "N_IBS1": 15526,
+      "N_IBS2": 14598,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U17": {
+      "HetHet": 0.16891706543936116,
+      "IBS0": 0.08195921850711695,
+      "IDs": [
+        "U09",
+        "U17"
+      ],
+      "Kinship": 0.004521963824289432,
+      "KinshipWithin": 0.006210709687192305,
+      "NHetHet": 5542,
+      "N_Het1": 13158,
+      "N_Het2": 13248,
+      "N_IBS0": 2689,
+      "N_IBS1": 15322,
+      "N_IBS2": 14798,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U18": {
+      "HetHet": 0.16605199792739797,
+      "IBS0": 0.08537291596817946,
+      "IDs": [
+        "U09",
+        "U18"
+      ],
+      "Kinship": -0.007238942088463318,
+      "KinshipWithin": -0.005835764902042517,
+      "NHetHet": 5448,
+      "N_Het1": 13158,
+      "N_Het2": 13231,
+      "N_IBS0": 2801,
+      "N_IBS1": 15493,
+      "N_IBS2": 14515,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U19": {
+      "HetHet": 0.1674235728001463,
+      "IBS0": 0.08451949160291383,
+      "IDs": [
+        "U09",
+        "U19"
+      ],
+      "Kinship": -0.0033425013370005363,
+      "KinshipWithin": -0.0020192783937211874,
+      "NHetHet": 5493,
+      "N_Het1": 13158,
+      "N_Het2": 13089,
+      "N_IBS0": 2773,
+      "N_IBS1": 15261,
+      "N_IBS2": 14775,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U09|U20": {
+      "HetHet": 0.16680675479483456,
+      "IBS0": 0.08397646519446779,
+      "IDs": [
+        "U09",
+        "U20"
+      ],
+      "Kinship": -0.005090390104662279,
+      "KinshipWithin": -0.0014168319637291016,
+      "NHetHet": 4366,
+      "N_Het1": 10510,
+      "N_Het2": 10664,
+      "N_IBS0": 2198,
+      "N_IBS1": 12442,
+      "N_IBS2": 11534,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U10|U11": {
+      "HetHet": 0.16644823066841416,
+      "IBS0": 0.08650065530799476,
+      "IDs": [
+        "U10",
+        "U11"
+      ],
+      "Kinship": -0.01081730769230771,
+      "KinshipWithin": -0.008160941355095843,
+      "NHetHet": 5461,
+      "N_Het1": 13104,
+      "N_Het2": 13241,
+      "N_IBS0": 2838,
+      "N_IBS1": 15423,
+      "N_IBS2": 14548,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U12": {
+      "HetHet": 0.16690542229266359,
+      "IBS0": 0.08576914870919565,
+      "IDs": [
+        "U10",
+        "U12"
+      ],
+      "Kinship": -0.007402319902319876,
+      "KinshipWithin": -0.005781226228510574,
+      "NHetHet": 5476,
+      "N_Het1": 13104,
+      "N_Het2": 13188,
+      "N_IBS0": 2814,
+      "N_IBS1": 15340,
+      "N_IBS2": 14655,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U13": {
+      "HetHet": 0.16714925782559664,
+      "IBS0": 0.08647017586637813,
+      "IDs": [
+        "U10",
+        "U13"
+      ],
+      "Kinship": -0.011103479853479814,
+      "KinshipWithin": -0.007194244604316547,
+      "NHetHet": 5484,
+      "N_Het1": 13104,
+      "N_Het2": 13306,
+      "N_IBS0": 2837,
+      "N_IBS1": 15442,
+      "N_IBS2": 14530,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U14": {
+      "HetHet": 0.16675302508458045,
+      "IBS0": 0.08570818982596239,
+      "IDs": [
+        "U10",
+        "U14"
+      ],
+      "Kinship": -0.006543803418803451,
+      "KinshipWithin": -0.005829681844160792,
+      "NHetHet": 5471,
+      "N_Het1": 13104,
+      "N_Het2": 13141,
+      "N_IBS0": 2812,
+      "N_IBS1": 15303,
+      "N_IBS2": 14694,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U15": {
+      "HetHet": 0.16294309488250175,
+      "IBS0": 0.08589106647566216,
+      "IDs": [
+        "U10",
+        "U15"
+      ],
+      "Kinship": -0.01196199633699635,
+      "KinshipWithin": -0.011045515139973339,
+      "NHetHet": 5346,
+      "N_Het1": 13104,
+      "N_Het2": 13151,
+      "N_IBS0": 2818,
+      "N_IBS1": 15563,
+      "N_IBS2": 14428,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U16": {
+      "HetHet": 0.16888658599774453,
+      "IBS0": 0.08372702612088147,
+      "IDs": [
+        "U10",
+        "U16"
+      ],
+      "Kinship": -0.0016025641025640969,
+      "KinshipWithin": 0.0017812476313196393,
+      "NHetHet": 5541,
+      "N_Het1": 13104,
+      "N_Het2": 13282,
+      "N_IBS0": 2747,
+      "N_IBS1": 15304,
+      "N_IBS2": 14758,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U17": {
+      "HetHet": 0.16754549056661283,
+      "IBS0": 0.08625681977506172,
+      "IDs": [
+        "U10",
+        "U17"
+      ],
+      "Kinship": -0.008966727716727685,
+      "KinshipWithin": -0.006185488767455981,
+      "NHetHet": 5497,
+      "N_Het1": 13104,
+      "N_Het2": 13248,
+      "N_IBS0": 2830,
+      "N_IBS1": 15358,
+      "N_IBS2": 14621,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U18": {
+      "HetHet": 0.1653509707702155,
+      "IBS0": 0.0845804504861471,
+      "IDs": [
+        "U10",
+        "U18"
+      ],
+      "Kinship": -0.007192460317460347,
+      "KinshipWithin": -0.004746535029428517,
+      "NHetHet": 5425,
+      "N_Het1": 13104,
+      "N_Het2": 13231,
+      "N_IBS0": 2775,
+      "N_IBS1": 15485,
+      "N_IBS2": 14549,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U19": {
+      "HetHet": 0.16516809412051572,
+      "IBS0": 0.08628729921667835,
+      "IDs": [
+        "U10",
+        "U19"
+      ],
+      "Kinship": -0.009569103827641534,
+      "KinshipWithin": -0.00927728782499141,
+      "NHetHet": 5419,
+      "N_Het1": 13104,
+      "N_Het2": 13089,
+      "N_IBS0": 2831,
+      "N_IBS1": 15355,
+      "N_IBS2": 14623,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U10|U20": {
+      "HetHet": 0.16737984259188507,
+      "IBS0": 0.08344158325055398,
+      "IDs": [
+        "U10",
+        "U20"
+      ],
+      "Kinship": -0.006090515166104926,
+      "KinshipWithin": 0.0006176065371276546,
+      "NHetHet": 4381,
+      "N_Het1": 10385,
+      "N_Het2": 10664,
+      "N_IBS0": 2184,
+      "N_IBS1": 12287,
+      "N_IBS2": 11703,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U11|U12": {
+      "HetHet": 0.16842939437349508,
+      "IBS0": 0.08403182053704776,
+      "IDs": [
+        "U11",
+        "U12"
+      ],
+      "Kinship": -0.0005497421898695842,
+      "KinshipWithin": 0.00045404669113473836,
+      "NHetHet": 5526,
+      "N_Het1": 13241,
+      "N_Het2": 13188,
+      "N_IBS0": 2757,
+      "N_IBS1": 15377,
+      "N_IBS2": 14675,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U13": {
+      "HetHet": 0.169587613154927,
+      "IBS0": 0.08156298576610077,
+      "IDs": [
+        "U11",
+        "U13"
+      ],
+      "Kinship": 0.0067781889585378785,
+      "KinshipWithin": 0.007985836441029117,
+      "NHetHet": 5564,
+      "N_Het1": 13241,
+      "N_Het2": 13306,
+      "N_IBS0": 2676,
+      "N_IBS1": 15419,
+      "N_IBS2": 14714,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U14": {
+      "HetHet": 0.1658996007193148,
+      "IBS0": 0.08418421774513091,
+      "IDs": [
+        "U11",
+        "U14"
+      ],
+      "Kinship": -0.004984399969560904,
+      "KinshipWithin": -0.0030702751876279283,
+      "NHetHet": 5443,
+      "N_Het1": 13241,
+      "N_Het2": 13141,
+      "N_IBS0": 2762,
+      "N_IBS1": 15496,
+      "N_IBS2": 14551,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U15": {
+      "HetHet": 0.16657014843488066,
+      "IBS0": 0.08470236825261361,
+      "IDs": [
+        "U11",
+        "U15"
+      ],
+      "Kinship": -0.005246749296631381,
+      "KinshipWithin": -0.0035237950894210367,
+      "NHetHet": 5465,
+      "N_Het1": 13241,
+      "N_Het2": 13151,
+      "N_IBS0": 2779,
+      "N_IBS1": 15462,
+      "N_IBS2": 14568,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U16": {
+      "HetHet": 0.16644823066841416,
+      "IBS0": 0.08223353348166662,
+      "IDs": [
+        "U11",
+        "U16"
+      ],
+      "Kinship": 0.0016803866777433951,
+      "KinshipWithin": 0.0024507031632922368,
+      "NHetHet": 5461,
+      "N_Het1": 13241,
+      "N_Het2": 13282,
+      "N_IBS0": 2698,
+      "N_IBS1": 15601,
+      "N_IBS2": 14510,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U17": {
+      "HetHet": 0.16690542229266359,
+      "IBS0": 0.08153250632448414,
+      "IDs": [
+        "U11",
+        "U17"
+      ],
+      "Kinship": 0.004625783551091334,
+      "KinshipWithin": 0.0047566914568311375,
+      "NHetHet": 5476,
+      "N_Het1": 13241,
+      "N_Het2": 13248,
+      "N_IBS0": 2675,
+      "N_IBS1": 15537,
+      "N_IBS2": 14597,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U18": {
+      "HetHet": 0.1692523392971441,
+      "IBS0": 0.08360510835441495,
+      "IDs": [
+        "U11",
+        "U18"
+      ],
+      "Kinship": 0.002342982389842041,
+      "KinshipWithin": 0.0025309761257177395,
+      "NHetHet": 5553,
+      "N_Het1": 13241,
+      "N_Het2": 13231,
+      "N_IBS0": 2743,
+      "N_IBS1": 15366,
+      "N_IBS2": 14700,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U19": {
+      "HetHet": 0.1637050809229175,
+      "IBS0": 0.08424517662836417,
+      "IDs": [
+        "U11",
+        "U19"
+      ],
+      "Kinship": -0.008900603560241471,
+      "KinshipWithin": -0.005962780098746677,
+      "NHetHet": 5371,
+      "N_Het1": 13241,
+      "N_Het2": 13089,
+      "N_IBS0": 2764,
+      "N_IBS1": 15588,
+      "N_IBS2": 14457,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U11|U20": {
+      "HetHet": 0.1684496064797127,
+      "IBS0": 0.08252464277527317,
+      "IDs": [
+        "U11",
+        "U20"
+      ],
+      "Kinship": 0.0031311799604482604,
+      "KinshipWithin": 0.004181741295869943,
+      "NHetHet": 4409,
+      "N_Het1": 10619,
+      "N_Het2": 10664,
+      "N_IBS0": 2160,
+      "N_IBS1": 12465,
+      "N_IBS2": 11549,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U12|U13": {
+      "HetHet": 0.1674235728001463,
+      "IBS0": 0.0818982596238837,
+      "IDs": [
+        "U12",
+        "U13"
+      ],
+      "Kinship": 0.0022747952684258332,
+      "KinshipWithin": 0.004491582999924511,
+      "NHetHet": 5493,
+      "N_Het1": 13188,
+      "N_Het2": 13306,
+      "N_IBS0": 2687,
+      "N_IBS1": 15508,
+      "N_IBS2": 14614,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U12|U14": {
+      "HetHet": 0.16675302508458045,
+      "IBS0": 0.08470236825261361,
+      "IDs": [
+        "U12",
+        "U14"
+      ],
+      "Kinship": -0.004204398447606672,
+      "KinshipWithin": -0.003304341220707205,
+      "NHetHet": 5471,
+      "N_Het1": 13188,
+      "N_Het2": 13141,
+      "N_IBS0": 2779,
+      "N_IBS1": 15387,
+      "N_IBS2": 14643,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U12|U15": {
+      "HetHet": 0.16501569691243256,
+      "IBS0": 0.08400134109543113,
+      "IDs": [
+        "U12",
+        "U15"
+      ],
+      "Kinship": -0.004429320964185246,
+      "KinshipWithin": -0.0037207183264360835,
+      "NHetHet": 5414,
+      "N_Het1": 13188,
+      "N_Het2": 13151,
+      "N_IBS0": 2756,
+      "N_IBS1": 15511,
+      "N_IBS2": 14542,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U12|U16": {
+      "HetHet": 0.17007528422079307,
+      "IBS0": 0.0818982596238837,
+      "IDs": [
+        "U12",
+        "U16"
+      ],
+      "Kinship": 0.006028207461328483,
+      "KinshipWithin": 0.007782395164336985,
+      "NHetHet": 5580,
+      "N_Het1": 13188,
+      "N_Het2": 13282,
+      "N_IBS0": 2687,
+      "N_IBS1": 15310,
+      "N_IBS2": 14812,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U12|U17": {
+      "HetHet": 0.16900850376421103,
+      "IBS0": 0.08357462891279832,
+      "IDs": [
+        "U12",
+        "U17"
+      ],
+      "Kinship": 0.0011753108886866648,
+      "KinshipWithin": 0.002307459524890301,
+      "NHetHet": 5545,
+      "N_Het1": 13188,
+      "N_Het2": 13248,
+      "N_IBS0": 2742,
+      "N_IBS1": 15346,
+      "N_IBS2": 14721,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U12|U18": {
+      "HetHet": 0.16696638117589685,
+      "IBS0": 0.08220305404004999,
+      "IDs": [
+        "U12",
+        "U18"
+      ],
+      "Kinship": 0.002369578404610273,
+      "KinshipWithin": 0.003179529883795753,
+      "NHetHet": 5478,
+      "N_Het1": 13188,
+      "N_Het2": 13231,
+      "N_IBS0": 2697,
+      "N_IBS1": 15463,
+      "N_IBS2": 14649,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U12|U19": {
+      "HetHet": 0.16571672406961505,
+      "IBS0": 0.08488524490231339,
+      "IDs": [
+        "U12",
+        "U19"
+      ],
+      "Kinship": -0.006971502788601147,
+      "KinshipWithin": -0.005061460592913955,
+      "NHetHet": 5437,
+      "N_Het1": 13188,
+      "N_Het2": 13089,
+      "N_IBS0": 2785,
+      "N_IBS1": 15403,
+      "N_IBS2": 14621,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U12|U20": {
+      "HetHet": 0.16795293038893558,
+      "IBS0": 0.0846259646977917,
+      "IDs": [
+        "U12",
+        "U20"
+      ],
+      "Kinship": -0.005062268276452175,
+      "KinshipWithin": -0.0016050606618514846,
+      "NHetHet": 4396,
+      "N_Het1": 10519,
+      "N_Het2": 10664,
+      "N_IBS0": 2215,
+      "N_IBS1": 12391,
+      "N_IBS2": 11568,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U13|U14": {
+      "HetHet": 0.16727117559206314,
+      "IBS0": 0.08296504008046572,
+      "IDs": [
+        "U13",
+        "U14"
+      ],
+      "Kinship": -0.0014648809070847424,
+      "KinshipWithin": 0.0016637047680266193,
+      "NHetHet": 5488,
+      "N_Het1": 13306,
+      "N_Het2": 13141,
+      "N_IBS0": 2722,
+      "N_IBS1": 15471,
+      "N_IBS2": 14616,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U13|U15": {
+      "HetHet": 0.1645585052881831,
+      "IBS0": 0.08290408119723247,
+      "IDs": [
+        "U13",
+        "U15"
+      ],
+      "Kinship": -0.004505360809063941,
+      "KinshipWithin": -0.0015496843935442416,
+      "NHetHet": 5399,
+      "N_Het1": 13306,
+      "N_Het2": 13151,
+      "N_IBS0": 2720,
+      "N_IBS1": 15659,
+      "N_IBS2": 14430,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U13|U16": {
+      "HetHet": 0.1693742570636106,
+      "IBS0": 0.08290408119723247,
+      "IDs": [
+        "U13",
+        "U16"
+      ],
+      "Kinship": 0.0039527179641620225,
+      "KinshipWithin": 0.004400481420189559,
+      "NHetHet": 5557,
+      "N_Het1": 13306,
+      "N_Het2": 13282,
+      "N_IBS0": 2720,
+      "N_IBS1": 15474,
+      "N_IBS2": 14615,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U13|U17": {
+      "HetHet": 0.16955713371331038,
+      "IBS0": 0.08235545124813314,
+      "IDs": [
+        "U13",
+        "U17"
+      ],
+      "Kinship": 0.004906400966183555,
+      "KinshipWithin": 0.005987798448444679,
+      "NHetHet": 5563,
+      "N_Het1": 13306,
+      "N_Het2": 13248,
+      "N_IBS0": 2702,
+      "N_IBS1": 15428,
+      "N_IBS2": 14679,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U13|U18": {
+      "HetHet": 0.1688561065561279,
+      "IBS0": 0.08317839617178213,
+      "IDs": [
+        "U13",
+        "U18"
+      ],
+      "Kinship": 0.0016816567152898587,
+      "KinshipWithin": 0.0030900252477672682,
+      "NHetHet": 5540,
+      "N_Het1": 13306,
+      "N_Het2": 13231,
+      "N_IBS0": 2729,
+      "N_IBS1": 15457,
+      "N_IBS2": 14623,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U13|U19": {
+      "HetHet": 0.16611295681063123,
+      "IBS0": 0.08330031393824865,
+      "IDs": [
+        "U13",
+        "U19"
+      ],
+      "Kinship": -0.0047559019023607485,
+      "KinshipWithin": -0.0006061754120098503,
+      "NHetHet": 5450,
+      "N_Het1": 13306,
+      "N_Het2": 13089,
+      "N_IBS0": 2733,
+      "N_IBS1": 15495,
+      "N_IBS2": 14581,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U13|U20": {
+      "HetHet": 0.1697486054863605,
+      "IBS0": 0.08076717353098495,
+      "IDs": [
+        "U13",
+        "U20"
+      ],
+      "Kinship": 0.00888229196117235,
+      "KinshipWithin": 0.010105757931844888,
+      "NHetHet": 4443,
+      "N_Het1": 10611,
+      "N_Het2": 10664,
+      "N_IBS0": 2114,
+      "N_IBS1": 12389,
+      "N_IBS2": 11671,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U14|U15": {
+      "HetHet": 0.1685513121399616,
+      "IBS0": 0.08717120302356061,
+      "IDs": [
+        "U14",
+        "U15"
+      ],
+      "Kinship": -0.007419526672247212,
+      "KinshipWithin": -0.007226532785638217,
+      "NHetHet": 5530,
+      "N_Het1": 13141,
+      "N_Het2": 13151,
+      "N_IBS0": 2860,
+      "N_IBS1": 15232,
+      "N_IBS2": 14717,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U14|U16": {
+      "HetHet": 0.1666920662013472,
+      "IBS0": 0.08244688957298302,
+      "IDs": [
+        "U14",
+        "U16"
+      ],
+      "Kinship": -0.00043756182938892163,
+      "KinshipWithin": 0.002232903152556485,
+      "NHetHet": 5469,
+      "N_Het1": 13141,
+      "N_Het2": 13282,
+      "N_IBS0": 2705,
+      "N_IBS1": 15485,
+      "N_IBS2": 14619,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U14|U17": {
+      "HetHet": 0.16675302508458045,
+      "IBS0": 0.08336127282148191,
+      "IDs": [
+        "U14",
+        "U17"
+      ],
+      "Kinship": -0.001997564873297275,
+      "KinshipWithin": 3.789457728599037e-05,
+      "NHetHet": 5471,
+      "N_Het1": 13141,
+      "N_Het2": 13248,
+      "N_IBS0": 2735,
+      "N_IBS1": 15447,
+      "N_IBS2": 14627,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U14|U18": {
+      "HetHet": 0.16541192965344875,
+      "IBS0": 0.08384894388734798,
+      "IDs": [
+        "U14",
+        "U18"
+      ],
+      "Kinship": -0.0045658625675367714,
+      "KinshipWithin": -0.0028439253753981494,
+      "NHetHet": 5427,
+      "N_Het1": 13141,
+      "N_Het2": 13231,
+      "N_IBS0": 2751,
+      "N_IBS1": 15518,
+      "N_IBS2": 14540,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U14|U19": {
+      "HetHet": 0.1650461763540492,
+      "IBS0": 0.08515955987686305,
+      "IDs": [
+        "U14",
+        "U19"
+      ],
+      "Kinship": -0.007601803040721222,
+      "KinshipWithin": -0.006595501334349981,
+      "NHetHet": 5415,
+      "N_Het1": 13141,
+      "N_Het2": 13089,
+      "N_IBS0": 2794,
+      "N_IBS1": 15400,
+      "N_IBS2": 14615,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U14|U20": {
+      "HetHet": 0.17158248643692214,
+      "IBS0": 0.08351799495682738,
+      "IDs": [
+        "U14",
+        "U20"
+      ],
+      "Kinship": 0.0027743526510480843,
+      "KinshipWithin": 0.005611354741358985,
+      "NHetHet": 4491,
+      "N_Het1": 10543,
+      "N_Het2": 10664,
+      "N_IBS0": 2186,
+      "N_IBS1": 12225,
+      "N_IBS2": 11763,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U15|U16": {
+      "HetHet": 0.16672254564296382,
+      "IBS0": 0.0815020268828675,
+      "IDs": [
+        "U15",
+        "U16"
+      ],
+      "Kinship": 0.0021481256178237373,
+      "KinshipWithin": 0.004615442817690009,
+      "NHetHet": 5470,
+      "N_Het1": 13151,
+      "N_Het2": 13282,
+      "N_IBS0": 2674,
+      "N_IBS1": 15493,
+      "N_IBS2": 14642,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U15|U17": {
+      "HetHet": 0.16812459995732879,
+      "IBS0": 0.0826297662226828,
+      "IDs": [
+        "U15",
+        "U17"
+      ],
+      "Kinship": 0.0017299064709908052,
+      "KinshipWithin": 0.0035607409371567105,
+      "NHetHet": 5516,
+      "N_Het1": 13151,
+      "N_Het2": 13248,
+      "N_IBS0": 2711,
+      "N_IBS1": 15367,
+      "N_IBS2": 14731,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U15|U18": {
+      "HetHet": 0.1658691212776982,
+      "IBS0": 0.08244688957298302,
+      "IDs": [
+        "U15",
+        "U18"
+      ],
+      "Kinship": -0.00030415937951489,
+      "KinshipWithin": 0.0012129482222727618,
+      "NHetHet": 5442,
+      "N_Het1": 13151,
+      "N_Het2": 13231,
+      "N_IBS0": 2705,
+      "N_IBS1": 15498,
+      "N_IBS2": 14606,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U15|U19": {
+      "HetHet": 0.16489377914596604,
+      "IBS0": 0.0847938065774635,
+      "IDs": [
+        "U15",
+        "U19"
+      ],
+      "Kinship": -0.007067002826801172,
+      "KinshipWithin": -0.00586890243902439,
+      "NHetHet": 5410,
+      "N_Het1": 13151,
+      "N_Het2": 13089,
+      "N_IBS0": 2782,
+      "N_IBS1": 15420,
+      "N_IBS2": 14607,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U15|U20": {
+      "HetHet": 0.16825857721402918,
+      "IBS0": 0.08302131886605028,
+      "IDs": [
+        "U15",
+        "U20"
+      ],
+      "Kinship": 0.0,
+      "KinshipWithin": 0.0027343013388647936,
+      "NHetHet": 4404,
+      "N_Het1": 10548,
+      "N_Het2": 10664,
+      "N_IBS0": 2173,
+      "N_IBS1": 12404,
+      "N_IBS2": 11597,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U16|U17": {
+      "HetHet": 0.16821603828217868,
+      "IBS0": 0.08000853424365266,
+      "IDs": [
+        "U16",
+        "U17"
+      ],
+      "Kinship": 0.009510869565217406,
+      "KinshipWithin": 0.010139464756879005,
+      "NHetHet": 5519,
+      "N_Het1": 13282,
+      "N_Het2": 13248,
+      "N_IBS0": 2625,
+      "N_IBS1": 15492,
+      "N_IBS2": 14692,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U16|U18": {
+      "HetHet": 0.16684446340943035,
+      "IBS0": 0.08043524642628547,
+      "IDs": [
+        "U16",
+        "U18"
+      ],
+      "Kinship": 0.006443201572065627,
+      "KinshipWithin": 0.007392599856674085,
+      "NHetHet": 5474,
+      "N_Het1": 13282,
+      "N_Het2": 13231,
+      "N_IBS0": 2639,
+      "N_IBS1": 15565,
+      "N_IBS2": 14605,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U16|U19": {
+      "HetHet": 0.16626535401871437,
+      "IBS0": 0.08272120454753269,
+      "IDs": [
+        "U16",
+        "U19"
+      ],
+      "Kinship": -0.002654901061960424,
+      "KinshipWithin": 0.0010238519585908763,
+      "NHetHet": 5455,
+      "N_Het1": 13282,
+      "N_Het2": 13089,
+      "N_IBS0": 2714,
+      "N_IBS1": 15461,
+      "N_IBS2": 14634,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U16|U20": {
+      "HetHet": 0.17173530984946894,
+      "IBS0": 0.08309773057232368,
+      "IDs": [
+        "U16",
+        "U20"
+      ],
+      "Kinship": 0.004612546125461248,
+      "KinshipWithin": 0.006828992605849385,
+      "NHetHet": 4495,
+      "N_Het1": 10569,
+      "N_Het2": 10664,
+      "N_IBS0": 2175,
+      "N_IBS1": 12243,
+      "N_IBS2": 11756,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U17|U18": {
+      "HetHet": 0.16836843549026181,
+      "IBS0": 0.08339175226309854,
+      "IDs": [
+        "U17",
+        "U18"
+      ],
+      "Kinship": 0.001643866676743988,
+      "KinshipWithin": 0.0019638203859662375,
+      "NHetHet": 5524,
+      "N_Het1": 13248,
+      "N_Het2": 13231,
+      "N_IBS0": 2736,
+      "N_IBS1": 15431,
+      "N_IBS2": 14642,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U17|U19": {
+      "HetHet": 0.1672406961504465,
+      "IBS0": 0.0831479167301655,
+      "IDs": [
+        "U17",
+        "U19"
+      ],
+      "Kinship": -0.0018527007410803487,
+      "KinshipWithin": 0.001177051296654896,
+      "NHetHet": 5487,
+      "N_Het1": 13248,
+      "N_Het2": 13089,
+      "N_IBS0": 2728,
+      "N_IBS1": 15363,
+      "N_IBS2": 14718,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U17|U20": {
+      "HetHet": 0.17211736838083594,
+      "IBS0": 0.08344158325055398,
+      "IDs": [
+        "U17",
+        "U20"
+      ],
+      "Kinship": 0.004698271791481745,
+      "KinshipWithin": 0.0064461487789959065,
+      "NHetHet": 4505,
+      "N_Het1": 10589,
+      "N_Het2": 10664,
+      "N_IBS0": 2184,
+      "N_IBS1": 12243,
+      "N_IBS2": 11747,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U18|U19": {
+      "HetHet": 0.16614343625224787,
+      "IBS0": 0.08330031393824865,
+      "IDs": [
+        "U18",
+        "U19"
+      ],
+      "Kinship": -0.003285201314080499,
+      "KinshipWithin": -0.0005699088145896656,
+      "NHetHet": 5451,
+      "N_Het1": 13231,
+      "N_Het2": 13089,
+      "N_IBS0": 2733,
+      "N_IBS1": 15418,
+      "N_IBS2": 14658,
+      "N_SNP": 32809,
+      "withinFamily": false
+    },
+    "U18|U20": {
+      "HetHet": 0.17204095667456254,
+      "IBS0": 0.08221899595017956,
+      "IDs": [
+        "U18",
+        "U20"
+      ],
+      "Kinship": 0.007190160832544923,
+      "KinshipWithin": 0.009371762268060657,
+      "NHetHet": 4503,
+      "N_Het1": 10570,
+      "N_Het2": 10664,
+      "N_IBS0": 2152,
+      "N_IBS1": 12228,
+      "N_IBS2": 11794,
+      "N_SNP": 26174,
+      "withinFamily": false
+    },
+    "U19|U20": {
+      "HetHet": 0.1685642240391228,
+      "IBS0": 0.08477878811033851,
+      "IDs": [
+        "U19",
+        "U20"
+      ],
+      "Kinship": -0.006265544289267289,
+      "KinshipWithin": -0.0012311771948101146,
+      "NHetHet": 4412,
+      "N_Het1": 10454,
+      "N_Het2": 10664,
+      "N_IBS0": 2219,
+      "N_IBS1": 12294,
+      "N_IBS2": 11661,
+      "N_SNP": 26174,
+      "withinFamily": false
+    }
+  },
+  "relationships": {
+    "duplicate": [
+      "CHILD1",
+      "DUP"
+    ],
+    "missingSamples": [
+      "U20"
+    ],
+    "parents": [
+      [
+        "DAD",
+        "CHILD1"
+      ],
+      [
+        "MOM",
+        "CHILD1"
+      ],
+      [
+        "DAD",
+        "CHILD2"
+      ],
+      [
+        "MOM",
+        "CHILD2"
+      ]
+    ],
+    "siblings": [
+      "CHILD1",
+      "CHILD2"
+    ]
+  },
+  "sampleCount": 25,
+  "sampleStats": {
+    "CHILD1": {
+      "FID": "FAM",
+      "called": 32809,
+      "heterozygous": 13219,
+      "missing": 0
+    },
+    "CHILD2": {
+      "FID": "FAM",
+      "called": 32809,
+      "heterozygous": 13255,
+      "missing": 0
+    },
+    "DAD": {
+      "FID": "FAM",
+      "called": 32809,
+      "heterozygous": 13137,
+      "missing": 0
+    },
+    "DUP": {
+      "FID": "COPY",
+      "called": 32809,
+      "heterozygous": 13219,
+      "missing": 0
+    },
+    "MOM": {
+      "FID": "FAM",
+      "called": 32809,
+      "heterozygous": 13237,
+      "missing": 0
+    },
+    "U01": {
+      "FID": "U01",
+      "called": 32809,
+      "heterozygous": 13199,
+      "missing": 0
+    },
+    "U02": {
+      "FID": "U02",
+      "called": 32809,
+      "heterozygous": 13151,
+      "missing": 0
+    },
+    "U03": {
+      "FID": "U03",
+      "called": 32809,
+      "heterozygous": 13151,
+      "missing": 0
+    },
+    "U04": {
+      "FID": "U04",
+      "called": 32809,
+      "heterozygous": 13278,
+      "missing": 0
+    },
+    "U05": {
+      "FID": "U05",
+      "called": 32809,
+      "heterozygous": 13178,
+      "missing": 0
+    },
+    "U06": {
+      "FID": "U06",
+      "called": 32809,
+      "heterozygous": 13306,
+      "missing": 0
+    },
+    "U07": {
+      "FID": "U07",
+      "called": 32809,
+      "heterozygous": 13175,
+      "missing": 0
+    },
+    "U08": {
+      "FID": "U08",
+      "called": 32809,
+      "heterozygous": 13265,
+      "missing": 0
+    },
+    "U09": {
+      "FID": "U09",
+      "called": 32809,
+      "heterozygous": 13158,
+      "missing": 0
+    },
+    "U10": {
+      "FID": "U10",
+      "called": 32809,
+      "heterozygous": 13104,
+      "missing": 0
+    },
+    "U11": {
+      "FID": "U11",
+      "called": 32809,
+      "heterozygous": 13241,
+      "missing": 0
+    },
+    "U12": {
+      "FID": "U12",
+      "called": 32809,
+      "heterozygous": 13188,
+      "missing": 0
+    },
+    "U13": {
+      "FID": "U13",
+      "called": 32809,
+      "heterozygous": 13306,
+      "missing": 0
+    },
+    "U14": {
+      "FID": "U14",
+      "called": 32809,
+      "heterozygous": 13141,
+      "missing": 0
+    },
+    "U15": {
+      "FID": "U15",
+      "called": 32809,
+      "heterozygous": 13151,
+      "missing": 0
+    },
+    "U16": {
+      "FID": "U16",
+      "called": 32809,
+      "heterozygous": 13282,
+      "missing": 0
+    },
+    "U17": {
+      "FID": "U17",
+      "called": 32809,
+      "heterozygous": 13248,
+      "missing": 0
+    },
+    "U18": {
+      "FID": "U18",
+      "called": 32809,
+      "heterozygous": 13231,
+      "missing": 0
+    },
+    "U19": {
+      "FID": "U19",
+      "called": 32809,
+      "heterozygous": 13089,
+      "missing": 0
+    },
+    "U20": {
+      "FID": "U20",
+      "called": 26174,
+      "heterozygous": 10664,
+      "missing": 6635
+    }
+  },
+  "schema": 1,
+  "seed": 2322026
+}

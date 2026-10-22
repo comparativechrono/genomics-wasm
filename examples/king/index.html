@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KING 2.3.2 in the browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>KING 2.3.2</h1><p>Explore kinship and family relationships in your browser.</p></header>
+<main>
+  <p>Your locally compiled KING runs in this tab. Genotype files remain on this computer. Reloading clears the workspace.</p>
+  <section aria-labelledby="files-heading">
+    <h2 id="files-heading">1. Load genotype files</h2>
+    <button id="load-data" type="button" disabled>Load synthetic example</button>
+    <p id="data-description" class="hint">A simulated family and unrelated samples, with no human-derived genotypes.</p>
+    <label for="upload">Add matching BED, BIM and FAM files</label><input id="upload" type="file" multiple disabled>
+    <label for="upload-folder">Add a folder</label><input id="upload-folder" type="file" webkitdirectory multiple disabled>
+    <p class="hint">Folder paths are retained. All three files must share their basename.</p>
+    <ul id="files"><li>No files loaded.</li></ul>
+    <button id="clear" type="button" disabled>Clear files</button>
+  </section>
+  <form id="command-form"><fieldset id="controls" disabled>
+    <legend>2. Run an analysis</legend>
+    <div class="row">
+      <label>BED filename<input id="bed-file" type="text" value="cohort.bed" spellcheck="false"></label>
+      <label>Output folder<input id="output-directory" type="text" value="results" spellcheck="false"></label>
+    </div>
+    <label>Analysis<select id="command"></select></label>
+    <p id="command-description" class="hint"></p>
+    <label for="arguments">Arguments (JSON array, without the program name)</label>
+    <textarea id="arguments" rows="6" spellcheck="false">[]</textarea>
+    <p class="hint">Each entry is one argument. The presets write to <code>&lt;output folder&gt;/king</code>. Custom commands must use this folder to make their output files available below.</p>
+    <label class="timeout">Time limit (seconds)<input id="timeout" type="number" min="1" max="3600" step="1" value="300" required></label>
+    <button id="run" type="submit">Run analysis</button>
+  </fieldset></form>
+  <button id="cancel" type="button" disabled>Cancel</button>
+  <p id="status" role="status" aria-live="polite">Loading controls…</p>
+  <section aria-labelledby="results-heading">
+    <h2 id="results-heading">3. Inspect and download results</h2>
+    <p class="hint">Results are replaced when a new command starts. Text previews show at most 100,000 bytes; downloads preserve the complete original bytes.</p>
+    <label>File to view<select id="result-file" disabled></select></label>
+    <pre id="preview">No output yet.</pre><div id="downloads"></div>
+    <h3>Standard output</h3><pre id="stdout">No output yet.</pre>
+    <h3>Standard error</h3><pre id="stderr">No output yet.</pre>
+    <div id="stream-downloads"></div>
+  </section>
+  <p class="hint">This build uses one worker and a bounded WebAssembly memory heap. Start with small cohorts. The synthetic examples do not establish biobank-scale capacity or clinical validity. KING’s external R plotting commands are unavailable in the browser.</p>
+  <p><a href="README.md">Local setup and licensing</a> · <a href="../../runtime/KING.md">JavaScript API</a> · <a href="../../datasets/king/README.md">Synthetic data</a> · <a href="../../tools/king/README.md">Build details</a></p>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>

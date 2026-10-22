@@ -1,0 +1,13 @@
+{
+  "dataset": {
+    "path": "../../datasets/king/",
+    "files": ["cohort.bed", "cohort.bim", "cohort.fam"]
+  },
+  "commands": {
+    "kinship": {"label": "Pairwise kinship", "flags": ["--kinship"], "description": "Estimate kinship between samples, including pairs within and between reported families."},
+    "related": {"label": "Find close relatives", "flags": ["--related", "--degree", "2", "--noscreen", "1"], "description": "Find relatives through the second degree. --noscreen 1 evaluates candidate pairs directly and avoids KING’s unreliable default screening on very small cohorts."},
+    "duplicate": {"label": "Find duplicate samples", "flags": ["--duplicate"], "description": "Find samples with matching genotypes."},
+    "bysample": {"label": "Sample quality control", "flags": ["--bysample"], "description": "Summarize genotypes and missingness for each sample."},
+    "bysnp": {"label": "Variant quality control", "flags": ["--bySNP"], "description": "Summarize genotypes and missingness for each variant."}
+  }
+}

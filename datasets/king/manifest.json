@@ -1,0 +1,56 @@
+{
+  "dataset": "king-synthetic-v1",
+  "files": {
+    "cohort.bed": {
+      "bytes": 885846,
+      "sha256": "adf29d4d8b2ceeabbbb4d614abf32e38af9ca8b6d9589f9497dfcfbad45a3a83"
+    },
+    "cohort.bim": {
+      "bytes": 848606,
+      "sha256": "9bd324bd469ab2a04f7ea525847e9622ea097b139d569fa6e94e029daabcdaff"
+    },
+    "cohort.fam": {
+      "bytes": 1697,
+      "sha256": "ee7044ffe6165305e89f2402fe1e40fc549f0769b9c2fa3ee157247ccd016a47"
+    },
+    "cohort.fam.gz": {
+      "bytes": 478,
+      "sha256": "be93392573d1a0e92dca6228afe16fecac97cdb7f6e4a3a4c2a254de0c17d068"
+    },
+    "small/cohort.bed": {
+      "bytes": 229666,
+      "sha256": "b89774d6b282359d8f73f651a37a80235f6428fffda429b66940e7e19f5131a7"
+    },
+    "small/cohort.bim": {
+      "bytes": 848606,
+      "sha256": "9bd324bd469ab2a04f7ea525847e9622ea097b139d569fa6e94e029daabcdaff"
+    },
+    "small/cohort.fam": {
+      "bytes": 415,
+      "sha256": "77f92b4bf6914c50882ec9b80581424a4b681091da0eca9cd08102de32031be4"
+    },
+    "small/manifest.json": {
+      "bytes": 814,
+      "sha256": "9f567bc68bdba0034a7ee8ab6da2fd46ce05402df59927d6b47387da9636d114"
+    },
+    "small/truth.json": {
+      "bytes": 129951,
+      "sha256": "edcbd4f3bd9084b370905e2a5c2258ea223ff9ab37e7e713cdee5f6c7010819e"
+    },
+    "truth.json": {
+      "bytes": 2315273,
+      "sha256": "21ab3fbb0d938b86510f16d128e8f07a65f91282b8a7e34eed26669132108aaf"
+    }
+  },
+  "inputFiles": [
+    "cohort.bed",
+    "cohort.bim",
+    "cohort.fam"
+  ],
+  "markerCount": 32809,
+  "provenance": "Generated entirely by scripts/generate-king-fixtures.py; no donor data or upstream fixture redistribution.",
+  "sampleCount": 105,
+  "schema": 1,
+  "seed": 2322026,
+  "version": "2.3.2"
+}
