@@ -1,5 +1,11 @@
 # Genomics WebAssembly tools
 
+An experimental [seqtk container2wasm prototype](docs/seqtk-container.md) runs
+the unchanged Linux executable in an emulated container inside the browser.
+It provides local file input, cancellation, logs and output downloads, with
+native/Docker/direct-WASM comparisons. It is separate from the direct ports
+below and requires its own build plus cross-origin-isolated hosting.
+
 Sequence trimming, DNA and RNA alignment, gene counting, transcript assembly,
 quantification, single-cell preprocessing, coverage, variant calling, metagenomics,
 genotype analysis, repeat sizing and visualization, peak calling, primer design
