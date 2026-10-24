@@ -221,6 +221,35 @@ def generate(output, sources):
         text(folder + '/scores.tsv', score, {'source': '2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh', 'transformation': 'Upstream score formulas and seed 5, LCG replacing awk rand; header added. Synthetic arbitrary coefficients.'})
         text(folder + '/sex.tsv', ['#IID\tSEX'] + [s+'\t1' for s in samples], {'source': '2.0/Tests/TEST_SCORE_CENTER_MISSING/run_tests.sh', 'transformation': 'All synthetic samples assigned male as upstream dosage test requires; supplied in both sets for consistent import.'})
 
+    # Original compact, entirely fictional family/duplicate cohort for the
+    # non-SSE2 paired-row bit-transpose regression. Keep files exercise odd
+    # and even sample counts without duplicating the genotype matrix.
+    folder = 'synthetic/king-padding'
+    ids = [('F0', 'dad'), ('F0', 'mom'), ('F0', 'child1'), ('F0', 'child2'), ('Fdup', 'dup')]
+    ids += [(f'F{i:03}', f'U{i:03}') for i in range(5, 105)]
+    origin = {'source': SCRIPT, 'transformation': 'Original fictional 105-sample, 4097-marker hardcall cohort. LCG seed 20261022; founder allele frequency 0.15+0.35*U; child genotypes inherit one randomly chosen parental allele; sample 5 duplicates sample 1. No missing genotypes. BED padding bits are zero. No donor or patient data.'}
+    rng = RandomLCG(20261022)
+    bed, bim = bytearray(b'\x6c\x1b\x01'), []
+    for marker in range(4097):
+        freq = 0.15 + 0.35 * rng.draw()
+        dad = [int(rng.draw() < freq) for _ in range(2)]
+        mom = [int(rng.draw() < freq) for _ in range(2)]
+        children = [dad[int(2*rng.draw())] + mom[int(2*rng.draw())] for _ in range(2)]
+        dosages = [sum(dad), sum(mom), *children, sum(dad)]
+        dosages += [int(rng.draw() < freq) + int(rng.draw() < freq) for _ in range(100)]
+        # PLINK BED: 00=A1/A1, 10=heterozygous, 11=A2/A2.
+        packed = bytearray((len(ids) + 3)//4)
+        for sample, dosage in enumerate(dosages):
+            packed[sample//4] |= (0, 2, 3)[dosage] << (2*(sample % 4))
+        bed.extend(packed)
+        bim.append(f'1\tv{marker+1}\t0\t{1000*(marker+1)}\tA\tG')
+    put('plink2/' + folder + '/cohort.bed', bytes(bed), origin)
+    text(folder + '/cohort.bim', bim, origin)
+    text(folder + '/cohort.fam', [f'{fid}\t{iid}\t' + ('dad\tmom' if iid in ('child1','child2') else '0\t0') + f'\t{1 if iid in ("dad", "child1", "dup") else 2}\t-9' for fid, iid in ids], origin)
+    for count in (25, 48, 63, 64, 65, 103, 104, 105):
+        text(folder + f'/keep{count}.txt', ['#FID\tIID', *[f'{fid}\t{iid}' for fid, iid in ids[:count]]], origin)
+        text(folder + f'/pairs{count}.kin0', ['#FID1\tIID1\tFID2\tIID2', *[f'{ids[0][0]}\t{ids[0][1]}\t{fid}\t{iid}' for fid, iid in ids[1:count]]], origin)
+
     json_write(output / 'provenance/fixture-sources.json', provenance)
     observations = {}
     for path in sorted((output / 'plink2').rglob('*')):

@@ -131,9 +131,9 @@
   },
   "files": {
     "README.md": {
-      "bytes": 6926,
+      "bytes": 7613,
       "generated": false,
-      "sha256": "e6ea2b0014819aeb99c17dad6144cab8e707010eb4812d1f29ece264ea4dac90"
+      "sha256": "8fb5681f70c553f3993bb26997647c1f57b165e2f732161193e4a7ee67fc8248"
     },
     "plink2/real/1kg-phase3-chr21.vcf.gz": {
       "bytes": 78046,
@@ -174,6 +174,101 @@
       "bytes": 492,
       "generated": true,
       "sha256": "f251a815f6cffa9913dd0e5fe40275a8dfdf24245d72ffb22d60ca0a27dd0dfd"
+    },
+    "plink2/synthetic/king-padding/cohort.bed": {
+      "bytes": 110622,
+      "generated": true,
+      "sha256": "2153b28cdb1887a0c2870bec7eba2562696275acafb7f3690e633d7c741ea427"
+    },
+    "plink2/synthetic/king-padding/cohort.bim": {
+      "bytes": 87920,
+      "generated": true,
+      "sha256": "1b955e4cd14d6b8fab1c70f16c6b2aad15722e89df693de828071cd1b94a5ebe"
+    },
+    "plink2/synthetic/king-padding/cohort.fam": {
+      "bytes": 1996,
+      "generated": true,
+      "sha256": "02b8bbf646f8cc652af90d6ca7939acf8283ed5f8da4dfdac930bb2173454607"
+    },
+    "plink2/synthetic/king-padding/keep103.txt": {
+      "bytes": 1032,
+      "generated": true,
+      "sha256": "a620def822eb40724a951b147348adcf88f388d0361e96f3791d50f7c51e8d22"
+    },
+    "plink2/synthetic/king-padding/keep104.txt": {
+      "bytes": 1042,
+      "generated": true,
+      "sha256": "06fc8cef5236393bc0458df988fe8758097331f08181c17c410add84ae0c4165"
+    },
+    "plink2/synthetic/king-padding/keep105.txt": {
+      "bytes": 1052,
+      "generated": true,
+      "sha256": "af873175a02a166f69d4b0c1cbfeb51f95884db19a23f4d74a3b3240d10365ec"
+    },
+    "plink2/synthetic/king-padding/keep25.txt": {
+      "bytes": 252,
+      "generated": true,
+      "sha256": "c5410a0842cd887249ba5e2e392f6997b4d032a88946b4dbdeed750fb4684e6a"
+    },
+    "plink2/synthetic/king-padding/keep48.txt": {
+      "bytes": 482,
+      "generated": true,
+      "sha256": "40fcec93624a1eb28b44050fad889811e206909dc71d4f5da6f04883c28c35d2"
+    },
+    "plink2/synthetic/king-padding/keep63.txt": {
+      "bytes": 632,
+      "generated": true,
+      "sha256": "a03105bf4948de81b4b769225abc3324735d31d0e3e8ca4ec5d0c050428feeee"
+    },
+    "plink2/synthetic/king-padding/keep64.txt": {
+      "bytes": 642,
+      "generated": true,
+      "sha256": "61abeac1f4633f10e07e44091ea3a5e0c46fdf9054fa51f7eef537cc19babb77"
+    },
+    "plink2/synthetic/king-padding/keep65.txt": {
+      "bytes": 652,
+      "generated": true,
+      "sha256": "8077aaec4099311b84b32ea279ae83b302088264387cc3812f558aa04e466a26"
+    },
+    "plink2/synthetic/king-padding/pairs103.kin0": {
+      "bytes": 1751,
+      "generated": true,
+      "sha256": "ed51c20f3bc355c3a48775ac8de80d68cc7340d4a06e0e35feaaf0b47ae1f283"
+    },
+    "plink2/synthetic/king-padding/pairs104.kin0": {
+      "bytes": 1768,
+      "generated": true,
+      "sha256": "4ad60fb5c959836ba33965f9a6a72f150830cd93f1ba5d9a33923f2e9b44595f"
+    },
+    "plink2/synthetic/king-padding/pairs105.kin0": {
+      "bytes": 1785,
+      "generated": true,
+      "sha256": "da9a401d40e4d0940ce5a36c642fbed54106521a985a1e807d1135684d1657d4"
+    },
+    "plink2/synthetic/king-padding/pairs25.kin0": {
+      "bytes": 425,
+      "generated": true,
+      "sha256": "2f2c58ae7776f3d4bef09b771bbda2b7f5990a06e97424f2696067b11d9572b1"
+    },
+    "plink2/synthetic/king-padding/pairs48.kin0": {
+      "bytes": 816,
+      "generated": true,
+      "sha256": "44e2b01e78f360d30c7d5becbd4e5b98cdc3cebd1d019d96ea2ceacef71be453"
+    },
+    "plink2/synthetic/king-padding/pairs63.kin0": {
+      "bytes": 1071,
+      "generated": true,
+      "sha256": "cae62988c9c9ec84f70e241b0f304b08ba757ad1d8a768d2714aef567b8743f1"
+    },
+    "plink2/synthetic/king-padding/pairs64.kin0": {
+      "bytes": 1088,
+      "generated": true,
+      "sha256": "c3128de1cdd7f2aa24cb24618872fbb49141ac7c591f328ca9e13315e24aaf65"
+    },
+    "plink2/synthetic/king-padding/pairs65.kin0": {
+      "bytes": 1105,
+      "generated": true,
+      "sha256": "379d71dd52db4b00b90962d418d8611a637ddfcf6cd46a1edd5d73a2330cde4f"
     },
     "plink2/synthetic/multiallelic.vcf": {
       "bytes": 249,
@@ -251,9 +346,9 @@
       "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
     },
     "provenance/fixture-sources.json": {
-      "bytes": 7605,
+      "bytes": 15588,
       "generated": true,
-      "sha256": "ff943e0cdcb1ac50bcf575d261507c8d986930d7712c0a30791d50d1bc62fe36"
+      "sha256": "f273cccb68f6ee15e6b1f0eab94cbaa5cb35379c6e39f48ab94e21a5477d076e"
     },
     "provenance/sources.lock.json": {
       "bytes": 8873,
@@ -309,8 +404,8 @@
   "regeneration": {
     "files": {
       "scripts/fetch-plink2-test-data.py": {
-        "bytes": 17338,
-        "sha256": "937a3fec0e7eefc0c1883b9e2ade9cee79e5ab8436c6d42cfeb76e8e85f17c37"
+        "bytes": 19535,
+        "sha256": "35d3abb87e6a8efaeb160abd5d41ec41475ab50098074923ba2bbb582541ad4f"
       }
     },
     "method": "Unchanged authentic and upstream synthetic copies; documented deterministic synthetic regression-input adaptations. No tool-result goldens.",

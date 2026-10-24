@@ -11,6 +11,7 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
+from functools import lru_cache
 
 NUMERIC_POLICY = {'method': 'printed-precision', 'relativeSlack': 1e-8, 'roundingUnits': 0.5}
 NORMALISATION = [
@@ -188,7 +189,205 @@ def compare_table(a, b, spec):
     return equal, stats
 
 
-def compare(expected_dir, actual_dir, spec):
+def checked_ids(value):
+    """Read the exact two-column sample identifiers emitted by this fixture."""
+    if isinstance(value, str):
+        rows = [line.split() for line in value.splitlines()]
+        if not rows or rows.pop(0) != ['#FID', 'IID']:
+            raise ValueError('independent truth: missing sample ID header')
+    else:
+        if value['columns'] != ['#FID', 'IID']:
+            raise ValueError('independent truth: incorrect sample ID columns')
+        rows = value['rows']
+    if any(len(row) != 2 for row in rows):
+        raise ValueError('independent truth: malformed sample ID row')
+    result = [tuple(row) for row in rows]
+    if len(set(result)) != len(result):
+        raise ValueError('independent truth: duplicate sample ID')
+    return result
+
+
+@lru_cache(maxsize=16)
+def bed_truth(bed_raw, bim_raw, fam_raw, keep_raw):
+    """Decode SNP-major BED directly, independent of PLINK and the generator.
+
+    Each sample is represented by three Python arbitrary-precision bitsets;
+    pair counts are intersections, never the C/C++ packed transpose algorithm.
+    """
+    fam = [line.split() for line in text(fam_raw).splitlines()]
+    if not fam or any(len(row) != 6 for row in fam):
+        raise ValueError('independent truth: invalid FAM')
+    all_ids = [tuple(row[:2]) for row in fam]
+    if len(set(all_ids)) != len(all_ids):
+        raise ValueError('independent truth: duplicate fixture sample')
+    keep = checked_ids(text(keep_raw))
+    if not keep or not set(keep).issubset(all_ids):
+        raise ValueError('independent truth: invalid keep sample')
+    selected = [i for i, pair in enumerate(all_ids) if pair in set(keep)]
+    ids = [all_ids[i] for i in selected]
+    bim = [line.split() for line in text(bim_raw).splitlines()]
+    if not bim or any(len(row) != 6 or row[0] not in {str(i) for i in range(1, 23)} for row in bim):
+        raise ValueError('independent truth: expected autosomal biallelic BIM')
+    if len({row[1] for row in bim}) != len(bim):
+        raise ValueError('independent truth: duplicate variant')
+    stride = (len(fam) + 3) // 4
+    if bed_raw[:3] != b'\x6c\x1b\x01' or len(bed_raw) != 3 + stride * len(bim):
+        raise ValueError('independent truth: invalid BED magic or size')
+    genotypes = [[0, 0, 0] for _ in ids]
+    for variant in range(len(bim)):
+        bit = 1 << variant
+        offset = 3 + variant * stride
+        for sample, raw_sample in enumerate(selected):
+            code = (bed_raw[offset + raw_sample // 4] >> (2 * (raw_sample % 4))) & 3
+            if code != 1:  # BED: 00=A1/A1, 10=A1/A2, 11=A2/A2, 01=missing.
+                genotype = {0: 0, 2: 1, 3: 2}[code]
+                genotypes[sample][genotype] |= bit
+    pairs = {}
+    for i in range(len(ids)):
+        a0, ah, a2 = genotypes[i]
+        for j in range(i):
+            b0, bh, b2 = genotypes[j]
+            n = ((a0 | ah | a2) & (b0 | bh | b2)).bit_count()
+            hh = (ah & bh).bit_count()
+            ibs0 = ((a0 & b2) | (a2 & b0)).bit_count()
+            h1 = (ah & (b0 | b2)).bit_count()
+            h2 = (bh & (a0 | a2)).bit_count()
+            smaller_het = hh + min(h1, h2)
+            if not n or not smaller_het:
+                raise ValueError('independent truth: degenerate genotype pair')
+            kin = Decimal('0.5') - Decimal(4 * ibs0 + h1 + h2) / Decimal(4 * smaller_het)
+            ibs = Decimal(1) - Decimal(2 * ibs0 + h1 + h2) / Decimal(2 * n)
+            pairs[(i, j)] = {'NSNP': n, 'HETHET': hh, 'IBS0': ibs0,
+                             'HET1_HOM2': h1, 'HET2_HOM1': h2,
+                             'KINSHIP': kin, 'IBS': ibs}
+    return {'ids': ids, 'variants': len(bim), 'pairs': pairs}
+
+
+def truth_number(token, expected, label):
+    """Check dtoa_g's six significant digits against an exact count ratio.
+
+    The bound is determined by the expected magnitude, not by the reported
+    number of decimals, so a corrupted coarse token cannot enlarge it.
+    """
+    actual = number(token)
+    expected = Decimal(expected)
+    if expected in (0, Decimal('0.5'), 1):
+        tolerance = Decimal(0)
+    else:
+        tolerance = Decimal('0.500001') * (Decimal(10) ** (expected.copy_abs().adjusted() - 5))
+    if abs(actual - expected) > tolerance:
+        raise ValueError(f'independent truth: {label}: {token} differs from {expected}')
+
+
+def subset_pairs(raw, ids):
+    lines = text(raw).splitlines()
+    if not lines:
+        raise ValueError('independent truth: empty pair subset')
+    columns = lines.pop(0).split()
+    if columns != ['#FID1', 'IID1', 'FID2', 'IID2']:
+        raise ValueError('independent truth: invalid pair subset header')
+    lookup = {sample: i for i, sample in enumerate(ids)}
+    pairs = set()
+    for line in lines:
+        row = line.split()
+        if len(row) != 4 or tuple(row[:2]) not in lookup or tuple(row[2:]) not in lookup:
+            raise ValueError('independent truth: invalid subset sample')
+        a, b = lookup[tuple(row[:2])], lookup[tuple(row[2:])]
+        pair = (max(a, b), min(a, b))
+        if a == b or pair in pairs:
+            raise ValueError('independent truth: duplicate or self subset pair')
+        pairs.add(pair)
+    return pairs
+
+
+def check_odd_sample_truth(values, spec, fixture_root):
+    config = spec['oddSampleTruth']
+    if fixture_root is None:
+        raise ValueError('independent truth: fixture directory required')
+    raw = {key: safe_file(fixture_root, config[key]).read_bytes() for key in ('bed', 'bim', 'fam', 'keep')}
+    truth = bed_truth(*(raw[key] for key in ('bed', 'bim', 'fam', 'keep')))
+    ids, pairs = truth['ids'], truth['pairs']
+    lookup = {sample: i for i, sample in enumerate(ids)}
+    mode = config['mode']
+    expected_pairs = set(pairs)
+    checked = 0
+    first_pairs = 0
+    if mode in ('king-table', 'king-subset'):
+        if mode == 'king-subset':
+            raw['subset'] = safe_file(fixture_root, config['subset']).read_bytes()
+            expected_pairs = subset_pairs(raw['subset'], ids)
+        if not {(i, 0) for i in range(1, len(ids))}.issubset(expected_pairs):
+            raise ValueError('independent truth: first-sample pair coverage absent')
+        value = values[config.get('output', 'king.kin0')]
+        columns = [c.removeprefix('#') for c in value['columns']]
+        required = ['FID1', 'IID1', 'FID2', 'IID2', 'NSNP', 'HETHET', 'IBS0', 'KINSHIP']
+        if any(c not in columns for c in required):
+            raise ValueError('independent truth: required KING columns absent')
+        observed = set()
+        for row in value['rows']:
+            record = dict(zip(columns, row))
+            a, b = (record['FID1'], record['IID1']), (record['FID2'], record['IID2'])
+            if a not in lookup or b not in lookup or a == b:
+                raise ValueError('independent truth: unknown or self KING pair')
+            i, j = lookup[a], lookup[b]
+            key = (max(i, j), min(i, j))
+            if key in observed or key not in expected_pairs:
+                raise ValueError('independent truth: duplicate or unexpected KING pair')
+            observed.add(key)
+            expected = pairs[key]
+            for name in ('NSNP', 'HETHET', 'IBS0'):
+                if record[name] != str(expected[name]):
+                    raise ValueError('independent truth: incorrect KING count ' + name)
+            truth_number(record['KINSHIP'], expected['KINSHIP'], 'KING kinship')
+            checked += 1
+            first_pairs += key[1] == 0
+        if observed != expected_pairs:
+            raise ValueError('independent truth: missing KING pairs')
+    elif mode in ('king-matrix', 'distance-ibs'):
+        matrix = values[config.get('output', 'king.king' if mode == 'king-matrix' else 'distance.mibs')]
+        output_ids = checked_ids(values[config.get('ids', 'king.king.id' if mode == 'king-matrix' else 'distance.mibs.id')])
+        if output_ids != ids or len(matrix['rows']) != len(ids) or len(matrix['columns']) != len(ids):
+            raise ValueError('independent truth: incorrect matrix sample dimensions or order')
+        for i, row in enumerate(matrix['rows']):
+            if len(row) != len(ids):
+                raise ValueError('independent truth: truncated matrix')
+            for j, token in enumerate(row):
+                expected = (Decimal('0.5') if mode == 'king-matrix' else Decimal(1)) if i == j else pairs[(max(i, j), min(i, j))]['KINSHIP' if mode == 'king-matrix' else 'IBS']
+                truth_number(token, expected, mode)
+                checked += 1
+                first_pairs += i == 0 and j != 0
+    elif mode == 'king-cutoff':
+        retained = checked_ids(values[config.get('retained', 'cutoff.king.cutoff.in.id')])
+        removed = checked_ids(values[config.get('removed', 'cutoff.king.cutoff.out.id')])
+        if set(retained) & set(removed) or set(retained) | set(removed) != set(ids):
+            raise ValueError('independent truth: cutoff IDs do not partition inputs')
+        threshold = Decimal(str(config['threshold']))
+        # Independent graph construction from genotype counts, followed by the
+        # documented greedy policy. Recompute degrees instead of transcribing
+        # PLINK's mutable bit matrix and degree-update implementation.
+        edges = {key for key, counts in pairs.items() if counts['KINSHIP'] > threshold}
+        remaining = set(range(len(ids)))
+        while edges:
+            neighbors = {i: set() for i in remaining}
+            for i, j in edges:
+                neighbors[i].add(j); neighbors[j].add(i)
+            leaves = [i for i in sorted(remaining) if len(neighbors[i]) == 1]
+            victim = next(iter(neighbors[leaves[0]])) if leaves else min(remaining, key=lambda i: (-len(neighbors[i]), i))
+            remaining.remove(victim)
+            edges = {edge for edge in edges if victim not in edge}
+        if retained != [sample for i, sample in enumerate(ids) if i in remaining] or removed != [sample for i, sample in enumerate(ids) if i not in remaining]:
+            raise ValueError('independent truth: incorrect kinship cutoff selection')
+        checked, first_pairs = len(pairs), len(ids) - 1
+    else:
+        raise ValueError('independent truth: unknown regression mode')
+    return {'method': 'direct SNP-major BED genotype intersections', 'mode': mode,
+            'samples': len(ids), 'variants': truth['variants'], 'checkedValues': checked,
+            'firstSamplePairs': first_pairs, 'firstSample': list(ids[0]),
+            'inputs': {config[key]: hashlib.sha256(value).hexdigest() for key, value in raw.items()},
+            'passed': True}
+
+
+def compare(expected_dir, actual_dir, spec, fixture_root=None):
     artifacts = spec.get('artifacts', [])
     paths = [artifact['path'] for artifact in artifacts]
     if not artifacts or len(paths) != len(set(paths)):
@@ -205,6 +404,10 @@ def compare(expected_dir, actual_dir, spec):
             values[side][name], invariants[side][name] = parse_artifact(path, artifact)
             raw = path.read_bytes()
             hashes[side][name], sizes[side][name] = hashlib.sha256(raw).hexdigest(), len(raw)
+    independent_truth = {}
+    if 'oddSampleTruth' in spec:
+        for side in ('expected', 'actual'):
+            independent_truth[side] = check_odd_sample_truth(values[side], spec, fixture_root)
     expected, actual = values['expected'], values['actual']
     differences, stats = [], {}
     for artifact in artifacts:
@@ -224,7 +427,8 @@ def compare(expected_dir, actual_dir, spec):
             'expectedFileBytes': sizes['expected'], 'actualFileBytes': sizes['actual'],
             'expectedCanonicalFiles': {p: digest(expected[p]) for p in paths}, 'canonicalFiles': {p: digest(actual[p]) for p in paths},
             'normalisation': NORMALISATION, 'numericTolerance': NUMERIC_POLICY if stats else 0,
-            'numericComparisons': stats, 'differences': differences}
+            'numericComparisons': stats, 'differences': differences,
+            **({'independentTruth': independent_truth} if independent_truth else {})}
 
 
 def main():
@@ -244,7 +448,7 @@ def main():
         raise ValueError('case dataset mismatch')
     manifest_raw = args.manifest.read_bytes()
     json.loads(manifest_raw)['datasets'][args.dataset]
-    result = compare(args.expected, args.actual, spec)
+    result = compare(args.expected, args.actual, spec, fixture_root=args.manifest.parent / args.dataset)
     result.update(schema=1, tool=args.tool, dataset=args.dataset, case=args.case,
                   actualTarget=args.actual_target, manifestSha256=hashlib.sha256(manifest_raw).hexdigest())
     args.report.parent.mkdir(parents=True, exist_ok=True)

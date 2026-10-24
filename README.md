@@ -135,6 +135,12 @@ real background reader threads even with one compute thread, so hosting needs
 cross-origin isolation. Its minimum working arena is 640 MiB, in addition to
 file copies, thread stacks and other allocations. Start with small datasets.
 
+Rebuild older PLINK 2 WebAssembly bundles before using KING relatedness or
+distance results with an odd sample count. The port now pads three upstream
+transpose buffers to an even row count, fixing corruption of pairs involving
+the first sample. See the [patch notes](tools/plink2/README.md) and
+[odd/even regression coverage](validation/plink2/README.md).
+
 KING 2.3.2 has a [local browser example](examples/king/README.md) and
 [JavaScript API](runtime/KING.md). The build downloads the pinned upstream
 source and compiles the original C++ algorithms into a serial worker.
